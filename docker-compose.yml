@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    restart: unless-stopped
+    container_name: carpool_postgres
+    env_file: .env
+    environment:
+      POSTGRES_USER: carpool
+      POSTGRES_PASSWORD: carpool
+      POSTGRES_DB: carpool
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+
+volumes:
+  postgres-data:

@@ -2,6 +2,11 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
+    "api-authentication-api-feature": "libs/api/authentication/api/feature",
+    "api-authentication-api-shared-entities-data-access": "libs/api/authentication/api/shared/entities/data-access",
+    "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
+    "api-authentication-service-feature": "libs/api/authentication/service/feature",
+    "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",
     "client": "apps/client",
     "client-e2e": "apps/client-e2e"

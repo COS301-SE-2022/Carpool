@@ -15,7 +15,22 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@carpool/api/shell/feature": ["libs/api/shell/feature/src/index.ts"]
+      "@carpool/api/authentication/entities": [
+        "libs/api/authentication/api/shared/entities/data-access/src/index.ts"
+      ],
+      "@carpool/api/authentication/repository": [
+        "libs/api/authentication/repository/data-access/src/index.ts"
+      ],
+      "@carpool/api/authentication/resolvers": [
+        "libs/api/authentication/api/feature/src/index.ts"
+      ],
+      "@carpool/api/authentication/service": [
+        "libs/api/authentication/service/feature/src/index.ts"
+      ],
+      "@carpool/api/prisma": [
+        "libs/api/shared/services/prisma/data-access/src/index.ts"
+      ],
+      "@carpool/api/shell": ["libs/api/shell/feature/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

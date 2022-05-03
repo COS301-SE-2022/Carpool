@@ -17,12 +17,11 @@ export class AuthRepository {
 
     if (user) {
       // const isValidPassword = bcrypt.compareSync(password, user.password);
+      const isValidPassword = user.password === password;
 
-      return user;
-
-      // if (isValidPassword) {
-      //   return user;
-      // }
+      if (isValidPassword) {
+        return user;
+      }
     }
   }
 

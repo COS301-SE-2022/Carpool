@@ -9,6 +9,16 @@
     "react-native": "*",
     "react-native-config": "*",
     "react-native-svg": "*",
-    "@react-native-async-storage/async-storage": "*"
+    "@react-native-async-storage/async-storage": "*",
+    "@react-navigation/native": "*",
+    "@testing-library/react": "*",
+    "react-native-screens": "*",
+    "react-redux": "*",
+    "@reduxjs/toolkit": "*",
+    "redux": "*",
+    "react-native-safe-area-context": "*",
+    "native-base": "*",
+    "@react-navigation/bottom-tabs": "*",
+    "material-icons-react": "*"
   }
 }

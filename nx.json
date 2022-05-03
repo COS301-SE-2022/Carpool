@@ -29,5 +29,12 @@
       }
     ]
   },
-  "defaultProject": "client"
+  "defaultProject": "client",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    }
+  }
 }

@@ -9,6 +9,9 @@
     "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",
     "client": "apps/client",
-    "client-e2e": "apps/client-e2e"
+    "client-components": "libs/client/components",
+    "client-e2e": "apps/client-e2e",
+    "client-pages": "libs/client/pages",
+    "client-store": "libs/client/store"
   }
 }

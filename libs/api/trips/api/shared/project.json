@@ -1,0 +1,22 @@
+{
+  "root": "libs/api/trips/api/shared",
+  "sourceRoot": "libs/api/trips/api/shared/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/trips/api/shared/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/trips/api/shared"],
+      "options": {
+        "jestConfig": "libs/api/trips/api/shared/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

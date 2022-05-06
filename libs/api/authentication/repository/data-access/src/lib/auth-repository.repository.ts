@@ -18,7 +18,7 @@ export class AuthRepository {
       },
     });
 
-    if (user && user.isValidated) {
+    if (user) {
       // const isValidPassword = bcrypt.compareSync(password, user.password);
       const isValidPassword = user.password === password;
 
@@ -49,6 +49,4 @@ export class AuthRepository {
       },
     });
   }
-
-  async validateAccount();
 }

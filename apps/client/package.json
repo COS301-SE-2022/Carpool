@@ -19,6 +19,7 @@
     "react-native-safe-area-context": "*",
     "native-base": "*",
     "@react-navigation/bottom-tabs": "*",
-    "material-icons-react": "*"
+    "material-icons-react": "*",
+    "react-native-vector-icons": "*"
   }
 }

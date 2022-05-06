@@ -1,9 +1,12 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import bcrypt from 'bcryptjs';
 import { UserInput } from '@carpool/api/authentication/entities';
-
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -15,13 +18,19 @@ export class AuthRepository {
       },
     });
 
-    if (user) {
+    if (user && user.isValidated) {
       // const isValidPassword = bcrypt.compareSync(password, user.password);
       const isValidPassword = user.password === password;
 
       if (isValidPassword) {
         return user;
       }
+    } else if (!user) {
+      throw new NotFoundException(`User with email ${email} does not exist`);
+    } else {
+      throw new UnauthorizedException(
+        `The email address ${email} has not been validated`
+      );
     }
   }
 
@@ -40,4 +49,6 @@ export class AuthRepository {
       },
     });
   }
+
+  async validateAccount();
 }

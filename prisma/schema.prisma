@@ -21,11 +21,11 @@ model User {
     idNumber    Int @unique @map("id_number")
     university  String
     password    String
-    studentNumber Int @unique @map("student_number")
+    studentNumber String @unique @map("student_number")
     email       String @unique
     profilePic  String @map("profile_pic") 
     isDriver    Boolean
-    isValidated     Boolean
+    isValidated Boolean @default(false)
 
     byReviews   Reviews[] @relation("by_review")
     forReviews  Reviews[] @relation("for_review")

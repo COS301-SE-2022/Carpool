@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, login, RootStore } from '@carpool/client/store';
 import { NativeStackScreenProps } from 'react-native-screens/native-stack';
+import Icon from 'react-native-vector-icons/Feather';
+
+import { Button } from '@carpool/client/components';
 
 import {
-  Box,
-  Center,
-  FormControl,
-  Heading,
-  HStack,
-  Input,
-  Link,
-  Button,
   Text,
-  VStack,
-} from 'native-base';
+  SafeAreaView,
+  View,
+  StyleSheet,
+  TextInput,
+  Image,
+} from 'react-native';
 
 type RootStackParamList = {
   Home: undefined;
   Login: undefined;
+  Onboard: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
@@ -28,6 +28,7 @@ export function LoginPage({ navigation }: Props) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [show, setShow] = useState(false);
 
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
@@ -43,87 +44,207 @@ export function LoginPage({ navigation }: Props) {
   };
 
   return (
-    <Center w="100%">
-      <Box safeArea p="2" py="8" w="90%" maxW="290">
-        <Heading
-          size="lg"
-          fontWeight="600"
-          color="coolGray.800"
-          _dark={{
-            color: 'warmGray.50',
-          }}
-        >
-          Welcome
-        </Heading>
-        <Heading
-          mt="1"
-          _dark={{
-            color: 'warmGray.200',
-          }}
-          color="coolGray.600"
-          fontWeight="medium"
-          size="xs"
-        >
-          Sign in to continue!
-        </Heading>
-
-        <VStack space={3} mt="5">
-          <FormControl>
-            <FormControl.Label>Email Address</FormControl.Label>
-            <Input
+    <SafeAreaView style={styles.container}>
+      <View style={styles.flexColumn}>
+        <View style={{ display: 'flex', flex: 3 }}>
+          <Icon
+            name="arrow-left"
+            size={30}
+            style={{ color: '#808080' }}
+            onPress={() => navigation.navigate('Onboard')}
+          />
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 30,
+            }}
+          >
+            <Image
+              source={require('./title.png')}
+              style={{ resizeMode: 'cover' }}
+            />
+          </View>
+          {/* <Title /> */}
+        </View>
+        <View style={{ display: 'flex', flex: 5 }}>
+          <Text style={{ textAlign: 'left', fontSize: 24, fontWeight: '700' }}>
+            Login
+          </Text>
+          <Text
+            style={{
+              textAlign: 'left',
+              fontSize: 15,
+              fontWeight: '400',
+              color: '#808080',
+              marginTop: 8,
+              marginBottom: 18,
+            }}
+          >
+            Login to book or offer a ride.
+          </Text>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Icon
+              name="mail"
+              size={22}
+              style={{ flex: 1, color: '#808080', marginRight: 8 }}
+            />
+            <TextInput
               value={email}
-              onChangeText={(value) => setEmail(value)}
+              placeholder="Email Address"
+              onChangeText={setEmail}
+              style={styles.input}
+              placeholderTextColor="#808080"
               autoCapitalize="none"
             />
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Password</FormControl.Label>
-            <Input
-              type="password"
-              value={password}
-              onChangeText={(value) => setPassword(value)}
-              autoCapitalize="none"
-            />
-            <Link
-              _text={{
-                fontSize: 'xs',
-                fontWeight: '500',
-                color: 'indigo.500',
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <Icon
+              name="lock"
+              size={22}
+              style={{
+                flex: 1,
+                color: '#808080',
+                marginRight: 8,
               }}
-              alignSelf="flex-end"
-              mt="1"
+            />
+            <View
+              style={{
+                flex: 10,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
             >
-              Forget Password?
-            </Link>
-          </FormControl>
-          <Button mt="2" colorScheme="indigo" onPress={submitHandler}>
-            Sign in
-          </Button>
-          <HStack mt="6" justifyContent="center">
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  borderColor: '#808080',
+                  borderBottomWidth: 1,
+                  marginVertical: 8,
+                }}
+              >
+                <TextInput
+                  value={password}
+                  placeholder="Password"
+                  onChangeText={setPassword}
+                  style={styles.passwordInput}
+                  secureTextEntry={show ? false : true}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+                <Icon
+                  name="eye-off"
+                  size={20}
+                  style={{ color: '#808080', marginRight: 5 }}
+                  onPress={() => setShow(!show)}
+                />
+              </View>
+              <Text
+                style={{ color: '#188aed', alignSelf: 'flex-end' }}
+                onPress={() => navigation.navigate('Home')}
+              >
+                Forgot password?
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 2,
+            justifyContent: 'flex-end',
+            marginBottom: 10,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: 10,
+            }}
+          >
             <Text
-              fontSize="sm"
-              color="coolGray.600"
-              _dark={{
-                color: 'warmGray.200',
-              }}
+              style={{ color: '#808080' }}
+              onPress={() => navigation.navigate('Home')}
             >
-              I'm a new user.
+              Don't have an account?
             </Text>
-            <Link
-              _text={{
-                color: 'indigo.500',
-                fontWeight: 'medium',
-                fontSize: 'sm',
-              }}
-              href="#"
+            <Text
+              style={{ color: '#188aed' }}
+              onPress={() => navigation.navigate('Home')}
             >
-              Sign Up
-            </Link>
-          </HStack>
-        </VStack>
-      </Box>
-    </Center>
+              &nbsp;Sign up
+            </Text>
+          </View>
+          <Button title="Login" onPress={submitHandler} />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    // alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
+  },
+  flexColumn: {
+    flexDirection: 'column',
+    height: '100%',
+    marginHorizontal: 40,
+    justifyContent: 'space-between',
+  },
+  borderStyle: {
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderStyle: 'solid',
+  },
+  title: {
+    fontSize: 30,
+    textAlign: 'center',
+    fontWeight: '700',
+  },
+  input: {
+    height: 40,
+    marginVertical: 8,
+    padding: 8,
+    paddingLeft: 5,
+    borderBottomColor: '#808080',
+    borderBottomWidth: 1,
+    borderStyle: 'solid',
+    flex: 10,
+  },
+  passwordInput: {
+    height: 40,
+    paddingLeft: 5,
+    flex: 10,
+  },
+  button: {
+    backgroundColor: '#188aed',
+    width: '100%',
+  },
+});
 
 export default LoginPage;

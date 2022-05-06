@@ -28,6 +28,9 @@ export class User {
 
   @Field(() => Date)
   updatedAt: Date;
+
+  @Field(() => Boolean)
+  isValidated: boolean;
 }
 
 @InputType()

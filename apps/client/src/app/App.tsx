@@ -1,8 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { HomePage, LoginPage } from '@carpool/client/pages';
-// import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
+import { HomePage, LoginPage, OnboardPage } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
@@ -11,25 +10,36 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 export type RootStackParamList = {
   Home;
   Login;
+  Onboard;
 };
 
-// const Stack = createNativeStackNavigator<RootStackParamList>();
-
 const Tab = createBottomTabNavigator<RootStackParamList>();
+
+const navTheme = DefaultTheme;
+navTheme.colors.background = '#fff';
 
 export const App = () => {
   return (
     <NativeBaseProvider>
       <Provider store={store}>
-        <NavigationContainer>
+        <NavigationContainer theme={navTheme}>
           <Tab.Navigator
-            initialRouteName="Home"
+            initialRouteName="Onboard"
             screenOptions={{
               headerShown: false,
             }}
           >
             <Tab.Screen name="Home" component={HomePage} />
-            <Tab.Screen name="Login" component={LoginPage} />
+            <Tab.Screen
+              name="Login"
+              component={LoginPage}
+              options={{ tabBarStyle: { display: 'none' } }}
+            />
+            <Tab.Screen
+              name="Onboard"
+              component={OnboardPage}
+              options={{ tabBarStyle: { display: 'none' } }}
+            />
           </Tab.Navigator>
         </NavigationContainer>
       </Provider>

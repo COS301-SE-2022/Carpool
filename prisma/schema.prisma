@@ -10,17 +10,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id          String @id @default(cuid())
-  name        String
-  surname     String
-  email       String @unique
-  password    String
-  university  String
-  studentNumber String @map("student_number")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @default(now()) @map("updated_at")
-  isValidated Boolean @default(false)
+////////////////////////////////
+//1.User
+////////////////////////////////
 
-  @@map("user")
+model User {
+    id          String @id @default(cuid())
+    name        String 
+    surname     String
+    idNumber    Int @unique @map("id_number")
+    university  String
+    password    String
+    studentNumber String @unique @map("student_number")
+    email       String @unique
+    profilePic  String @map("profile_pic") 
+    isDriver    Boolean
+    createdAt   DateTime @default(now()) @map("created_at")
+    updatedAt   DateTime @default(now()) @map("updated_at")
+    isValidated Boolean @default(false)
+
+    byReviews   Reviews[] @relation("by_review")
+    forReviews  Reviews[] @relation("for_review")
+    bankDetails BankingDetails? @relation("bank_details")
+    trips       Trips[] @relation("user_trips")
+    driver      Driver? @relation("driver_id")
+    userTrips   Trips[] @relation("trip_booking") 
+
+    @@map("user")
+}
+
+////////////////////////////////
+//2.Banking Details
+////////////////////////////////
+
+model BankingDetails {
+    userID      String @map("user_id")
+    bankAccount Int @unique @id @map("bank_account")
+    expireDate  DateTime @map("expire_date")
+    branch      String
+    bank        String
+    user        User @relation(name:"bank_details", fields:[userID], references: [id])
+    
+    @@map("banking_details")
+}
+
+////////////////////////////////
+//3.Trips
+////////////////////////////////
+
+model Trips {
+    tripID      String @id @default(cuid()) @map("trip_id")
+    userID      String @map("user_id") 
+    tripDate    DateTime @map("trip_date")
+    seatsAvailable Int @map("seats_available")
+    price       Float
+    startLocation String @map("start_location")
+    destination String
+    category    String
+    status      String 
+
+    user        User @relation(name:"user_trips", fields:[userID], references: [id])
+    passengers  User[] @relation("trip_booking")
+    
+    @@map("trips")
+}
+
+////////////////////////////////
+//4.Reviews
+////////////////////////////////
+
+model Reviews{
+    byID        String 
+    forID       String
+    role        Role
+    comment     String
+    rating      Int
+
+    byUser      User @relation(name:"by_review", fields:[byID], references: [id])
+    forUser     User @relation(name:"for_review", fields:[forID], references: [id])
+
+    @@id([byID,forID])
+    @@map("reviews")
+}
+
+////////////////////////////////
+//5. Driver 
+////////////////////////////////
+
+model Driver {
+    userID      String @id @map("user_id")
+    license     String 
+    licensePlate String @map("license_plate")
+    model       String
+    carPicture  String @map("car_picture")
+    driver      User @relation(name: "driver_id", fields: [userID], references: [id])
+    
+    @@map("driver")
+}
+
+//Roles for Reviews
+enum Role {
+    DRIVER
+    PASSENGER
 }

@@ -1,7 +1,12 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { HomePage, LoginPage, OnboardPage } from '@carpool/client/pages';
+import {
+  HomePage,
+  LoginPage,
+  OnboardPage,
+  SignUpPage,
+} from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
@@ -11,6 +16,7 @@ export type RootStackParamList = {
   Home;
   Login;
   Onboard;
+  SignUp;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -29,17 +35,22 @@ export const App = () => {
               headerShown: false,
             }}
           >
-            <Tab.Screen name="Home" component={HomePage} />
+            <Tab.Screen
+              name="Onboard"
+              component={OnboardPage}
+              options={{ tabBarStyle: { display: 'none' } }}
+            />
             <Tab.Screen
               name="Login"
               component={LoginPage}
               options={{ tabBarStyle: { display: 'none' } }}
             />
             <Tab.Screen
-              name="Onboard"
-              component={OnboardPage}
+              name="SignUp"
+              component={SignUpPage}
               options={{ tabBarStyle: { display: 'none' } }}
             />
+            <Tab.Screen name="Home" component={HomePage} />
           </Tab.Navigator>
         </NavigationContainer>
       </Provider>

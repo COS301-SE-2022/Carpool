@@ -7,6 +7,7 @@ type RootStackParamList = {
   Home: undefined;
   Login: undefined;
   Onboard: undefined;
+  SignUp: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Onboard'>;
@@ -79,7 +80,7 @@ export function OnboardPage({ navigation }: Props) {
           </View>
           <Button
             title="Sign Up"
-            onPress={() => navigation.navigate('Login')}
+            onPress={() => navigation.navigate('SignUp')}
           />
         </View>
       </View>

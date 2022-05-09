@@ -4,7 +4,12 @@ import { AppDispatch, login, RootStore } from '@carpool/client/store';
 import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { Button, Input, PasswordInput } from '@carpool/client/components';
+import {
+  Button,
+  Input,
+  PasswordInput,
+  InlineInputs,
+} from '@carpool/client/components';
 
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
 
@@ -15,13 +20,18 @@ type RootStackParamList = {
   SignUp: undefined;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
-export function LoginPage({ navigation }: Props) {
+export function SignUpPage({ navigation }: Props) {
   const dispatch: AppDispatch = useDispatch();
 
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
+  const [university, setUniversity] = useState('');
+  const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
@@ -32,14 +42,60 @@ export function LoginPage({ navigation }: Props) {
     }
   }, [user, navigation]);
 
+  const checkPassword = () => {
+    if (password === passwordConfirm) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const checkEmailFormat = () => {
+    const domain = email.split('@')[1];
+
+    const validDomains = [
+      'myuct.co.za',
+      'sun.ac.za',
+      'tuks.co.za',
+      'students.wits.ac.za',
+      'stu.ukzn.ac.za',
+      'myuwc.ac.za',
+      'campus.ru.ac.za',
+      'student.uj.ac',
+      'student.g.nwu.ac.za',
+      'ufs4life.ac.za',
+      'mandela.ac.za',
+      'dut4life.ac.za',
+      'unizulu.ac.za',
+      'student.monash.edu',
+      'edu.vut.ac.za',
+      'stud.cut.ac.za',
+      'mywsu.ac.za',
+      'keyaka.ul.ac.za',
+      'tut4life.ac.za',
+    ];
+
+    if (validDomains.includes(domain)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const submitHandler = () => {
-    dispatch(login({ email, password }));
+    if (!checkPassword()) {
+      alert('Passwords do not match');
+    } else if (!checkEmailFormat()) {
+      alert('Invalid email format');
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
-        <View style={{ display: 'flex', flex: 3 }}>
+        <View style={{ display: 'flex', flex: 2 }}>
           <Icon
             name="arrow-left"
             size={30}
@@ -62,7 +118,7 @@ export function LoginPage({ navigation }: Props) {
         </View>
         <View style={{ display: 'flex', flex: 5 }}>
           <Text style={{ textAlign: 'left', fontSize: 24, fontWeight: '700' }}>
-            Login
+            Sign Up
           </Text>
           <Text
             style={{
@@ -72,22 +128,51 @@ export function LoginPage({ navigation }: Props) {
               color: '#808080',
               marginTop: 8,
               marginBottom: 18,
+              lineHeight: 20,
             }}
           >
-            Login to book or offer a ride.
+            Sign up to explore the great features Carpool has to offer!
           </Text>
+          <InlineInputs
+            onChangeTextOne={setName}
+            onChangeTextTwo={setSurname}
+            inputOneValue={name}
+            inputTwoValue={surname}
+            inputOnePlaceholder="Name"
+            inputTwoPlaceholder="Surname"
+            iconName="user"
+          />
           <Input
-            inputPlaceholder="Email Address"
             onChangeText={setEmail}
-            iconName="mail"
             inputValue={email}
+            inputPlaceholder="Email Address"
+            iconName="mail"
+          />
+          <Input
+            onChangeText={setUniversity}
+            inputValue={university}
+            inputPlaceholder="University"
+            iconName="mail"
+          />
+          <Input
+            onChangeText={setStudentNumber}
+            inputValue={studentNumber}
+            inputPlaceholder="Student Number"
+            iconName="mail"
           />
           <PasswordInput
-            inputPlaceholder="Password"
             onChangeText={setPassword}
+            inputValue={password}
+            inputPlaceholder="Password"
             iconOneName="lock"
             iconTwoName="eye-off"
-            inputValue={password}
+          />
+          <PasswordInput
+            onChangeText={setPasswordConfirm}
+            inputValue={passwordConfirm}
+            inputPlaceholder="Confirm Password"
+            iconOneName="lock"
+            iconTwoName="eye-off"
           />
         </View>
         <View
@@ -108,15 +193,15 @@ export function LoginPage({ navigation }: Props) {
               marginBottom: 10,
             }}
           >
-            <Text style={{ color: '#808080' }}>Don't have an account?</Text>
+            <Text style={{ color: '#808080' }}>Already have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.navigate('SignUp')}
+              onPress={() => navigation.navigate('Login')}
             >
-              &nbsp;Sign up
+              &nbsp;Login
             </Text>
           </View>
-          <Button title="Login" onPress={submitHandler} />
+          <Button title="Sign Up" onPress={submitHandler} />
         </View>
       </View>
     </SafeAreaView>
@@ -125,7 +210,6 @@ export function LoginPage({ navigation }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    // alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
   },
@@ -145,25 +229,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: '700',
   },
-  input: {
-    height: 40,
-    marginVertical: 8,
-    padding: 8,
-    paddingLeft: 5,
-    borderBottomColor: '#808080',
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    flex: 10,
-  },
-  passwordInput: {
-    height: 40,
-    paddingLeft: 5,
-    flex: 10,
-  },
   button: {
     backgroundColor: '#188aed',
     width: '100%',
   },
 });
 
-export default LoginPage;
+export default SignUpPage;

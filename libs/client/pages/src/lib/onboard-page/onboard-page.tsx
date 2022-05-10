@@ -4,7 +4,6 @@ import { Button } from '@carpool/client/components';
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
 
 type RootStackParamList = {
-  Home: undefined;
   Login: undefined;
   Onboard: undefined;
   SignUp: undefined;
@@ -73,15 +72,9 @@ export function OnboardPage({ navigation }: Props) {
           }}
         >
           <View style={{ marginVertical: 20 }}>
-            <Button
-              title="Login"
-              onPress={() => navigation.navigate('Login')}
-            />
+            <Button title="Login" onPress={() => navigation.push('Login')} />
           </View>
-          <Button
-            title="Sign Up"
-            onPress={() => navigation.navigate('SignUp')}
-          />
+          <Button title="Sign Up" onPress={() => navigation.push('SignUp')} />
         </View>
       </View>
     </SafeAreaView>

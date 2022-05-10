@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, login, RootStore } from '@carpool/client/store';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, login } from '@carpool/client/store';
 import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -9,7 +9,6 @@ import { Button, Input, PasswordInput } from '@carpool/client/components';
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
 
 type RootStackParamList = {
-  Home: undefined;
   Login: undefined;
   Onboard: undefined;
   SignUp: undefined;
@@ -23,15 +22,6 @@ export function LoginPage({ navigation }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
-
-  useEffect(() => {
-    if (user && user.name) {
-      navigation.navigate('Home');
-    }
-  }, [user, navigation]);
-
   const submitHandler = () => {
     dispatch(login({ email, password }));
   };
@@ -44,7 +34,7 @@ export function LoginPage({ navigation }: Props) {
             name="arrow-left"
             size={30}
             style={{ color: '#808080' }}
-            onPress={() => navigation.navigate('Onboard')}
+            onPress={() => navigation.goBack()}
           />
           <View
             style={{
@@ -79,7 +69,7 @@ export function LoginPage({ navigation }: Props) {
           <Input
             inputPlaceholder="Email Address"
             onChangeText={setEmail}
-            iconName="mail"
+            iconName="email"
             inputValue={email}
           />
           <PasswordInput
@@ -111,7 +101,7 @@ export function LoginPage({ navigation }: Props) {
             <Text style={{ color: '#808080' }}>Don't have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.navigate('SignUp')}
+              onPress={() => navigation.push('SignUp')}
             >
               &nbsp;Sign up
             </Text>

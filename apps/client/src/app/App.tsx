@@ -11,13 +11,6 @@ import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useSelector } from 'react-redux';
-import { RootStore } from '@carpool/client/store';
-import { useEffect } from 'react';
-
-export type AuthParamList = {
-  Home;
-};
 
 export type RootStackParamList = {
   Home;
@@ -27,21 +20,11 @@ export type RootStackParamList = {
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-const AuthTab = createBottomTabNavigator<AuthParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
 
 export const App = () => {
-  const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
-
-  useEffect(() => {
-    if (user && user.name) {
-      console.log('user logged in');
-    }
-  }, [user]);
-
   return (
     <NativeBaseProvider>
       <Provider store={store}>

@@ -1,3 +1,4 @@
+import { Booking, Trip } from '@carpool/api/trips/api/shared';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 
 @ObjectType()
@@ -37,6 +38,12 @@ export class User {
 
   @Field(() => Boolean)
   isValidated: boolean;
+
+  @Field(() => [Trip])
+  tripsCreated: Trip[];
+
+  @Field(() => [Booking])
+  bookings: Booking[];
 }
 
 @ObjectType()

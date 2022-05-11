@@ -18,23 +18,22 @@ model User {
     id          String @id @default(cuid())
     name        String
     surname     String
-    // idNumber    Int @unique @map("id_number")
     email       String @unique
     password    String
     university  String
     studentNumber String @unique @map("student_number")
-    profilePic  String @map("profile_pic")
+    profilePic  String @map("profile_pic") @default("placeholder.png")
     isDriver    Boolean @default(false)
     createdAt   DateTime @default(now()) @map("created_at")
     updatedAt   DateTime @default(now()) @map("updated_at")
     isValidated Boolean @default(false)
 
-    byReviews   Reviews[] @relation("by_review")
-    forReviews  Reviews[] @relation("for_review")
+    byReviews   Review[] @relation("by_review")
+    forReviews  Review[] @relation("for_review")
     bankDetails BankingDetails? @relation("bank_details")
-    trips       Trips[] @relation("user_trips")
+    tripsCreated       Trip[]
     driver      Driver? @relation("driver_id")
-    userTrips   Trips[] @relation("trip_booking")
+    bookings    Booking[]
 
     @@map("user")
 }
@@ -44,12 +43,12 @@ model User {
 ////////////////////////////////
 
 model BankingDetails {
-    userID      String @map("user_id")
+    userId      String @map("user_id")
     bankAccount Int @unique @id @map("bank_account")
     expireDate  DateTime @map("expire_date")
     branch      String
     bank        String
-    user        User @relation(name:"bank_details", fields:[userID], references: [id])
+    user        User @relation(name:"bank_details", fields:[userId], references: [id])
 
     @@map("banking_details")
 }
@@ -58,9 +57,9 @@ model BankingDetails {
 //3.Trips
 ////////////////////////////////
 
-model Trips {
-    tripID      String @id @default(cuid()) @map("trip_id")
-    userID      String @map("user_id")
+model Trip {
+    tripId      String @id @default(cuid()) @map("trip_id")
+    driverId      String @map("user_id")
     tripDate    DateTime @map("trip_date")
     seatsAvailable Int @map("seats_available")
     price       Float
@@ -69,27 +68,40 @@ model Trips {
     category    String
     status      String
 
-    user        User @relation(name:"user_trips", fields:[userID], references: [id])
-    passengers  User[] @relation("trip_booking")
+    driver        User @relation(fields:[driverId], references: [id])
+    passengers    Booking[]
 
     @@map("trips")
+}
+
+model Booking {
+  bookingId      String @id @default(cuid()) @map("booking_id")
+  userId         String @map("user_id")
+  tripId         String @map("trip_id")
+  bookingDate    DateTime @map("booking_date")
+  seatsBooked    Int @map("seats_booked")
+  status         String
+  price          Float
+
+  user           User @relation(fields:[userId], references: [id])
+  trip           Trip @relation(fields:[tripId], references: [tripId])
 }
 
 ////////////////////////////////
 //4.Reviews
 ////////////////////////////////
 
-model Reviews{
-    byID        String
-    forID       String
+model Review {
+    byId        String
+    forId       String
     role        Role
     comment     String
     rating      Int
 
-    byUser      User @relation(name:"by_review", fields:[byID], references: [id])
-    forUser     User @relation(name:"for_review", fields:[forID], references: [id])
+    byUser      User @relation(name:"by_review", fields:[byId], references: [id])
+    forUser     User @relation(name:"for_review", fields:[forId], references: [id])
 
-    @@id([byID,forID])
+    @@id([byId,forId])
     @@map("reviews")
 }
 
@@ -98,12 +110,13 @@ model Reviews{
 ////////////////////////////////
 
 model Driver {
-    userID      String @id @map("user_id")
+    userId      String @id @map("user_id")
+    idNumber    String @unique @map("id_number")
     license     String
     licensePlate String @map("license_plate")
     model       String
     carPicture  String @map("car_picture")
-    driver      User @relation(name: "driver_id", fields: [userID], references: [id])
+    user      User @relation(name: "driver_id", fields: [userId], references: [id])
 
     @@map("driver")
 }

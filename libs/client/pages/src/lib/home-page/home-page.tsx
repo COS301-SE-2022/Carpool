@@ -5,6 +5,7 @@ import { Center, Box, Heading, HStack, Text, Pressable } from 'native-base';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 import { Button } from '@carpool/client/components';
 import * as SecureStore from 'expo-secure-store';
+import { TextInput } from 'react-native';
 
 export function HomePage({ navigation }: HomeProps) {
   const userState = useSelector((state: RootStore) => state.user);
@@ -20,17 +21,20 @@ export function HomePage({ navigation }: HomeProps) {
     <Box safeAreaTop>
       <Center w="100%">
         <HStack
-          px="1"
-          py="3"
+          mt="3"
+          px="3"
+          py="2"
           justifyContent="center"
           alignItems="center"
-          w="100%"
+          borderColor={'#188aed'}
+          borderWidth={1}
+          borderRadius={100}
         >
           <HStack alignItems="center">
             <Pressable
               px="3"
               py="1"
-              backgroundColor={selected === 0 ? 'black' : 'transparent'}
+              backgroundColor={selected === 0 ? '#188aed' : 'transparent'}
               borderRadius="full"
               onPress={() => setSelected(0)}
             >
@@ -49,7 +53,7 @@ export function HomePage({ navigation }: HomeProps) {
             <Pressable
               px="3"
               py="1"
-              backgroundColor={selected === 1 ? 'black' : 'transparent'}
+              backgroundColor={selected === 1 ? '#188aed' : 'transparent'}
               borderRadius="full"
               onPress={() => setSelected(1)}
             >
@@ -66,8 +70,16 @@ export function HomePage({ navigation }: HomeProps) {
           </HStack>
         </HStack>
       </Center>
-      <Center w="100%">
-        <Box p="2" py="8" w="90%" maxW="290">
+      <Center w="100%" mt="10">
+        {/* add search bar */}
+        <HStack px="1" py="1" w="80%" borderColor={'#188aed'} borderWidth={1} borderRadius={100}>
+          {/* Add location image */}
+          {/* <Box px="1" py="1" w="10%" borderColor={'#188aed'} borderWidth={1} borderRadius={100}>
+            <Text>📍</Text>
+          </Box> */}
+          <TextInput placeholder='Select your destination'/>
+        </HStack>
+        <Box  p="2" py="8" w="90%" maxW="290">
           <Heading
             size="lg"
             fontWeight="600"
@@ -76,7 +88,8 @@ export function HomePage({ navigation }: HomeProps) {
               color: 'warmGray.50',
             }}
           >
-            Welcome {user && user.email}
+            Carpool 
+            {/* {user && user.email} */}
           </Heading>
           <Button onPress={logoutHandler} title="Logout" />
         </Box>

@@ -20,7 +20,7 @@ export function UserTypeInput(props: UserTypeInputProps) {
           borderWidth={1}
           borderRadius={100}
         >
-          <HStack alignItems="center">
+          <HStack>
             <Pressable
               px="3"
               py="1"
@@ -34,12 +34,12 @@ export function UserTypeInput(props: UserTypeInputProps) {
                   fontSize="13"
                   fontWeight="medium"
                 >
-                  Driving
+                  Passenger
                 </Text>
               </Center>
             </Pressable>
           </HStack>
-          <HStack>
+          <HStack alignItems="center">
             <Pressable
               px="3"
               py="1"
@@ -53,11 +53,12 @@ export function UserTypeInput(props: UserTypeInputProps) {
                   fontSize="13"
                   fontWeight="medium"
                 >
-                  Passenger
+                  Driving
                 </Text>
               </Center>
             </Pressable>
           </HStack>
+
         </HStack>
       </Center>
   );

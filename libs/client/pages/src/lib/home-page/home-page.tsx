@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { Center, Box, Heading, HStack, Text, Pressable } from 'native-base';
 import { HomeProps } from '../NavigationTypes/navigation-types';
+import { Button } from '@carpool/client/components';
+import * as SecureStore from 'expo-secure-store';
 
 export function HomePage({ navigation }: HomeProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
   const [selected, setSelected] = useState(0);
+
+  const logoutHandler = () => {
+    SecureStore.deleteItemAsync('user');
+  };
 
   return (
     <Box safeAreaTop>
@@ -72,6 +78,7 @@ export function HomePage({ navigation }: HomeProps) {
           >
             Welcome {user && user.email}
           </Heading>
+          <Button onPress={logoutHandler} title="Logout" />
         </Box>
       </Center>
     </Box>

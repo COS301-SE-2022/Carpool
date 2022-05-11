@@ -3,7 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, login, RootStore } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
 import { Button, Input, PasswordInput } from '@carpool/client/components';
-import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+  Alert,
+} from 'react-native';
 import { LoginProps } from '../NavigationTypes/navigation-types';
 
 export function LoginPage({ navigation }: LoginProps) {
@@ -13,10 +21,10 @@ export function LoginPage({ navigation }: LoginProps) {
   const [password, setPassword] = useState('');
 
   const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
+  const { user, status, error } = userState;
 
   const submitHandler = () => {
-    if (user && user.token !== '') {
+    if (user && user.token && !user.verificationCode) {
       navigation.navigate('ConfirmEmail');
     } else {
       dispatch(login({ email, password }));
@@ -63,25 +71,31 @@ export function LoginPage({ navigation }: LoginProps) {
           >
             Login to book or offer a ride.
           </Text>
-          <Input
-            inputPlaceholder="Email Address"
-            onChangeText={setEmail}
-            iconName="email"
-            inputValue={email}
-          />
-          <PasswordInput
-            inputPlaceholder="Password"
-            onChangeText={setPassword}
-            iconOneName="lock"
-            iconTwoName="eye-off"
-            inputValue={password}
-          />
-          <Text
-            style={{ color: '#188aed', textAlign: 'right' }}
-            onPress={() => navigation.push('ForgotPassword')}
-          >
-            Forgot Password?
-          </Text>
+          {status === 'loading' ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <Input
+                inputPlaceholder="Email Address"
+                onChangeText={setEmail}
+                iconName="email"
+                inputValue={email}
+              />
+              <PasswordInput
+                inputPlaceholder="Password"
+                onChangeText={setPassword}
+                iconOneName="lock"
+                iconTwoName="eye-off"
+                inputValue={password}
+              />
+              <Text
+                style={{ color: '#188aed', textAlign: 'right' }}
+                onPress={() => navigation.push('ForgotPassword')}
+              >
+                Forgot Password?
+              </Text>
+            </>
+          )}
         </View>
         <View
           style={{
@@ -156,6 +170,15 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#188aed',
     width: '100%',
+  },
+  containerNew: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
   },
 });
 

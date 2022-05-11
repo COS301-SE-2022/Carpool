@@ -12,8 +12,13 @@ import { Button } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
 import { KeyboardAvoidingView } from 'native-base';
 import { ConfirmEmailProps } from '../NavigationTypes/navigation-types';
+import { useSelector } from 'react-redux';
+import { RootStore } from '@carpool/client/store';
 
 export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
+
   const [first, setFirst] = useState('');
   const [second, setSecond] = useState('');
   const [third, setThird] = useState('');
@@ -111,7 +116,7 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                   paddingVertical: 15,
                   paddingHorizontal: 10,
                   textAlign: 'center',
-                  marginHorizontal: 10,
+                  marginHorizontal: 5,
                 }}
                 placeholderTextColor="#808080"
                 autoCapitalize="none"
@@ -131,7 +136,7 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                   paddingVertical: 15,
                   paddingHorizontal: 10,
                   textAlign: 'center',
-                  marginHorizontal: 10,
+                  marginHorizontal: 5,
                 }}
                 placeholderTextColor="#808080"
                 autoCapitalize="none"
@@ -149,7 +154,7 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                   paddingVertical: 15,
                   paddingHorizontal: 10,
                   textAlign: 'center',
-                  marginHorizontal: 10,
+                  marginHorizontal: 5,
                 }}
                 placeholderTextColor="#808080"
                 autoCapitalize="none"
@@ -167,7 +172,43 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                   paddingHorizontal: 10,
                   textAlign: 'center',
                   paddingVertical: 15,
-                  marginHorizontal: 10,
+                  marginHorizontal: 5,
+                }}
+                placeholderTextColor="#808080"
+                autoCapitalize="none"
+              />
+              <TextInput
+                value={fourth}
+                placeholder=""
+                onChangeText={setFourth}
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: '#808080',
+                  fontSize: 20,
+                  borderRadius: 8,
+                  paddingHorizontal: 10,
+                  textAlign: 'center',
+                  paddingVertical: 15,
+                  marginHorizontal: 5,
+                }}
+                placeholderTextColor="#808080"
+                autoCapitalize="none"
+              />
+              <TextInput
+                value={fourth}
+                placeholder=""
+                onChangeText={setFourth}
+                style={{
+                  flex: 1,
+                  borderWidth: 1,
+                  borderColor: '#808080',
+                  fontSize: 20,
+                  borderRadius: 8,
+                  paddingHorizontal: 10,
+                  textAlign: 'center',
+                  paddingVertical: 15,
+                  marginHorizontal: 5,
                 }}
                 placeholderTextColor="#808080"
                 autoCapitalize="none"

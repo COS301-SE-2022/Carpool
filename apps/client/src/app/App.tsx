@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import {
   HomePage,
@@ -17,6 +17,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { fetchStorage } from '@carpool/client/store';
 
 export type RootStackParamList = {
   Home;
@@ -37,13 +38,15 @@ const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
 
+store.dispatch(fetchStorage());
+
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
   return (
     <NavigationContainer theme={navTheme}>
-      {user && user.token !== '' ? (
+      {user && user.token ? (
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{

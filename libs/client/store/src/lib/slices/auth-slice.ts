@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../types/auth-types';
-import { login, register } from '../actions/auth-actions';
+import { login, register, fetchStorage } from '../actions/auth-actions';
 
 export const initialState = {
   user: null,
@@ -31,7 +31,11 @@ export const userLoginSlice = createSlice({
         if (state.status === 'loading') {
           console.log('FAIL');
           state.status = 'idle';
-          // state.error = action.error;
+        }
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
         }
       })
       .addCase(register.pending, (state, action) => {
@@ -51,6 +55,27 @@ export const userLoginSlice = createSlice({
         if (state.status === 'loading') {
           console.log('FAIL');
           state.status = 'idle';
+          // state.error = action.error;
+        }
+      })
+      .addCase(fetchStorage.rejected, (state, action) => {
+        if (state.status === 'loading') {
+          console.log('FAIL');
+          state.status = 'idle';
+          // state.error = action.error;
+        }
+      })
+      .addCase(fetchStorage.fulfilled, (state, action) => {
+        if (state.status === 'loading') {
+          console.log('SUCCESS');
+          state.status = 'idle';
+          state.user = action.payload;
+        }
+      })
+      .addCase(fetchStorage.pending, (state, action) => {
+        if (state.status === 'idle') {
+          console.log('IDLE');
+          state.status = 'loading';
           // state.error = action.error;
         }
       });

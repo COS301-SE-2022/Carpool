@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, register } from '@carpool/client/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, register, RootStore } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {
@@ -73,6 +73,7 @@ export function SignUpPage({ navigation }: SignupProps) {
       dispatch(
         register({ name, surname, email, password, university, studentNumber })
       );
+
       navigation.navigate('ConfirmEmail');
     }
   };

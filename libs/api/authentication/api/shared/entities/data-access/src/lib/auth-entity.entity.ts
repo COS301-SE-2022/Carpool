@@ -56,6 +56,12 @@ export class UserLogin {
 
   @Field()
   token: string;
+
+  @Field()
+  verificationCode: string;
+
+  @Field(() => Date)
+  expires: Date;
 }
 
 @InputType()

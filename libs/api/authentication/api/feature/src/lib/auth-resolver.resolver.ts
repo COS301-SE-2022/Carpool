@@ -17,7 +17,6 @@ export class AuthResolver {
       const user = new UserLogin();
       user.id = userObj.id;
       user.email = userObj.email;
-      user.token = '';
 
       if (userObj.isValidated) {
         user.token = 'generate';
@@ -65,7 +64,11 @@ export class AuthResolver {
       const user = new UserLogin();
       user.id = userObj.id;
       user.email = userObj.email;
-      user.token = '';
+      user.verificationCode = `${Math.floor(100000 + Math.random() * 900000)}`;
+
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      user.expires = date;
 
       return user;
     } else {

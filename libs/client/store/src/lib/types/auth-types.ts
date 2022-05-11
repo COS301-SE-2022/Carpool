@@ -7,7 +7,9 @@ export type UserState = {
 export type User = {
   id: string;
   email: string;
-  token: string;
+  token?: string;
+  verificationCode?: string;
+  expires?: string;
 };
 
 export type Error = {

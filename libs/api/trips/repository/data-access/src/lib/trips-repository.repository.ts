@@ -32,6 +32,8 @@ export class TripsRepository {
 
   // async create(trips: TripsInput): Promise<Trips> {}
 
+  // async bookTrip(tripId: string, passengerId: string) : Promise<Trip | null>
+
   // async update(id: string, trips: TripsUpdate): Promise<Trips> {}
 
   // async delete(id: string): Promise<Trips> {}

@@ -13,7 +13,8 @@ export const USER_REGISTER = `
       register(name: $name, surname: $surname, email: $email, university: $university, studentNumber: $studentNumber, password: $password) {
         id
         email
-        token
+        verificationCode
+        expires
       }
   }
 `;

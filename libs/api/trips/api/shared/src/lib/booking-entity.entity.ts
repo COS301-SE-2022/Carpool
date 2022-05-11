@@ -1,6 +1,6 @@
 import { ObjectType, ID, Field, Int, Float } from '@nestjs/graphql';
-import { User } from '@carpool/api/authentication/entities';
 import { Trip } from './trip-entity.entity';
+import { User } from '@carpool/api/authentication/entities';
 
 @ObjectType()
 export class Booking {
@@ -24,9 +24,6 @@ export class Booking {
 
   @Field(() => Float)
   price: number;
-
-  @Field(() => User)
-  user: User;
 
   @Field(() => Trip)
   trip: Trip;

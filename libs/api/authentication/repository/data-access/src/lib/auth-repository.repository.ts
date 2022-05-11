@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { User } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { UserInput } from '@carpool/api/authentication/entities';
 @Injectable()
 export class AuthRepository {
@@ -18,16 +18,16 @@ export class AuthRepository {
       },
     });
 
-    if (user) {
-      // const isValidPassword = bcrypt.compareSync(password, user.password);
-      const isValidPassword = user.password === password;
+    if (user && user.isValidated) {
+      const isValidPassword = await bcrypt.compare(password, user.password);
+      // const isValidPassword = user.password === password;
 
       if (isValidPassword) {
         return user;
       }
     } else if (!user) {
       throw new NotFoundException(`User with email ${email} does not exist`);
-    } else {
+    } else if (!user.isValidated) {
       throw new UnauthorizedException(
         `The email address ${email} has not been validated`
       );
@@ -35,9 +35,6 @@ export class AuthRepository {
   }
 
   async register(user: UserInput): Promise<User | null> {
-    const salt = bcrypt.genSaltSync(10);
-    const hashedPassword = bcrypt.hashSync(user.password, salt);
-
     const userExist = await this.prisma.user.findUnique({
       where: {
         email: user.email,
@@ -47,6 +44,9 @@ export class AuthRepository {
     if (userExist) {
       throw new Error(`User with email ${user.email} already exists`);
     } else {
+      const salt = await bcrypt.genSalt();
+      const hashedPassword = await bcrypt.hash(user.password, salt);
+
       return this.prisma.user.create({
         data: {
           name: user.name,

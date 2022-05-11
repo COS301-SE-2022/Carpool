@@ -1,0 +1,11 @@
+---
+name: CI Full Tests
+on: 
+  push:
+    branches: [ main ]
+
+jobs:
+  test-all:
+    uses: ./.github/workflows/nxtest.yml
+    with:
+      test: 'all'

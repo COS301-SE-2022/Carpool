@@ -40,6 +40,8 @@ Thumbs.db
 
 # React Native
 
+.env
+
 # Xcode
 #
 build/

@@ -32,6 +32,7 @@ export type AuthStackParamList = {
   ForgotPassword;
   ConfirmEmail;
   ResetPassword;
+  Home;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -66,6 +67,7 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <AuthStack.Screen name="Home" component={HomePage} />
           <AuthStack.Screen name="Onboard" component={OnboardPage} />
           <AuthStack.Screen name="Login" component={LoginPage} />
           <AuthStack.Screen name="SignUp" component={SignUpPage} />

@@ -10,11 +10,21 @@ import {
   InlineInputs,
 } from '@carpool/client/components';
 
-import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import {
+  Text,
+  SafeAreaView,
+  View,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import { SignupProps } from '../NavigationTypes/navigation-types';
 
 export function SignUpPage({ navigation }: SignupProps) {
   const dispatch: AppDispatch = useDispatch();
+
+  const userState = useSelector((state: RootStore) => state.user);
+  const { status } = userState;
 
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
@@ -119,47 +129,53 @@ export function SignUpPage({ navigation }: SignupProps) {
           >
             Sign up to explore the great features Carpool has to offer!
           </Text>
-          <InlineInputs
-            onChangeTextOne={setName}
-            onChangeTextTwo={setSurname}
-            inputOneValue={name}
-            inputTwoValue={surname}
-            inputOnePlaceholder="Name"
-            inputTwoPlaceholder="Surname"
-            iconName="account"
-          />
-          <Input
-            onChangeText={setEmail}
-            inputValue={email}
-            inputPlaceholder="Email Address"
-            iconName="email"
-          />
-          <Input
-            onChangeText={setUniversity}
-            inputValue={university}
-            inputPlaceholder="University"
-            iconName="school"
-          />
-          <Input
-            onChangeText={setStudentNumber}
-            inputValue={studentNumber}
-            inputPlaceholder="Student Number"
-            iconName="card-account-details"
-          />
-          <PasswordInput
-            onChangeText={setPassword}
-            inputValue={password}
-            inputPlaceholder="Password"
-            iconOneName="lock"
-            iconTwoName="eye-off"
-          />
-          <PasswordInput
-            onChangeText={setPasswordConfirm}
-            inputValue={passwordConfirm}
-            inputPlaceholder="Confirm Password"
-            iconOneName="lock"
-            iconTwoName="eye-off"
-          />
+          {status === 'loading' ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <InlineInputs
+                onChangeTextOne={setName}
+                onChangeTextTwo={setSurname}
+                inputOneValue={name}
+                inputTwoValue={surname}
+                inputOnePlaceholder="Name"
+                inputTwoPlaceholder="Surname"
+                iconName="account"
+              />
+              <Input
+                onChangeText={setEmail}
+                inputValue={email}
+                inputPlaceholder="Email Address"
+                iconName="email"
+              />
+              <Input
+                onChangeText={setUniversity}
+                inputValue={university}
+                inputPlaceholder="University"
+                iconName="school"
+              />
+              <Input
+                onChangeText={setStudentNumber}
+                inputValue={studentNumber}
+                inputPlaceholder="Student Number"
+                iconName="card-account-details"
+              />
+              <PasswordInput
+                onChangeText={setPassword}
+                inputValue={password}
+                inputPlaceholder="Password"
+                iconOneName="lock"
+                iconTwoName="eye-off"
+              />
+              <PasswordInput
+                onChangeText={setPasswordConfirm}
+                inputValue={passwordConfirm}
+                inputPlaceholder="Confirm Password"
+                iconOneName="lock"
+                iconTwoName="eye-off"
+              />
+            </>
+          )}
         </View>
         <View
           style={{

@@ -6,12 +6,14 @@ import {
   UserRegisterCommand,
   UserVerifyCommand,
 } from './commands/auth-command.command';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly queryBus: QueryBus,
-    private commandBus: CommandBus
+    private commandBus: CommandBus,
+    private readonly mailerService: MailerService
   ) {}
 
   async login(email: string, password: string): Promise<User | null> {
@@ -40,5 +42,16 @@ export class AuthService {
 
   async verifyEmail(id: string): Promise<boolean> {
     return await this.commandBus.execute(new UserVerifyCommand(id));
+  }
+
+  async sendVerificationEmail(email: string, code: string): Promise<void> {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Greeting from NestJS NodeMailer',
+      template: '/confirm_email',
+      context: {
+        code: code,
+      },
+    });
   }
 }

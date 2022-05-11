@@ -38,7 +38,7 @@ export function LoginPage({ navigation }: LoginProps) {
   }, [error]);
 
   const submitHandler = () => {
-    if (user && !user.token && user.verificationCode && status !== 'success') {
+    if (user && !user.token && status !== 'success') {
       navigation.navigate('ConfirmEmail');
     } else {
       dispatch(login({ email, password }));

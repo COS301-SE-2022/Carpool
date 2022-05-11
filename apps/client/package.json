@@ -23,6 +23,7 @@
     "react-native-vector-icons": "*",
     "react-redux": "*",
     "redux": "*",
-    "graphql": "*"
+    "graphql": "*",
+    "react-native-toast-message": "*"
   }
 }

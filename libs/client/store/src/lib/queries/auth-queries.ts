@@ -20,9 +20,6 @@ export const USER_REGISTER = `
 
 export const VERIFY_EMAIL = `
   mutation ($id: String!) {
-      verifyEmail(id: $id) {
-        id
-        token
-      }
+    verifyEmail(id: $id)
   }
 `;

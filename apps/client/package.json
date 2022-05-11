@@ -22,6 +22,7 @@
     "react-native-svg": "*",
     "react-native-vector-icons": "*",
     "react-redux": "*",
-    "redux": "*"
+    "redux": "*",
+    "graphql": "*"
   }
 }

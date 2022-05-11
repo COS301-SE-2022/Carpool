@@ -11,6 +11,7 @@ export class AuthResolver {
     @Args('email') email: string,
     @Args('password') password: string
   ): Promise<UserLogin | null> {
+    console.log(email);
     const userObj = await this.authService.login(email, password);
 
     if (userObj) {
@@ -74,5 +75,10 @@ export class AuthResolver {
     } else {
       throw new Error('Something went wrong!');
     }
+  }
+
+  @Mutation(() => UserLogin)
+  async verifyEmail(@Args('id') id: string): Promise<boolean> {
+    return await this.authService.verifyEmail(id);
   }
 }

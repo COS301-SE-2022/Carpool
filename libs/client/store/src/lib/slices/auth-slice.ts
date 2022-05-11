@@ -1,6 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { UserState } from '../types/auth-types';
-import { login, register, fetchStorage } from '../actions/auth-actions';
+import {
+  login,
+  register,
+  fetchStorage,
+  verifyEmail,
+} from '../actions/auth-actions';
 
 export const initialState = {
   user: null,
@@ -76,6 +81,27 @@ export const userLoginSlice = createSlice({
         if (state.status === 'idle') {
           console.log('IDLE');
           state.status = 'loading';
+          // state.error = action.error;
+        }
+      })
+      .addCase(verifyEmail.pending, (state, action) => {
+        if (state.status === 'idle') {
+          console.log('IDLE');
+          state.status = 'loading';
+          // state.error = action.error;
+        }
+      })
+      .addCase(verifyEmail.fulfilled, (state, action) => {
+        if (state.status === 'loading') {
+          console.log('SUCCESS');
+          state.status = 'success';
+          // state.user = action.payload;
+        }
+      })
+      .addCase(verifyEmail.rejected, (state, action) => {
+        if (state.status === 'loading') {
+          console.log('FAIL');
+          state.status = 'idle';
           // state.error = action.error;
         }
       });

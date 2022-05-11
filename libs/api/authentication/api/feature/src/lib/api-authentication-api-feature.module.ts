@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { AuthRepository } from '@carpool/api/authentication/repository';
-import { AuthService } from '@carpool/api/authentication/service';
+import {
+  AuthService,
+  UserVerifyHandler,
+} from '@carpool/api/authentication/service';
 import { AuthResolver } from './auth-resolver.resolver';
 import {
   UserLoginHandler,
@@ -17,6 +20,7 @@ import { PrismaService } from '@carpool/api/prisma';
     PrismaService,
     UserLoginHandler,
     UserRegisterHandler,
+    UserVerifyHandler,
     AuthRepository,
   ],
 })

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import {
   HomePage,
@@ -18,6 +18,8 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
+import Toast from 'react-native-toast-message';
+import * as SecureStore from 'expo-secure-store';
 
 export type RootStackParamList = {
   Home;
@@ -43,6 +45,8 @@ store.dispatch(fetchStorage());
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
+
+  // SecureStore.deleteItemAsync('user');
 
   return (
     <NavigationContainer theme={navTheme}>
@@ -85,6 +89,7 @@ export const App = () => {
     <NativeBaseProvider>
       <Provider store={store}>
         <AppWrapper />
+        <Toast />
       </Provider>
     </NativeBaseProvider>
   );

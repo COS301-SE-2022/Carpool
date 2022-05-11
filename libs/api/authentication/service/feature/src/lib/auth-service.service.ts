@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { User } from '@carpool/api/authentication/entities';
 import { UserLoginQuery } from './queries/auth-query.query';
-import { UserRegisterCommand } from './commands/auth-command.command';
+import {
+  UserRegisterCommand,
+  UserVerifyCommand,
+} from './commands/auth-command.command';
 
 @Injectable()
 export class AuthService {
@@ -19,19 +22,23 @@ export class AuthService {
     name: string,
     surname: string,
     email: string,
-    password: string,
     university: string,
-    studentNumber: string
+    studentNumber: string,
+    password: string
   ): Promise<User | null> {
     return await this.commandBus.execute(
       new UserRegisterCommand(
         name,
         surname,
         email,
-        password,
         university,
-        studentNumber
+        studentNumber,
+        password
       )
     );
+  }
+
+  async verifyEmail(id: string): Promise<boolean> {
+    return await this.commandBus.execute(new UserVerifyCommand(id));
   }
 }

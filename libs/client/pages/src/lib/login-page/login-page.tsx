@@ -1,23 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, login, RootStore } from '@carpool/client/store';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import Icon from 'react-native-vector-icons/Feather';
-
 import { Button, Input, PasswordInput } from '@carpool/client/components';
-
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import { LoginProps } from '../NavigationTypes/navigation-types';
 
-type RootStackParamList = {
-  Home: undefined;
-  Login: undefined;
-  Onboard: undefined;
-  SignUp: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
-
-export function LoginPage({ navigation }: Props) {
+export function LoginPage({ navigation }: LoginProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -26,14 +15,12 @@ export function LoginPage({ navigation }: Props) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
-  useEffect(() => {
-    if (user && user.name) {
-      navigation.navigate('Home');
-    }
-  }, [user, navigation]);
-
   const submitHandler = () => {
-    dispatch(login({ email, password }));
+    if (user && user.token !== '') {
+      navigation.navigate('ConfirmEmail');
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
 
   return (
@@ -44,7 +31,7 @@ export function LoginPage({ navigation }: Props) {
             name="arrow-left"
             size={30}
             style={{ color: '#808080' }}
-            onPress={() => navigation.navigate('Onboard')}
+            onPress={() => navigation.goBack()}
           />
           <View
             style={{
@@ -55,7 +42,7 @@ export function LoginPage({ navigation }: Props) {
             }}
           >
             <Image
-              source={require('./title.png')}
+              source={require('../assets/title.png')}
               style={{ resizeMode: 'cover' }}
             />
           </View>
@@ -79,7 +66,7 @@ export function LoginPage({ navigation }: Props) {
           <Input
             inputPlaceholder="Email Address"
             onChangeText={setEmail}
-            iconName="mail"
+            iconName="email"
             inputValue={email}
           />
           <PasswordInput
@@ -89,6 +76,12 @@ export function LoginPage({ navigation }: Props) {
             iconTwoName="eye-off"
             inputValue={password}
           />
+          <Text
+            style={{ color: '#188aed', textAlign: 'right' }}
+            onPress={() => navigation.push('ForgotPassword')}
+          >
+            Forgot Password?
+          </Text>
         </View>
         <View
           style={{
@@ -111,7 +104,7 @@ export function LoginPage({ navigation }: Props) {
             <Text style={{ color: '#808080' }}>Don't have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.navigate('SignUp')}
+              onPress={() => navigation.push('SignUp')}
             >
               &nbsp;Sign up
             </Text>

@@ -1,9 +1,10 @@
+/* eslint-disable-next-line */
 import React from 'react';
+import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
 import { Button } from '@carpool/client/components';
-import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
-import { OnboardProps } from '../NavigationTypes/navigation-types';
+import { ResetPasswordProps } from '../NavigationTypes/navigation-types';
 
-export function OnboardPage({ navigation }: OnboardProps) {
+export function ResetPasswordPage({ navigation }: ResetPasswordProps) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
@@ -116,4 +117,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnboardPage;
+export default ResetPasswordPage;

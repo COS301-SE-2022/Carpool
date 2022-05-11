@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, login, RootStore } from '@carpool/client/store';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, register } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {
@@ -12,17 +11,9 @@ import {
 } from '@carpool/client/components';
 
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import { SignupProps } from '../NavigationTypes/navigation-types';
 
-type RootStackParamList = {
-  Home: undefined;
-  Login: undefined;
-  Onboard: undefined;
-  SignUp: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
-
-export function SignUpPage({ navigation }: Props) {
+export function SignUpPage({ navigation }: SignupProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -32,15 +23,6 @@ export function SignUpPage({ navigation }: Props) {
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
-
-  const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
-
-  useEffect(() => {
-    if (user && user.name) {
-      navigation.navigate('Home');
-    }
-  }, [user, navigation]);
 
   const checkPassword = () => {
     if (password === passwordConfirm) {
@@ -88,7 +70,10 @@ export function SignUpPage({ navigation }: Props) {
     } else if (!checkEmailFormat()) {
       alert('Invalid email format');
     } else {
-      dispatch(login({ email, password }));
+      dispatch(
+        register({ name, surname, email, password, university, studentNumber })
+      );
+      navigation.navigate('ConfirmEmail');
     }
   };
 
@@ -100,7 +85,7 @@ export function SignUpPage({ navigation }: Props) {
             name="arrow-left"
             size={30}
             style={{ color: '#808080' }}
-            onPress={() => navigation.navigate('Onboard')}
+            onPress={() => navigation.goBack()}
           />
           <View
             style={{
@@ -111,7 +96,7 @@ export function SignUpPage({ navigation }: Props) {
             }}
           >
             <Image
-              source={require('./title.png')}
+              source={require('../assets/title.png')}
               style={{ resizeMode: 'cover' }}
             />
           </View>
@@ -140,25 +125,25 @@ export function SignUpPage({ navigation }: Props) {
             inputTwoValue={surname}
             inputOnePlaceholder="Name"
             inputTwoPlaceholder="Surname"
-            iconName="user"
+            iconName="account"
           />
           <Input
             onChangeText={setEmail}
             inputValue={email}
             inputPlaceholder="Email Address"
-            iconName="mail"
+            iconName="email"
           />
           <Input
             onChangeText={setUniversity}
             inputValue={university}
             inputPlaceholder="University"
-            iconName="mail"
+            iconName="school"
           />
           <Input
             onChangeText={setStudentNumber}
             inputValue={studentNumber}
             inputPlaceholder="Student Number"
-            iconName="mail"
+            iconName="card-account-details"
           />
           <PasswordInput
             onChangeText={setPassword}
@@ -196,7 +181,7 @@ export function SignUpPage({ navigation }: Props) {
             <Text style={{ color: '#808080' }}>Already have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.navigate('Login')}
+              onPress={() => navigation.push('Login')}
             >
               &nbsp;Login
             </Text>

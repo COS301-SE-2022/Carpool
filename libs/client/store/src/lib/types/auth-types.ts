@@ -6,11 +6,8 @@ export type UserState = {
 
 export type User = {
   id: string;
-  name: string;
-  surname: string;
   email: string;
-  university: string;
-  studentNumber: string;
+  token: string;
 };
 
 export type Error = {

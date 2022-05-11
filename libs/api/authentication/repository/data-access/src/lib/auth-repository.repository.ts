@@ -18,16 +18,8 @@ export class AuthRepository {
       },
     });
 
-    console.log(user);
-
     if (user && user.isValidated) {
       const isValidPassword = await bcrypt.compare(password, user.password);
-      // const isValidPassword = user.password === password;
-
-      console.log('After password check');
-      console.log(`DB Password ${user.password}`);
-      console.log(`Entered Password ${password}`);
-      console.log(`Validation ${isValidPassword}`);
 
       if (isValidPassword) {
         return user;

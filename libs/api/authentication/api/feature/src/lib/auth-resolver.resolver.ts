@@ -11,7 +11,6 @@ export class AuthResolver {
     @Args('email') email: string,
     @Args('password') password: string
   ): Promise<UserLogin | null> {
-    console.log(email);
     const userObj = await this.authService.login(email, password);
 
     if (userObj) {
@@ -31,18 +30,6 @@ export class AuthResolver {
     }
   }
 
-  // signup
-  // enter details
-  // validate email format -> frontend
-  // check if email already exists
-  // create user in DB with isValidated == false
-  // set user in redux -> frontend
-  // set user in localstorage -> frontend
-  // set empty token
-  // send confirmation code
-  // direct to confirm email page -> frontend
-  // if entered correctly -> set isValidated to true
-  // update user in DB with isValidated == true
   @Mutation(() => UserLogin)
   async register(
     @Args('name') name: string,
@@ -71,13 +58,22 @@ export class AuthResolver {
       date.setDate(date.getDate() + 1);
       user.expires = date;
 
+      console.log('before email');
+
+      await this.authService.sendVerificationEmail(
+        user.email,
+        user.verificationCode
+      );
+
+      console.log('after email');
+
       return user;
     } else {
       throw new Error('Something went wrong!');
     }
   }
 
-  @Mutation(() => UserLogin)
+  @Mutation(() => Boolean)
   async verifyEmail(@Args('id') id: string): Promise<boolean> {
     return await this.authService.verifyEmail(id);
   }

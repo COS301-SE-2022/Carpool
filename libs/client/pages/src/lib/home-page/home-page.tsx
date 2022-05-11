@@ -76,7 +76,7 @@ export function HomePage({ navigation }: HomeProps) {
               color: 'warmGray.50',
             }}
           >
-            Welcome {user && user.email}
+            Welcome
           </Heading>
           <Button onPress={logoutHandler} title="Logout" />
         </Box>

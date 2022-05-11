@@ -100,13 +100,19 @@ export const verifyEmail = createAsyncThunk(
   async (verify: Verify) => {
     const storedCode = await SecureStore.getItemAsync('user');
 
+    console.log(storedCode);
+    console.log(verify.code);
+
     if (storedCode && JSON.parse(storedCode).verificationCode === verify.code) {
+      console.log('before query');
       const response = await axios.post('http://localhost:3333/graphql', {
         query: VERIFY_EMAIL,
         variables: {
           id: verify.id,
         },
       });
+
+      console.log('after query');
 
       console.log('VERIFYING');
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, login, RootStore } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,9 +10,9 @@ import {
   StyleSheet,
   Image,
   ActivityIndicator,
-  Alert,
 } from 'react-native';
 import { LoginProps } from '../NavigationTypes/navigation-types';
+import Toast from 'react-native-toast-message';
 
 export function LoginPage({ navigation }: LoginProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -23,8 +23,22 @@ export function LoginPage({ navigation }: LoginProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user, status, error } = userState;
 
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: message,
+    });
+  };
+
+  useEffect(() => {
+    if (error) {
+      showToast(error.message);
+    }
+  }, [error]);
+
   const submitHandler = () => {
-    if (user && user.token && !user.verificationCode) {
+    if (user && !user.token && user.verificationCode && status !== 'success') {
       navigation.navigate('ConfirmEmail');
     } else {
       dispatch(login({ email, password }));

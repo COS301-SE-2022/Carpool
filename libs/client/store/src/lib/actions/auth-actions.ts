@@ -1,9 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { USER_LOGIN, USER_REGISTER } from '../queries/auth-queries';
+import {
+  USER_LOGIN,
+  USER_REGISTER,
+  VERIFY_EMAIL,
+} from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
 import { User } from '@carpool/client/store';
-import { responsePathAsArray } from 'graphql';
 
 export type Error = {
   message: string;
@@ -18,9 +21,14 @@ export type UserRegister = {
   name: string;
   surname: string;
   email: string;
-  password: string;
   university: string;
   studentNumber: string;
+  password: string;
+};
+
+export type Verify = {
+  id: string;
+  code: string;
 };
 
 export const fetchStorage = createAsyncThunk('store/initialise', async () => {
@@ -55,6 +63,7 @@ export const login = createAsyncThunk<User, UserLogin, { rejectValue: Error }>(
 
     const res = response.data.data.login;
 
+    SecureStore.deleteItemAsync('user');
     SecureStore.setItemAsync('user', JSON.stringify(res));
 
     return res;
@@ -70,9 +79,9 @@ export const register = createAsyncThunk(
         name: user.name,
         surname: user.surname,
         email: user.email,
-        password: user.password,
         university: user.university,
         studentNumber: user.studentNumber,
+        password: user.password,
       },
     });
 
@@ -83,5 +92,33 @@ export const register = createAsyncThunk(
     SecureStore.setItemAsync('user', JSON.stringify(res));
 
     return res;
+  }
+);
+
+export const verifyEmail = createAsyncThunk(
+  'users/verify',
+  async (verify: Verify) => {
+    const storedCode = await SecureStore.getItemAsync('user');
+
+    if (storedCode && JSON.parse(storedCode).verificationCode === verify.code) {
+      const response = await axios.post('http://localhost:3333/graphql', {
+        query: VERIFY_EMAIL,
+        variables: {
+          id: verify.id,
+        },
+      });
+
+      console.log('VERIFYING');
+
+      console.log(response);
+
+      const res = response.data.data.verifyEmail;
+
+      console.log(res);
+
+      // SecureStore.setItemAsync('user', JSON.stringify(res));
+
+      return res;
+    }
   }
 );

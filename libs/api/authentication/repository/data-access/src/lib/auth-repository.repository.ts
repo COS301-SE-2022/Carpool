@@ -18,9 +18,16 @@ export class AuthRepository {
       },
     });
 
+    console.log(user);
+
     if (user && user.isValidated) {
       const isValidPassword = await bcrypt.compare(password, user.password);
       // const isValidPassword = user.password === password;
+
+      console.log('After password check');
+      console.log(`DB Password ${user.password}`);
+      console.log(`Entered Password ${password}`);
+      console.log(`Validation ${isValidPassword}`);
 
       if (isValidPassword) {
         return user;
@@ -28,9 +35,7 @@ export class AuthRepository {
     } else if (!user) {
       throw new NotFoundException(`User with email ${email} does not exist`);
     } else if (!user.isValidated) {
-      throw new UnauthorizedException(
-        `The email address ${email} has not been validated`
-      );
+      throw new UnauthorizedException(`Email address has not been validated`);
     }
   }
 
@@ -52,12 +57,29 @@ export class AuthRepository {
           name: user.name,
           surname: user.surname,
           email: user.email,
-          password: hashedPassword,
           university: user.university,
           studentNumber: user.studentNumber,
+          password: hashedPassword,
           profilePic: '',
         },
       });
+    }
+  }
+
+  async validateEmail(id: string): Promise<boolean> {
+    const user = await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        isValidated: true,
+      },
+    });
+
+    if (user) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

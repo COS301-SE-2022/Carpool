@@ -71,7 +71,7 @@ export function SignUpPage({ navigation }: SignupProps) {
       alert('Invalid email format');
     } else {
       dispatch(
-        register({ name, surname, email, password, university, studentNumber })
+        register({ name, surname, email, university, studentNumber, password })
       );
 
       navigation.navigate('ConfirmEmail');

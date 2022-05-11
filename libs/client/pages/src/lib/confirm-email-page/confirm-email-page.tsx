@@ -12,24 +12,32 @@ import { Button } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
 import { KeyboardAvoidingView } from 'native-base';
 import { ConfirmEmailProps } from '../NavigationTypes/navigation-types';
-import { useSelector } from 'react-redux';
-import { RootStore } from '@carpool/client/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStore, verifyEmail } from '@carpool/client/store';
+import { AppDispatch } from '@carpool/client/store';
 
 export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
+  const dispatch: AppDispatch = useDispatch();
+
   const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
+  const { user, status } = userState;
 
   const [first, setFirst] = useState('');
   const [second, setSecond] = useState('');
   const [third, setThird] = useState('');
   const [fourth, setFourth] = useState('');
+  const [fifth, setFifth] = useState('');
+  const [sixth, setSixth] = useState('');
 
   const submitHandler = () => {
-    if (first === '1' && second === '2' && third === '3' && fourth === '4') {
-      navigation.popToTop();
-      navigation.navigate('Login');
-    } else {
-      alert('Invalid code');
+    const code = `${first}${second}${third}${fourth}${fifth}${sixth}`;
+
+    if (user) {
+      dispatch(verifyEmail({ id: user.id, code }));
+
+      if (status === 'success') {
+        navigation.navigate('Login');
+      }
     }
   };
 
@@ -178,9 +186,9 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                 autoCapitalize="none"
               />
               <TextInput
-                value={fourth}
+                value={fifth}
                 placeholder=""
-                onChangeText={setFourth}
+                onChangeText={setFifth}
                 style={{
                   flex: 1,
                   borderWidth: 1,
@@ -196,9 +204,9 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
                 autoCapitalize="none"
               />
               <TextInput
-                value={fourth}
+                value={sixth}
                 placeholder=""
-                onChangeText={setFourth}
+                onChangeText={setSixth}
                 style={{
                   flex: 1,
                   borderWidth: 1,

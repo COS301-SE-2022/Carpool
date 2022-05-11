@@ -23,6 +23,12 @@ export class User {
   @Field()
   studentNumber: string;
 
+  @Field()
+  profilePic: string;
+
+  @Field(() => Boolean)
+  isDriver: boolean;
+
   @Field(() => Date)
   createdAt: Date;
 
@@ -31,6 +37,18 @@ export class User {
 
   @Field(() => Boolean)
   isValidated: boolean;
+}
+
+@ObjectType()
+export class UserLogin {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  token: string;
 }
 
 @InputType()

@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, login } from '@carpool/client/store';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, login, RootStore } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
-
 import { Button, Input, PasswordInput } from '@carpool/client/components';
-
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import { LoginProps } from '../NavigationTypes/navigation-types';
 
-type RootStackParamList = {
-  Login: undefined;
-  Onboard: undefined;
-  SignUp: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
-
-export function LoginPage({ navigation }: Props) {
+export function LoginPage({ navigation }: LoginProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
+
   const submitHandler = () => {
-    dispatch(login({ email, password }));
+    if (user && user.token !== '') {
+      navigation.navigate('ConfirmEmail');
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
 
   return (
@@ -45,7 +42,7 @@ export function LoginPage({ navigation }: Props) {
             }}
           >
             <Image
-              source={require('./title.png')}
+              source={require('../assets/title.png')}
               style={{ resizeMode: 'cover' }}
             />
           </View>
@@ -79,6 +76,12 @@ export function LoginPage({ navigation }: Props) {
             iconTwoName="eye-off"
             inputValue={password}
           />
+          <Text
+            style={{ color: '#188aed', textAlign: 'right' }}
+            onPress={() => navigation.push('ForgotPassword')}
+          >
+            Forgot Password?
+          </Text>
         </View>
         <View
           style={{

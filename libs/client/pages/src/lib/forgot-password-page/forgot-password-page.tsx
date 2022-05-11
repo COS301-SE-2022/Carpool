@@ -1,25 +1,36 @@
-import React from 'react';
-import { Button } from '@carpool/client/components';
-import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
-import { OnboardProps } from '../NavigationTypes/navigation-types';
+/* eslint-disable-next-line */
+import React, { useState } from 'react';
+import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
+import { Button, Input } from '@carpool/client/components';
+import Icon from 'react-native-vector-icons/Feather';
+import { ForgotPasswordProps } from '../NavigationTypes/navigation-types';
 
-export function OnboardPage({ navigation }: OnboardProps) {
+export function ForgotPasswordPage({ navigation }: ForgotPasswordProps) {
+  const [email, setEmail] = useState('');
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
-        <View
-          style={{
-            width: '100%',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 26,
-            flex: 1,
-          }}
-        >
-          <Image
-            source={require('../assets/title.png')}
-            style={{ resizeMode: 'cover' }}
+        <View style={{ display: 'flex', flex: 1 }}>
+          <Icon
+            name="arrow-left"
+            size={30}
+            style={{ color: '#808080' }}
+            onPress={() => navigation.goBack()}
           />
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 30,
+            }}
+          >
+            <Image
+              source={require('../assets/title.png')}
+              style={{ resizeMode: 'cover' }}
+            />
+          </View>
         </View>
         <View
           style={{
@@ -31,13 +42,13 @@ export function OnboardPage({ navigation }: OnboardProps) {
           }}
         >
           <Image
-            source={require('../assets/onboard.png')}
+            source={require('../assets/forgot_password.png')}
             style={{ resizeMode: 'cover' }}
           />
         </View>
         <View style={{ display: 'flex', flex: 2, justifyContent: 'center' }}>
           <Text style={{ textAlign: 'left', fontSize: 24, fontWeight: '700' }}>
-            Welcome to Carpool,
+            Forgot password?
           </Text>
           <Text
             style={{
@@ -47,12 +58,18 @@ export function OnboardPage({ navigation }: OnboardProps) {
               color: '#808080',
               marginTop: 8,
               marginBottom: 18,
-              lineHeight: 20,
+              lineHeight: 22,
             }}
           >
-            Book &amp; share rides with fellow students. Save money, time &amp;
-            meet new people. Click below to login or sign up!
+            No problem. It happens to all of us! Enter your registered email
+            address below to receive a password reset email.
           </Text>
+          <Input
+            inputPlaceholder="Email Address"
+            iconName="email"
+            onChangeText={setEmail}
+            inputValue={email}
+          />
         </View>
         <View
           style={{
@@ -63,10 +80,10 @@ export function OnboardPage({ navigation }: OnboardProps) {
             flexDirection: 'column',
           }}
         >
-          <View style={{ marginVertical: 20 }}>
-            <Button title="Login" onPress={() => navigation.push('Login')} />
-          </View>
-          <Button title="Sign Up" onPress={() => navigation.push('SignUp')} />
+          <Button
+            title="Reset Password"
+            onPress={() => navigation.push('Login')}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -116,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnboardPage;
+export default ForgotPasswordPage;

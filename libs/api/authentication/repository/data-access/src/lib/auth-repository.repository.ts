@@ -38,15 +38,26 @@ export class AuthRepository {
     const salt = bcrypt.genSaltSync(10);
     const hashedPassword = bcrypt.hashSync(user.password, salt);
 
-    return this.prisma.user.create({
-      data: {
-        name: user.name,
-        surname: user.surname,
+    const userExist = await this.prisma.user.findUnique({
+      where: {
         email: user.email,
-        password: hashedPassword,
-        university: user.university,
-        studentNumber: user.studentNumber,
       },
     });
+
+    if (userExist) {
+      throw new Error(`User with email ${user.email} already exists`);
+    } else {
+      return this.prisma.user.create({
+        data: {
+          name: user.name,
+          surname: user.surname,
+          email: user.email,
+          password: hashedPassword,
+          university: user.university,
+          studentNumber: user.studentNumber,
+          profilePic: '',
+        },
+      });
+    }
   }
 }

@@ -6,6 +6,9 @@ import {
   LoginPage,
   OnboardPage,
   SignUpPage,
+  ForgotPasswordPage,
+  ConfirmEmailPage,
+  ResetPasswordPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -20,13 +23,16 @@ export type RootStackParamList = {
 };
 
 export type AuthStackParamList = {
-  Login;
   Onboard;
+  Login;
   SignUp;
+  ForgotPassword;
+  ConfirmEmail;
+  ResetPassword;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-const AuthTab = createNativeStackNavigator<AuthStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
@@ -37,7 +43,7 @@ const AppWrapper = () => {
 
   return (
     <NavigationContainer theme={navTheme}>
-      {user && user.name ? (
+      {user && user.token !== '' ? (
         <Tab.Navigator
           initialRouteName="Home"
           screenOptions={{
@@ -47,16 +53,25 @@ const AppWrapper = () => {
           <Tab.Screen name="Home" component={HomePage} />
         </Tab.Navigator>
       ) : (
-        <AuthTab.Navigator
+        <AuthStack.Navigator
           initialRouteName="Onboard"
           screenOptions={{
             headerShown: false,
           }}
         >
-          <AuthTab.Screen name="Onboard" component={OnboardPage} />
-          <AuthTab.Screen name="Login" component={LoginPage} />
-          <AuthTab.Screen name="SignUp" component={SignUpPage} />
-        </AuthTab.Navigator>
+          <AuthStack.Screen name="Onboard" component={OnboardPage} />
+          <AuthStack.Screen name="Login" component={LoginPage} />
+          <AuthStack.Screen name="SignUp" component={SignUpPage} />
+          <AuthStack.Screen
+            name="ForgotPassword"
+            component={ForgotPasswordPage}
+          />
+          <AuthStack.Screen name="ConfirmEmail" component={ConfirmEmailPage} />
+          <AuthStack.Screen
+            name="ResetPassword"
+            component={ResetPasswordPage}
+          />
+        </AuthStack.Navigator>
       )}
     </NavigationContainer>
   );

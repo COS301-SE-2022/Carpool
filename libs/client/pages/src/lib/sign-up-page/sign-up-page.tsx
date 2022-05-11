@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { AppDispatch, login } from '@carpool/client/store';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
+import { AppDispatch, register } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {
@@ -12,16 +11,9 @@ import {
 } from '@carpool/client/components';
 
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
+import { SignupProps } from '../NavigationTypes/navigation-types';
 
-type RootStackParamList = {
-  Login: undefined;
-  Onboard: undefined;
-  SignUp: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
-
-export function SignUpPage({ navigation }: Props) {
+export function SignUpPage({ navigation }: SignupProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -78,7 +70,10 @@ export function SignUpPage({ navigation }: Props) {
     } else if (!checkEmailFormat()) {
       alert('Invalid email format');
     } else {
-      dispatch(login({ email, password }));
+      dispatch(
+        register({ name, surname, email, password, university, studentNumber })
+      );
+      navigation.navigate('ConfirmEmail');
     }
   };
 
@@ -101,7 +96,7 @@ export function SignUpPage({ navigation }: Props) {
             }}
           >
             <Image
-              source={require('./title.png')}
+              source={require('../assets/title.png')}
               style={{ resizeMode: 'cover' }}
             />
           </View>

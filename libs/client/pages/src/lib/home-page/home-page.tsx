@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
-import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { Center, Box, Heading, HStack, Text, Pressable } from 'native-base';
+import { HomeProps } from '../NavigationTypes/navigation-types';
 
-type RootStackParamList = {
-  Home: undefined;
-};
-
-type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
-export function HomePage({ navigation }: Props) {
+export function HomePage({ navigation }: HomeProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
@@ -76,7 +70,7 @@ export function HomePage({ navigation }: Props) {
               color: 'warmGray.50',
             }}
           >
-            Welcome {user && user.name}
+            Welcome {user && user.email}
           </Heading>
         </Box>
       </Center>

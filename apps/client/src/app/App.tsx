@@ -11,6 +11,7 @@ import {
   ResetPasswordPage,
   TripDetails,
   SearchPage,
+  SignOut,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -26,6 +27,8 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
   Home;
+  SignOut;
+  Login;
 };
 
 export type HomeStackParamList = {
@@ -97,6 +100,8 @@ const AppWrapper = () => {
           })}
         >
           <Tab.Screen name="Home" component={HomeStack} />
+          <Tab.Screen name="Login" component={LoginPage} />
+          <Tab.Screen name="SignOut" component={SignOut} />
         </Tab.Navigator>
       ) : (
         <AuthStack.Navigator

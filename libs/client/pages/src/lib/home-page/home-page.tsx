@@ -10,7 +10,6 @@ import {
   Input,
   TripCard,
 } from '@carpool/client/components';
-import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 import * as ReactDOM from 'react-dom';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -32,6 +31,29 @@ import { NumberInput, NumberInputField } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export function HomePage(this: any, { navigation }: HomeProps) {
+  //const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event: any, selectedDate: Date) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode: any) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   const dispatch: AppDispatch = useDispatch();
 
   const tripState = useSelector((state: RootStore) => state.trips);
@@ -59,8 +81,14 @@ export function HomePage(this: any, { navigation }: HomeProps) {
   };
 
   const datePicker = () => {
-    return <RNDateTimePicker mode="date" onChange={(() => setDate(date))} value={new Date()}/>;
-  }
+    return (
+      <RNDateTimePicker
+        mode="date"
+        onChange={() => setDate(date)}
+        value={new Date()}
+      />
+    );
+  };
 
   return (
     <SafeAreaView
@@ -248,11 +276,21 @@ export function HomePage(this: any, { navigation }: HomeProps) {
                   <Text style={styles.text}>Schedule</Text>
                 </View>
                 <View>
-                <Button onPress={(() => setDateDisplay(true))} title="Show date picker!" />
-                {dateDisplay ?(
-                  <RNDateTimePicker mode="date" onChange={(() => setDate(date))} value={new Date()}/>
-                ):(dateDisplay)}
+                  <Button onPress={showDatepicker} title="Date" />
                 </View>
+                <View>
+                  <Button onPress={showTimepicker} title="Time" />
+                </View>
+                <Text>selected: {date.toLocaleString()}</Text>
+                {show && (
+                  <RNDateTimePicker
+                    testID="dateTimePicker"
+                    value={date}
+                    mode={mode}
+                    is24Hour={true}
+                    onChange={onChange}
+                  />
+                )}
               </View>
               <View style={styles.inputContainer}>
                 <View style={[styles.flexCol, { flex: 1 }]}>
@@ -353,7 +391,5 @@ const styles = StyleSheet.create({
     width: 230,
   },
 });
-
-
 
 export default HomePage;

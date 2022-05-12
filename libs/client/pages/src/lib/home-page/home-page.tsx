@@ -62,11 +62,11 @@ export function HomePage({ navigation }: HomeProps) {
   const [search, setSearch] = useState(true);
 
   //setDate = (event, date) => {};
-  const [postStatus, setPostStatus] = useState('');
+
   const [seats, setSeats] = useState(0);
 
-  const [role, setRole] = useState(0);
-  const [dateDisplay, setDateDisplay] = useState(false);
+
+ 
 
   useEffect(() => {
     dispatch(listTrips());
@@ -298,7 +298,7 @@ export function HomePage({ navigation }: HomeProps) {
                   </Center>
 
                   <Center flex={1}>
-                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showDatepicker}>
+                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showTimepicker}>
                       <MaterialIcon
                         name='clock'
                         size={25}

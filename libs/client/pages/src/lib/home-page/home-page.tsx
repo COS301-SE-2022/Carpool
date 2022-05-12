@@ -84,7 +84,7 @@ export function HomePage({ navigation }: HomeProps) {
             </Text>
           </Pressable>
         </View> */}
-        <UserTypeInput/>
+        <UserTypeInput HomePageProps={HomeProps}/>
         <View style={{ paddingHorizontal: 30 }}>
           <View style={[styles.locationShow, { marginBottom: 15 }]}>
             <View

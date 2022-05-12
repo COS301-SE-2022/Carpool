@@ -1,4 +1,6 @@
 import { RootStore } from '@carpool/client/store';
+import { NavigationRouteContext } from '@react-navigation/native';
+import { HomeProps, PostTripsProps } from 'libs/client/pages/src/lib/NavigationTypes/navigation-types';
 import { Center, Box, Heading, HStack, Text, Pressable, Icon, Stack, Input } from 'native-base';
 
 import React, { useState } from 'react';
@@ -7,9 +9,8 @@ import { useSelector } from 'react-redux';
 
 
 /* eslint-disable-next-line */
-export interface UserTypeInputProps {}
 
-export function UserTypeInput(props: UserTypeInputProps) {
+export function UserTypeInput({navigation}: UserTypeInputProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
@@ -17,9 +18,13 @@ export function UserTypeInput(props: UserTypeInputProps) {
 
   const SelectedHandler = () => {
     if(selected===0){
-      return <Passenger/>;
+      //return <Passenger/>;
+      HomePageProps.navigation.navigate("Home");
+      //navigation.navigate('Home');
     }else{
-      return <Driver/>;
+      //return <Driver/>;
+      PostTripsProps.navigation.navigate("PostTrips");
+      //navigation.navigate('PostTrips');
     }
   }
 
@@ -65,7 +70,7 @@ export function UserTypeInput(props: UserTypeInputProps) {
               py="1"
               backgroundColor={selected === 0 ? '#188aed' : 'transparent'}
               borderRadius="full"
-              onPress={() => setSelected(0)}
+              onPress={() => SelectedHandler()}
             >
               <Center>
                 <Text
@@ -84,7 +89,7 @@ export function UserTypeInput(props: UserTypeInputProps) {
               py="1"
               backgroundColor={selected === 1 ? '#188aed' : 'transparent'}
               borderRadius="full"
-              onPress={() => setSelected(1)}
+              onPress={() => SelectedHandler()}
             >
               <Center>
                 <Text

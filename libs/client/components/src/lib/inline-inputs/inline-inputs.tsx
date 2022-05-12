@@ -1,8 +1,7 @@
 /* eslint-disable-next-line */
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import Icons from 'react-native-vector-icons/MaterialIcons';
-//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
   onChangeTextOne: (text: string) => void;
@@ -32,7 +31,7 @@ export function InlineInputs({
         alignItems: 'center',
       }}
     >
-      <Icons
+      <Icon
         name={iconName}
         size={22}
         style={{ flex: 1, color: '#808080', marginRight: 8 }}

@@ -11,6 +11,7 @@ import {
   ResetPasswordPage,
   TripDetails,
   PostTrips,
+  SearchPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -25,7 +26,12 @@ import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
-  //Home;
+  Home;
+};
+
+export type HomeStackParamList = {
+  HomeScreen;
+  Search;
   TripDetails;
   PostTrips;
 };
@@ -42,11 +48,29 @@ export type AuthStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
 
 store.dispatch(fetchStorage());
+
+const HomeStack = () => {
+  return (
+    <HomeStackNav.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HomeStackNav.Screen name="HomeScreen" component={HomePage} />
+      <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
+      <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <HomeStackNav.Screen name="Search" component={SearchPage} />
+      </HomeStackNav.Group>
+    </HomeStackNav.Navigator>
+  );
+};
 
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);

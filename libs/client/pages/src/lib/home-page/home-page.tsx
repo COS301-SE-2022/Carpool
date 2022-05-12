@@ -13,6 +13,7 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
+  TouchableOpacity,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 
@@ -23,23 +24,36 @@ export function HomePage({ navigation }: HomeProps) {
   const { trips, status } = tripState;
 
   const [selected, setSelected] = useState(false);
+  const [search, setSearch] = useState(true);
+
+  const [role, setRole] = useState(0);
 
   useEffect(() => {
     dispatch(listTrips());
   }, [trips, dispatch]);
 
   const viewTrip = (tripId: string) => {
-    navigation.navigate('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId });
+  };
+
+  const openSearch = () => {
+    navigation.push('Search');
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{
+        flex: 1,
+      }}
+    >
       <View
         style={{
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
           flex: 1,
+          paddingTop: 5,
+          margin: 5,
         }}
       >
         {/* <View
@@ -63,7 +77,10 @@ export function HomePage({ navigation }: HomeProps) {
             }}
           >
             <Text
-              style={{ color: !selected ? '#fff' : '#000', fontWeight: '600' }}
+              style={{
+                color: !selected ? '#fff' : '#000',
+                fontWeight: '600',
+              }}
             >
               Passenger
             </Text>
@@ -86,107 +103,120 @@ export function HomePage({ navigation }: HomeProps) {
         </View> */}
         <UserTypeInput HomePageProps={HomeProps}/>
         <View style={{ paddingHorizontal: 30 }}>
-          <View style={[styles.locationShow, { marginBottom: 15 }]}>
-            <View
-              style={[
-                styles.flexRow,
-                {
-                  alignSelf: 'flex-start',
-                  flex: 5,
-                  justifyContent: 'flex-start',
-                },
-              ]}
-            >
+          <TouchableOpacity onPress={openSearch}>
+            <View style={[styles.locationShow, { marginBottom: 15 }]}>
+              <View
+                style={[
+                  styles.flexRow,
+                  {
+                    alignSelf: 'flex-start',
+                    flex: 5,
+                    justifyContent: 'flex-start',
+                  },
+                ]}
+              >
+                <Icons
+                  style={[styles.text, { marginRight: 8 }]}
+                  name="location-on"
+                  size={25}
+                />
+                <Text
+                  style={[styles.text, { fontSize: 15, maxWidth: '75%' }]}
+                  numberOfLines={1}
+                >
+                  Location
+                </Text>
+              </View>
               <Icons
-                style={[styles.text, { marginRight: 8 }]}
-                name="location-on"
+                style={[styles.text, { marginRight: 8, color: '#188aed' }]}
+                name="my-location"
                 size={25}
               />
-              <Text
-                style={[styles.text, { fontSize: 15, maxWidth: '75%' }]}
-                numberOfLines={1}
-              >
-                Location
-              </Text>
             </View>
-            <Icons
-              style={[styles.text, { marginRight: 8, color: '#188aed' }]}
-              name="my-location"
-              size={25}
-            />
-          </View>
+          </TouchableOpacity>
         </View>
-        <View style={{ paddingHorizontal: 30 }}>
-          <Text style={{ fontWeight: '700', fontSize: 25 }}>Nearby</Text>
-        </View>
-        <ScrollView
-          style={{ paddingHorizontal: 30 }}
-          contentContainerStyle={{ flexGrow: 1 }}
-        >
-          <TripCard
-            tripId="1"
-            driver="Benjamin Osmers"
-            startLocation="Highveld"
-            destination="University of Pretoria, Hatfield Campus"
-            created="now"
-            image="./lighter_grey.png"
-            date="12 May 2022"
-            distance="1"
-            onPress={() => viewTrip('1')}
-          />
-          {status === 'loading' ? (
-            <ActivityIndicator size="large" />
-          ) : trips ? (
-            /* eslint-disable-next-line */
-            <>
-              {trips.map((trip) => (
-                <TripCard
-                  tripId={trip.tripId}
-                  driver={trip.driver}
-                  startLocation={trip.startLocation}
-                  destination={trip.destination}
-                  created="now"
-                  image="./lighter_grey.png"
-                  date={trip.date}
-                  distance={trip.distance}
-                  onPress={() => viewTrip(trip.tripId)}
-                />
-              ))}
-            </>
-          ) : (
-            <View
-              style={{
-                height: '90%',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+        {!selected ? (
+          <>
+            <View style={{ paddingHorizontal: 30 }}>
+              <Text style={{ fontWeight: '700', fontSize: 25 }}>Nearby</Text>
+            </View>
+            <ScrollView
+              style={{ paddingHorizontal: 30 }}
+              contentContainerStyle={{ flexGrow: 1 }}
             >
-              <Image source={require('./no_trips.png')} resizeMode="cover" />
-              <Text
-                style={{
-                  color: '#808080',
-                  fontSize: 18,
-                  fontWeight: '700',
-                  marginTop: 20,
-                }}
-              >
-                No trips found...
-              </Text>
-              <Text
-                style={{
-                  color: '#808080',
-                  fontSize: 18,
-                  fontWeight: '700',
-                  marginTop: 10,
-                }}
-              >
-                Try searching for your trip.
-              </Text>
-            </View>
-          )}
-        </ScrollView>
+              <TripCard
+                tripId="1"
+                driver="Benjamin Osmers"
+                startLocation="Highveld"
+                destination="University of Pretoria, Hatfield Campus"
+                created="now"
+                image="./lighter_grey.png"
+                date="12 May 2022"
+                distance="1"
+                onPress={() => viewTrip('1')}
+              />
+              {status === 'loading' ? (
+                <ActivityIndicator size="large" />
+              ) : trips ? (
+                /* eslint-disable-next-line */
+                <>
+                  {trips.map((trip) => (
+                    <TripCard
+                      tripId={trip.tripId}
+                      driver={trip.driver}
+                      startLocation={trip.startLocation}
+                      destination={trip.destination}
+                      created="now"
+                      image="./lighter_grey.png"
+                      date={trip.date}
+                      distance={trip.distance}
+                      onPress={() => viewTrip(trip.tripId)}
+                    />
+                  ))}
+                </>
+              ) : (
+                <View
+                  style={{
+                    height: '90%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Image
+                    source={require('./no_trips.png')}
+                    resizeMode="cover"
+                  />
+                  <Text
+                    style={{
+                      color: '#808080',
+                      fontSize: 18,
+                      fontWeight: '700',
+                      marginTop: 20,
+                    }}
+                  >
+                    No trips found...
+                  </Text>
+                  <Text
+                    style={{
+                      color: '#808080',
+                      fontSize: 18,
+                      fontWeight: '700',
+                      marginTop: 10,
+                    }}
+                  >
+                    Try searching for your trip.
+                  </Text>
+                </View>
+              )}
+            </ScrollView>
+          </>
+        ) : (
+          <View style={{ flexGrow: 1 }}>
+            <Text>Show driver screen</Text>
+          </View>
+        )}
       </View>
     </SafeAreaView>
   );

@@ -140,7 +140,7 @@ export function SignUpPage({ navigation }: SignupProps) {
                 inputTwoValue={surname}
                 inputOnePlaceholder="Name"
                 inputTwoPlaceholder="Surname"
-                iconName="account"
+                iconName="account-circle"
               />
               <Input
                 onChangeText={setEmail}

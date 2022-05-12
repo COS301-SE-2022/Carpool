@@ -1,5 +1,5 @@
 let nxPreset = require('@nrwl/jest/preset');
 nxPreset.transform = {
-  '^.+\\.(ts|js|html)$|@react-native|react-native': 'ts-jest',
+  '^.+\\.(ts|js|html)$|node_modules/(?!((jest-)?react-native(-.*)?|@react-native(-community)?)/)': 'ts-jest',
 };
 module.exports = { ...nxPreset };

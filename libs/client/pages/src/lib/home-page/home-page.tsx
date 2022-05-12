@@ -56,7 +56,7 @@ export function HomePage({ navigation }: HomeProps) {
           margin: 5,
         }}
       >
-        {/* <View
+        <View
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -100,7 +100,7 @@ export function HomePage({ navigation }: HomeProps) {
               Driver
             </Text>
           </Pressable>
-        </View> */}
+        </View>
         <View style={{ paddingHorizontal: 30 }}>
           <TouchableOpacity onPress={openSearch}>
             <View style={[styles.locationShow, { marginBottom: 15 }]}>

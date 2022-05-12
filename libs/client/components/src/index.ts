@@ -4,4 +4,3 @@ export * from './lib/input/input';
 export * from './lib/button/button';
 export * from './lib/trip-card/trip-card';
 export * from './lib/client-components';
-export * from './lib/user-type-input/user-type-input';

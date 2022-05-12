@@ -1,13 +1,52 @@
-import { Center, Box, Heading, HStack, Text, Pressable } from 'native-base';
+import { RootStore } from '@carpool/client/store';
+import { Center, Box, Heading, HStack, Text, Pressable, Icon, Stack, Input } from 'native-base';
 
 import React, { useState } from 'react';
+import { TextInput } from 'react-native';
+import { useSelector } from 'react-redux';
 
 
 /* eslint-disable-next-line */
 export interface UserTypeInputProps {}
 
 export function UserTypeInput(props: UserTypeInputProps) {
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
+
   const [selected, setSelected] = useState(0);
+
+  const SelectedHandler = () => {
+    if(selected===0){
+      return <Passenger/>;
+    }else{
+      return <Driver/>;
+    }
+  }
+
+  const Driver = () => {
+    return <Stack space={4} w="100%" alignItems="center">
+        <Input w={{
+        base: "75%",
+        md: "25%"
+      }} InputLeftElement={<Icon name="map-pin" size={5} color="muted.400" />} placeholder="Select your pickup" />
+        <Input w={{
+        base: "75%",
+        md: "25%"
+      }} InputLeftElement={<Icon name="navigation" size={5} color="muted.400" onPress={() => setShow(!show)} />} placeholder="Select your destination" />
+      </Stack>;
+  };
+
+  const Passenger = () => {
+    {/* add search bar */}
+    return <HStack px="1" py="1" w="80%" borderColor={'#188aed'} borderWidth={1} borderRadius={100}>
+    {/* Add location image */}
+    {/* <Box px="1" py="1" w="10%" borderColor={'#188aed'} borderWidth={1} borderRadius={100}>
+      <Text>📍</Text>
+    </Box> */}
+    <TextInput placeholder='Select your destination'/>
+    </HStack>
+  }
+
   return (
     <Center w="100%">
         <HStack
@@ -60,6 +99,7 @@ export function UserTypeInput(props: UserTypeInputProps) {
           </HStack>
 
         </HStack>
+        <SelectedHandler/>
       </Center>
   );
 }

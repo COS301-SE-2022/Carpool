@@ -38,12 +38,12 @@ export function LoginPage({ navigation }: LoginProps) {
   }, [error]);
 
   const submitHandler = () => {
-    navigation.navigate('Home');
-    // if (user && !user.token && status !== 'success') {
-    //   navigation.navigate('ConfirmEmail');
-    // } else {
-    //   dispatch(login({ email, password }));
-    // }
+    // navigation.navigate('Home');
+    if (user && !user.token && status !== 'success') {
+      navigation.navigate('ConfirmEmail');
+    } else {
+      dispatch(login({ email, password }));
+    }
   };
 
   return (

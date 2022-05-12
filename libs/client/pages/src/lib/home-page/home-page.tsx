@@ -26,7 +26,7 @@ import {
   TextInput,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
-import { Button, Center, Input, NumberInput, NumberInputField } from 'native-base';
+import { Button, Center, Input, NumberInput, NumberInputField, VStack } from 'native-base';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 export function HomePage({ navigation }: HomeProps) {
@@ -66,7 +66,7 @@ export function HomePage({ navigation }: HomeProps) {
   const [seats, setSeats] = useState(0);
 
 
- 
+
 
   useEffect(() => {
     dispatch(listTrips());
@@ -79,17 +79,6 @@ export function HomePage({ navigation }: HomeProps) {
   const openSearch = () => {
     navigation.push('Search');
   };
-
-  const datePicker = () => {
-    return (
-      <RNDateTimePicker
-        mode="date"
-        onChange={() => setDate(date)}
-        value={new Date()}
-      />
-    );
-  };
-
   return (
     <SafeAreaView
       style={{
@@ -263,7 +252,7 @@ export function HomePage({ navigation }: HomeProps) {
           </>
         ) : (
           <View style={{ flexGrow: 1 }}>
-            <View style={{ paddingHorizontal: 30 }}>
+            <VStack px={10} space={4}>
               {/* <InlineInputs onChangeTextOne={function (text: string): void {
                 throw new Error('Function not implemented.');
               }} onChangeTextTwo={function (text: string): void {
@@ -273,39 +262,32 @@ export function HomePage({ navigation }: HomeProps) {
               <View style={styles.inputContainer}>
                 <View style={[styles.flexCol, { flex: 1 }]}>
                   <Icon style={[styles.text]} name="clock" size={25} />
-                  <Text style={styles.text}>Schedule</Text>
+                  <Text style={styles.text}>Time</Text>
                 </View>
                 <View style={[styles.flexRow, { flex: 3 }]}>
 
+                  <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showDatepicker}>
+                    <MaterialIcon
+                      name='calendar'
+                      size={25}
+                      color='white'
+                    />
+                  </Button>
 
-                  {/* <View>
-                    <Button onPress={showDatepicker} >
-                      <Icon color={'white'} name="calendar" size={25} />
-                    </Button>
-                  </View> */}
-                  <Center flex={1}>
-                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showDatepicker}>
-                      <MaterialIcon
-                        name='calendar'
-                        size={25}
-                        color='white'
-                      />
-                    </Button>
-                  </Center>
                   <Center flex={1}>
                     <Text style={{ fontSize: 16 }}>{date.toLocaleDateString()}</Text>
-                    <Text style={{fontSize: 16}}>{date.toLocaleTimeString()}</Text>
+                    <Text style={{ fontSize: 16 }}>{date.toLocaleTimeString()}</Text>
                   </Center>
 
-                  <Center flex={1}>
-                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showTimepicker}>
-                      <MaterialIcon
-                        name='clock'
-                        size={25}
-                        color='white'
-                      />
-                    </Button>
-                  </Center>
+
+                  <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={showTimepicker}>
+                    <MaterialIcon
+                      name='clock'
+                      size={25}
+                      color='white'
+                    />
+                  </Button>
+
                   {/* <View>
                     <Button onPress={showTimepicker}>
                       <Icon color={'white'} name="clock" size={25} />
@@ -318,6 +300,7 @@ export function HomePage({ navigation }: HomeProps) {
                       mode={mode}
                       is24Hour={true}
                       onChange={onChange}
+                      // style={{ width: '100%' }}
                     />
                   )}
 
@@ -331,10 +314,10 @@ export function HomePage({ navigation }: HomeProps) {
                   <Text style={styles.text}>Trip Cost</Text>
                 </View>
 
-                <Input fontSize={18} flex={3.2} borderRadius={100} borderColor={'trueGray.400'} w={{
+                <Input fontSize={18} flex={3} borderRadius={100} borderColor={'trueGray.400'} w={{
                   base: "75%",
                   md: "25%"
-                }} InputLeftElement={<Text style={{ marginLeft: 10 }}>R</Text>} placeholder="200" />
+                }} InputLeftElement={<Text style={{ marginLeft: 10, fontSize: 16 }}>R</Text>} placeholder="200" />
 
               </View>
 
@@ -347,46 +330,35 @@ export function HomePage({ navigation }: HomeProps) {
                   />
                   <Text style={styles.text}>Seats</Text>
                 </View>
-                <View style={{ flex: 3.5, display: 'flex', flexDirection: 'row' }}>
-
-                  <Center flex={1}>
-                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={() => setSeats(seats - 1)}>
-                      <MaterialIcon
-                        name='minus'
-                        size={25}
-                        color='white'
-                      />
-                    </Button>
-                  </Center>
-
-                  <Input fontSize={20} textAlign={'center'} flex={1} borderRadius={100} borderColor={'trueGray.400'} value={`${seats}`} />
-                  <Center flex={1}>
-                    <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={() => setSeats(seats + 1)}>
-                      <MaterialIcon
-                        name='plus'
-                        size={25}
-                        color='white'
-                      />
-                    </Button>
-                  </Center>
+                <View style={{ flex: 3, display: 'flex', flexDirection: 'row' }}>
 
 
+                  <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={() => setSeats(seats - 1)}>
+                    <MaterialIcon
+                      name='minus'
+                      size={25}
+                      color='white'
+                    />
+                  </Button>
 
+                  <Input mx={5} fontSize={20} textAlign={'center'} flex={1} borderRadius={100} borderColor={'trueGray.400'} value={`${seats}`} />
+
+                  <Button bg={'#188aed'} w={50} variant="outline" borderRadius={100} onPress={() => setSeats(seats + 1)}>
+                    <MaterialIcon
+                      name='plus'
+                      size={25}
+                      color='white'
+                    />
+                  </Button>
                 </View>
 
-
-                <View style={{ height: 20 }}></View>
-
               </View>
 
-              <View style={{ height: 20 }}>
-              </View>
-
-              <Button backgroundColor={'#188aed'} h={50} borderRadius={100}>
+              <Button mt={10} backgroundColor={'#188aed'} h={50} borderRadius={100} onPress={() => navigation.navigate('DriverHome')}>
                 <Text style={{ fontSize: 22, color: 'white' }}>Submit</Text>
               </Button>
 
-            </View>
+            </VStack>
           </View>
         )}
       </View>

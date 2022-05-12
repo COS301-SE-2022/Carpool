@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 import * as SecureStore from 'expo-secure-store';
-import { TripCard } from '@carpool/client/components';
+import { TripCard, UserTypeInput } from '@carpool/client/components';
 import {
   View,
   SafeAreaView,
@@ -42,7 +42,7 @@ export function HomePage({ navigation }: HomeProps) {
           flex: 1,
         }}
       >
-        <View
+        {/* <View
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -83,7 +83,8 @@ export function HomePage({ navigation }: HomeProps) {
               Driver
             </Text>
           </Pressable>
-        </View>
+        </View> */}
+        <UserTypeInput/>
         <View style={{ paddingHorizontal: 30 }}>
           <View style={[styles.locationShow, { marginBottom: 15 }]}>
             <View

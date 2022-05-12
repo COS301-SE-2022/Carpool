@@ -99,7 +99,6 @@ export function UserTypeInput(props: UserTypeInputProps) {
           </HStack>
 
         </HStack>
-        <SelectedHandler/>
       </Center>
   );
 }

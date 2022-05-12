@@ -1,9 +1,8 @@
 /* eslint-disable-next-line */
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-//import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-//import Icons from 'react-native-vector-icons/MaterialIcons';
+// import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 type cardProps = {
   tripId: string;
@@ -77,7 +76,7 @@ export function TripCard({
                 },
               ]}
             >
-              <Icons
+              <Icon
                 style={[styles.text, { marginRight: 8 }]}
                 name="location-on"
                 size={25}
@@ -89,7 +88,7 @@ export function TripCard({
                 {startLocation}
               </Text>
             </View>
-            <Icons
+            <Icon
               style={[styles.text, { marginRight: 8, color: '#188aed' }]}
               name="my-location"
               size={25}
@@ -106,7 +105,7 @@ export function TripCard({
                 },
               ]}
             >
-              <Icons
+              <Icon
                 style={[styles.text, { marginRight: 8 }]}
                 name="location-on"
                 size={25}
@@ -118,7 +117,7 @@ export function TripCard({
                 {destination}
               </Text>
             </View>
-            <Icons
+            <Icon
               style={[styles.text, { marginRight: 8, color: '#188aed' }]}
               name="location-searching"
               size={25}

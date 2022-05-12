@@ -10,7 +10,9 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   TripDetails,
+  PostTrips,
   SearchPage,
+  DriverHome,
   SignOut,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
@@ -22,7 +24,8 @@ import { RootStore } from '@carpool/client/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
-import * as SecureStore from 'expo-secure-store';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
+//import * as SecureStore from 'expo-secure-store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
@@ -35,15 +38,18 @@ export type HomeStackParamList = {
   HomeScreen;
   Search;
   TripDetails;
+  PostTrips;
 };
 
 export type AuthStackParamList = {
+  Home;
   Onboard;
   Login;
   SignUp;
   ForgotPassword;
   ConfirmEmail;
   ResetPassword;
+  DriverHome;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -110,6 +116,13 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <AuthStack.Screen name="PostTrips" component={PostTrips} />
+          <AuthStack.Screen name="DriverHome" component={DriverHome} />
+          <AuthStack.Screen name="TripDetails" component={TripDetails} />
+          <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
+            <HomeStackNav.Screen name="Search" component={SearchPage} />
+          </HomeStackNav.Group>
+          <AuthStack.Screen name="Home" component={HomePage} />
           <AuthStack.Screen name="Onboard" component={OnboardPage} />
           <AuthStack.Screen name="Login" component={LoginPage} />
           <AuthStack.Screen name="SignUp" component={SignUpPage} />

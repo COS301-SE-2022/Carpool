@@ -5,6 +5,7 @@ import { Image, View, Text, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
 // import MapView from 'react-native-maps';
 
 export function TripDetails({ route, navigation }: TripDetailsProps) {

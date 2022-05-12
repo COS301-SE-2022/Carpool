@@ -139,7 +139,7 @@ export function SignUpPage({ navigation }: SignupProps) {
                 inputOneValue={name}
                 inputTwoValue={surname}
                 inputOnePlaceholder="Name"
-                inputTwoPlaceholder="Surname"
+                inputTwoPlaceholder="Surname" 
                 iconName="account"
               />
               <Input

@@ -24,6 +24,7 @@
     "react-redux": "*",
     "redux": "*",
     "graphql": "*",
-    "react-native-toast-message": "*"
+    "react-native-toast-message": "*",
+    "@react-native-community/datetimepicker": "*"
   }
 }

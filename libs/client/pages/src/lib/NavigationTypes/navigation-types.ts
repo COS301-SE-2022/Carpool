@@ -28,13 +28,15 @@ export type ResetPasswordProps = NativeStackScreenProps<
   'ConfirmEmail'
 >;
 
-export type RootStackParamList = {
+export type HomeStackParamList = {
   Home: undefined;
   TripDetails: { tripId: string };
+  Search: undefined;
 };
 
-export type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+export type HomeProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 export type TripDetailsProps = NativeStackScreenProps<
-  RootStackParamList,
+  HomeStackParamList,
   'TripDetails'
 >;
+export type SearchProps = NativeStackScreenProps<HomeStackParamList, 'Search'>;

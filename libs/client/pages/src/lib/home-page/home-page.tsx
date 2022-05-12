@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 import * as SecureStore from 'expo-secure-store';
-import { TripCard, UserTypeInput } from '@carpool/client/components';
+import { TripCard } from '@carpool/client/components';
 import {
   View,
   SafeAreaView,
@@ -101,7 +101,6 @@ export function HomePage({ navigation }: HomeProps) {
             </Text>
           </Pressable>
         </View> */}
-        <UserTypeInput HomePageProps={HomeProps}/>
         <View style={{ paddingHorizontal: 30 }}>
           <TouchableOpacity onPress={openSearch}>
             <View style={[styles.locationShow, { marginBottom: 15 }]}>

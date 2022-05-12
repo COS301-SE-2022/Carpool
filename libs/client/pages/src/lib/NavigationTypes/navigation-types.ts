@@ -30,9 +30,13 @@ export type ResetPasswordProps = NativeStackScreenProps<
 
 export type RootStackParamList = {
   Home: undefined;
+  TripDetails: { tripId: string };
   PostTrip: undefined;
 };
 
 export type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
-
 export type PostTripsProps = NativeStackScreenProps<RootStackParamList, 'PostTrip'>;
+export type TripDetailsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'TripDetails'
+>;

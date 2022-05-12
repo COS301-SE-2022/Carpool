@@ -6,11 +6,7 @@ import {
   VERIFY_EMAIL,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
-import { User } from '@carpool/client/store';
-
-export type Error = {
-  message: string;
-};
+import { User } from '../types/auth-types';
 
 export type UserLogin = {
   email: string;

@@ -9,6 +9,7 @@ import {
   ForgotPasswordPage,
   ConfirmEmailPage,
   ResetPasswordPage,
+  TripDetails,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -20,9 +21,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 import * as SecureStore from 'expo-secure-store';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
   Home;
+  TripDetails;
 };
 
 export type AuthStackParamList = {
@@ -53,11 +56,24 @@ const AppWrapper = () => {
       {user && user.token ? (
         <Tab.Navigator
           initialRouteName="Home"
-          screenOptions={{
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused ? 'home' : 'home-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: '#188aed',
+            tabBarInactiveTintColor: '#188aed',
             headerShown: false,
-          }}
+          })}
         >
           <Tab.Screen name="Home" component={HomePage} />
+          <Tab.Screen name="TripDetails" component={TripDetails} />
         </Tab.Navigator>
       ) : (
         <AuthStack.Navigator

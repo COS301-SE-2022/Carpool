@@ -1,3 +1,4 @@
+export * from './lib/trip-details/trip-details';
 export * from './lib/reset-password-page/reset-password-page';
 export * from './lib/confirm-email-page/confirm-email-page';
 export * from './lib/forgot-password-page/forgot-password-page';

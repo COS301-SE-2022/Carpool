@@ -11,6 +11,14 @@ import { UserInput } from '@carpool/api/authentication/entities';
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  async findUserById(id: string): Promise<User | null> {
+    return this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
   async login(email: string, password: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {

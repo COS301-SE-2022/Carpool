@@ -9,7 +9,7 @@ export class TripsCreateCommand {
     public readonly destination: string,
     public readonly category: string,
     public readonly status: string,
-    public readonly driver: User
+    public readonly driver: string
   ) {}
 }
 

@@ -37,7 +37,7 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
     trip.destination = destination;
     trip.category = category;
     trip.status = status;
-    trip.driver = driver;
+    trip.driverId = driver;
     return await this.tripsRepository.create(trip);
   }
 }

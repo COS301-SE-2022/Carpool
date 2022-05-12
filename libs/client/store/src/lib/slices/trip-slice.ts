@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TripList } from '../types/trip-types';
-import { listTrips } from '../actions/trip-actions';
+import { TripDetails, TripList } from '../types/trip-types';
+import { listTrips, fetchTripDetails } from '../actions/trip-actions';
 
 export const initialState = {
   trips: null,
@@ -24,6 +24,39 @@ export const tripListSlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const tripInitialState = {
+  trip: null,
+  status: 'idle',
+  error: null,
+} as TripDetails;
+
+export const tripDetailsSlice = createSlice({
+  name: 'trip',
+  initialState: tripInitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchTripDetails.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(fetchTripDetails.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trip = action.payload;
+      })
+      .addCase(fetchTripDetails.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

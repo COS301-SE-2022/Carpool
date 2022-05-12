@@ -11,3 +11,7 @@ export class FindByPassengerQuery {
 export class FindBookingByTripQuery {
   constructor(public readonly tripId: string) {}
 }
+
+export class FindTripByIdQuery {
+  constructor(public readonly tripId: string) {}
+}

@@ -4,3 +4,7 @@ export class UserLoginQuery {
     public readonly password: string
   ) {}
 }
+
+export class FindUserByIdQuery {
+  constructor(public readonly id: string) {}
+}

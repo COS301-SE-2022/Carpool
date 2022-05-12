@@ -8,11 +8,22 @@ export type TripList = {
 
 export type Trip = {
   tripId: string;
-  driver: string;
+  driver: Driver;
   startLocation: string;
   destination: string;
-  created: string;
-  image: string;
-  date: string;
-  distance: string;
+  tripDate: string;
+  price?: string;
+  seatsAvailable?: string;
+};
+
+export type Driver = {
+  name: string;
+  surname: string;
+  profilePic: string;
+};
+
+export type TripDetails = {
+  trip: Trip | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
 };

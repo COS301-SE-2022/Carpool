@@ -10,9 +10,11 @@ import {
   BookTripHandler,
   TripsDeleteHandler,
   TripsUpdateHandler,
+  FindTripByIdHandler,
 } from '@carpool/api/trips/service/feature';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
+import { AuthService } from '@carpool/api/authentication/service';
 
 @Module({
   imports: [CqrsModule],
@@ -28,6 +30,8 @@ import { PrismaService } from '@carpool/api/prisma';
     BookTripHandler,
     TripsDeleteHandler,
     TripsUpdateHandler,
+    FindTripByIdHandler,
+    AuthService,
   ],
 })
 export class TripsModule {}

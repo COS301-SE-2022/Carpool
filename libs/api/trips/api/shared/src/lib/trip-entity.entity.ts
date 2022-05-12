@@ -30,12 +30,21 @@ export class Trip {
 
   @Field()
   status: string;
+
+  @Field(() => Booking)
+  passengers: Booking[];
+
+  @Field(() => User)
+  driver: User;
 }
 
 @InputType()
 export class TripsInput {
+  @Field(() => Date)
+  tripDate: Date;
+
   @Field()
-  tripDate: Date | string;
+  driverId: string;
 
   @Field()
   seatsAvailable: number;

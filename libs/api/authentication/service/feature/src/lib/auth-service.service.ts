@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { User } from '@carpool/api/authentication/entities';
-import { UserLoginQuery } from './queries/auth-query.query';
+import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
   UserVerifyCommand,
@@ -15,6 +15,10 @@ export class AuthService {
     private commandBus: CommandBus,
     private readonly mailerService: MailerService
   ) {}
+
+  async findUserById(id: string): Promise<User | null> {
+    return await this.queryBus.execute(new FindUserByIdQuery(id));
+  }
 
   async login(email: string, password: string): Promise<User | null> {
     return await this.queryBus.execute(new UserLoginQuery(email, password));

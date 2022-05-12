@@ -6,6 +6,7 @@ import {
   FindByDriverQuery,
   FindByPassengerQuery,
   FindBookingByTripQuery,
+  FindTripByIdQuery,
 } from './trips-query.query';
 
 @QueryHandler(FindAllQuery)
@@ -43,5 +44,14 @@ export class FindBookingByTripHandler
 
   async execute(query: FindBookingByTripQuery): Promise<Booking[] | null> {
     return await this.tripsRepository.findBookingByTrip(query.tripId);
+  }
+}
+
+@QueryHandler(FindTripByIdQuery)
+export class FindTripByIdHandler implements IQueryHandler<FindTripByIdQuery> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindTripByIdQuery): Promise<Trip | null> {
+    return await this.tripsRepository.findTripById(query.tripId);
   }
 }

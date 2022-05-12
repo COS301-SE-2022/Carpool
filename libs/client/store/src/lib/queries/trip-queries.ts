@@ -1,15 +1,32 @@
 export const LIST_TRIPS = `
-  query () {
-     listTrips() {
+  query {
+     findAll {
         tripId
         driver {
           name
           surname
-          profilePicture
+          profilePic
         }
         startLocation
         destination
         tripDate
+     }
+  }
+`;
+export const TRIP_DETAILS = `
+  query($id: String!) {
+     findTripById(id: $id) {
+        tripId
+        driver {
+          name
+          surname
+          profilePic
+        }
+        startLocation
+        destination
+        tripDate
+        price
+        seatsAvailable
      }
   }
 `;

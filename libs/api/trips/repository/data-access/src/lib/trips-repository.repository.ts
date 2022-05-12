@@ -8,6 +8,7 @@ import {
   TripsUpdate,
 } from '@carpool/api/trips/api/shared';
 
+@Injectable()
 export class TripsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
@@ -19,6 +20,14 @@ export class TripsRepository {
     return await this.prisma.trip.findMany({
       where: {
         driverId: driverId,
+      },
+    });
+  }
+
+  async findTripById(id: string): Promise<Trip> {
+    return this.prisma.trip.findUnique({
+      where: {
+        tripId: id,
       },
     });
   }
@@ -53,6 +62,11 @@ export class TripsRepository {
         destination: trips.destination,
         category: trips.category,
         status: trips.status,
+        driver: {
+          connect: {
+            id: trips.driverId,
+          },
+        },
       },
     });
   }

@@ -60,7 +60,7 @@ model BankingDetails {
 model Trip {
     tripId      String @id @default(cuid()) @map("trip_id")
     driverId      String @map("user_id")
-    tripDate    DateTime @map("trip_date") 
+    tripDate    DateTime @map("trip_date")
     createdAt   DateTime @default(now()) @map("created_at")
     seatsAvailable Int @map("seats_available")
     price       Float
@@ -72,7 +72,7 @@ model Trip {
     driver        User @relation(fields:[driverId], references: [id])
     passengers    Booking[]
 
-    @@map("trips")
+    @@map("trip")
 }
 
 model Booking {

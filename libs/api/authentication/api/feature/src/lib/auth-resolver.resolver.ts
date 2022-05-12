@@ -1,10 +1,15 @@
 import { AuthService } from '@carpool/api/authentication/service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { UserLogin } from '@carpool/api/authentication/entities';
+import { UserLogin, User } from '@carpool/api/authentication/entities';
 
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
+
+  @Query(() => User)
+  async findUserById(@Args('id') id: string): Promise<User | null> {
+    return await this.authService.findUserById(id);
+  }
 
   @Query(() => UserLogin)
   async login(

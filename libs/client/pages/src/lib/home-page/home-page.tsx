@@ -30,7 +30,7 @@ export function HomePage({ navigation }: HomeProps) {
 
   useEffect(() => {
     dispatch(listTrips());
-  }, [trips, dispatch]);
+  }, [dispatch]);
 
   const viewTrip = (tripId: string) => {
     navigation.push('TripDetails', { tripId });
@@ -38,6 +38,31 @@ export function HomePage({ navigation }: HomeProps) {
 
   const openSearch = () => {
     navigation.push('Search');
+  };
+
+  const formatDate = (date: string) => {
+    const dateObj = new Date(date);
+
+    const day = dateObj.getDate();
+    const month = dateObj.getMonth();
+    const year = dateObj.getFullYear();
+
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+
+    return `${day} ${monthNames[month]} ${year}`;
   };
 
   return (
@@ -143,7 +168,7 @@ export function HomePage({ navigation }: HomeProps) {
               style={{ paddingHorizontal: 30 }}
               contentContainerStyle={{ flexGrow: 1 }}
             >
-              <TripCard
+              {/* <TripCard
                 tripId="1"
                 driver="Benjamin Osmers"
                 startLocation="Highveld"
@@ -153,7 +178,7 @@ export function HomePage({ navigation }: HomeProps) {
                 date="12 May 2022"
                 distance="1"
                 onPress={() => viewTrip('1')}
-              />
+              /> */}
               {status === 'loading' ? (
                 <ActivityIndicator size="large" />
               ) : trips ? (
@@ -161,14 +186,15 @@ export function HomePage({ navigation }: HomeProps) {
                 <>
                   {trips.map((trip) => (
                     <TripCard
+                      key={trip.tripId}
                       tripId={trip.tripId}
-                      driver={trip.driver}
+                      driver={`${trip.driver.name} ${trip.driver.surname}`}
                       startLocation={trip.startLocation}
                       destination={trip.destination}
                       created="now"
                       image="./lighter_grey.png"
-                      date={trip.date}
-                      distance={trip.distance}
+                      date={formatDate(trip.tripDate)}
+                      distance="1"
                       onPress={() => viewTrip(trip.tripId)}
                     />
                   ))}

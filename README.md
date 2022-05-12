@@ -8,7 +8,7 @@ This is a React Native application that helps students find and join safe car tr
 #### Requirements Specification
 [SRS Document](https://github.com/COS301-SE-2022/Carpool/wiki/Requirements-Specification)
 #### Project Management
-[BluLance Technologies]()
+[BluLance Technologies](https://sharing.clickup.com/37420985/b/h/5-109399496-2/b7d190b78a422b1)
 #### Team Members
 ##### Benjamin Osmers
 Benjamin is a Mechanical Engineering graduate (BEng, 2019) and current final year Multimedia (BIS) student at the University of Pretoria. During 2019-2021, he ran his own web development company alongside his studies. During which he developed various websites and web apps, mostly focusing on E-Commerce stores. Most of the projects were built using the MERN development stack: MongoDB (or MySQL), Express, React, Node.js.

@@ -100,7 +100,7 @@ export function LoginPage({ navigation }: LoginProps) {
                 inputPlaceholder="Password"
                 onChangeText={setPassword}
                 iconOneName="lock"
-                iconTwoName="visibility-off"
+                iconTwoName="eye-off"
                 inputValue={password}
               />
               <Text

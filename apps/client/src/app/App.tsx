@@ -23,9 +23,9 @@ import { RootStore } from '@carpool/client/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
 //import * as SecureStore from 'expo-secure-store';
-//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
   Home;

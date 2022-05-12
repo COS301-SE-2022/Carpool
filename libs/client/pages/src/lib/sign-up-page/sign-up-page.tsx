@@ -139,8 +139,8 @@ export function SignUpPage({ navigation }: SignupProps) {
                 inputOneValue={name}
                 inputTwoValue={surname}
                 inputOnePlaceholder="Name"
-                inputTwoPlaceholder="Surname"
-                iconName="account-circle"
+                inputTwoPlaceholder="Surname" 
+                iconName="account"
               />
               <Input
                 onChangeText={setEmail}
@@ -165,14 +165,14 @@ export function SignUpPage({ navigation }: SignupProps) {
                 inputValue={password}
                 inputPlaceholder="Password"
                 iconOneName="lock"
-                iconTwoName="visibility-off"
+                iconTwoName="eye-off"
               />
               <PasswordInput
                 onChangeText={setPasswordConfirm}
                 inputValue={passwordConfirm}
                 inputPlaceholder="Confirm Password"
                 iconOneName="lock"
-                iconTwoName="visibility-off"
+                iconTwoName="eye-off"
               />
             </>
           )}

@@ -4,10 +4,10 @@ import { TripDetailsProps } from '../NavigationTypes/navigation-types';
 import { View } from 'react-native';
 import { Text } from 'react-native';
 import { Image } from 'react-native';
-//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+//import Icon from 'react-native-vector-icons/MaterialIcons';
 // import MapView from 'react-native-maps';
 
 export function TripDetails({ route, navigation }: TripDetailsProps) {

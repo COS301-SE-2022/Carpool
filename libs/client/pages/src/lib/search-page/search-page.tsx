@@ -4,8 +4,9 @@ import { Text, StyleSheet, View } from 'react-native';
 import { Button } from '@carpool/client/components';
 import { SearchProps } from '../NavigationTypes/navigation-types';
 import Icons from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export function SearchPage({ navigation }: SearchProps) {
   return (

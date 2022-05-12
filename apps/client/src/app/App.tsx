@@ -24,11 +24,12 @@ import * as SecureStore from 'expo-secure-store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
-  Home;
+  //Home;
   TripDetails;
 };
 
 export type AuthStackParamList = {
+  Home;
   Onboard;
   Login;
   SignUp;
@@ -82,6 +83,7 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <AuthStack.Screen name="Home" component={HomePage} />
           <AuthStack.Screen name="Onboard" component={OnboardPage} />
           <AuthStack.Screen name="Login" component={LoginPage} />
           <AuthStack.Screen name="SignUp" component={SignUpPage} />

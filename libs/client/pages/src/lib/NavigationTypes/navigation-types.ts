@@ -36,7 +36,8 @@ export type HomeStackParamList = {
   PostTrips: undefined;
   UserInput: undefined;
   Search: undefined;
-
+  SignOut: undefined;
+  Login: undefined;
 };
 
 export type PostTripsProps = NativeStackScreenProps<HomeStackParamList, 'PostTrips'>;
@@ -48,3 +49,7 @@ export type TripDetailsProps = NativeStackScreenProps<
   'TripDetails'
 >;
 export type SearchProps = NativeStackScreenProps<HomeStackParamList, 'Search'>;
+export type SignOutProps = NativeStackScreenProps<
+  HomeStackParamList,
+  'SignOut'
+>;

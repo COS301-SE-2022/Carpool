@@ -1,4 +1,4 @@
-import { Field, ObjectType, ID, Int, Float } from '@nestjs/graphql';
+import { Field, ObjectType, ID, Int, Float, InputType } from '@nestjs/graphql';
 import { User } from '@carpool/api/authentication/entities';
 import { Booking } from './booking-entity.entity';
 
@@ -8,7 +8,7 @@ export class Trip {
   tripId: string;
 
   @Field()
-  userId: string;
+  driverId: string;
 
   @Field(() => Date)
   tripDate: Date;
@@ -30,10 +30,40 @@ export class Trip {
 
   @Field()
   status: string;
+}
 
-  @Field(() => User)
-  driver: User;
+@InputType()
+export class TripsInput {
+  @Field()
+  tripDate: Date | string;
 
-  @Field(() => [Booking])
-  passengers: Booking[];
+  @Field()
+  seatsAvailable: number;
+
+  @Field()
+  price: number;
+
+  @Field()
+  startLocation: string;
+
+  @Field()
+  destination: string;
+
+  @Field()
+  category: string;
+
+  @Field()
+  status: string;
+}
+
+@InputType()
+export class TripsUpdate {
+  @Field()
+  seatsAvailable: number;
+
+  @Field()
+  price: number;
+
+  @Field()
+  status: string;
 }

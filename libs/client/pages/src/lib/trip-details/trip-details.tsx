@@ -1,9 +1,7 @@
 /* eslint-disable-next-line */
 import React from 'react';
 import { TripDetailsProps } from '../NavigationTypes/navigation-types';
-import { View } from 'react-native';
-import { Text } from 'react-native';
-import { Image } from 'react-native';
+import { Image, View, Text, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
@@ -84,7 +82,6 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
           justifyContent: 'center',
         }}
       >
-        <Text>Insert Map Here</Text>
         {/* <MapView
           initialRegion={{
             latitude: 37.78825,
@@ -93,17 +90,88 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
             longitudeDelta: 0.0421,
           }}
         /> */}
+        <Image source={require('./map_placeholder.png')} resizeMode="cover" />
       </View>
       <View
         style={{
           flex: 3,
           display: 'flex',
+          zIndex: 20,
           flexDirection: 'column',
+          backgroundColor: '#fff',
         }}
       >
-        <View style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <View style={{ flex: 2, padding: 20 }}>
-            <Text>Start Location</Text>
+        <View style={{ flex: 1.5, display: 'flex', flexDirection: 'column' }}>
+          <View
+            style={{
+              flex: 2,
+              padding: 20,
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            <View
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
+              <View
+                style={{
+                  flex: 1,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                }}
+              >
+                <Icons
+                  name="my-location"
+                  style={{ flex: 0.85, color: '#188aed' }}
+                  size={22}
+                />
+                <View
+                  style={{ width: 4, flex: 3, backgroundColor: '#188aed' }}
+                ></View>
+                <Icons
+                  name="location-searching"
+                  style={{ flex: 1, marginTop: -4, color: '#188aed' }}
+                  size={22}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 9,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  paddingLeft: 10,
+                  // borderWidth: 1,
+                }}
+              >
+                <View style={{ flex: 1 }}>
+                  <Text>Start Location</Text>
+                  <Text style={{ fontWeight: '600', fontSize: 18 }}>
+                    Highveld
+                  </Text>
+                </View>
+                <View style={{ flex: 1, marginBottom: -20 }}>
+                  <Text>Destination</Text>
+                  <Text
+                    numberOfLines={1}
+                    style={{
+                      fontWeight: '600',
+                      fontSize: 18,
+                      maxWidth: '75%',
+                    }}
+                  >
+                    University of Pretoria, Hatfield Campus
+                  </Text>
+                </View>
+              </View>
+            </View>
           </View>
           <View
             style={{
@@ -313,5 +381,35 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  locationShow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#808080',
+    borderRadius: 30,
+    marginTop: 15,
+    width: '100%',
+  },
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  text: {
+    color: '#808080',
+    fontWeight: '600',
+  },
+  locationDetailsContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
 export default TripDetails;

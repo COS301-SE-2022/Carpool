@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 import * as SecureStore from 'expo-secure-store';
-import { InlineInputs, Input, TripCard } from '@carpool/client/components';
+import { Button, InlineInputs, Input, TripCard } from '@carpool/client/components';
 
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,7 +20,7 @@ import {
   TextInput,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
-import { NumberInputField } from 'native-base';
+import { NumberInput, NumberInputField } from 'native-base';
 
 export function HomePage({ navigation }: HomeProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -30,6 +30,8 @@ export function HomePage({ navigation }: HomeProps) {
 
   const [selected, setSelected] = useState(false);
   const [search, setSearch] = useState(true);
+  const [postStatus, setPostStatus] = useState('');
+
 
   const [role, setRole] = useState(0);
 
@@ -230,7 +232,7 @@ export function HomePage({ navigation }: HomeProps) {
 
               <View style={styles.inputContainer}>
 
-                <View style={[styles.flexCol, {flex: 1}]}>
+                <View style={[styles.flexCol, { flex: 1 }]}>
                   <Icon
                     style={[styles.text]}
                     name="clock"
@@ -240,11 +242,11 @@ export function HomePage({ navigation }: HomeProps) {
                     Schedule
                   </Text>
                 </View>
-                <TextInput style={styles.input} placeholder="Date" />
+                <TextInput style={styles.input} placeholder="Now" />
 
               </View>
               <View style={styles.inputContainer}>
-                <View style={[styles.flexCol, {flex: 1}]}>
+                <View style={[styles.flexCol, { flex: 1 }]}>
                   <Icon
                     style={[styles.text]}
                     name="dollar-sign"
@@ -258,7 +260,7 @@ export function HomePage({ navigation }: HomeProps) {
               </View>
 
               <View style={styles.inputContainer}>
-                <View style={[styles.flexCol, {flex: 1}]}>
+                <View style={[styles.flexCol, { flex: 1 }]}>
                   <MaterialIcon
                     style={[styles.text]}
                     name="car-seat"
@@ -268,12 +270,25 @@ export function HomePage({ navigation }: HomeProps) {
                     Seats
                   </Text>
                 </View>
-                {/* <NumberInputField style={styles.input} placeholder="2" /> */}
+                {/* <NumberInput autoCompleteType={null} /> */}
+                {/* <NumberInputField  style={styles.input} placeholder="2" /> */}
                 <TextInput style={styles.input} placeholder="4" />
               </View>
 
+
+              <View style={{height:20}}>
+              </View>
+
+              <Button title={postStatus == '' ? "Submit" : postStatus == 'success' ? "Posted" : ""} onPress={() => {
+                setPostStatus('loading');
+                setTimeout(() => {
+                  setPostStatus('success');
+                }
+                  , 2000);
+              }
+              } />
+              {/* } */}
             </View>
-            <Text>Show driver screen</Text>
           </View>
         )}
       </View>

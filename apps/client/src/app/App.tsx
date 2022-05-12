@@ -101,8 +101,7 @@ const AppWrapper = () => {
           })}
         >
           <Tab.Screen name="Home" component={HomePage} />
-          <Tab.Screen name="PostTrips" component={PostTrips} />          
-          <Tab.Screen name="TripDetails" component={TripDetails} />
+
         </Tab.Navigator>
       ) : (
         <AuthStack.Navigator
@@ -111,6 +110,11 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <AuthStack.Screen name="PostTrips" component={PostTrips} />
+          <AuthStack.Screen name="TripDetails" component={TripDetails} />
+          <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
+            <HomeStackNav.Screen name="Search" component={SearchPage} />
+          </HomeStackNav.Group>
           <AuthStack.Screen name="Home" component={HomePage} />
           <AuthStack.Screen name="Onboard" component={OnboardPage} />
           <AuthStack.Screen name="Login" component={LoginPage} />

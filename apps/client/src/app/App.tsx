@@ -12,6 +12,7 @@ import {
   TripDetails,
   PostTrips,
   SearchPage,
+  DriverHome,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -45,6 +46,7 @@ export type AuthStackParamList = {
   ForgotPassword;
   ConfirmEmail;
   ResetPassword;
+  DriverHome;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -111,6 +113,7 @@ const AppWrapper = () => {
           }}
         >
           <AuthStack.Screen name="PostTrips" component={PostTrips} />
+          <AuthStack.Screen name="DriverHome" component={DriverHome} />
           <AuthStack.Screen name="TripDetails" component={TripDetails} />
           <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
             <HomeStackNav.Screen name="Search" component={SearchPage} />

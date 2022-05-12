@@ -7,7 +7,9 @@ export type AuthStackParamList = {
   ForgotPassword: undefined;
   ConfirmEmail: undefined;
   ResetPassword: undefined;
+  DriverHome: undefined;
 };
+export type DriverHomeProps = NativeStackScreenProps<AuthStackParamList, 'DriverHome'>;
 
 export type OnboardProps = NativeStackScreenProps<
   AuthStackParamList,
@@ -34,9 +36,11 @@ export type HomeStackParamList = {
   PostTrips: undefined;
   UserInput: undefined;
   Search: undefined;
+
 };
 
 export type PostTripsProps = NativeStackScreenProps<HomeStackParamList, 'PostTrips'>;
+
 
 export type HomeProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
 export type TripDetailsProps = NativeStackScreenProps<

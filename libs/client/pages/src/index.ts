@@ -1,3 +1,4 @@
+export * from './lib/driver-home/driver-home';
 export * from './lib/search-page/search-page';
 export * from './lib/trip-details/trip-details';
 export * from './lib/post-trips/post-trips';

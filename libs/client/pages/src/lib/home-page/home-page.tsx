@@ -3,7 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 import * as SecureStore from 'expo-secure-store';
-import { TripCard } from '@carpool/client/components';
+import { InlineInputs, Input, TripCard } from '@carpool/client/components';
+
+import Icon from 'react-native-vector-icons/Feather';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   View,
   SafeAreaView,
@@ -14,8 +17,10 @@ import {
   ActivityIndicator,
   Image,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import { NumberInputField } from 'native-base';
 
 export function HomePage({ navigation }: HomeProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -213,6 +218,61 @@ export function HomePage({ navigation }: HomeProps) {
           </>
         ) : (
           <View style={{ flexGrow: 1 }}>
+
+            <View style={{ paddingHorizontal: 30 }}>
+              {/* <InlineInputs onChangeTextOne={function (text: string): void {
+                throw new Error('Function not implemented.');
+              }} onChangeTextTwo={function (text: string): void {
+                throw new Error('Function not implemented.');
+              }} inputOneValue={''} inputOnePlaceholder={''} inputTwoValue={''} inputTwoPlaceholder={''} iconName={'clock'} /> */}
+
+
+
+              <View style={styles.inputContainer}>
+
+                <View style={[styles.flexCol, {flex: 1}]}>
+                  <Icon
+                    style={[styles.text]}
+                    name="clock"
+                    size={25}
+                  />
+                  <Text style={styles.text}>
+                    Schedule
+                  </Text>
+                </View>
+                <TextInput style={styles.input} placeholder="Date" />
+
+              </View>
+              <View style={styles.inputContainer}>
+                <View style={[styles.flexCol, {flex: 1}]}>
+                  <Icon
+                    style={[styles.text]}
+                    name="dollar-sign"
+                    size={25}
+                  />
+                  <Text style={styles.text}>
+                    Trip Cost
+                  </Text>
+                </View>
+                <TextInput style={styles.input} placeholder="R200" />
+              </View>
+
+              <View style={styles.inputContainer}>
+                <View style={[styles.flexCol, {flex: 1}]}>
+                  <MaterialIcon
+                    style={[styles.text]}
+                    name="car-seat"
+                    size={25}
+                  />
+                  <Text style={styles.text}>
+                    Seats
+                  </Text>
+                </View>
+                {/* <NumberInputField style={styles.input} placeholder="2" /> */}
+                <TextInput style={styles.input} placeholder="4" />
+              </View>
+
+            </View>
             <Text>Show driver screen</Text>
           </View>
         )}
@@ -235,9 +295,32 @@ const styles = StyleSheet.create({
     marginTop: 15,
     width: '100%',
   },
+  input: {
+    borderWidth: 1,
+    borderColor: '#808080',
+    borderRadius: 30,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    flex: 3.5,
+    marginLeft: 10,
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 0,
+    paddingVertical: 8,
+  },
   flexRow: {
     display: 'flex',
     flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  flexCol: {
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
   },

@@ -10,6 +10,7 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   TripDetails,
+  SearchPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -25,6 +26,11 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export type RootStackParamList = {
   Home;
+};
+
+export type HomeStackParamList = {
+  HomeScreen;
+  Search;
   TripDetails;
 };
 
@@ -39,11 +45,29 @@ export type AuthStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
+const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
 
 store.dispatch(fetchStorage());
+
+const HomeStack = () => {
+  return (
+    <HomeStackNav.Navigator
+      initialRouteName="HomeScreen"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <HomeStackNav.Screen name="HomeScreen" component={HomePage} />
+      <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
+      <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <HomeStackNav.Screen name="Search" component={SearchPage} />
+      </HomeStackNav.Group>
+    </HomeStackNav.Navigator>
+  );
+};
 
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
@@ -72,8 +96,7 @@ const AppWrapper = () => {
             headerShown: false,
           })}
         >
-          <Tab.Screen name="Home" component={HomePage} />
-          <Tab.Screen name="TripDetails" component={TripDetails} />
+          <Tab.Screen name="Home" component={HomeStack} />
         </Tab.Navigator>
       ) : (
         <AuthStack.Navigator

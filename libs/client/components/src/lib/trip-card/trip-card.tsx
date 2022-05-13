@@ -60,7 +60,7 @@ export function TripCard({
               <Icon name="star" size={18} color="#FACC15" />
               <Icon name="star" size={18} color="#FACC15" />
               <Icon name="star" size={18} color="#FACC15" />
-              <Icon name="star-half-full" size={18} color="#FACC15" />
+              <Icon name="star-half" size={18} color="#FACC15" />
             </View>
           </View>
         </View>

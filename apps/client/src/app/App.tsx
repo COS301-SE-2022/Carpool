@@ -39,6 +39,7 @@ export type HomeStackParamList = {
   Search;
   TripDetails;
   PostTrips;
+  DriverHome;
 };
 
 export type AuthStackParamList = {
@@ -49,7 +50,6 @@ export type AuthStackParamList = {
   ForgotPassword;
   ConfirmEmail;
   ResetPassword;
-  DriverHome;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -71,6 +71,7 @@ const HomeStack = () => {
     >
       <HomeStackNav.Screen name="HomeScreen" component={HomePage} />
       <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
+      <HomeStackNav.Screen name="DriverHome" component={DriverHome} />
       <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
         <HomeStackNav.Screen name="Search" component={SearchPage} />
       </HomeStackNav.Group>
@@ -116,9 +117,8 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
-          <AuthStack.Screen name="PostTrips" component={PostTrips} />
-          <AuthStack.Screen name="DriverHome" component={DriverHome} />
-          <AuthStack.Screen name="TripDetails" component={TripDetails} />
+          {/* <AuthStack.Screen name="PostTrips" component={PostTrips} /> */}
+          {/* <AuthStack.Screen name="DriverHome" component={DriverHome} /> */}
           <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
             <HomeStackNav.Screen name="Search" component={SearchPage} />
           </HomeStackNav.Group>

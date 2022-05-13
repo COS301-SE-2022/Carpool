@@ -1,7 +1,7 @@
 /* eslint-disable-next-line */
 import React, { useEffect } from 'react';
 import { TripDetailsProps } from '../NavigationTypes/navigation-types';
-import { Image, View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { Image, View, Text, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
@@ -15,7 +15,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const tripDetails = useSelector((state: RootStore) => state.trip);
-  const { trip, status, error } = tripDetails;
+  const { trip, status } = tripDetails;
 
   useEffect(() => {
     dispatch(fetchTripDetails(tripId));
@@ -30,7 +30,6 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
 
     const day = dateObj.getDate();
     const month = dateObj.getMonth();
-    const year = dateObj.getFullYear();
 
     const monthNames = [
       'Jan',
@@ -434,35 +433,5 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  locationShow: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 1,
-    borderColor: '#808080',
-    borderRadius: 30,
-    marginTop: 15,
-    width: '100%',
-  },
-  flexRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  text: {
-    color: '#808080',
-    fontWeight: '600',
-  },
-  locationDetailsContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-});
 
 export default TripDetails;

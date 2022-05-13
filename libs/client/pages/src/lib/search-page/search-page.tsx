@@ -1,14 +1,37 @@
 /* eslint-disable-next-line */
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { Button } from '@carpool/client/components';
 import { SearchProps } from '../NavigationTypes/navigation-types';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TextInput } from 'react-native';
+import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import { IconButton } from 'native-base';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export function SearchPage({ navigation }: SearchProps) {
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState('date');
+  const [showDateTime, setShowDateTime] = useState(false);
+  const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
+    const currentDate = selectedDate;
+    setShowDateTime(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode: string) => {
+    setShowDateTime(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
   return (
     <View style={{ flex: 1, padding: 30 }}>
       <View
@@ -109,15 +132,23 @@ export function SearchPage({ navigation }: SearchProps) {
             marginRight: 5,
           }}
         >
-          <Icon
+          <IconButton mr={2} bg={'#188aed'} borderRadius={100} onPress={showDatepicker} icon={<Icon
+            name="calendar-today"
+            size={20}
+            color='white'
+          />} />
+          {/* <Icon
             name="calendar-today"
             size={20}
             style={{ flex: 1, color: '#808080' }}
-          />
+          /> */}
           <Text style={{ color: '#808080', flex: 3, fontWeight: '600' }}>
-            Date
+            {date.toLocaleDateString()}
           </Text>
+
         </View>
+
+
         <View
           style={{
             flex: 1,
@@ -132,19 +163,33 @@ export function SearchPage({ navigation }: SearchProps) {
             marginLeft: 5,
           }}
         >
-          <Icon
+          {/* <Icon
             name="clock-time-one"
             size={20}
             style={{ flex: 1, color: '#808080' }}
-          />
+          /> */}
+          <IconButton mr={3.5} bg={'#188aed'} borderRadius={100} onPress={showTimepicker} icon={<Icon
+            name="clock"
+            size={20}
+            color='white'
+          />} />
           <Text style={{ color: '#808080', flex: 3, fontWeight: '600' }}>
-            Time
+            {date.toLocaleTimeString()}
           </Text>
         </View>
       </View>
       <View style={{ marginTop: 30 }}>
         <Button onPress={() => navigation.goBack()} title="Search" />
       </View>
+      {showDateTime && (
+        <RNDateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          // is24Hour={true}
+          onChange={onChange}
+        />
+      )}
     </View>
   );
 }

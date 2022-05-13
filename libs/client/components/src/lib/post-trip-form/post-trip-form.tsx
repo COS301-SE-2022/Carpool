@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* eslint-disable-next-line */
-export interface PostTripFormProps { }
+export interface PostTripFormProps { setSelected : (selected : boolean) => void; }
 
 export function PostTripForm(props: PostTripFormProps) {
   const [date, setDate] = useState(new Date());
@@ -55,14 +55,14 @@ export function PostTripForm(props: PostTripFormProps) {
       </Button>
       <Actionsheet isOpen={isOpen} onClose={onClose}>
         <Actionsheet.Content>
-          <Box w="100%" h={60} px={5} justifyContent="center">
+          {/* <Box w="100%" h={60} px={5} justifyContent="center">
             <Text fontSize="16" color="gray.500" _dark={{
               color: "gray.300"
             }}>
               New Trip
             </Text>
-          </Box>
-          <VStack w={'100%'} px={2} space={8}>
+          </Box> */}
+          <VStack w={'100%'} px={4} pt={4} space={8}>
             <HStack justifyContent={'space-between'}>
               <VStack flex={1}>
                 <Center>
@@ -70,7 +70,7 @@ export function PostTripForm(props: PostTripFormProps) {
                   <Text >Time</Text>
                 </Center>
               </VStack>
-              <HStack flex={3}>
+              <HStack flex={3} ml={5}>
                 <Button
                   bg={'#188aed'}
                   w={50}
@@ -114,6 +114,7 @@ export function PostTripForm(props: PostTripFormProps) {
               <Input
                 fontSize={18}
                 flex={3}
+                ml={5}
                 borderRadius={100}
                 borderColor={'trueGray.400'}
                 w={{
@@ -137,9 +138,8 @@ export function PostTripForm(props: PostTripFormProps) {
                   <Text >Seats</Text>
                 </Center>
               </VStack>
-              <View
-                style={{ flex: 3, display: 'flex', flexDirection: 'row' }}
-              >
+              <HStack flex={3} ml={5}>
+
                 <Button
                   bg={'#188aed'}
                   w={50}
@@ -169,7 +169,7 @@ export function PostTripForm(props: PostTripFormProps) {
                 >
                   <Icon name="plus" size={25} color="white" />
                 </Button>
-              </View>
+              </HStack>
             </HStack>
 
             <Button
@@ -177,9 +177,15 @@ export function PostTripForm(props: PostTripFormProps) {
               backgroundColor={'#188aed'}
               h={50}
               borderRadius={100}
-              onPress={() => setSelected(false)}
+              onPress={() => props.setSelected(false)}
             >
-              <Text style={{ fontSize: 22, color: 'white' }}>Post Trip</Text>
+
+              <HStack w={'100%'} alignItems={'center'} >
+
+                <Icon name="car-connected" size={24} color="white"  />
+                <Text ml={1.5} style={{ fontSize: 20, color: 'white' }}>Post Trip</Text>
+              </HStack>
+
             </Button>
           </VStack>
           {/* <Actionsheet.Item>Delete</Actionsheet.Item>

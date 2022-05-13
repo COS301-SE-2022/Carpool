@@ -233,7 +233,7 @@ export function HomePage({ navigation }: HomeProps) {
           </>
         ) : (
           <View style={{ flexGrow: 1 }}>
-            <PostTripForm/>
+            <PostTripForm setSelected={setSelected}/>
            
           </View>
         )}

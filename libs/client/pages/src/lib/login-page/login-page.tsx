@@ -40,7 +40,7 @@ export function LoginPage({ navigation }: LoginProps) {
   const submitHandler = () => {
     // navigation.navigate('Home');
     if (user && !user.token && status !== 'success') {
-      navigation.navigate('ConfirmEmail');
+      navigation.navigate('Home');
     } else {
       dispatch(login({ email, password }));
     }

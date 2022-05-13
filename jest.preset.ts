@@ -1,5 +1,7 @@
 let nxPreset = require('@nrwl/jest/preset');
-nxPreset.transform = {
-  '^.+\\.(ts|js|html)$|node_modules/(?!((jest-)?react-native(-.*)?|@react-native(-community)?)/)': 'ts-jest',
+const iconModule = 'react-native-vector-icons';
+module.exports = {
+  ...nxPreset,
+  transformIgnorePatterns: [`/node_modules/(?!${iconModule})`],
+  coverageReporters: ['lcov'],
 };
-module.exports = { ...nxPreset };

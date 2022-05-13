@@ -20,14 +20,14 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button, Center, Input, VStack } from 'native-base';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 export function HomePage({ navigation }: HomeProps) {
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState(date);
+  const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
 
-  const onChange = (selectedDate: Date) => {
+  const onChange = (event:DateTimePickerEvent, selectedDate: Date) => {
     const currentDate = selectedDate;
     setShow(false);
     setDate(currentDate);
@@ -290,18 +290,13 @@ export function HomePage({ navigation }: HomeProps) {
                   >
                     <MaterialIcon name="clock" size={25} color="white" />
                   </Button>
-
-                  {/* <View>
-                    <Button onPress={showTimepicker}>
-                      <Icon color={'white'} name="clock" size={25} />
-                    </Button>
-                  </View> */}
                   {show && (
                     <RNDateTimePicker
                       testID="dateTimePicker"
                       value={date}
-                      is24Hour={true}
-                      onChange={() => onChange(date)}
+                      mode={mode}
+                      // is24Hour={true}
+                      onChange={onChange}
                     />
                   )}
                 </View>

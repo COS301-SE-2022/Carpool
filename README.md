@@ -1,5 +1,6 @@
 ![alt text](https://github.com/COS301-SE-2022/Carpool/blob/main/Asset%203%404x.png)
 # Carpool
+[![](https://github.com/COS301-SE-2022/Carpool/actions/workflows/index.yml/badge.svg)](https://github.com/COS-301/graduates/actions/workflows/index.yml)
 ## Description
 This is a React Native application that helps students find and join safe car trips, e.g., short trips to/from campus or longer trips to return home for the holidays.
 ### Demo 1

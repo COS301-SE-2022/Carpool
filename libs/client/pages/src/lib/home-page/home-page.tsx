@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 //import DatePicker from 'react-native-datepicker';
-import { TripCard } from '@carpool/client/components';
+import { PostTripForm, TripCard } from '@carpool/client/components';
 
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,28 +23,7 @@ import { Button, Center, Input, VStack } from 'native-base';
 import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 
 export function HomePage({ navigation }: HomeProps) {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-
-  const onChange = (event:DateTimePickerEvent, selectedDate: Date) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode: any) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
+ 
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -53,7 +32,6 @@ export function HomePage({ navigation }: HomeProps) {
 
   const [selected, setSelected] = useState(false);
 
-  const [seats, setSeats] = useState(0);
 
   useEffect(() => {
     dispatch(listTrips());
@@ -255,129 +233,8 @@ export function HomePage({ navigation }: HomeProps) {
           </>
         ) : (
           <View style={{ flexGrow: 1 }}>
-            <VStack px={10} space={4}>
-              <View style={styles.inputContainer}>
-                <View style={[styles.flexCol, { flex: 1 }]}>
-                  <Icon style={[styles.text]} name="clock" size={25} />
-                  <Text style={styles.text}>Time</Text>
-                </View>
-                <View style={[styles.flexRow, { flex: 3 }]}>
-                  <Button
-                    bg={'#188aed'}
-                    w={50}
-                    variant="outline"
-                    borderRadius={100}
-                    onPress={showDatepicker}
-                  >
-                    <MaterialIcon name="calendar" size={25} color="white" />
-                  </Button>
-
-                  <Center flex={1}>
-                    <Text style={{ fontSize: 16 }}>
-                      {date.toLocaleDateString()}
-                    </Text>
-                    <Text style={{ fontSize: 16 }}>
-                      {date.toLocaleTimeString()}
-                    </Text>
-                  </Center>
-
-                  <Button
-                    bg={'#188aed'}
-                    w={50}
-                    variant="outline"
-                    borderRadius={100}
-                    onPress={showTimepicker}
-                  >
-                    <MaterialIcon name="clock" size={25} color="white" />
-                  </Button>
-                  {show && (
-                    <RNDateTimePicker
-                      testID="dateTimePicker"
-                      value={date}
-                      mode={mode}
-                      // is24Hour={true}
-                      onChange={onChange}
-                    />
-                  )}
-                </View>
-              </View>
-
-              <View style={styles.inputContainer}>
-                <View style={[styles.flexCol, { flex: 1 }]}>
-                  <Icon style={[styles.text]} name="dollar-sign" size={25} />
-                  <Text style={styles.text}>Trip Cost</Text>
-                </View>
-
-                <Input
-                  fontSize={18}
-                  flex={3}
-                  borderRadius={100}
-                  borderColor={'trueGray.400'}
-                  w={{
-                    base: '75%',
-                    md: '25%',
-                  }}
-                  InputLeftElement={
-                    <Text style={{ marginLeft: 10, fontSize: 16 }}>R</Text>
-                  }
-                  placeholder="200"
-                />
-              </View>
-
-              <View style={styles.inputContainer}>
-                <View style={[styles.flexCol, { flex: 1 }]}>
-                  <MaterialIcon
-                    style={[styles.text]}
-                    name="car-seat"
-                    size={25}
-                  />
-                  <Text style={styles.text}>Seats</Text>
-                </View>
-                <View
-                  style={{ flex: 3, display: 'flex', flexDirection: 'row' }}
-                >
-                  <Button
-                    bg={'#188aed'}
-                    w={50}
-                    variant="outline"
-                    borderRadius={100}
-                    onPress={() => setSeats(seats - 1)}
-                  >
-                    <MaterialIcon name="minus" size={25} color="white" />
-                  </Button>
-
-                  <Input
-                    mx={5}
-                    fontSize={20}
-                    textAlign={'center'}
-                    flex={1}
-                    borderRadius={100}
-                    borderColor={'trueGray.400'}
-                    value={`${seats}`}
-                  />
-
-                  <Button
-                    bg={'#188aed'}
-                    w={50}
-                    variant="outline"
-                    borderRadius={100}
-                    onPress={() => setSeats(seats + 1)}
-                  >
-                    <MaterialIcon name="plus" size={25} color="white" />
-                  </Button>
-                </View>
-              </View>
-
-              <Button
-                mt={10}
-                backgroundColor={'#188aed'}
-                h={50}
-                borderRadius={100}
-                onPress={() => setSelected(false)}
-              >
-                <Text style={{ fontSize: 22, color: 'white' }}>Submit</Text>
-              </Button>
-            </VStack>
+            <PostTripForm/>
+           
           </View>
         )}
       </View>

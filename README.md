@@ -6,7 +6,7 @@ This is a React Native application that helps students find and join safe car tr
 #### Video
 [BluLance Technologies-Demo 1]()
 #### Requirements Specification
-[SRS Document](https://github.com/COS301-SE-2022/Carpool/wiki/Requirements-Specification)
+[SRS Document](https://drive.google.com/file/d/1uizO3q1V69K9nh-_v5FZIcaAzrMxIOQO/view?usp=sharing)
 #### Project Management
 [BluLance Technologies](https://sharing.clickup.com/37420985/b/h/5-109399496-2/b7d190b78a422b1)
 #### Team Members

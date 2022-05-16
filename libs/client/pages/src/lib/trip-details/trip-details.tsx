@@ -1,13 +1,14 @@
 /* eslint-disable-next-line */
 import React, { useEffect } from 'react';
 import { TripDetailsProps } from '../NavigationTypes/navigation-types';
-import { Image, View, Text, ActivityIndicator } from 'react-native';
+import { Image, View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
 import { RootStore } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, fetchTripDetails } from '@carpool/client/store';
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 export function TripDetails({ route, navigation }: TripDetailsProps) {
   const { tripId } = route.params;
@@ -133,9 +134,19 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
               justifyContent: 'center',
             }}
           >
-            <Image
+            {/* <Image
               source={require('./map_placeholder.png')}
               resizeMode="cover"
+            /> */}
+            <MapView
+              initialRegion={{
+                latitude: 37.78825,
+                longitude: -122.4324,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+              provider={PROVIDER_GOOGLE}
+              style={styles.map}
             />
           </View>
           <View
@@ -433,5 +444,18 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    height: 400,
+    width: 400,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
+});
 
 export default TripDetails;

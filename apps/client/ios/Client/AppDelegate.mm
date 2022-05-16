@@ -1,5 +1,7 @@
 #import "AppDelegate.h"
 
+#import <GoogleMaps/GoogleMaps.h>
+
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -39,6 +41,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng"];
+  
   RCTAppSetupPrepareApp(application);
 
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];

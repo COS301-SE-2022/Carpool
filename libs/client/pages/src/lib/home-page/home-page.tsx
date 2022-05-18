@@ -4,6 +4,10 @@ import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 //import DatePicker from 'react-native-datepicker';
 import { PostTripForm, TripCard } from '@carpool/client/components';
+import {
+  GooglePlacesAutocomplete,
+  GooglePlaceDetail,
+} from 'react-native-google-places-autocomplete';
 
 import Icon from 'react-native-vector-icons/Feather';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -20,18 +24,19 @@ import {
 } from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button, Center, Input, VStack } from 'native-base';
-import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import RNDateTimePicker, {
+  DateTimePickerEvent,
+} from '@react-native-community/datetimepicker';
 
 export function HomePage({ navigation }: HomeProps) {
- 
-
   const dispatch: AppDispatch = useDispatch();
 
   const tripState = useSelector((state: RootStore) => state.trips);
   const { trips, status } = tripState;
 
-  const [selected, setSelected] = useState(false);
+  const [placeId, setPlaceId] = useState('');
 
+  const [selected, setSelected] = useState(false);
 
   useEffect(() => {
     dispatch(listTrips());
@@ -131,8 +136,34 @@ export function HomePage({ navigation }: HomeProps) {
             </Text>
           </Pressable>
         </View>
-        <View style={{ paddingHorizontal: 30 }}>
-          <TouchableOpacity onPress={openSearch}>
+        <View style={{ paddingHorizontal: 30, zIndex: 20 }}>
+          <GooglePlacesAutocomplete
+            placeholder="Search"
+            fetchDetails={true}
+            onPress={(data, details = null) => {
+              // 'details' is provided when fetchDetails = true
+              console.log(data, details);
+            }}
+            query={{
+              key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+              language: 'en',
+              components: 'country:za',
+            }}
+            enablePoweredByContainer={false}
+            styles={{
+              container: {
+                zIndex: 20,
+                flex: 0,
+              },
+              textInput: {
+                borderWidth: 1,
+                borderColor: '#808080',
+                borderRadius: 25,
+                paddingLeft: 20,
+              },
+            }}
+          />
+          {/* <TouchableOpacity onPress={openSearch}>
             <View style={[styles.locationShow, { marginBottom: 15 }]}>
               <View
                 style={[
@@ -162,7 +193,7 @@ export function HomePage({ navigation }: HomeProps) {
                 size={25}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {!selected ? (
           <>
@@ -233,8 +264,7 @@ export function HomePage({ navigation }: HomeProps) {
           </>
         ) : (
           <View style={{ flexGrow: 1 }}>
-            <PostTripForm setSelected={setSelected}/>
-           
+            <PostTripForm setSelected={setSelected} />
           </View>
         )}
       </View>

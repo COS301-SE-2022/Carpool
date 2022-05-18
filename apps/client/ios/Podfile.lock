@@ -484,7 +484,7 @@ DEPENDENCIES:
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - react-native-config (from `../../../node_modules/react-native-config`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
-  - react-native-maps (from `../node_modules/react-native-maps`)
+  - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../../../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../../../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -581,7 +581,7 @@ EXTERNAL SOURCES:
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-maps:
-    :path: "../node_modules/react-native-maps"
+    :path: "../../../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../../../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -697,6 +697,6 @@ SPEC CHECKSUMS:
   Yoga: 17cd9a50243093b547c1e539c749928dd68152da
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7c615d528673387934016fc707dcc49b14b43c04
+PODFILE CHECKSUM: 5a84883e764c04295c2d35711478c17c9aa05bb9
 
 COCOAPODS: 1.11.3

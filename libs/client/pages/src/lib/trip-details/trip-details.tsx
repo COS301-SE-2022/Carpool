@@ -1,17 +1,54 @@
 /* eslint-disable-next-line */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef, forwardRef } from 'react';
 import { TripDetailsProps } from '../NavigationTypes/navigation-types';
-import { Image, View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import {
+  Image,
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
 import { RootStore } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, fetchTripDetails } from '@carpool/client/store';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
+import Toast from 'react-native-toast-message';
 
 export function TripDetails({ route, navigation }: TripDetailsProps) {
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng';
+
+  const coordinates = [
+    {
+      latitude: -25.885403078424385,
+      longitude: 28.175066596453615,
+    },
+    {
+      latitude: -25.848574675553433,
+      longitude: 28.161367826753043,
+    },
+    {
+      latitude: -25.755925609848557,
+      longitude: 28.231159113257796,
+    },
+  ];
+
+  const initialRegion = {
+    latitude: 37.78825,
+    longitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  };
+
+  const { width, height } = Dimensions.get('window');
+
   const { tripId } = route.params;
+
+  const mapView = useRef<MapView>(null);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -50,6 +87,14 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     return `${day} ${monthNames[month]}`;
   };
 
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: message,
+    });
+  };
+
   const formatDateFull = (date: string) => {
     const dateObj = new Date(date);
 
@@ -78,7 +123,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
           <View
             style={{
               backgroundColor: '#188aed',
-              flex: 1,
+              flex: 0.8,
               shadowColor: '#000',
               shadowOffset: {
                 width: 0,
@@ -89,7 +134,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
               elevation: 5,
               borderBottomLeftRadius: 20,
               borderBottomRightRadius: 20,
-              paddingTop: 60,
+              paddingTop: 50,
               marginBottom: -10,
               paddingHorizontal: 30,
               zIndex: 20,
@@ -128,26 +173,69 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
           </View>
           <View
             style={{
-              flex: 2,
+              flex: 2.5,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
             }}
           >
-            {/* <Image
-              source={require('./map_placeholder.png')}
-              resizeMode="cover"
-            /> */}
             <MapView
-              initialRegion={{
-                latitude: 37.78825,
-                longitude: -122.4324,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
-              provider={PROVIDER_GOOGLE}
+              initialRegion={initialRegion}
               style={styles.map}
-            />
+              provider={PROVIDER_GOOGLE}
+              ref={mapView}
+            >
+              <Marker coordinate={coordinates[0]} pinColor="#188aed" />
+              <Marker
+                coordinate={coordinates[coordinates.length - 1]}
+                pinColor="#188aed"
+              />
+              {/* {coordinates.slice(1, coordinates.length - 1).map((c, index) => (
+                <Marker key={index} coordinate={c} pinColor="#188aed">
+                  <Image
+                    source={require('./user_location.png')}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </Marker>
+              ))} */}
+              {coordinates.length >= 2 && (
+                <MapViewDirections
+                  origin={coordinates[0]}
+                  destination={coordinates[coordinates.length - 1]}
+                  waypoints={
+                    coordinates.length > 2
+                      ? coordinates.slice(1, -1)
+                      : undefined
+                  }
+                  apikey={GOOGLE_MAPS_APIKEY}
+                  strokeWidth={3}
+                  strokeColor="#188aed"
+                  optimizeWaypoints={true}
+                  onStart={(params) => {
+                    console.log(
+                      `Started routing between "${params.origin}" and "${params.destination}"`
+                    );
+                  }}
+                  onReady={(result) => {
+                    console.log(`Distance: ${result.distance} km`);
+                    console.log(`Duration: ${result.duration} min.`);
+
+                    mapView.current?.fitToCoordinates(result.coordinates, {
+                      edgePadding: {
+                        right: width / 20,
+                        bottom: height / 20,
+                        left: width / 20,
+                        top: height / 10,
+                      },
+                      animated: true,
+                    });
+                  }}
+                  onError={(errorMessage) => {
+                    showToast(errorMessage);
+                  }}
+                />
+              )}
+            </MapView>
           </View>
           <View
             style={{

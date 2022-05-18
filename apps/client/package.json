@@ -25,6 +25,9 @@
     "redux": "*",
     "graphql": "*",
     "react-native-toast-message": "*",
-    "@react-native-community/datetimepicker": "*"
+    "@react-native-community/datetimepicker": "*",
+    "react-native-maps": "*",
+    "react-native-maps-directions": "*",
+    "react-native-google-places-autocomplete": "*"
   }
 }

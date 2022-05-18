@@ -21,7 +21,7 @@ export function LoginPage({ navigation }: LoginProps) {
   const [password, setPassword] = useState('');
 
   const userState = useSelector((state: RootStore) => state.user);
-  const { user, status, error } = userState;
+  const { status, error } = userState;
 
   const showToast = (message: string) => {
     Toast.show({
@@ -39,11 +39,11 @@ export function LoginPage({ navigation }: LoginProps) {
 
   const submitHandler = () => {
     // navigation.navigate('Home');
-    if (user && !user.token && status !== 'success') {
-      navigation.navigate('Home');
-    } else {
-      dispatch(login({ email, password }));
-    }
+    // if (user && !user.token && status !== 'success') {
+    //   navigation.navigate('Home');
+    // } else {
+    dispatch(login({ email, password }));
+    // }
   };
 
   return (

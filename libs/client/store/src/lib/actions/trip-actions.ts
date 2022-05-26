@@ -2,10 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { LIST_TRIPS, TRIP_DETAILS } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
-import { Trip } from '../types/trip-types';
+import { TripListType, TripDetailsType } from '../types/trip-types';
 
 export const listTrips = createAsyncThunk<
-  Trip[],
+  TripListType[],
   undefined,
   { rejectValue: Error }
 >('trips/list', async (__, thunkApi) => {
@@ -22,7 +22,7 @@ export const listTrips = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  const res = response.data.data.findAll;
+  const res = response.data.data.findAllTrips;
 
   SecureStore.deleteItemAsync('trips');
   SecureStore.setItemAsync('trips', JSON.stringify(res));
@@ -31,7 +31,7 @@ export const listTrips = createAsyncThunk<
 });
 
 export const fetchTripDetails = createAsyncThunk<
-  Trip,
+  TripDetailsType,
   string,
   { rejectValue: Error }
 >('trip/details', async (tripId: string, thunkApi) => {
@@ -53,8 +53,7 @@ export const fetchTripDetails = createAsyncThunk<
 
   const res = response.data.data.findTripById;
 
-  // SecureStore.deleteItemAsync('trip');
-  // SecureStore.setItemAsync('trip', JSON.stringify(res));
+  console.log(res);
 
   return res;
 });

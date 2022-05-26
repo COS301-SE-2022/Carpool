@@ -1,15 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { User } from '@carpool/api/authentication/entities';
-import { Booking, Trip } from '@carpool/api/trips/api/shared';
-import { BookingInput, TripsUpdate } from '@carpool/api/trips/api/shared';
+import {
+  Booking,
+  Trip,
+  BookingInput,
+  TripsUpdate,
+} from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
   FindByDriverQuery,
   FindByPassengerQuery,
   FindBookingByTripQuery,
   FindTripByIdQuery,
+  FindCoordinatesByTripQuery,
 } from './queries/trips-query.query';
+import { Location } from '@carpool/api/trips/entities';
 import {
   TripsCreateCommand,
   TripsUpdateCommand,
@@ -42,6 +48,10 @@ export class TripsService {
 
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
     return await this.queryBus.execute(new FindBookingByTripQuery(tripID));
+  }
+
+  async findCoordinatesByTrip(tripID: string): Promise<Location[] | null> {
+    return await this.queryBus.execute(new FindCoordinatesByTripQuery(tripID));
   }
 
   async create(

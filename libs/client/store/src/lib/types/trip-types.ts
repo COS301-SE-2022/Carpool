@@ -1,19 +1,27 @@
 import { Error } from './auth-types';
 
 export type TripList = {
-  trips: Trip[] | null;
+  trips: TripListType[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
 
-export type Trip = {
+export type TripListType = {
   tripId: string;
   driver: Driver;
-  startLocation: string;
-  destination: string;
   tripDate: string;
-  price?: string;
-  seatsAvailable?: string;
+  createdAt: string;
+  coordinates: Location[];
+};
+
+export type Location = {
+  address: string;
+  latitude: string;
+  longitude: string;
+};
+
+export type Passenger = {
+  bookingId: string;
 };
 
 export type Driver = {
@@ -23,7 +31,17 @@ export type Driver = {
 };
 
 export type TripDetails = {
-  trip: Trip | null;
+  trip: TripDetailsType | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
+};
+
+export type TripDetailsType = {
+  tripId: string;
+  driver: Driver;
+  tripDate: string;
+  createdAt: string;
+  seatsAvailable?: string;
+  price: string;
+  coordinates: Location[];
 };

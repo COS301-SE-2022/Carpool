@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { Trip, Booking } from '@carpool/api/trips/api/shared';
+import { Trip, Booking } from '@carpool/api/trips/entities';
 import { User } from '@carpool/api/authentication/entities';
 import { TripsResolver } from './trips-resolver.resolver';
-import { TripsService } from '@carpool/api/trips/service/feature';
+import { TripsService } from '@carpool/api/trips/service';
 
 jest.mock('@carpool/api/trips/api/shared');
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;

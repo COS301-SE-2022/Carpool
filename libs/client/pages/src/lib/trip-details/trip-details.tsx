@@ -22,28 +22,6 @@ import Toast from 'react-native-toast-message';
 export function TripDetails({ route, navigation }: TripDetailsProps) {
   const GOOGLE_MAPS_APIKEY = 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng';
 
-  const coordinates = [
-    {
-      latitude: -25.885403078424385,
-      longitude: 28.175066596453615,
-    },
-    {
-      latitude: -25.848574675553433,
-      longitude: 28.161367826753043,
-    },
-    {
-      latitude: -25.755925609848557,
-      longitude: 28.231159113257796,
-    },
-  ];
-
-  const initialRegion = {
-    latitude: 37.78825,
-    longitude: -122.4324,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  };
-
   const { width, height } = Dimensions.get('window');
 
   const { tripId } = route.params;
@@ -86,6 +64,16 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
 
     return `${day} ${monthNames[month]}`;
   };
+  const formatTime = (time: string) => {
+    const dateObj = new Date(time);
+
+    console.log(dateObj.toLocaleString('en-US', { hour12: false }));
+
+    const hours = dateObj.getHours();
+    const minutes = dateObj.getMinutes() === 0 ? '00' : dateObj.getMinutes();
+
+    return `${hours}:${minutes}`;
+  };
 
   const showToast = (message: string) => {
     Toast.show({
@@ -117,13 +105,23 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
       }}
     >
       {status === 'loading' ? (
-        <ActivityIndicator size="large" />
+        <View
+          style={{
+            height: '100%',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator size="large" color="#188aed" />
+        </View>
       ) : (
         <>
           <View
             style={{
               backgroundColor: '#188aed',
-              flex: 0.8,
+              flex: 0.9,
               shadowColor: '#000',
               shadowOffset: {
                 width: 0,
@@ -134,7 +132,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
               elevation: 5,
               borderBottomLeftRadius: 20,
               borderBottomRightRadius: 20,
-              paddingTop: 50,
+              paddingTop: 40,
               marginBottom: -10,
               paddingHorizontal: 30,
               zIndex: 20,
@@ -154,7 +152,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                   color: '#fff',
                   fontWeight: '800',
                   fontSize: 35,
-                  marginBottom: 10,
+                  marginBottom: 5,
                 }}
               >
                 {trip && formatDate(trip.tripDate)}
@@ -166,31 +164,52 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                   maxWidth: '80%',
                   lineHeight: 20,
                 }}
+                numberOfLines={2}
               >
-                Trip to {trip && trip.destination}
+                Trip to {trip && trip.coordinates[0].address}
               </Text>
             </View>
           </View>
-          <View
-            style={{
-              flex: 2.5,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <MapView
-              initialRegion={initialRegion}
-              style={styles.map}
-              provider={PROVIDER_GOOGLE}
-              ref={mapView}
+          {trip && (
+            <View
+              style={{
+                flex: 2.5,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >
-              <Marker coordinate={coordinates[0]} pinColor="#188aed" />
-              <Marker
-                coordinate={coordinates[coordinates.length - 1]}
-                pinColor="#188aed"
-              />
-              {/* {coordinates.slice(1, coordinates.length - 1).map((c, index) => (
+              <MapView
+                initialRegion={{
+                  latitude: parseFloat(trip.coordinates[0].latitude),
+                  longitude: parseFloat(trip.coordinates[0].longitude),
+                  latitudeDelta: 0,
+                  longitudeDelta: 0,
+                }}
+                // zoomEnabled={false}
+                // zoomTapEnabled={false}
+                // zoomControlEnabled={false}
+                // rotateEnabled={false}
+                // scrollEnabled={false}
+                style={styles.map}
+                provider={PROVIDER_GOOGLE}
+                ref={mapView}
+              >
+                <Marker
+                  coordinate={{
+                    latitude: parseFloat(trip.coordinates[0].latitude),
+                    longitude: parseFloat(trip.coordinates[0].longitude),
+                  }}
+                  pinColor="#188aed"
+                />
+                <Marker
+                  coordinate={{
+                    latitude: parseFloat(trip.coordinates[1].latitude),
+                    longitude: parseFloat(trip.coordinates[1].longitude),
+                  }}
+                  pinColor="#188aed"
+                />
+                {/* {coordinates.slice(1, coordinates.length - 1).map((c, index) => (
                 <Marker key={index} coordinate={c} pinColor="#188aed">
                   <Image
                     source={require('./user_location.png')}
@@ -198,45 +217,47 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                   />
                 </Marker>
               ))} */}
-              {coordinates.length >= 2 && (
-                <MapViewDirections
-                  origin={coordinates[0]}
-                  destination={coordinates[coordinates.length - 1]}
-                  waypoints={
-                    coordinates.length > 2
-                      ? coordinates.slice(1, -1)
-                      : undefined
-                  }
-                  apikey={GOOGLE_MAPS_APIKEY}
-                  strokeWidth={3}
-                  strokeColor="#188aed"
-                  optimizeWaypoints={true}
-                  onStart={(params) => {
-                    console.log(
-                      `Started routing between "${params.origin}" and "${params.destination}"`
-                    );
-                  }}
-                  onReady={(result) => {
-                    console.log(`Distance: ${result.distance} km`);
-                    console.log(`Duration: ${result.duration} min.`);
+                {trip.coordinates.length >= 2 && (
+                  <MapViewDirections
+                    origin={{
+                      latitude: parseFloat(trip.coordinates[0].latitude),
+                      longitude: parseFloat(trip.coordinates[0].longitude),
+                    }}
+                    destination={{
+                      latitude: parseFloat(trip.coordinates[1].latitude),
+                      longitude: parseFloat(trip.coordinates[1].longitude),
+                    }}
+                    apikey={GOOGLE_MAPS_APIKEY}
+                    strokeWidth={3}
+                    strokeColor="#188aed"
+                    optimizeWaypoints={true}
+                    onStart={(params) => {
+                      console.log(
+                        `Started routing between "${params.origin}" and "${params.destination}"`
+                      );
+                    }}
+                    onReady={(result) => {
+                      console.log(`Distance: ${result.distance} km`);
+                      console.log(`Duration: ${result.duration} min.`);
 
-                    mapView.current?.fitToCoordinates(result.coordinates, {
-                      edgePadding: {
-                        right: width / 20,
-                        bottom: height / 20,
-                        left: width / 20,
-                        top: height / 10,
-                      },
-                      animated: true,
-                    });
-                  }}
-                  onError={(errorMessage) => {
-                    showToast(errorMessage);
-                  }}
-                />
-              )}
-            </MapView>
-          </View>
+                      mapView.current?.fitToCoordinates(result.coordinates, {
+                        edgePadding: {
+                          right: width / 20,
+                          bottom: height / 20,
+                          left: width / 20,
+                          top: height / 10,
+                        },
+                        animated: true,
+                      });
+                    }}
+                    onError={(errorMessage) => {
+                      showToast(errorMessage);
+                    }}
+                  />
+                )}
+              </MapView>
+            </View>
+          )}
           <View
             style={{
               flex: 3,
@@ -300,8 +321,11 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                   >
                     <View style={{ flex: 1 }}>
                       <Text>Start Location</Text>
-                      <Text style={{ fontWeight: '600', fontSize: 18 }}>
-                        {trip && trip.startLocation}
+                      <Text
+                        style={{ fontWeight: '600', fontSize: 18 }}
+                        numberOfLines={1}
+                      >
+                        {trip && trip.coordinates[0].address}
                       </Text>
                     </View>
                     <View style={{ flex: 1, marginBottom: -20 }}>
@@ -314,7 +338,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                           maxWidth: '75%',
                         }}
                       >
-                        {trip && trip.destination}
+                        {trip && trip.coordinates[1].address}
                       </Text>
                     </View>
                   </View>
@@ -411,7 +435,9 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                     style={{ marginRight: 5 }}
                     color="#188aed"
                   />
-                  <Text style={{ fontWeight: '700' }}>3PM</Text>
+                  <Text style={{ fontWeight: '700' }}>
+                    {trip && formatTime(trip.tripDate)}
+                  </Text>
                 </View>
               </View>
             </View>

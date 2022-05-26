@@ -4,13 +4,10 @@ import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
 import { HomeProps } from '../NavigationTypes/navigation-types';
 //import DatePicker from 'react-native-datepicker';
 import { PostTripForm, TripCard } from '@carpool/client/components';
-import {
-  GooglePlacesAutocomplete,
-  GooglePlaceDetail,
-} from 'react-native-google-places-autocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-import Icon from 'react-native-vector-icons/Feather';
-import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/Feather';
+// import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   View,
   SafeAreaView,
@@ -20,21 +17,19 @@ import {
   ScrollView,
   ActivityIndicator,
   Image,
-  TouchableOpacity,
+  // TouchableOpacity,
 } from 'react-native';
-import Icons from 'react-native-vector-icons/MaterialIcons';
-import { Button, Center, Input, VStack } from 'native-base';
-import RNDateTimePicker, {
-  DateTimePickerEvent,
-} from '@react-native-community/datetimepicker';
+// import Icons from 'react-native-vector-icons/MaterialIcons';
+// import { Button, Center, Input, VStack } from 'native-base';
+// import RNDateTimePicker, {
+//   DateTimePickerEvent,
+// } from '@react-native-community/datetimepicker';
 
 export function HomePage({ navigation }: HomeProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const tripState = useSelector((state: RootStore) => state.trips);
   const { trips, status } = tripState;
-
-  const [placeId, setPlaceId] = useState('');
 
   const [selected, setSelected] = useState(false);
 
@@ -46,9 +41,9 @@ export function HomePage({ navigation }: HomeProps) {
     navigation.push('TripDetails', { tripId });
   };
 
-  const openSearch = () => {
-    navigation.push('Search');
-  };
+  // const openSearch = () => {
+  //   navigation.push('Search');
+  // };
 
   const formatDate = (date: string) => {
     const dateObj = new Date(date);
@@ -214,9 +209,9 @@ export function HomePage({ navigation }: HomeProps) {
                       key={trip.tripId}
                       tripId={trip.tripId}
                       driver={`${trip.driver.name} ${trip.driver.surname}`}
-                      startLocation={trip.startLocation}
-                      destination={trip.destination}
-                      created="now"
+                      startLocation={trip.coordinates[0].address}
+                      destination={trip.coordinates[1].address}
+                      created={formatDate(trip.createdAt)}
                       image="./lighter_grey.png"
                       date={formatDate(trip.tripDate)}
                       distance="1"

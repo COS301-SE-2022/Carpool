@@ -1,12 +1,13 @@
-import { TripsRepository } from '@carpool/api/trips/repository/data-access';
+import { TripsRepository } from '@carpool/api/trips/repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Trip, Booking } from '@prisma/client';
+import { Trip, Booking, Location } from '@prisma/client';
 import {
   FindAllQuery,
   FindByDriverQuery,
   FindByPassengerQuery,
   FindBookingByTripQuery,
   FindTripByIdQuery,
+  FindCoordinatesByTripQuery,
 } from './trips-query.query';
 
 @QueryHandler(FindAllQuery)
@@ -44,6 +45,17 @@ export class FindBookingByTripHandler
 
   async execute(query: FindBookingByTripQuery): Promise<Booking[] | null> {
     return await this.tripsRepository.findBookingByTrip(query.tripId);
+  }
+}
+
+@QueryHandler(FindCoordinatesByTripQuery)
+export class FindCoordinatesByTripHandler
+  implements IQueryHandler<FindCoordinatesByTripQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindCoordinatesByTripQuery): Promise<Location[] | null> {
+    return await this.tripsRepository.findCoordinatesByTrip(query.tripId);
   }
 }
 

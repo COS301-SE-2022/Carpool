@@ -27,7 +27,8 @@ export class AuthRepository {
     });
 
     if (user && user.isValidated) {
-      const isValidPassword = await bcrypt.compare(password, user.password);
+      // const isValidPassword = await bcrypt.compare(password, user.password);
+      const isValidPassword = user.password === password;
 
       if (isValidPassword) {
         return user;

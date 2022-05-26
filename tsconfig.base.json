@@ -31,16 +31,16 @@
         "libs/api/shared/services/prisma/data-access/src/index.ts"
       ],
       "@carpool/api/shell": ["libs/api/shell/feature/src/index.ts"],
-      "@carpool/api/trips/api/feature": [
-        "libs/api/trips/api/feature/src/index.ts"
+      "@carpool/api/trips/entities": [
+        "libs/api/trips/api/shared/entities/data-access/src/index.ts"
       ],
-      "@carpool/api/trips/api/shared": [
-        "libs/api/trips/api/shared/src/index.ts"
-      ],
-      "@carpool/api/trips/repository/data-access": [
+      "@carpool/api/trips/repository": [
         "libs/api/trips/repository/data-access/src/index.ts"
       ],
-      "@carpool/api/trips/service/feature": [
+      "@carpool/api/trips/resolvers": [
+        "libs/api/trips/api/feature/src/index.ts"
+      ],
+      "@carpool/api/trips/service": [
         "libs/api/trips/service/feature/src/index.ts"
       ],
       "@carpool/client/components": ["libs/client/components/src/index.ts"],

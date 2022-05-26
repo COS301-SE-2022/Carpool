@@ -1,0 +1,278 @@
+[
+  {
+    "ecoLake": {
+      "address": "Eco Lake, Tamarillo Street, Eco-Park Estate, Centurion, South Africa",
+      "lat": "-25.8858077",
+      "lng": "28.1760277"
+    }
+  },
+  {
+    "tuks": {
+      "address": "University of Pretoria, Lynnwood Rd, Hatfield, Pretoria, South Africa",
+      "lat": "-25.7545492",
+      "lng": "28.2314476"
+    }
+  },
+  {
+    "edwards": {
+      "address": "1060 Edwards Road, Eldoraigne, Centurion, South Africa",
+      "lat": "-25.8487678",
+      "lng": "28.1613571"
+    }
+  },
+  {
+    "description": "University of Pretoria, Lynnwood Rd, Hatfield, Pretoria, South Africa",
+    "matched_substrings": [
+      {
+        "length": 6,
+        "offset": 0
+      }
+    ],
+    "place_id": "ChIJ0zuFF71hlR4RAslCW-07CKc",
+    "reference": "ChIJ0zuFF71hlR4RAslCW-07CKc",
+    "structured_formatting": {
+      "main_text": "University of Pretoria",
+      "main_text_matched_substrings": [
+        {
+          "length": 6,
+          "offset": 0
+        }
+      ],
+      "secondary_text": "Lynnwood Rd, Hatfield, Pretoria, South Africa"
+    },
+    "terms": [
+      {
+        "offset": 0,
+        "value": "University of Pretoria"
+      },
+      {
+        "offset": 24,
+        "value": "Lynnwood Rd"
+      },
+      {
+        "offset": 37,
+        "value": "Hatfield"
+      },
+      {
+        "offset": 47,
+        "value": "Pretoria"
+      },
+      {
+        "offset": 57,
+        "value": "South Africa"
+      }
+    ],
+    "types": ["university", "point_of_interest", "establishment"]
+  },
+  {
+    "address_components": [
+      {
+        "long_name": "Lynnwood Rd",
+        "short_name": "Lynnwood Rd",
+        "types": ["route"]
+      },
+      {
+        "long_name": "Hatfield",
+        "short_name": "Hatfield",
+        "types": ["sublocality_level_2", "sublocality", "political"]
+      },
+      {
+        "long_name": "Pretoria",
+        "short_name": "Pretoria",
+        "types": ["locality", "political"]
+      },
+      {
+        "long_name": "City of Tshwane Metropolitan Municipality",
+        "short_name": "City of Tshwane Metropolitan Municipality",
+        "types": ["administrative_area_level_2", "political"]
+      },
+      {
+        "long_name": "Gauteng",
+        "short_name": "GP",
+        "types": ["administrative_area_level_1", "political"]
+      },
+      {
+        "long_name": "South Africa",
+        "short_name": "ZA",
+        "types": ["country", "political"]
+      },
+      {
+        "long_name": "0002",
+        "short_name": "0002",
+        "types": ["postal_code"]
+      }
+    ],
+    "adr_address": "<span class=\"street-address\">Lynnwood Rd</span>, <span class=\"extended-address\">Hatfield</span>, <span class=\"locality\">Pretoria</span>, <span class=\"postal-code\">0002</span>, <span class=\"country-name\">South Africa</span>",
+    "business_status": "OPERATIONAL",
+    "formatted_address": "Lynnwood Rd, Hatfield, Pretoria, 0002, South Africa",
+    "formatted_phone_number": "012 420 4111",
+    "geometry": {
+      "location": {
+        "lat": -25.7545492,
+        "lng": 28.2314476
+      },
+      "viewport": {
+        "northeast": {
+          "lat": -25.74999825,
+          "lng": 28.24116345
+        },
+        "southwest": {
+          "lat": -25.75869965,
+          "lng": 28.22178205
+        }
+      }
+    },
+    "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/school-71.png",
+    "icon_background_color": "#7B9EB0",
+    "icon_mask_base_uri": "https://maps.gstatic.com/mapfiles/place_api/icons/v2/school_pinlet",
+    "international_phone_number": "+27 12 420 4111",
+    "name": "University of Pretoria",
+    "photos": [
+      {
+        "height": 6032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/103411748545636554319\">Wynand Steyn</a>"
+        ],
+        "photo_reference": "Aap_uEDCAEQtzHN0LknRCi8jM9qcHu5eYCfhjtj7QIIuoCe7YYETkii6yYGKTYBhZ5ctvCjfFbgspS_5MP4DfUzVsxhvzGtJDgzQLj-QhjNc3FkEc65aeN-ZfEKfKV_GD8cls1hwkgP0WJNTlAEa-gvaTFPKQtKiSLJ5oe04xvs8njul8vtJ",
+        "width": 4143
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/118383373963789862970\">Temi Scott</a>"
+        ],
+        "photo_reference": "Aap_uEDg9leFK5dZuTc4v1zc-sO66J1_teda-Kwu071I8Eidiemzf7Epki3tDW9j5e3s9TeCnFYn2yvD051K7PY3zVRPIFprpna2X59LNnOd_JDV0AnTkJJV9XoMzVGkR8Dcg1ez4huU4H8I0BtqCjoeASUB7kJocbDSfaxVCzePCiPIm7Hn",
+        "width": 3024
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/107554345456139498741\">JanHendrik Snyman</a>"
+        ],
+        "photo_reference": "Aap_uEAEv_d8gGQ2VnVX4WbMwCcDGOP_z6uWpljI2NoZck6c2a4h1_42Nsd3dT9LggRskdX_mgbXcuCpKbYb3qJ-iQtezfLquVEfzFOM3Z2GIuf-G09MdCLvXNlIJqd95TyZAGtbxKP1aT-ZX23C3pbG0_ILjCE9W1Lfdl-drk2yiZ3NINJw",
+        "width": 3024
+      },
+      {
+        "height": 3024,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/107554345456139498741\">JanHendrik Snyman</a>"
+        ],
+        "photo_reference": "Aap_uEBwmlMwquPRYFTm_7jCy-3cfbvMu1ZYiYWUcdWwnhZbt-rpjoimJQe-r_6rBh_xJ0SajD4G8AgG6YfGqjE43l6EPZ-_UkoH8z-dt3TZ_H2dGuF6gS1-hP-CGBtp6aOslqLUrbI_bmJf6jQsN2u7uwYJfyijWhx-hntxR31zbZSTnP6u",
+        "width": 4032
+      },
+      {
+        "height": 903,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/117034233001078502115\">Wasswa Nsubuga</a>"
+        ],
+        "photo_reference": "Aap_uECbkmVndOcsgVqCzzX4uF0Va3XQu8xPvBwem3UeV-c_HlrFUvhUxmjuPK3nDe8RVWDj-Aw-3UayXPtYg3XjrLgLdZWBFU5sRZU4s8BBCBGetJAjoo84zJp_h8S7n-pWHaXGJKYEB6LDGPgI3mNJt25nd2COwuI1A7WkPpwgM2Y9ZI_n",
+        "width": 1280
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/107554345456139498741\">JanHendrik Snyman</a>"
+        ],
+        "photo_reference": "Aap_uECGLjRwenbjvl-9F_HsEkRHwLuaZxqRXGRhUqUyRD_o7eUp2AjqpUYV6qzbb3toUy5pWlGwRoBvO7oAZbWp2e4ZhzD6epFYOZaM8Cq67rcbx5wojdklMQ__ZG2PXif_CeM_KN0_jUMCOaFUT0zhYF7MLe4mqnYWb2fdWW9nQzRxfOEP",
+        "width": 3024
+      },
+      {
+        "height": 3078,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/101587628634739918199\">Andre Broekman</a>"
+        ],
+        "photo_reference": "Aap_uEBPYcG3Mw6j_oG3ABUsBYTf_m5x_9vo2T5uf4jp7E637162Q5Sp_CYbgfkX76--ijkEYsui-dywZ6jOrHWJ8NCJsgnY9oqcNCqE_D36gPamhO1TyfoQ-UqL4ApdJPPjvWW010AR3beP2aXrOqzTzS0p0xDeodXLXndMCVxwCzb8A0k6",
+        "width": 5472
+      },
+      {
+        "height": 2016,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/103411748545636554319\">Wynand Steyn</a>"
+        ],
+        "photo_reference": "Aap_uEDsu_r8TM2upL2fWmiGcqPvpGeutzulLHCbt4hqB2AnBz2SaO9hHNyARFTBGa0zsH0f9J2B2V2M9zwb6XuXXoY_FrY7HMWYAAal6mzge73PiF7DFC4I_ObbjVPTn5Y-Nt8M5BHXr8xqZ-hGVl2nxJTF6bb1e0QUT7azibvlY9kF0gOo",
+        "width": 4032
+      },
+      {
+        "height": 4032,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/117034233001078502115\">Wasswa Nsubuga</a>"
+        ],
+        "photo_reference": "Aap_uEAeyO_ZKnou0AnLxciYcAWOqbtcY0z6NGjMJ2WODwUPkqY3PqFLWnUjAYb0Q5IJL4C69AILuc1VHOB-2eiPaqzZ1OzzALUr673ZB7JREvhfx9-TRdCFtoI1ytNpvBLUQF37lRvMN3HHB11Gl0na10kMSUcbod8g_abRkbdT9TpdvaEF",
+        "width": 3024
+      },
+      {
+        "height": 3000,
+        "html_attributions": [
+          "<a href=\"https://maps.google.com/maps/contrib/111383641752845644245\">Annelize Steyn</a>"
+        ],
+        "photo_reference": "Aap_uEAE3NM0fMftCkAvZR4bDfZT-yZxtKXjq6HO836hoxwtmOixr3rOsbejq05gei9qszylkwkG2HnfuJ2WyoqKGa5gCUdl39t7r_6bv6Bp-UdWumh9FOTme3Tm-YuIZxM8gpHcNSb1KcWno6-rwJGtijIbssIkmC-6q6bOSwvr6V11F-g8",
+        "width": 4000
+      }
+    ],
+    "place_id": "ChIJ0zuFF71hlR4RAslCW-07CKc",
+    "plus_code": {
+      "compound_code": "66WJ+5H Pretoria, South Africa",
+      "global_code": "5G6C66WJ+5H"
+    },
+    "rating": 4.6,
+    "reference": "ChIJ0zuFF71hlR4RAslCW-07CKc",
+    "reviews": [
+      {
+        "author_name": "tshifhiwa thovhakale",
+        "author_url": "https://www.google.com/maps/contrib/104133256246999474371/reviews",
+        "language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GhcrFD9TaYCrfvCKrV0M3vbk3JKMsduDaSdgsxaEw=s128-c0x00000000-cc-rp-mo",
+        "rating": 5,
+        "relative_time_description": "a year ago",
+        "text": "best University ever👌🏼",
+        "time": 1599766376
+      },
+      {
+        "author_name": "Lee-Winnz Marvey",
+        "author_url": "https://www.google.com/maps/contrib/111746669466733733519/reviews",
+        "language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a/AATXAJzRA7jSwhHuoga6Av9K3CQAWxalO_mEOHRvcFft=s128-c0x00000000-cc-rp-mo-ba3",
+        "rating": 4,
+        "relative_time_description": "2 months ago",
+        "text": "It is a place with beautiful views especially in the mornings after it has rained. The education is of a high standard so enroll at your own peril. It is quite the social environment if you want to immerse yourself in the people and community.",
+        "time": 1646221520
+      },
+      {
+        "author_name": "Sean Van der Merwe",
+        "author_url": "https://www.google.com/maps/contrib/112492519841568228042/reviews",
+        "language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GgDmCZpMeGON3hSYUuYAEu86_P4gpsUxOQGiPN7=s128-c0x00000000-cc-rp-mo-ba2",
+        "rating": 5,
+        "relative_time_description": "3 months ago",
+        "text": "Good university. Nice looking campus. No complaints.",
+        "time": 1643810990
+      },
+      {
+        "author_name": "hf delport",
+        "author_url": "https://www.google.com/maps/contrib/110089845637414389652/reviews",
+        "language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14GgDXPOxi1xg8BxMumxxfEwXCCdnETpWlkG2K0nA7w=s128-c0x00000000-cc-rp-mo-ba3",
+        "rating": 5,
+        "relative_time_description": "3 weeks ago",
+        "text": "A great place to study with awesome facilities, and great staff. The people are great on campus.",
+        "time": 1650902143
+      },
+      {
+        "author_name": "Frederick Myburg",
+        "author_url": "https://www.google.com/maps/contrib/114043183972216064878/reviews",
+        "language": "en",
+        "profile_photo_url": "https://lh3.googleusercontent.com/a-/AOh14Gh_lQKJ4AKd9NAdxdl7mMIuL0CLVsI-K50BHLjwyQ=s128-c0x00000000-cc-rp-mo",
+        "rating": 5,
+        "relative_time_description": "a week ago",
+        "text": "The building and grounds of Hatfield campus is not just a wonderful place to study, but also to walk around in general.\nIt is home of two seperate theaters, many different cafes, restaurants and takeaways. Furthermore there is beautiful historic buildings and gardens!",
+        "time": 1652045480
+      }
+    ],
+    "types": ["university", "point_of_interest", "establishment"],
+    "url": "https://maps.google.com/?cid=12035935894772041986",
+    "user_ratings_total": 1137,
+    "utc_offset": 120,
+    "vicinity": "Lynnwood Rd, Hatfield, Pretoria",
+    "website": "https://www.up.ac.za/"
+  }
+]

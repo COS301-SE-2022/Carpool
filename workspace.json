@@ -9,7 +9,7 @@
     "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",
     "api-trips-api-feature": "libs/api/trips/api/feature",
-    "api-trips-api-shared": "libs/api/trips/api/shared",
+    "api-trips-api-shared-entities-data-access": "libs/api/trips/api/shared/entities/data-access",
     "api-trips-repository-data-access": "libs/api/trips/repository/data-access",
     "api-trips-service-feature": "libs/api/trips/service/feature",
     "client": "apps/client",

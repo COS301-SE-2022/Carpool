@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { TripsRepository } from '@carpool/api/trips/repository/data-access';
-import { TripsService } from '@carpool/api/trips/service/feature';
+import { TripsRepository } from '@carpool/api/trips/repository';
+import { TripsService } from '@carpool/api/trips/service';
 import { TripsResolver } from './trips-resolver.resolver';
 import {
   FindAllHandler,
@@ -11,7 +11,9 @@ import {
   TripsDeleteHandler,
   TripsUpdateHandler,
   FindTripByIdHandler,
-} from '@carpool/api/trips/service/feature';
+  FindCoordinatesByTripHandler,
+  FindBookingByTripHandler,
+} from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
 import { AuthService } from '@carpool/api/authentication/service';
@@ -28,8 +30,10 @@ import { AuthService } from '@carpool/api/authentication/service';
     FindByPassengerHandler,
     TripsCreateHandler,
     BookTripHandler,
+    FindBookingByTripHandler,
     TripsDeleteHandler,
     TripsUpdateHandler,
+    FindCoordinatesByTripHandler,
     FindTripByIdHandler,
     AuthService,
   ],

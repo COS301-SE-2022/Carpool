@@ -1,9 +1,9 @@
 import { User } from '@carpool/api/authentication/entities';
-import { Trip, Booking } from '@carpool/api/trips/api/shared';
-import { TripsService } from '@carpool/api/trips/service/feature';
+import { Trip, Booking, Location } from '@carpool/api/trips/entities';
+import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
-  Mutation,
+  // Mutation,
   Query,
   ResolveField,
   Resolver,
@@ -19,6 +19,11 @@ export class TripsResolver {
   ) {}
 
   @ResolveField(() => [Booking])
+  async coordinates(@Root() trip: Trip): Promise<Location[]> {
+    return await this.tripsService.findCoordinatesByTrip(trip.tripId);
+  }
+
+  @ResolveField(() => [Location])
   async passengers(@Root() trip: Trip): Promise<Booking[]> {
     return await this.tripsService.findBookingByTrip(trip.tripId);
   }
@@ -29,7 +34,7 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
-  async findAll(): Promise<Trip[]> {
+  async findAllTrips(): Promise<Trip[]> {
     return await this.tripsService.findAll();
   }
 
@@ -48,65 +53,65 @@ export class TripsResolver {
     return await this.tripsService.findByDriver(PassengerId);
   }
 
-  @Mutation(() => Trip)
-  async create(
-    tripDate: Date,
-    seatsAvailable: number,
-    price: number,
-    startLocation: string,
-    destination: string,
-    category: string,
-    status: string,
-    driver: string
-  ): Promise<Trip> {
-    return await this.tripsService.create(
-      tripDate,
-      seatsAvailable,
-      price,
-      startLocation,
-      destination,
-      category,
-      status,
-      driver
-    );
-  }
+  // @Mutation(() => Trip)
+  // async create(
+  //   driverId: string,
+  //   tripDate: Date,
+  //   seatsAvailable: number,
+  //   price: number,
+  //   startLocation: string,
+  //   destination: string,
+  //   category: string,
+  //   status: string
+  // ): Promise<Trip> {
+  //   return await this.tripsService.create(
+  //     driverId,
+  //     tripDate,
+  //     seatsAvailable,
+  //     price,
+  //     startLocation,
+  //     destination,
+  //     category,
+  //     status
+  //   );
+  // }
 
-  @Mutation(() => Trip)
-  async delete(tripId: string): Promise<Trip> {
-    return await this.tripsService.delete(tripId);
-  }
+  // @Mutation(() => Trip)
+  // async delete(tripId: string): Promise<Trip> {
+  //   return await this.tripsService.delete(tripId);
+  // }
 
-  @Mutation(() => Trip)
-  async update(
-    tripId: string,
-    seatsAvailable: number,
-    price: number,
-    status: string
-  ): Promise<Trip> {
-    return await this.tripsService.update(
-      tripId,
-      seatsAvailable,
-      price,
-      status
-    );
-  }
+  // @Mutation(() => Trip)
+  // async update(
+  //   tripId: string,
+  //   seatsAvailable: number,
+  //   price: number,
+  //   status: string
+  // ): Promise<Trip> {
+  //   return await this.tripsService.update(
+  //     tripId,
+  //     seatsAvailable,
+  //     price,
+  //     status
+  //   );
+  // }
 
-  @Mutation(() => Booking)
-  async bookTrip(
-    userId: string,
-    tripId: string,
-    bookingDate: Date,
-    seatsBooked: number,
-    status: string,
-    price: number
-  ): Promise<Booking> {
-    return await this.tripsService.bookTrip(
-      userId,
-      tripId,
-      bookingDate,
-      seatsBooked,
-      status,
-      price
-    );
-  }
+  // @Mutation(() => Booking)
+  // async bookTrip(
+  //   userId: string,
+  //   tripId: string,
+  //   bookingDate: Date,
+  //   seatsBooked: number,
+  //   status: string,
+  //   price: number
+  // ): Promise<Booking> {
+  //   return await this.tripsService.bookTrip(
+  //     userId,
+  //     tripId,
+  //     bookingDate,
+  //     seatsBooked,
+  //     status,
+  //     price
+  //   );
+  // }
 }

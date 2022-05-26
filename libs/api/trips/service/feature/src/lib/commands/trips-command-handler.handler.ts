@@ -1,5 +1,5 @@
 import { Trip, Booking } from '@prisma/client';
-import { TripsRepository } from '@carpool/api/trips/repository/data-access';
+import { TripsRepository } from '@carpool/api/trips/repository';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import {
   TripsCreateCommand,
@@ -11,32 +11,19 @@ import {
   BookingInput,
   TripsInput,
   TripsUpdate,
-} from '@carpool/api/trips/api/shared';
+} from '@carpool/api/trips/entities';
 
 @CommandHandler(TripsCreateCommand)
 export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: TripsCreateCommand): Promise<Trip | null> {
-    const {
-      tripDate,
-      seatsAvailable,
-      price,
-      startLocation,
-      destination,
-      category,
-      status,
-      driver,
-    } = command;
+    const { tripDate, seatsAvailable, price, driver } = command;
 
     const trip = new TripsInput();
     trip.tripDate = tripDate;
     trip.seatsAvailable = seatsAvailable;
     trip.price = price;
-    trip.startLocation = startLocation;
-    trip.destination = destination;
-    trip.category = category;
-    trip.status = status;
     trip.driverId = driver;
     return await this.tripsRepository.create(trip);
   }

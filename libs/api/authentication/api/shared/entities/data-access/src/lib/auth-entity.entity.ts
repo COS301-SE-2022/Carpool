@@ -1,4 +1,4 @@
-import { Booking, Trip } from '@carpool/api/trips/api/shared';
+import { Booking, Trip } from '@carpool/api/trips/entities';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 
 @ObjectType()

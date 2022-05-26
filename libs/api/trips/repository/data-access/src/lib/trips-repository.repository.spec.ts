@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TripsRepository } from './trips-repository.repository';
 import { PrismaService } from '@carpool/api/prisma';
-import { Booking, Trip } from '@carpool/api/trips/api/shared';
+import { Booking, Trip } from '@carpool/api/trips/entities';
 
 jest.mock('@carpool/api/trips/api/shared');
 

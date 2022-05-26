@@ -1,41 +1,39 @@
 export const LIST_TRIPS = `
   query {
-     findAll {
-        tripId
-        driver {
-          name
-          surname
-          profilePic
-        }
-        startLocation
-        destination
-        tripDate
-     }
-  }
-`;
-export const TRIP_DETAILS = `
-  query($id: String!) {
-     findTripById(id: $id) {
-        tripId
-        driver {
-          name
-          surname
-          profilePic
-        }
-        startLocation
-        destination
-        tripDate
-        price
-        seatsAvailable
-     }
+    findAllTrips {
+      tripId,
+       driver {
+        name,
+        surname,
+        profilePic
+      },
+      tripDate,
+      createdAt,
+      coordinates {
+        address,
+      }
+    }
   }
 `;
 
-// tripId: string;
-// driver: string;
-// startLocation: string;
-// destination: string;
-// created: string;
-// image: string;
-// date: string;
-// distance: string;
+export const TRIP_DETAILS = `
+  query($id: String!) {
+    findTripById(id: $id) {
+      tripId,
+       driver {
+        name,
+        surname,
+        profilePic
+      },
+      tripDate,
+      createdAt,
+      seatsAvailable,
+      price,
+      coordinates {
+        address,
+        latitude
+        longitude,
+      }
+    }
+  }
+`;

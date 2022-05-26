@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip } from '@prisma/client';
-import { Booking } from '@prisma/client';
+import { Trip, Booking, Location } from '@prisma/client';
 import {
   BookingInput,
   TripsInput,
   TripsUpdate,
-} from '@carpool/api/trips/api/shared';
+} from '@carpool/api/trips/entities';
 
 @Injectable()
 export class TripsRepository {
@@ -52,16 +51,34 @@ export class TripsRepository {
     });
   }
 
+  async findCoordinatesByTrip(tripID: string): Promise<Location[]> {
+    return this.prisma.location.findMany({
+      where: {
+        tripId: tripID,
+      },
+    });
+  }
+
   async create(trips: TripsInput): Promise<Trip> {
     return this.prisma.trip.create({
       data: {
         tripDate: trips.tripDate,
         seatsAvailable: trips.seatsAvailable,
         price: trips.price,
-        startLocation: trips.startLocation,
-        destination: trips.destination,
-        category: trips.category,
-        status: trips.status,
+        coordinates: {
+          create: [
+            {
+              address: trips.coordinates[0].address,
+              latitude: trips.coordinates[0].latitude,
+              longitude: trips.coordinates[0].longitude,
+            },
+            {
+              address: trips.coordinates[1].address,
+              latitude: trips.coordinates[1].latitude,
+              longitude: trips.coordinates[1].longitude,
+            },
+          ],
+        },
         driver: {
           connect: {
             id: trips.driverId,
@@ -92,7 +109,6 @@ export class TripsRepository {
       data: {
         seatsAvailable: trips.seatsAvailable,
         price: trips.price,
-        status: trips.status,
       },
     });
   }

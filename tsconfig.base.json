@@ -45,6 +45,9 @@
       ],
       "@carpool/client/components": ["libs/client/components/src/index.ts"],
       "@carpool/client/pages": ["libs/client/pages/src/index.ts"],
+      "@carpool/client/shared/utilities": [
+        "libs/client/shared/utilities/src/index.ts"
+      ],
       "@carpool/client/store": ["libs/client/store/src/index.ts"]
     }
   },

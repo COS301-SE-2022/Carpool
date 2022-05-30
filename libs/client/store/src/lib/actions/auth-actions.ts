@@ -124,3 +124,8 @@ export const verifyEmail = createAsyncThunk(
     }
   }
 );
+
+export const logout = createAsyncThunk('users/logout', async () => {
+  await SecureStore.deleteItemAsync('user');
+  return null;
+});

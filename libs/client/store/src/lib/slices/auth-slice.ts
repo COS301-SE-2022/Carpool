@@ -5,6 +5,7 @@ import {
   register,
   fetchStorage,
   verifyEmail,
+  logout,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -80,8 +81,23 @@ export const userLoginSlice = createSlice({
       })
       .addCase(verifyEmail.rejected, (state, action) => {
         console.log('FAIL');
+        state.status = 'error';
+        // state.error = action.error;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'error';
+        // state.error = action.error;
+      })
+      .addCase(logout.pending, (state, action) => {
+        console.log('LOADING');
         state.status = 'idle';
         // state.error = action.error;
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.user = action.payload;
       });
   },
 });

@@ -16,6 +16,18 @@ export const LIST_TRIPS = `
   }
 `;
 
+export const UPCOMING_TRIP = `
+  query {
+    findUpcomingTrip {
+      tripId,
+      tripDate,
+      coordinates {
+        address,
+      }
+    }
+  }
+`;
+
 export const TRIP_DETAILS = `
   query($id: String!) {
     findTripById(id: $id) {

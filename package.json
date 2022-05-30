@@ -5,6 +5,8 @@
   "scripts": {
     "start": "nx serve",
     "start:api": "yarn start api",
+    "prisma:seed": "ts-node prisma/seed.ts",
+    "prisma:sow": "ts-node prisma/sow.ts",
     "build": "nx build",
     "test": "nx test"
   },

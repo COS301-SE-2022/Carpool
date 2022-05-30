@@ -83,6 +83,21 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     });
   };
 
+  const coordinates = [
+    {
+      latitude: -25.8487678,
+      longitude: 28.1613571,
+    },
+    {
+      latitude: -25.8487678,
+      longitude: 28.1613571,
+    },
+    {
+      latitude: -25.8487678,
+      longitude: 28.1613571,
+    },
+  ];
+
   const formatDateFull = (date: string) => {
     const dateObj = new Date(date);
 
@@ -204,6 +219,18 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                 />
                 <Marker
                   coordinate={{
+                    latitude: -25.8487678,
+                    longitude: 28.1613571,
+                  }}
+                  pinColor="#188aed"
+                >
+                  <Image
+                    source={require('./user_location.png')}
+                    style={{ width: 35, height: 35 }}
+                  />
+                </Marker>
+                <Marker
+                  coordinate={{
                     latitude: parseFloat(trip.coordinates[1].latitude),
                     longitude: parseFloat(trip.coordinates[1].longitude),
                   }}
@@ -227,6 +254,11 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
                       latitude: parseFloat(trip.coordinates[1].latitude),
                       longitude: parseFloat(trip.coordinates[1].longitude),
                     }}
+                    waypoints={
+                      coordinates.length > 2
+                        ? coordinates.slice(1, -1)
+                        : undefined
+                    }
                     apikey={GOOGLE_MAPS_APIKEY}
                     strokeWidth={3}
                     strokeColor="#188aed"

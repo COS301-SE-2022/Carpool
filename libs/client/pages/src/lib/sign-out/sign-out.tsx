@@ -1,15 +1,16 @@
 /* eslint-disable-next-line */
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native';
 import { Button } from '@carpool/client/components';
-import * as SecureStore from 'expo-secure-store';
 import { SignOutProps } from '../NavigationTypes/navigation-types';
+import { AppDispatch, logout } from '@carpool/client/store';
 
 export function SignOut({ navigation }: SignOutProps) {
+  const dispatch: AppDispatch = useDispatch();
+
   const signOutHandler = () => {
-    SecureStore.deleteItemAsync('user');
-    SecureStore.deleteItemAsync('trips');
-    navigation.navigate('Login');
+    dispatch(logout());
   };
 
   return (

@@ -1,37 +1,60 @@
 /* eslint-disable-next-line */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 import { Button } from '@carpool/client/components';
 import { SearchProps } from '../NavigationTypes/navigation-types';
-import Icons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TextInput } from 'react-native';
-import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { IconButton } from 'native-base';
-//import Icon from 'react-native-vector-icons/MaterialIcons';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+import DatePicker from 'react-native-date-picker';
+import Geolocation from '@react-native-community/geolocation';
+
+// navigator.geolocation = require('@react-native-community/geolocation');
+
+// Geolocation.getCurrentPosition((info) => {
+//   console.log(info);
+// });
+
+/* eslint-disable-next-line */
+// navigator.geolocation = Geolocation;
+
+// navigator.geolocation = require('@react-native-community/geolocation');
 
 export function SearchPage({ navigation }: SearchProps) {
+  type address = {
+    address: string;
+    latitude: string;
+    longitude: string;
+  };
+
+  const [currentLocation, setCurrentLocation] = useState({});
+
+  type reqionType = {
+    latitude: string;
+    longitude: string;
+  };
+
   const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('date');
-  const [showDateTime, setShowDateTime] = useState(false);
-  const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
-    const currentDate = selectedDate;
-    setShowDateTime(false);
-    setDate(currentDate);
+  const [open, setOpen] = useState(false);
+
+  const [origin, setOrigin] = useState({} as address);
+  const [destination, setDestination] = useState({} as address);
+
+  const [region, setRegion] = useState({});
+
+  const search = () => {
+    alert(
+      `${origin.address} to ${destination.address} on ${date.toISOString()}`
+    );
   };
 
-  const showMode = (currentMode: string) => {
-    setShowDateTime(true);
-    setMode(currentMode);
+  const logDate = (date: Date) => {
+    console.log(date.toISOString());
   };
 
-  const showDatepicker = () => {
-    showMode('date');
-  };
+  useEffect(() => {
+    navigator.geolocation = Geolocation;
+  }, []);
 
-  const showTimepicker = () => {
-    showMode('time');
-  };
   return (
     <View style={{ flex: 1, padding: 30 }}>
       <View
@@ -53,62 +76,77 @@ export function SearchPage({ navigation }: SearchProps) {
         </Text>
       </View>
       <View style={styles.locationDetailsContainer}>
-        <View style={styles.locationShow}>
-          <View
-            style={[
-              styles.flexRow,
-              {
-                alignSelf: 'flex-start',
-                flex: 5,
-                justifyContent: 'flex-start',
-              },
-            ]}
-          >
-            <Icons
-              style={[styles.text, { marginRight: 8 }]}
-              name="location-on"
-              size={25}
-            />
-            <TextInput
-              placeholder="Start Location"
-              placeholderTextColor="#808080"
-              style={{ fontWeight: '600' }}
-            />
-          </View>
-          <Icons
-            style={[styles.text, { marginRight: 8, color: '#188aed' }]}
-            name="my-location"
-            size={25}
-          />
-        </View>
-        <View style={styles.locationShow}>
-          <View
-            style={[
-              styles.flexRow,
-              {
-                alignSelf: 'flex-start',
-                flex: 5,
-                justifyContent: 'flex-start',
-              },
-            ]}
-          >
-            <Icons
-              style={[styles.text, { marginRight: 8 }]}
-              name="location-on"
-              size={25}
-            />
-            <TextInput
-              placeholder="Destination"
-              placeholderTextColor="#808080"
-              style={{ fontWeight: '600' }}
-            />
-          </View>
-          <Icons
-            style={[styles.text, { marginRight: 8, color: '#188aed' }]}
-            name="location-searching"
-            size={25}
-          />
-        </View>
+        <GooglePlacesAutocomplete
+          placeholder="Search"
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+            console.log('Hello');
+            console.log(data, details);
+            setOrigin({
+              address: data.description,
+              latitude: `${details?.geometry.location.lat}`,
+              longitude: `${details?.geometry.location.lng}`,
+            });
+          }}
+          currentLocation={true}
+          currentLocationLabel="Current Location"
+          nearbyPlacesAPI="GoogleReverseGeocoding"
+          query={{
+            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+            language: 'en',
+            components: 'country:za',
+          }}
+          textInputProps={{
+            placeholder: 'Start Location',
+          }}
+          enablePoweredByContainer={false}
+          styles={{
+            container: {
+              zIndex: 20,
+              flex: 0,
+            },
+            textInput: {
+              borderWidth: 1,
+              borderColor: '#808080',
+              borderRadius: 25,
+              paddingLeft: 20,
+            },
+          }}
+        />
+        <GooglePlacesAutocomplete
+          placeholder="Search"
+          fetchDetails={true}
+          onPress={(data, details = null) => {
+            console.log(data, details);
+            setDestination({
+              address: data.description,
+              latitude: `${details?.geometry.location.lat}`,
+              longitude: `${details?.geometry.location.lng}`,
+            });
+          }}
+          query={{
+            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+            language: 'en',
+            components: 'country:za',
+          }}
+          textInputProps={{
+            placeholder: 'Destination',
+          }}
+          enablePoweredByContainer={false}
+          styles={{
+            container: {
+              zIndex: 20,
+              flex: 0,
+            },
+            textInput: {
+              borderWidth: 1,
+              borderColor: '#808080',
+              borderRadius: 25,
+              paddingLeft: 20,
+              marginTop: 10,
+            },
+          }}
+        />
       </View>
       <View
         style={{
@@ -118,78 +156,24 @@ export function SearchPage({ navigation }: SearchProps) {
           marginTop: 30,
         }}
       >
-        <View
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderWidth: 1,
-            borderColor: '#808080',
-            borderRadius: 30,
-            padding: 10,
-            marginRight: 5,
+        <Button title="Open" onPress={() => setOpen(true)} />
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={(date) => {
+            setOpen(false);
+            setDate(date);
+            logDate(date);
           }}
-        >
-          <IconButton mr={2} bg={'#188aed'} borderRadius={100} onPress={showDatepicker} icon={<Icon
-            name="calendar-today"
-            size={20}
-            color='white'
-          />} />
-          {/* <Icon
-            name="calendar-today"
-            size={20}
-            style={{ flex: 1, color: '#808080' }}
-          /> */}
-          <Text style={{ color: '#808080', flex: 3, fontWeight: '600' }}>
-            {date.toLocaleDateString()}
-          </Text>
-
-        </View>
-
-
-        <View
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-            borderWidth: 1,
-            borderColor: '#808080',
-            borderRadius: 30,
-            padding: 10,
-            marginLeft: 5,
+          onCancel={() => {
+            setOpen(false);
           }}
-        >
-          {/* <Icon
-            name="clock-time-one"
-            size={20}
-            style={{ flex: 1, color: '#808080' }}
-          /> */}
-          <IconButton mr={3.5} bg={'#188aed'} borderRadius={100} onPress={showTimepicker} icon={<Icon
-            name="clock"
-            size={20}
-            color='white'
-          />} />
-          <Text style={{ color: '#808080', flex: 3, fontWeight: '600' }}>
-            {date.toLocaleTimeString()}
-          </Text>
-        </View>
+        />
       </View>
       <View style={{ marginTop: 30 }}>
-        <Button onPress={() => navigation.goBack()} title="Search" />
+        <Button onPress={search} title="Search" />
       </View>
-      {showDateTime && (
-        <RNDateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          // is24Hour={true}
-          onChange={onChange}
-        />
-      )}
     </View>
   );
 }

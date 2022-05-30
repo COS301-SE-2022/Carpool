@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TripDetails, TripList } from '../types/trip-types';
-import { listTrips, fetchTripDetails } from '../actions/trip-actions';
+import { TripDetails, TripList, UpcomingTrip } from '../types/trip-types';
+import {
+  listTrips,
+  fetchTripDetails,
+  fetchUpcomingTrip,
+} from '../actions/trip-actions';
 
 export const initialState = {
   trips: null,
@@ -57,6 +61,39 @@ export const tripDetailsSlice = createSlice({
         state.trip = action.payload;
       })
       .addCase(fetchTripDetails.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const tripUpcomingState = {
+  trip: null,
+  status: 'idle',
+  error: null,
+} as UpcomingTrip;
+
+export const upcomingTripSlice = createSlice({
+  name: 'upcoming',
+  initialState: tripUpcomingState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUpcomingTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(fetchUpcomingTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trip = action.payload;
+      })
+      .addCase(fetchUpcomingTrip.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

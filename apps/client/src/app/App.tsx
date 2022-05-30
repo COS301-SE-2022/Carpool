@@ -27,6 +27,7 @@ import Toast from 'react-native-toast-message';
 //import Icon from 'react-native-vector-icons/MaterialIcons';
 // import * as SecureStore from 'expo-secure-store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Geolocation from 'react-native-geolocation-service';
 
 export type RootStackParamList = {
   Home;
@@ -104,6 +105,24 @@ const AppWrapper = () => {
             tabBarActiveTintColor: '#188aed',
             tabBarInactiveTintColor: '#188aed',
             headerShown: false,
+            tabBarStyle: {
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 10,
+              paddingBottom: 22,
+              shadowColor: '#555',
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.25,
+              shadowRadius: 3.84,
+              elevation: 3,
+              marginTop: -15,
+            },
           })}
         >
           <Tab.Screen name="Home" component={HomeStack} />
@@ -142,6 +161,8 @@ const AppWrapper = () => {
 };
 
 export const App = () => {
+  // navigator.geolocation = Geolocation;
+
   return (
     <NativeBaseProvider>
       <Provider store={store}>

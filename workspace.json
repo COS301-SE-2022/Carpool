@@ -16,6 +16,7 @@
     "client-components": "libs/client/components",
     "client-e2e": "apps/client-e2e",
     "client-pages": "libs/client/pages",
+    "client-shared-utilities": "libs/client/shared/utilities",
     "client-store": "libs/client/store"
   }
 }

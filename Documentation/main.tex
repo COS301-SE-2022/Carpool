@@ -632,5 +632,126 @@ The connection between the various subsystems and their individual classes are d
                 \item DeleteChatroom:\\
                 Admin can delete the chatroom, the id of the chatroom is passed through this function. The chatroom with that particular id is removed from the chatroom table in the database. This function is called automatically by the system .when the trip has been complete.\\
     \end{enumerate}
+    \newpage
+    \section{Traceability Matrix}
+
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{|l|l|l|c|c|c|c|c|c|}
+        \hline
+    
+            \multicolumn{9}{|c|}{Subsystems} \\ \hline
+            &      & 7.1  & 7.2   & 7.3 & 7.4 & 7.5 & 7.6  &7.7 \\ \hline
+        \multirow{22}{*}{Requirements}
+        & R1    &   X   &       &      &    &      &   &    \\ \cline{2-9} 
+        & R2    &   X   &       &      &    &      &   &    \\ \cline{2-9} 
+        & R3    &   X   &       &      &    &      &   &    \\ \cline{2-9} 
+        & R4    &       &       &      &    &   X  &   &     \\ \cline{2-9}
+        & R5    &       &       &      &    &      & X &    \\ \cline{2-9}
+        & R6    &       &       &      &    &   X  &   &    \\ \cline{2-9}
+        & R7    &       &       &      &    &      & X &    \\ \cline{2-9}
+        & R8    &       &   X   &      &    &      &   &    \\ \cline{2-9}
+        & R9    &       &       &   X  &    &      &   &    \\ \cline{2-9}
+        & R10   &       &       &      &    &      & X &    \\ \cline{2-9}
+        & R11   &       &       &      &    &      &   &  X  \\ \cline{2-9}
+        & R12   &       &       &      &    &      & X &     \\ \cline{2-9}
+        & R13   &       &       &      &    &      & X &     \\ \cline{2-9}
+        & R14   &   X   &       &      &    &      &   &    \\ \cline{2-9}
+        & R15   &       &       &      &  X &      &   &    \\ \cline{2-9}
+        & R5.1  &   X   &       &      &    &      &   &    \\ \cline{2-9}
+        & R5.2  &       &       &      &    &      &   &  X  \\ \cline{2-9}
+        & R5.3  &       &       &  X   &    &      &   &    \\ \cline{2-9}
+        & R5.4  &       &   X   &      &    &      &   &    \\ \cline{2-9}
+        & R5.5  &       &       &      &    &   X  &   &    \\ \cline{2-9}
+        & R5.6  &       &       &      &    &      &   &    \\ \cline{1-9}
+                                    
+        \end{tabular}
+        \vspace{1cm}
+    \caption{Transability matrix with requirements numbers as rows and the sub-systems as columns}
+    \label{table:Could-haveRequirementsTraceabilityMatrix}
+\end{table}
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{|l|l|l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+    
+            \multicolumn{17}{|c|}{Requirements} \\ \hline
+            &  & R1  & R2   & R3 & R4 & R5 & R6 & R7 &R8 & R9 & R10 & R11 & R12 & R13 & R14 & R15    \\ \hline
+        \multirow{29}{*}{Use cases}
+
+        & U1.1 &    &  X     &     &   &   &   &   &   &   &   &   &   &   & X    &  \\ \cline{2-17}
+        & U1.2 & X  &       &      &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.3 &    &   X    &     &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.4 & X  &       &      &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.5 & X  &       &      &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.6 &    &        &  X  &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.7 & X  &       &      &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U1.8 & X  &       &      &   &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U2.1 &    &       &      &   &   &   &   &  X &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U2.2 &    &       &      &   &   &   &   &  X &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U2.3 &    &       &      &   &   &   &   &  X &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U2.4 &    &       &      &   &   &   &   &  X &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U3.1 &    &       &      &   &   &   &   &   & X  &   &   &   &   &    &  \\ \cline{2-17}    
+        & U3.2 &    &       &      &   &   &   &   &   & X  &   &   &   &   &    &  \\ \cline{2-17}    
+        & U3.3 &    &       &      &   &   &   &   &   & X  &   &   &   &   &    &  \\ \cline{2-17}    
+        & U4.1 &    &       &      &   &   &   &   &   &   &   &   &   &   &    & X \\ \cline{2-17}    
+        & U4.2 &    &       &      &   &   &   &   &   &   &   &   &   &   &    & X \\ \cline{2-17}    
+        & U4.3 &    &       &      &   &   &   &   &   &   &   &   &   &   &    & X \\ \cline{2-17}    
+        & U4.4 &    &       &      &   &   &   &   &   &   &   &   &   &   &    & X \\ \cline{2-17}    
+        & U5.1 &    &       &      &   & X  &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.2 &    &       &      &   &   & X  &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.3 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.4 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.5 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.6 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.7 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.8 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.9 &    &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U5.10 &   &       &      & X  &   &   &   &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.1 &    &       &      &   &   &   &  X &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.2 &    &       &      &   &   &   &  X &   &   &   &   & X &   &    &  \\ \cline{2-17}    
+        & U6.3 &    &       &      &   &   &   &  X &   &   &   &   & X  &   &    &  \\ \cline{2-17}    
+        & U6.4 &    &       &      &   &   &   &  X &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.5 &    &       &      &   &   &   &  X &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.6 &    &       &      &   &   &   &  X &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.7 &    &       &      &   &   &   &   &   &   &   &   &   & X  &    &  \\ \cline{2-17}    
+        & U6.8 &    &       &      &   &   &   &   &   &   &   &   &   & X  &    &  \\ \cline{2-17}    
+        & U6.9 &    &       &      &   &   &   & X  &   &   &   &   &   &   &    &  \\ \cline{2-17}    
+        & U6.10 &   &       &      &   &   &   &   &   &   & X  &   &   &   &    &  \\ \cline{1-17}    
+  
+
+   \end{tabular}
+   \vspace{0.2cm}
+    \caption{Transability matrix with use cases as rows and requirements as columns}
+    \label{table:ContinuedCould-haveRequirementsTraceabilityMatrix}
+\end{table}
+\newpage
+\begin{table}[H]
+    \centering
+        \begin{tabular}{|l|l|l|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+    
+            \multicolumn{17}{|c|}{Requirements} \\ \hline
+            &  & R1  & R2   & R3 & R4 & R5 & R6 & R7 &R8 & R9 & R10 & R11 & R12 & R13 & R14 & R15    \\ \hline
+        \multirow{7}{*}{Use cases}
+        
+        & U7.1 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.2 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.3 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.4 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.5 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.6 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{2-17}    
+        & U7.7 &    &       &      &   &   &   &   &   &   &   & X  &   &   &    &  \\ \cline{1-17}    
+        
+   \end{tabular}
+   \vspace{1cm}
+    \caption{Transability matrix with use cases as rows and requirements as columns}
+    \label{table:ContinuedCould-haveRequirementsTraceabilityMatrix}
+\end{table}
+
+\newpage
+\section{KO}
 
     \end{document}

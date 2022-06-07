@@ -70,7 +70,7 @@
 
 
 \newpage
-\tableofcontents 
+\tableofcontents
 \newpage
 \section{Architectural design strategy}
 \newpage
@@ -105,6 +105,7 @@ The maps should show a route between the two locations.
 \newline
 The system should be secure when doing any form of user authentication within the app.
 Meanwhile, on the database side it will also have be secure with protective administraive details.
+For example: when a user signs up the password will be salted then hashed and stored in the database.
 \newline
 \newpage
 \section{Architectural design and patterns}
@@ -113,7 +114,30 @@ Meanwhile, on the database side it will also have be secure with protective admi
 The application will be used by many users and therefore the application will be used in a client-server pattern.
 It will consist of drivers and passengers whom will need to connect to the server for usage.
 The database will be used to store the drivers, passengers and various trips which will be posted and receive bookings for.
-
+\begin{center}
+    \noindent
+    \includegraphics[width=4cm]{images/client_server.png}
+    \vspace{0.5cm}
+\end{center}
+\textbf{Model View Controller:}
+\newline
+Since the app will need to query the database and update the database, the app will be used in a MVC pattern.
+The app will have the layout to be like a model view controller, for example: the passanger will have to be able to view available trips (view -> controller -> model).
+For the driver they will have to update the model, posting a trip in other words, to then be able to see thier trips (view -> model).
+\begin{center}
+    \noindent
+    \includegraphics[width=10cm]{images/model_view_controller.png}
+    \vspace{0.5cm}
+\end{center}
+\textbf{Layered:}
+\newline
+The app will be used in a layered pattern as well since a model view controller can also be thought of as multiple layers.
+This pattern will be shown as a means of communicating between the backend, database and the front end.
+\begin{center}
+    \noindent
+    \includegraphics[width=4cm]{images/layered.png}
+    \vspace{0.5cm}
+\end{center}
 \newpage
 \section{Architectural constraints}
 \newpage

@@ -19,6 +19,7 @@
 \onehalfspacing
 \usepackage[english]{babel}
 \usepackage{fancyhdr}
+\usepackage{enumitem}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -207,10 +208,51 @@ The user should have the ability to operate and own a mobile device such as a sm
         
     \end{itemize}
   \end{changemargin}
-        
+  
+  \newpage
+\section{Functional Requirements}
+
+    \begin{changemargin}
     
+        \subsection{Must-have requirements}
+            \begin{enumerate}[.9in,label=R.\arabic*]
+    
+                \item The system must provide users with the opportunity to create and manage their accounts.
+                \item The system must provide users with the opportunity to Login.\\
+                R2.1 If the user forgets their password, the system must allow the user to change their password in a   secure manner.
+                
+                \item The system must verify the user.\\
+                R3.1: The system must verify that the user is a student by verifying their university email.\\
+                R3.2  If the user is a driver, The system must verify the user's driver license.
+
+                \item The system must provide the user with the opportunity to create and post trips.\\
+                R4.1: The system must allow users to cancel these created trips.\\
+                R4.2: The system must allow users to edit these created trips.\\
+                R.4.3: The system must notify drivers when these created trips are fully booked.\\
+                R4.4: The system must allow the user who created the trip to accept or decline users who book available seats.\\
+
+                \item The system must allow users to browse trips that have seats available.
+                \item The system must provide users with the opportunity to book a seat on an available trip.
+                \item The system must provide a search functionality for trips using a variety of search criteria (drivers, location, price).
+                \item The system must allow a user to view other users’ profiles.
+     \newpage           
+        \subsection{Could-have requirements}
+
+                \item The system must allow users to make secure online payments for their trips.
+                \item The system must allow users to rate fellow carpoolers after a trip.
+                \item The system must have a route history for users to view.
+                \item The system must have a secure real-time chat feature.
+                
+        \subsection{Nice-to-have requirements}
+        
+                \item The system must have an integrated tracking feature.
+                \item The system must recommend trips to the user based on their current location or their previous trip history.
+                \item The system must allow users to set emergency contacts and send these contact notifications/updates.
+                \item The system must allow users to send and receive notifications about trips (reminders).
+
+            \end{enumerate}
     
 
-% \end{table}
+    \end{changemargin}
 
 \end{document}

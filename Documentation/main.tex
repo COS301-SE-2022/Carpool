@@ -251,8 +251,63 @@ The user should have the ability to operate and own a mobile device such as a sm
                 \item The system must allow users to send and receive notifications about trips (reminders).
 
             \end{enumerate}
-    
-
+            
     \end{changemargin}
+    
+    \newpage
+\section{Quality requirements}
+
+    \begin{changemargin}
+    \large{ \textbf{Scalability}}
+        \begin{itemize}
+            \item[-] Currently the carpool application is only for students in South Africa but it could be expanded internationally. 
+            \item[-] As the number of users and operations grows, the server and database must be able to scale both vertically and horizontally.  The system must be able to accommodate a user base from 100 users to 1 million users.
+          \end{itemize} 
+\vspace{0.5cm}
+    \large{ \textbf{Performance}}
+            \begin{itemize}
+             \item[-] The database must function well in order for the user to have no delays in the program. 
+             \item[-] Reading is more significant than writing since users are more likely to spend time browsing than posting trips. As a result, few actions write to the database. Hence a read operation should take less than 500ms and a write operation should approximately 1s.
+             
+             \end{itemize}
+\vspace{0.5cm}
+    \large{ \textbf{Security}}
+         \begin{itemize}
+            \item[-] Because users' passwords and banking details  are kept in the database, the database must be encrypted in order to safeguard this data. 
+            \item [-] Because users' passwords and banking details  are kept in the database, the database must be encrypted in order to safeguard this data. 
+        \end{itemize}
+\vspace{0.5cm}    
+    \large{ \textbf{Maintainability}}
+         \begin{itemize}
+            \item[-] The system should be maintainable in the future.
+            \item [-] The system should be well documented such that that new developers can quickly comprehend  the system.
+            \item[-] We should be certain that the technology we choose will be supported for a long time.
+            \item [-] It should be simple to add new functionality to the system or alter existing functionality. The system should be decoupled as much as possible.
+            \item[-] All modifications should adhere to the system's current coding standard, ensuring that the modified system is indistinguishable from the original.
+            \item [-] Admin users should be able to track performance, allowing the system's owner to make well-informed judgments about whether or not the system's capacity should be raised.
+            \item[-] The system should be checked and maintained on a regular basis, at least twice a month. Users should be informed about this maintenance at least 24 hours ahead of time so that they may make the required preparations.
+
+
+        \end{itemize}
+    \end{changemargin}
+\vspace{0.5cm}    
+    \large{ \textbf{Usability:}}
+            \begin{itemize}
+             \item[-] The system should be simple and intuitive to use, making use of the recognition over recall concept. 
+             \item[-]The user should be able to see the system's responses, whether favorable or negative. These responses should contain enough information, allowing the user to know exactly what went wrong or right.
+            \item[-] Buttons and instructions should be placed in a basic and straightforward manner.
+            \item[-]Buttons, graphics, and text should be made large enough to improve clarity, user comfort, reduce annoyance, and reduce the chance of selection mistakes.
+            \item[-]The navigation of the application should be kept simple, ensuring all users are able to navigate through the application at ease.
+            
+             \end{itemize}
+ \vspace{0.5cm}            
+        \large{ \textbf{Reliability:}}
+            \begin{itemize}
+             \item[-] The software should be extremely reliable. If a crash occurs, the system should be able to offer sufficient information as to why the crash happened, allowing us to swiftly correct the problem.
+             \item[-] Each component of the system should perform as the developers planned.
+             \item[-] Before being released to the public, the system should be fault tolerant and properly tested.
+             \item[-] 	The system should be operational 99.9\% of the time.
+
+             \end{itemize}
 
 \end{document}

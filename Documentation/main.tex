@@ -402,7 +402,7 @@ The connection between the various subsystems and their individual classes are d
                     
                         \centering
                         \includegraphics[width=15cm]{images/User Usecase.drawio.png}
-                        \caption{User Use Cases}
+                        \caption{Payment Use Cases}
                         \label{fig:User UseCases}
                         
                     \end{figure}
@@ -434,7 +434,7 @@ The connection between the various subsystems and their individual classes are d
                     
                         \centering
                         \includegraphics[]{images/Rating Usecase.drawio.png}
-                        \caption{User Use Cases}
+                        \caption{Reviews Use Cases}
                         \label{fig:User UseCases}
                         
                     \end{figure}
@@ -467,7 +467,7 @@ The connection between the various subsystems and their individual classes are d
                     
                         \centering
                         \includegraphics[]{images/Notification Usecase.drawio.png}
-                        \caption{User Use Cases}
+                        \caption{Notifications Use Cases}
                         \label{fig:User UseCases}
                         
                     \end{figure}
@@ -488,7 +488,7 @@ The connection between the various subsystems and their individual classes are d
                 \item NotifyUserWhenTripFullyBooked: \\
                     This allows drivers and passengers to know when their trip has been fully booked. Passengers will pay the minimum price for a seat, and driver won’t have to worry about looking for more people to carpool with. This will take in all the users that belong to the fully booked trip as a parameter.\\
                
-    
+     \end{enumerate}
 \newpage
                 \subsection{Trips:}
                 \subsubsection{Use Cases}
@@ -498,7 +498,7 @@ The connection between the various subsystems and their individual classes are d
                     
                         \centering
                         \includegraphics[width = 15cm]{images/Trips Usecase.drawio.png}
-                        \caption{User Use Cases}
+                        \caption{Trips Use Cases}
                         \label{fig:User UseCases}
                         
                     \end{figure}
@@ -541,7 +541,96 @@ The connection between the various subsystems and their individual classes are d
                 	
             \end{enumerate}
 
- \end{enumerate}
+\newpage
+                \subsection{Searching :}
+                \subsubsection{Use Cases}
+                The searching subsystem allows users to browse for trips based on many different criteria’s and filters. A list of trips that match the criteria will be displayed to the user.
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[width = 15cm]{images/SearchingUseCase.drawio.png}
+                        \caption{Searching Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+         \newpage           
+                \subsubsection{Service Contract}
+            
+             \begin{enumerate}[label=U1.\arabic*]
 
+                \item BasedOnDriver:\\
+                Passengers will be provided with the opportunity to search for a trip based on the drivers name. The name of the driver will be passed as a parameter into this function. Trips that the driver has currently posted will then be displayed to the passenger.\\
+                 
+
+                \item BasedOnStartLocation:\\
+                Passengers will be provided with the opportunity to search for a trip based on their start location. Their start location  will be passed as a parameter into this function. Trips that are near their start location will be displayed to the user.\\
+
+                \item BasedOnDestination:\\
+                Passengers will be provided with the opportunity to search for a trip based on their end  location. Their end  location  will be passed as a parameter into this function. Trips that are near their end location will be displayed to the user.\\
+                U6.2 
+	
+                \item BasedonPrice: \\
+                Passengers will be provided with the opportunity to search for a trip based on the price of the available seat. Trips will then be displayed to the user from lowest seat cost to highest seat cost, or vice versa depending on the passenger’s needs.\\
+                    
+                \item BasedOnSeatsAviailable:\\
+                Passengers will be provided with the opportunity to search for a trip based on the number of seats available (Trips that have more seats will be displayed first or trips that have one seat left will be displayed first. Trips that match this criteria will then be displayed to the user. \\
+                    
+                \item BasedOnDriversRating:\\
+                Passengers will be provided with the opportunity to search for a trip based the rating of the drivers. Trips that have drivers will high ratings will displayed at the top of the page, and drivers with low ratings will be displayed towards the end of the page.\\
+
+                \item BasedOnPreviousTrips:\\
+                Admin will use this function to view the user’s previous trips, and recommend trips to the user based on their previous trips. Information like the driver, driver’s rating and cost can be used to find a trip that the passenger will most likely join. The trip will be added to an array.\\
+                	
+                \item BasedOnPreviousLocations: \\
+                Admin will use this function to view the user’s previous trip, and based on their previous locations recommend a trip to them. The function scans through all trips that have been posted in the database, and matches the users  previous locations to locations in the database. If there is a match, then the trip is added to an array..\\
+                
+                \item Search:\\
+                Passengers will be provided with the opportunity to search for a trip based on different criteria. The criteria will then be passed as a parameter to the specific search function. Trips that meet the criteria will be displayed to the user.\\
+
+                \item ViewRecommendedTrips:\\
+                The user will be able to view all the trips that have been recommended to them by the system. These recommended trips will be based on their previous trips(previous location, cost, driver). \\
+                	
+            \end{enumerate}
+\newpage
+                \subsection{Chat :}
+                \subsubsection{Use Cases}
+                The chat subsystem allows the user to send and receive messages from other user within the carpool application. Users are added to chatrooms when their trips are confirmed, and the users part of that trip are able to talk to one another in a central location.
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[width = 15cm]{images/Chat Usecase.drawio.png}
+                        \caption{Chat Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+         \newpage           
+                \subsubsection{Service Contract}
+            
+             \begin{enumerate}[label=U1.\arabic*]
+
+                \item SendMessage:\\
+                User will be allowed to send messages on the group chat, The content of the message as well as the sender and receivers of the message will be passed into the function as parameters. The message will  then be stored in the database and displayed in the chat room for that particular trip.\\
+                 
+
+                \item BlockUser:\\
+                Users will be provided with the opportunity to block another user, they will no longer be able to receive messages from that passenger, nor will they be able to join a trip with a user that they have blocked. The userid of the blocked user, and the userid of the user who wants to block someone will be passed as a parameter in the function. The system will then ensure that the user does not receive or join trips with said blocked user.\\
+        
+               \item LeaveChatroom:\\
+                User’s will be provided with the opportunity to leave the chatroom that has been created for a specific trip. The userid of the user that wants to leave the trip will be passed as a parameter into the function. The user will then be removed from the chatroom row in the database. The user will no longer receive messages from said chatroom.\\
+	
+                \item CreateChatroom: \\
+                When a driver creates a trip, a chatroom is automatically created by the system. Every time a passenger is confirmed to be apart of the trip, they are added to the chatroom.\\
+                    
+                \item RemoveUser:\\
+                Admin is allowed to remove a passenger from the chatroom, the userid of the passenger that Admin wants to remove will be passed as a parameter into the function. The user is then removed from the chatroom row in the database. The user is no longer a participant of the chatroom and can no longer receive messages from that chatroom.\\
+                    
+                \item AddUser:\\
+                Admin is allowed to add a user to the chatroom, the userid of the passenger Admin wants to add to the chatroom will be passed as a parameter. When a passenger is confirmed to be a participant in the trip, this function will be called so that the user can be apart of the chatroom for that trip. The user is added to the chatroom row in the database. The user can now receive and send messages via the chatroom.\\
+
+                \item DeleteChatroom:\\
+                Admin can delete the chatroom, the id of the chatroom is passed through this function. The chatroom with that particular id is removed from the chatroom table in the database. This function is called automatically by the system .when the trip has been complete.\\
+    \end{enumerate}
 
     \end{document}

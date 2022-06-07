@@ -310,4 +310,53 @@ The user should have the ability to operate and own a mobile device such as a sm
 
              \end{itemize}
 
-\end{document}
+
+\newpage
+\section{Class Diagram}
+The connection between the various subsystems and their individual classes are depicted in depth in Carpool’s class diagram.
+\vspace{1.5cm}
+    
+        \begin{figure}[H]
+        
+            \centering
+            \includegraphics[scale=0.45]{images/Carpool_Class_Diagram.drawio.png}
+            \caption{Carpool Class Diagram}
+            \label{fig:ClassDiagram}
+            
+        \end{figure}
+   \newpage     
+        \subsection{Analysis of Class Diagram}
+        
+    \subsubsection{User}
+        This table stores all the necessary information of the user. A user can be either a passenger, driver or both.
+
+    \subsubsection{Banking\_Details}
+       This table is responsible for storing the user’s banking details. The user can only have one bank account, and bank account can belong to only one user.
+        
+    \subsubsection{Reviews}
+        This table stores the reviews that users leave on other user’s profiles. The role attribute refers to Driver or Passenger. A user can leave many different reviews on many different profiles, however a review can only be created by one user.
+                
+    
+       \subsubsection{Notification table}
+        This table stores all notifications that were sent either by a driver or an admin user. A notification can be sent to multiple users at the same time, however a notification can only be sent by one person.
+
+
+       \subsubsection{Trips}
+        This table is responsible for storing the trips that the user(driver) has created. It stores the necessary information about the trip that has been created. A user (driver) can post/ create many different trips however only one user can post/create a trip.
+       
+    
+       \subsubsection{Booking}
+        This table is responsible for storing the bookings that have been made by the user(passenger). Booking occurs when a user(passenger) requests an available seat on a trip that has been created. The booking is only confirmed once the driver has accepted their request. A user can have many bookings on many trips, however a booking can only relate to one user. A trip can have many bookings (since more then one passenger can join a trip), but a booking can only belong to one trip.
+        
+       \subsubsection{ChatRoom}
+        This is responsible for storing information relating to a chatroom. A chatroom is created when the user confirms a booking. The chatroom allows all users that partake in the trip to send messages to one another in a central location, instead of sending messages to each user individually. A user can belong to many chatrooms, and a chatroom can have many different users.
+
+    
+      \subsubsection{Message}
+        This is the actual message that is sent on the chatroom. This table stores all necessary information about the message sent as well as who sent the message, and who receives the message. A message can belong to only one chatroom, but a chatroom can consists of many different messages. A user can create many different messages, but a message can only be created/sent by one user.
+
+    \subsubsection{Driver}
+    Since a user can be both a driver and a passenger, the driver table stores all information relating to the driver. This ensures that the User table does not have null fields, since if a user is a passenger they won’t need to enter their car model and a picture of their license.
+         
+    
+    \end{document}

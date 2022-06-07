@@ -351,14 +351,15 @@ The connection between the various subsystems and their individual classes are d
          
 \newpage
 \section{Subsystems}
-                \subsection{User:}
+
+     \subsection{User:}
                 \subsubsection{Use Cases}
                   The User subsystem manages all operations where a User needs to interact with the other subsystems:
-                    
+                  
                     \begin{figure}[H]
                     
                         \centering
-                        \includegraphics[width=15cm]{images/User Usecase.drawio.png}
+                        \includegraphics[width=15cm]{images/Payment UseCase.drawio.png}
                         \caption{User Use Cases}
                         \label{fig:User UseCases}
                         
@@ -389,13 +390,158 @@ The connection between the various subsystems and their individual classes are d
                 	
                 \item DeleteUser: \\
                     The admin user is able to delete/ remove any user from the Carpool application. The userid of the user who should be removed should be passed into this function. The user will be removed from the database.
+                    
+                    \end{enumerate}
+                    
+\newpage
+                \subsection{Payment:}
+                \subsubsection{Use Cases}
+                  The Payment subsystem is responsible for ensuring that the user is able to make secure payments via the application. This could be done using payFast:
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[width=15cm]{images/User Usecase.drawio.png}
+                        \caption{User Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+                    
+            \subsubsection{Service Contract}
+             \begin{enumerate}[label=U1.\arabic*]
+
+                \item MakePayment:\\
+                When a user would like to make payment for their booking, this function will be called. The function will take in as parameters : account holder, account number, password, OTP, amount due)
+
+                \item Confirmation:\\
+                	This use case is responsible for sending a confirmation email to the user once the payment is reflected as successful. The function takes in the userid as a parameter.
+
+                \item GenerateInvoice:\\
+                This use case is responsible for generating an invoice that will be emailed along with the confirmation to the user. This is only done when the payment is successful.
+                	
+                \item CancelPayment: \\
+            The user is provided with the opportunity to cancel their payment. The money that they paid will be refunded to them.
+               
                 
             \end{enumerate}
+            
+            \vspace{1cm}
+                \subsection{Reviews:}
+                \subsubsection{Use Cases}
+                   The review subsystem allows user’s to rate and review other users in the application. Driver’s can rate passengers and passengers can rate drivers. This rating allows users to gain insight on how their driver/passenger conducts themselves on trips.
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[]{images/Rating Usecase.drawio.png}
+                        \caption{User Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+         \newpage           
+                \subsubsection{Service Contract}
+            
+             \begin{enumerate}[label=U1.\arabic*]
 
+                \item ViewRatings:\\
+                    The user is able to view all their ratings, These are ratings that have been created by other users. This function will return a list of all the user’s ratings, both positive and negative.\\
 
+                \item LeaveRating:\\
+                	This function returns a list of notifications that the user has received. The user is able to view all their notifications on one page\\
 
+                \item LeaveReview:\\
+                    The user is able to rate other users via this use case. This function takes in the userid of the user who wants to leave the rating, the userid of the user whom the rating is about, and the rating.\\
+                	
+                \item NotifyUserWhenTripFullyBooked: \\
+                    The user is able to review other users via this use case. This function takes in the userid of the user who wants to leave the review, the userid of the user whom the review is about, and the review. Ratings are integer/ stars and reviews are usually longer sentence.\\
+               
+            \end{enumerate}
+            
+    \newpage
+                    \subsection{Notifications:}
+                \subsubsection{Use Cases}
+                  The notification subsystem allows admin to send notifications to users when their trips are fully booked and when they have been validated. The notification subsystem also allows users to send notifications to other users in the trip reminding them about the trip.
+                  \vspace{1cm}
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[]{images/Notification Usecase.drawio.png}
+                        \caption{User Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+   \newpage                 
+                \subsubsection{Service Contract}
+            
+             \begin{enumerate}[label=U1.\arabic*]
 
+                \item CreateNotification:\\
+                    This function will allow users to create notifications, passed as a parameter will be the context of the notification as well as the user/users that one would like to send the notification to.\\
 
+                \item ViewNotifications:\\
+                	This function returns a list of notifications that the user has received. The user is able to view all their notifications on one page\\
+
+                \item NotifyUserWhenValidated:\\
+                    The admin users will make use of this function once they have completed validating a user’s email address or drivers license. This will make the users aware of their validation status and they can then start using the application as soon as possible. The parameters will be the userid’s of those users who have been validated successfully.\\
+                	
+                \item NotifyUserWhenTripFullyBooked: \\
+                    This allows drivers and passengers to know when their trip has been fully booked. Passengers will pay the minimum price for a seat, and driver won’t have to worry about looking for more people to carpool with. This will take in all the users that belong to the fully booked trip as a parameter.\\
+               
+    
+\newpage
+                \subsection{Trips:}
+                \subsubsection{Use Cases}
+                    The trips subsystem is where the core functionality of the application occurs, users are able to browse, book and create trips in this subsystem
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[width = 15cm]{images/Trips Usecase.drawio.png}
+                        \caption{User Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+         \newpage           
+                \subsubsection{Service Contract}
+            
+             \begin{enumerate}[label=U1.\arabic*]
+
+                \item ViewTripHistory:\\
+                This allows the user to view the previous trips that they have booked or that they have created. The developers will also use this this function to recommend trips to passengers.\\
+
+                \item BookTrip:\\
+                Users will be provided with the functionality to book a trip that has available seats. Booking a trip can be split into two functions: 
+                Requesting a Trip – The user will first have to request to be apart of said trip, the user will have to wait for confirmation from the driver of the trip.
+                Confirmed Trip – Once the trip has been confirmed, the user will receive a notification about this confirmation and will be able to edit/cancel their booking.\\
+
+                \item EditBooking:\\
+                The passenger will be able to edit their booking, by increasing the number of seats that they would like to book, or their start location.\\
+                	
+                \item CancelBooking: \\
+                The passenger will be provided with the opportunity to cancel their booking, the driver will be notified about this confirmation. If payment has been made, then the passenger will be refunded.\\
+                    
+                \item CreateTrip:\\
+                Drivers can create a  trip, when creating the trip they need to include : date of trip, seats available, price per seat, starting location and destination of the trip. The database will then record all this information and this trip will be displayed on the view Trip page.\\
+                    
+                \item EditTrip:\\
+                Drivers can then edit the trips they created, by changing the information that they have entered(date of trip, seats available, price per seat, starting location and destination of the trip). They can also deny previously confirmed passengers of joining the trip. The database will be updated accordingly.\\
+
+                \item CancelTrip:\\
+                A driver can cancel the trips that they have created, when they cancel the trip. Passengers who were supposed to be apart of the trip will be notified. The trip’s information will be removed from the database and users will no longer be able to join the trip since it does not exist anymore.\\
+                	
+                \item StartTrip: \\
+                When the driver begin their trip (ready to pick up fellow passengers), they need to start the trip, when they begin their trip, the passengers will be notified that their driver is on their way to pick them up.\\
+                
+                \item EndTrip:\\
+                Once the driver has arrived at the desired destination with the required passengers, the driver will be asked to end the trip. This is to ensure that the trip has been completed successfully and participants of the trip have arrived safely of their destination. The trip will then be categorized  as completed in the database.\\
+
+                \item Decline/Accept Passengers:\\
+                The driver will be allowed to accept and decline passengers that would like to join their trip. This allows the driver to ensure that they are travelling with people they are comfortable with. Before accepting/ declining the passenger, the user will be prompted to view the passengers profile, ensuring that the driver makes and informed decision.\\
+                	
+            \end{enumerate}
+
+ \end{enumerate}
 
 
     \end{document}

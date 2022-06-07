@@ -168,7 +168,6 @@ The user should have the ability to operate and own a mobile device such as a sm
 
     \newpage
 \subsection{User Stories}
- \begin{changemargin}
     \begin{itemize}
         \item \textbf{\underline{User Story 1: }}\\
         As an Admin I want to verify a student's email address and driver license, so that only valid users can access the application (Students who study at a recognized University in South Africa).
@@ -203,19 +202,15 @@ The user should have the ability to operate and own a mobile device such as a sm
         \item \textbf{\underline{User Story 16: }} \\ 
         As a student with a limited budget user, I want an inexpensive way to travel so I don't have to rely on public transportation.
         \item \textbf{\underline{User Story 17: }} \\ 
-        As a commuter on a long route, I wany to be able to chat to someone so that the travel feels shorter.
+        As a commuter on a long route, I want to be able to chat to someone so that the travel feels shorter.
         
         
     \end{itemize}
-  \end{changemargin}
   
   \newpage
 \section{Functional Requirements}
-
-    \begin{changemargin}
-    
         \subsection{Must-have requirements}
-            \begin{enumerate}[.9in,label=R.\arabic*]
+            \begin{enumerate}[label=R.\arabic*]
     
                 \item The system must provide users with the opportunity to create and manage their accounts.
                 \item The system must provide users with the opportunity to Login.\\
@@ -252,12 +247,9 @@ The user should have the ability to operate and own a mobile device such as a sm
 
             \end{enumerate}
             
-    \end{changemargin}
     
     \newpage
 \section{Quality requirements}
-
-    \begin{changemargin}
     \large{ \textbf{Scalability}}
         \begin{itemize}
             \item[-] Currently the carpool application is only for students in South Africa but it could be expanded internationally. 
@@ -289,7 +281,6 @@ The user should have the ability to operate and own a mobile device such as a sm
 
 
         \end{itemize}
-    \end{changemargin}
 \vspace{0.5cm}    
     \large{ \textbf{Usability:}}
             \begin{itemize}
@@ -358,5 +349,53 @@ The connection between the various subsystems and their individual classes are d
     \subsubsection{Driver}
     Since a user can be both a driver and a passenger, the driver table stores all information relating to the driver. This ensures that the User table does not have null fields, since if a user is a passenger they won’t need to enter their car model and a picture of their license.
          
+\newpage
+\section{Subsystems}
+                \subsection{User:}
+                \subsubsection{Use Cases}
+                  The User subsystem manages all operations where a User needs to interact with the other subsystems:
+                    
+                    \begin{figure}[H]
+                    
+                        \centering
+                        \includegraphics[width=15cm]{images/User Usecase.drawio.png}
+                        \caption{User Use Cases}
+                        \label{fig:User UseCases}
+                        
+                    \end{figure}
+            
+             \begin{enumerate}[label=U1.\arabic*]
     
+                \item Login:\\
+                	The user will be asked to enter their username (student email address) and password in order to access the functionality of the application. If the user enters the correct credentials, they will be issued with a token which will be stores on their local storage.
+
+                \item Register:\\
+                	In order to access the functionality of this application, the user has to have an account. The user can create an account by entering their, name, surname, university, email, student number and profile picture
+
+                \item ForgotPassword:\\
+                	A link will be sent to the user’s email address, when the user clicks on the link, they will be directed to a website whereby they will be allowed to change their password in a secure manner. The database will be updated with this new password, the userid, and new password will be passed into this function.
+                	
+                \item EditProfile: \\
+                    The user will be provided with the opportunity to edit their profie, such as their name, surname, and profile picture. The userid as well as what information the user would like to edit will be passed into this function.
+                    
+                \item EditPaymentMethod:\\
+                    The user will be provided with the opportunity to change their banking details and their payment method (cash or card). The userid as well as the updated banking details/ payment method will be passed into this function.
+                    
+                \item VerifyStudent:\\
+                    The admin user will verify newly registered students through their email address. The function will take in the student’s email address as a parameter, and return a Boolean value (based on if the user is valid or not). This verification ensures that the user is a student at a recognized university in South Africa.                
+                    
+                \item AddAdmin:\\
+                	The admin user is able to add new admin users to the database. This function will take in the admin user’s name, surname, email, student number and profile picture. A new user will be created in the database.
+                	
+                \item DeleteUser: \\
+                    The admin user is able to delete/ remove any user from the Carpool application. The userid of the user who should be removed should be passed into this function. The user will be removed from the database.
+                
+            \end{enumerate}
+
+
+
+
+
+
+
     \end{document}

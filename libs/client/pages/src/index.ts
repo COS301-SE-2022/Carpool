@@ -1,3 +1,5 @@
+export * from './lib/driver-profile/driver-profile';
+export * from './lib/search-results/search-results';
 export * from './lib/change-password/change-password';
 export * from './lib/trip-history/trip-history';
 export * from './lib/statistics/statistics';

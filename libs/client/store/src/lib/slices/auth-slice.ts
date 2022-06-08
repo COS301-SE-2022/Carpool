@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UserProfileState, UserState } from '../types/auth-types';
+import {
+  UpdateUserType,
+  UserProfileState,
+  UserState,
+} from '../types/auth-types';
 import {
   login,
   register,
@@ -7,6 +11,7 @@ import {
   verifyEmail,
   logout,
   fetchUserProfile,
+  createUpdateUser,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -132,6 +137,32 @@ export const userProfileSlice = createSlice({
         } else {
           state.error = { message: 'Unknown error' };
         }
+      });
+  },
+});
+
+export const initialUpdateState = {
+  status: 'idle',
+  error: null,
+} as UpdateUserType;
+
+export const userUpdateSlice = createSlice({
+  name: 'users',
+  initialState: initialUpdateState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createUpdateUser.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(createUpdateUser.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+      })
+      .addCase(createUpdateUser.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
       });
   },
 });

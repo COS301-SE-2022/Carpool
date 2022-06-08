@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from '@carpool/client/components';
 import { Text, SafeAreaView, View, StyleSheet, Image } from 'react-native';
-import { OnboardProps } from '../NavigationTypes/navigation-types';
+import { OnboardPageProps } from '../NavigationTypes/navigation-types';
 
-export function OnboardPage({ navigation }: OnboardProps) {
+export function OnboardPage({ navigation }: OnboardPageProps) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
@@ -64,9 +64,15 @@ export function OnboardPage({ navigation }: OnboardProps) {
           }}
         >
           <View style={{ marginVertical: 20 }}>
-            <Button title="Login" onPress={() => navigation.push('Login')} />
+            <Button
+              title="Login"
+              onPress={() => navigation.push('LoginPage')}
+            />
           </View>
-          <Button title="Sign Up" onPress={() => navigation.push('SignUp')} />
+          <Button
+            title="Sign Up"
+            onPress={() => navigation.push('SignUpPage')}
+          />
         </View>
       </View>
     </SafeAreaView>

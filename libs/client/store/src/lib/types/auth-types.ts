@@ -27,3 +27,8 @@ export type UserProfile = {
   university: string;
   studentNumber: string;
 };
+
+export type UpdateUserType = {
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

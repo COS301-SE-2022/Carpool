@@ -11,12 +11,12 @@ import {
 import { Button } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
 import { KeyboardAvoidingView } from 'native-base';
-import { ConfirmEmailProps } from '../NavigationTypes/navigation-types';
+import { ConfirmEmailPageProps } from '../NavigationTypes/navigation-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootStore, verifyEmail } from '@carpool/client/store';
 import { AppDispatch } from '@carpool/client/store';
 
-export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
+export function ConfirmEmailPage({ navigation }: ConfirmEmailPageProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const userState = useSelector((state: RootStore) => state.user);
@@ -36,7 +36,7 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailProps) {
       dispatch(verifyEmail({ id: user.id, code }));
 
       if (status === 'success') {
-        navigation.navigate('Login');
+        navigation.navigate('LoginPage');
       }
     }
   };

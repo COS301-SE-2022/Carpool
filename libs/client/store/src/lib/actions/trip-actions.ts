@@ -2,7 +2,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
   LIST_TRIPS,
+  PASSENGER_HISTORY,
   TRIP_DETAILS,
+  DRIVER_HISTORY,
   UPCOMING_TRIP,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
@@ -34,6 +36,58 @@ export const listTrips = createAsyncThunk<
 
   SecureStore.deleteItemAsync('trips');
   SecureStore.setItemAsync('trips', JSON.stringify(res));
+
+  return res;
+});
+
+export const listDriverHistory = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/history', async (tripId: string, thunkApi) => {
+  const response = await axios.post('http://localhost:3333/graphql', {
+    query: DRIVER_HISTORY,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByDriver;
+
+  return res;
+});
+
+export const listPassengerHistory = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/history', async (tripId: string, thunkApi) => {
+  const response = await axios.post('http://localhost:3333/graphql', {
+    query: PASSENGER_HISTORY,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByPassenger;
 
   return res;
 });

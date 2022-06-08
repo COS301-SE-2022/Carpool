@@ -18,9 +18,9 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { SignupProps } from '../NavigationTypes/navigation-types';
+import { SignUpPageProps } from '../NavigationTypes/navigation-types';
 
-export function SignUpPage({ navigation }: SignupProps) {
+export function SignUpPage({ navigation }: SignUpPageProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const userState = useSelector((state: RootStore) => state.user);
@@ -84,7 +84,7 @@ export function SignUpPage({ navigation }: SignupProps) {
         register({ name, surname, email, university, studentNumber, password })
       );
 
-      navigation.navigate('ConfirmEmail');
+      navigation.navigate('ConfirmEmailPage');
     }
   };
 
@@ -139,7 +139,7 @@ export function SignUpPage({ navigation }: SignupProps) {
                 inputOneValue={name}
                 inputTwoValue={surname}
                 inputOnePlaceholder="Name"
-                inputTwoPlaceholder="Surname" 
+                inputTwoPlaceholder="Surname"
                 iconName="account"
               />
               <Input
@@ -198,7 +198,7 @@ export function SignUpPage({ navigation }: SignupProps) {
             <Text style={{ color: '#808080' }}>Already have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.push('Login')}
+              onPress={() => navigation.push('LoginPage')}
             >
               &nbsp;Login
             </Text>

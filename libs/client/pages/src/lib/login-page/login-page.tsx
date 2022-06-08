@@ -11,10 +11,10 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { LoginProps } from '../NavigationTypes/navigation-types';
+import { LoginPageProps } from '../NavigationTypes/navigation-types';
 import Toast from 'react-native-toast-message';
 
-export function LoginPage({ navigation }: LoginProps) {
+export function LoginPage({ navigation }: LoginPageProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const [email, setEmail] = useState('');
@@ -105,7 +105,7 @@ export function LoginPage({ navigation }: LoginProps) {
               />
               <Text
                 style={{ color: '#188aed', textAlign: 'right' }}
-                onPress={() => navigation.push('ForgotPassword')}
+                onPress={() => navigation.push('ForgotPasswordPage')}
               >
                 Forgot Password?
               </Text>
@@ -133,7 +133,7 @@ export function LoginPage({ navigation }: LoginProps) {
             <Text style={{ color: '#808080' }}>Don't have an account?</Text>
             <Text
               style={{ color: '#188aed' }}
-              onPress={() => navigation.push('SignUp')}
+              onPress={() => navigation.push('SignUpPage')}
             >
               &nbsp;Sign up
             </Text>

@@ -6,7 +6,7 @@ import {
 import { User } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import * as bcrypt from 'bcrypt';
-import { UserInput } from '@carpool/api/authentication/entities';
+import { UserInput, UserUpdate } from '@carpool/api/authentication/entities';
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -78,6 +78,27 @@ export class AuthRepository {
     });
 
     if (user) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  async updateUser(user: UserUpdate): Promise<boolean> {
+    const updatedUser = await this.prisma.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        university: user.university,
+        studentNumber: user.studentNumber,
+      },
+    });
+
+    if (updatedUser) {
       return true;
     } else {
       return false;

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TripDetailsProps } from '../NavigationTypes/navigation-types';
+import { TripDetailsPageProps } from '../NavigationTypes/navigation-types';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { RootStore } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import {
   TripDetailsBottomContainer,
 } from '@carpool/client/components';
 
-export function TripDetails({ route, navigation }: TripDetailsProps) {
+export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   const { tripId } = route.params;
 
   const dispatch: AppDispatch = useDispatch();
@@ -26,10 +26,6 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
 
   const bookRide = (tripId: string) => {
     console.log(`Booking ride ${tripId}`);
-  };
-
-  const userProfile = (userId: string) => {
-    navigation.push('UserProfile', { userId });
   };
 
   return (
@@ -71,7 +67,11 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
               <TripDetailsBottomContainer
                 trip={trip}
                 onPress={() => bookRide(tripId)}
-                onPressUser={() => userProfile('5678')}
+                onPressUser={() =>
+                  navigation.navigate('DriverProfile', {
+                    driverId: trip.driver.id,
+                  })
+                }
               />
             )}
           </View>

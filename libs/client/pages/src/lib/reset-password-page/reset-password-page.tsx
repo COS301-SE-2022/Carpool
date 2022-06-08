@@ -2,9 +2,8 @@
 import React from 'react';
 import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
 import { Button } from '@carpool/client/components';
-import { ResetPasswordProps } from '../NavigationTypes/navigation-types';
 
-export function ResetPasswordPage({ navigation }: ResetPasswordProps) {
+export function ResetPasswordPage() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
@@ -64,10 +63,10 @@ export function ResetPasswordPage({ navigation }: ResetPasswordProps) {
             flexDirection: 'column',
           }}
         >
-          <View style={{ marginVertical: 20 }}>
+          {/* <View style={{ marginVertical: 20 }}>
             <Button title="Login" onPress={() => navigation.push('Login')} />
           </View>
-          <Button title="Sign Up" onPress={() => navigation.push('SignUp')} />
+          <Button title="Sign Up" onPress={() => navigation.push('SignUp')} /> */}
         </View>
       </View>
     </SafeAreaView>

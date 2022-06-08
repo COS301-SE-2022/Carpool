@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
 import { Button, Input } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
-import { ForgotPasswordProps } from '../NavigationTypes/navigation-types';
+import { ForgotPasswordPageProps } from '../NavigationTypes/navigation-types';
 
-export function ForgotPasswordPage({ navigation }: ForgotPasswordProps) {
+export function ForgotPasswordPage({ navigation }: ForgotPasswordPageProps) {
   const [email, setEmail] = useState('');
 
   return (
@@ -82,7 +82,7 @@ export function ForgotPasswordPage({ navigation }: ForgotPasswordProps) {
         >
           <Button
             title="Reset Password"
-            onPress={() => navigation.push('Login')}
+            onPress={() => navigation.push('LoginPage')}
           />
         </View>
       </View>

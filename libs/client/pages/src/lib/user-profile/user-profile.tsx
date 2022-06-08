@@ -8,14 +8,14 @@ import {
   Pressable,
   Alert,
 } from 'react-native';
-import { UserProfileStackProps } from '../NavigationTypes/navigation-types';
+import { UserProfileProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { fetchUserProfile, AppDispatch, logout } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
 
-export function UserProfile({ navigation }: UserProfileStackProps) {
+export function UserProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const userProfile = useSelector((state: RootStore) => state.userProfile);
@@ -25,10 +25,10 @@ export function UserProfile({ navigation }: UserProfileStackProps) {
   const { user: userData } = user;
 
   useEffect(() => {
-    if (userData) {
+    if (userData && !profile) {
       dispatch(fetchUserProfile(userData.id));
     }
-  }, [dispatch, userData]);
+  }, [dispatch, userData, profile]);
 
   const signOut = () => {
     Alert.alert('Are you sure?', '', [
@@ -137,7 +137,7 @@ export function UserProfile({ navigation }: UserProfileStackProps) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}
-                onPress={() => navigation.push('Profile')}
+                onPress={() => navigation.push('EditProfile')}
               >
                 <View
                   style={{

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -6,16 +6,26 @@ import {
   SafeAreaView,
   Image,
   Pressable,
+  TextInput,
 } from 'react-native';
-import { UserProfileStackProps } from '../NavigationTypes/navigation-types';
+import { UserProfileProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '@carpool/client/store';
-import { fetchUserProfile, AppDispatch } from '@carpool/client/store';
+import { RootStore, UserUpdate } from '@carpool/client/store';
+import {
+  fetchUserProfile,
+  AppDispatch,
+  createUpdateUser,
+} from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icons from 'react-native-vector-icons/Entypo';
 
-export function EditProfile({ navigation }: UserProfileStackProps) {
+export function EditProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
+
+  const [name, setName] = useState('');
+  const [surname, setSurname] = useState('');
+  const [email, setEmail] = useState('');
+  const [university, setUniversity] = useState('');
+  const [studentNumber, setStudentNumber] = useState('');
 
   const userProfile = useSelector((state: RootStore) => state.userProfile);
   const { userProfile: profile, status } = userProfile;
@@ -23,16 +33,49 @@ export function EditProfile({ navigation }: UserProfileStackProps) {
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
+  const updateUser = useSelector((state: RootStore) => state.updateUser);
+  const { status: updateStatus } = updateUser;
+
   useEffect(() => {
-    if (userData) {
+    if (userData && !profile) {
       dispatch(fetchUserProfile(userData.id));
     }
-  }, [dispatch, userData]);
+
+    if (profile) {
+      setName(profile.name);
+      setSurname(profile.surname);
+      setEmail(profile.email);
+      setUniversity(profile.university);
+      setStudentNumber(profile.studentNumber);
+    }
+  }, [dispatch, userData, updateStatus]);
+
+  const saveProfile = () => {
+    dispatch(
+      createUpdateUser({
+        id: userData ? userData.id : '',
+        name,
+        surname,
+        email,
+        university,
+        studentNumber,
+      })
+    );
+  };
 
   return (
     <SafeAreaView style={{ height: '100%' }}>
       {status === 'loading' ? (
-        <ActivityIndicator />
+        <View
+          style={{
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <ActivityIndicator />
+        </View>
       ) : (
         profile && (
           <View
@@ -81,7 +124,7 @@ export function EditProfile({ navigation }: UserProfileStackProps) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                flex: 3,
+                flex: 2,
               }}
             >
               <Image
@@ -101,30 +144,177 @@ export function EditProfile({ navigation }: UserProfileStackProps) {
               >
                 {profile.name} {profile.surname}
               </Text>
-              {/* <Pressable
-            style={{
-              width: '50%',
-              backgroundColor: '#188aed',
-              borderRadius: 30,
-              paddingVertical: 8,
-            }}
-            onPress={editProfile}
-          >
-            <Text
-              style={{
-                color: '#fff',
-                fontSize: 18,
-                fontWeight: '600',
-                textAlign: 'center',
-              }}
-            >
-              Edit Profile
-            </Text>
-          </Pressable> */}
             </View>
             <View
-              style={{ flex: 5, display: 'flex', flexDirection: 'column' }}
-            ></View>
+              style={{
+                flex: 5,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>Name</Text>
+                <TextInput
+                  value={name}
+                  onChangeText={setName}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>Surname</Text>
+                <TextInput
+                  value={surname}
+                  onChangeText={setSurname}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>Email</Text>
+                <TextInput
+                  value={email}
+                  onChangeText={setEmail}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>University</Text>
+                <TextInput
+                  value={university}
+                  onChangeText={setUniversity}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>Student Number</Text>
+                <TextInput
+                  value={studentNumber}
+                  onChangeText={setStudentNumber}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <Pressable
+                style={{
+                  width: '50%',
+                  backgroundColor: '#188aed',
+                  borderRadius: 30,
+                  marginTop: 30,
+                  paddingVertical: 10,
+                }}
+                onPress={saveProfile}
+              >
+                <Text
+                  style={{
+                    color: '#fff',
+                    fontSize: 18,
+                    fontWeight: '600',
+                    textAlign: 'center',
+                  }}
+                >
+                  Save
+                </Text>
+              </Pressable>
+            </View>
           </View>
         )
       )}

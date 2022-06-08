@@ -2,13 +2,13 @@
 import React, { useState } from 'react';
 import { Text, StyleSheet, View, Pressable } from 'react-native';
 import { Button } from '@carpool/client/components';
-import { SearchProps } from '../NavigationTypes/navigation-types';
+import { SearchPageProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DatePicker from 'react-native-date-picker';
 import { formatDate, getTime } from '@carpool/client/shared/utilities';
 
-export function SearchPage({ navigation }: SearchProps) {
+export function SearchPage({ navigation }: SearchPageProps) {
   type address = {
     address: string;
     latitude: string;

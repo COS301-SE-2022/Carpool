@@ -36,3 +36,8 @@ export const VERIFY_EMAIL = `
     verifyEmail(id: $id)
   }
 `;
+
+export const USER_UPDATE = `
+mutation ($id: String!, $name: String!, $surname: String!, $email: String!, $university: String!, $studentNumber: String!) {
+  updateUser(id: $id, name: $name, surname: $surname, email: $email, university: $university, studentNumber: $studentNumber)
+}`;

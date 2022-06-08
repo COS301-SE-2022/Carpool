@@ -5,6 +5,7 @@ import {
   USER_PROFILE,
   USER_REGISTER,
   VERIFY_EMAIL,
+  USER_UPDATE,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
 import { User, UserProfile } from '../types/auth-types';
@@ -160,3 +161,35 @@ export const logout = createAsyncThunk('users/logout', async () => {
   await SecureStore.deleteItemAsync('user');
   return null;
 });
+
+export type UserUpdate = {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  university: string;
+  studentNumber: string;
+};
+
+export const createUpdateUser = createAsyncThunk(
+  'users/update',
+  async (user: UserUpdate) => {
+    const response = await axios.post('http://localhost:3333/graphql', {
+      query: USER_UPDATE,
+      variables: {
+        id: user.id,
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        university: user.university,
+        studentNumber: user.studentNumber,
+      },
+    });
+
+    console.log('ADDING');
+
+    const res = response.data.data.updateUser;
+
+    return res;
+  }
+);

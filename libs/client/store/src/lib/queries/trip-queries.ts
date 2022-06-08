@@ -16,6 +16,42 @@ export const LIST_TRIPS = `
   }
 `;
 
+export const DRIVER_HISTORY = `
+query ($id: String!) {
+  findByDriver(id: $id) {
+    tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
+export const PASSENGER_HISTORY = `
+query ($id: String!) {
+  findByPassenger(id: $id) {
+    tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
 export const UPCOMING_TRIP = `
   query {
     findUpcomingTrip {

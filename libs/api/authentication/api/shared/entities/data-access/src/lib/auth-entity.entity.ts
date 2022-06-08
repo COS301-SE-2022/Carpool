@@ -84,3 +84,24 @@ export class UserInput {
   @Field()
   studentNumber: string;
 }
+
+@InputType()
+export class UserUpdate {
+  @Field()
+  id: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  surname: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  university: string;
+
+  @Field()
+  studentNumber: string;
+}

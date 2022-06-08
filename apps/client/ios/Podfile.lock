@@ -333,12 +333,12 @@ PODS:
     - React-Core
   - react-native-date-picker (4.2.2):
     - React-Core
-  - react-native-geolocation (2.1.0):
-    - React-Core
   - react-native-google-maps (0.31.1):
     - Google-Maps-iOS-Utils (= 4.1.0)
     - GoogleMaps (= 6.1.1)
     - React-Core
+  - react-native-location (2.5.0):
+    - React
   - react-native-maps (0.31.1):
     - React-Core
   - react-native-safe-area-context (4.2.5):
@@ -488,8 +488,8 @@ DEPENDENCIES:
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - react-native-config (from `../../../node_modules/react-native-config`)
   - react-native-date-picker (from `../../../node_modules/react-native-date-picker`)
-  - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-google-maps (from `../node_modules/react-native-maps`)
+  - react-native-location (from `../node_modules/react-native-location/react-native-location.podspec`)
   - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../../../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -586,10 +586,10 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-config"
   react-native-date-picker:
     :path: "../../../node_modules/react-native-date-picker"
-  react-native-geolocation:
-    :path: "../node_modules/@react-native-community/geolocation"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-location:
+    :path: "../node_modules/react-native-location/react-native-location.podspec"
   react-native-maps:
     :path: "../../../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -680,8 +680,8 @@ SPEC CHECKSUMS:
   React-logger: f79dd3cc0f9b44f5611c6c7862badd891a862cf8
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-date-picker: 9088350e06918f7d842a34c171acadc66583cb94
-  react-native-geolocation: 69f4fd37650b8e7fee91816d395e62dd16f5ab8d
   react-native-google-maps: 8231ffa015bf8b222c2e2661fa9163cdb609a224
+  react-native-location: 5a40ec1cc6abf2f6d94df979f98ec76c3a415681
   react-native-maps: 8b8bfada2c86205a7f5a07dd1f92f29b33ea83aa
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f
   React-perflogger: 30ab8d6db10e175626069e742eead3ebe8f24fd5
@@ -709,6 +709,6 @@ SPEC CHECKSUMS:
   Yoga: 17cd9a50243093b547c1e539c749928dd68152da
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 3eae07e012337e625b9a4899beb2147cc557bb89
+PODFILE CHECKSUM: e9fc119e6d0f55d5e98f49fdb65f115e4e1c07ee
 
 COCOAPODS: 1.11.3

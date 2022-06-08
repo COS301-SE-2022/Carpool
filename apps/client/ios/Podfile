@@ -22,8 +22,8 @@ target 'Client' do
   pod 'GoogleMaps'
   pod 'Google-Maps-iOS-Utils'
 
-  pod 'react-native-location', :path => '../node_modules/react-native-location/react-native-location.podspec'
-  # pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
+  # pod 'react-native-location', :path => '../node_modules/react-native-location/react-native-location.podspec'
+  pod 'react-native-geolocation', path: '../node_modules/@react-native-community/geolocation'
 
   use_react_native!(
     :path => config[:reactNativePath],

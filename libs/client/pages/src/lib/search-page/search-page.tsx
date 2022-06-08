@@ -1,12 +1,23 @@
 /* eslint-disable-next-line */
-import React, { useState } from 'react';
-import { Text, StyleSheet, View, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, StyleSheet, View } from 'react-native';
 import { Button } from '@carpool/client/components';
 import { SearchProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DatePicker from 'react-native-date-picker';
-import { formatDate, getTime } from '@carpool/client/shared/utilities';
+import Geolocation from '@react-native-community/geolocation';
+
+// navigator.geolocation = require('@react-native-community/geolocation');
+
+// Geolocation.getCurrentPosition((info) => {
+//   console.log(info);
+// });
+
+/* eslint-disable-next-line */
+// navigator.geolocation = Geolocation;
+
+// navigator.geolocation = require('@react-native-community/geolocation');
 
 export function SearchPage({ navigation }: SearchProps) {
   type address = {
@@ -15,13 +26,20 @@ export function SearchPage({ navigation }: SearchProps) {
     longitude: string;
   };
 
+  const [currentLocation, setCurrentLocation] = useState({});
+
+  type reqionType = {
+    latitude: string;
+    longitude: string;
+  };
+
   const [date, setDate] = useState(new Date());
   const [open, setOpen] = useState(false);
 
-  const [selected, setSelected] = useState(false);
-
   const [origin, setOrigin] = useState({} as address);
   const [destination, setDestination] = useState({} as address);
+
+  const [region, setRegion] = useState({});
 
   const search = () => {
     alert(
@@ -29,9 +47,13 @@ export function SearchPage({ navigation }: SearchProps) {
     );
   };
 
-  // const logDate = (date: Date) => {
-  //   console.log(date.toISOString());
-  // };
+  const logDate = (date: Date) => {
+    console.log(date.toISOString());
+  };
+
+  useEffect(() => {
+    navigator.geolocation = Geolocation;
+  }, []);
 
   return (
     <View style={{ flex: 1, padding: 30 }}>
@@ -66,6 +88,9 @@ export function SearchPage({ navigation }: SearchProps) {
               longitude: `${details?.geometry.location.lng}`,
             });
           }}
+          currentLocation={true}
+          currentLocationLabel="Current Location"
+          nearbyPlacesAPI="GoogleReverseGeocoding"
           query={{
             key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
             language: 'en',
@@ -128,28 +153,10 @@ export function SearchPage({ navigation }: SearchProps) {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: 10,
+          marginTop: 30,
         }}
       >
-        <Pressable
-          onPress={() => setOpen(true)}
-          style={{
-            borderWidth: 1,
-            width: '100%',
-            paddingHorizontal: 10,
-            paddingVertical: 12,
-            borderRadius: 25,
-            borderColor: '#808080',
-          }}
-        >
-          <Text style={{ color: selected ? '#000' : '#b9b9b9' }}>
-            {selected
-              ? `${formatDate(date.toUTCString())} ${getTime(
-                  date.toUTCString()
-                )}`
-              : ' Select Date...'}
-          </Text>
-        </Pressable>
+        <Button title="Open" onPress={() => setOpen(true)} />
         <DatePicker
           modal
           open={open}
@@ -157,8 +164,7 @@ export function SearchPage({ navigation }: SearchProps) {
           onConfirm={(date) => {
             setOpen(false);
             setDate(date);
-            setSelected(true);
-            // logDate(date);
+            logDate(date);
           }}
           onCancel={() => {
             setOpen(false);

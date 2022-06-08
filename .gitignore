@@ -19,6 +19,10 @@ node_modules
 
 .env
 
+# For database connections
+carpool_key.json
+cloud_sql_proxy.exe
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

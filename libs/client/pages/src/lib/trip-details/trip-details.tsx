@@ -28,6 +28,10 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
     console.log(`Booking ride ${tripId}`);
   };
 
+  const userProfile = (userId: string) => {
+    navigation.push('UserProfile', { userId });
+  };
+
   return (
     <View
       style={[
@@ -67,6 +71,7 @@ export function TripDetails({ route, navigation }: TripDetailsProps) {
               <TripDetailsBottomContainer
                 trip={trip}
                 onPress={() => bookRide(tripId)}
+                onPressUser={() => userProfile('5678')}
               />
             )}
           </View>

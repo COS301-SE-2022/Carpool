@@ -2,15 +2,20 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import {
   USER_LOGIN,
+  USER_PROFILE,
   USER_REGISTER,
   VERIFY_EMAIL,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
-import { User } from '../types/auth-types';
+import { User, UserProfile } from '../types/auth-types';
 
 export type UserLogin = {
   email: string;
   password: string;
+};
+
+export type UserProfileId = {
+  id: string;
 };
 
 export type UserRegister = {
@@ -65,6 +70,32 @@ export const login = createAsyncThunk<User, UserLogin, { rejectValue: Error }>(
     return res;
   }
 );
+
+export const fetchUserProfile = createAsyncThunk<
+  UserProfile,
+  string,
+  { rejectValue: Error }
+>('users/profile', async (userId: string, thunkApi) => {
+  const response = await axios.post('http://localhost:3333/graphql', {
+    query: USER_PROFILE,
+    variables: {
+      id: userId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findUserById;
+
+  return res;
+});
 
 export const register = createAsyncThunk(
   'users/register',

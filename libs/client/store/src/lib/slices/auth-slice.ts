@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { UserState } from '../types/auth-types';
+import { UserProfileState, UserState } from '../types/auth-types';
 import {
   login,
   register,
   fetchStorage,
   verifyEmail,
   logout,
+  fetchUserProfile,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -98,6 +99,39 @@ export const userLoginSlice = createSlice({
         console.log('SUCCESS');
         state.status = 'success';
         state.user = action.payload;
+      });
+  },
+});
+
+export const initialProfileState = {
+  userProfile: null,
+  status: 'idle',
+  error: null,
+} as UserProfileState;
+
+export const userProfileSlice = createSlice({
+  name: 'users',
+  initialState: initialProfileState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUserProfile.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.userProfile = action.payload;
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
       });
   },
 });

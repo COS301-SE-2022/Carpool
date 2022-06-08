@@ -37,6 +37,7 @@ export type Passenger = {
 };
 
 export type Driver = {
+  id: string;
   name: string;
   surname: string;
   profilePic: string;

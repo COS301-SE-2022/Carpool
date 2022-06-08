@@ -33,6 +33,7 @@ export const TRIP_DETAILS = `
     findTripById(id: $id) {
       tripId,
        driver {
+         id,
         name,
         surname,
         profilePic

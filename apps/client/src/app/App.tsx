@@ -14,6 +14,10 @@ import {
   SearchPage,
   DriverHome,
   SignOut,
+  UserProfile,
+  EditProfile,
+  Statistics,
+  TripHistory,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -33,6 +37,7 @@ export type RootStackParamList = {
   Home;
   SignOut;
   Login;
+  UserProfile;
 };
 
 export type HomeStackParamList = {
@@ -41,6 +46,16 @@ export type HomeStackParamList = {
   TripDetails;
   PostTrips;
   DriverHome;
+  UserProfile;
+};
+
+export type ProfileStackParamList = {
+  UserProfile;
+  Profile;
+  Statistics;
+  TripHistory;
+  ChangePassword;
+  SignOut;
 };
 
 export type AuthStackParamList = {
@@ -56,6 +71,7 @@ export type AuthStackParamList = {
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
+const ProfileStackNav = createNativeStackNavigator<ProfileStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
@@ -73,10 +89,39 @@ const HomeStack = () => {
       <HomeStackNav.Screen name="HomeScreen" component={HomePage} />
       <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
       <HomeStackNav.Screen name="DriverHome" component={DriverHome} />
+      <HomeStackNav.Screen name="UserProfile" component={UserProfile} />
       <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
         <HomeStackNav.Screen name="Search" component={SearchPage} />
       </HomeStackNav.Group>
     </HomeStackNav.Navigator>
+  );
+};
+
+const ProfileStack = () => {
+  return (
+    <ProfileStackNav.Navigator
+      initialRouteName="UserProfile"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <ProfileStackNav.Screen name="UserProfile" component={UserProfile} />
+      <ProfileStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <ProfileStackNav.Screen name="Profile" component={EditProfile} />
+      </ProfileStackNav.Group>
+      <ProfileStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <ProfileStackNav.Screen name="Statistics" component={Statistics} />
+      </ProfileStackNav.Group>
+      <ProfileStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
+      </ProfileStackNav.Group>
+      {/* <ProfileStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <ProfileStackNav.Screen name="ChangePassword" component={SearchPage} />
+      </ProfileStackNav.Group> */}
+      <ProfileStackNav.Group screenOptions={{ presentation: 'modal' }}>
+        <ProfileStackNav.Screen name="SignOut" component={SignOut} />
+      </ProfileStackNav.Group>
+    </ProfileStackNav.Navigator>
   );
 };
 
@@ -128,6 +173,7 @@ const AppWrapper = () => {
           <Tab.Screen name="Home" component={HomeStack} />
           <Tab.Screen name="Login" component={LoginPage} />
           <Tab.Screen name="SignOut" component={SignOut} />
+          <Tab.Screen name="UserProfile" component={ProfileStack} />
         </Tab.Navigator>
       ) : (
         <AuthStack.Navigator

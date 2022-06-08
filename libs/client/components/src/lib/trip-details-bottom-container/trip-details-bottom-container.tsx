@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, View, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
@@ -9,18 +9,24 @@ import { TripDetailsType } from '@carpool/client/store';
 type props = {
   trip: TripDetailsType;
   onPress: () => void;
+  onPressUser: () => void;
 };
 
-export function TripDetailsBottomContainer({ trip, onPress }: props) {
+export function TripDetailsBottomContainer({
+  trip,
+  onPress,
+  onPressUser,
+}: props) {
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
-      <View
+      <Pressable
         style={[
           styles.flexRow,
           {
             flex: 1,
           },
         ]}
+        onPress={onPressUser}
       >
         <View
           style={[
@@ -71,7 +77,7 @@ export function TripDetailsBottomContainer({ trip, onPress }: props) {
         <View style={[styles.shadow, styles.chatButton]}>
           <Icons name="chat-bubble" color="#188aed" size={25} />
         </View>
-      </View>
+      </Pressable>
       <View
         style={[
           styles.flexCol,

@@ -1,60 +1,94 @@
 import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 
-export type AuthStackParamList = {
-  Onboard: undefined;
-  Login: undefined;
-  SignUp: undefined;
-  ForgotPassword: undefined;
-  ConfirmEmail: undefined;
-  ResetPassword: undefined;
-};
-export type DriverHomeProps = NativeStackScreenProps<
-  HomeStackParamList,
-  'DriverHome'
->;
-
-export type OnboardProps = NativeStackScreenProps<
-  AuthStackParamList,
-  'Onboard'
->;
-export type LoginProps = NativeStackScreenProps<AuthStackParamList, 'Login'>;
-export type SignupProps = NativeStackScreenProps<AuthStackParamList, 'SignUp'>;
-export type ConfirmEmailProps = NativeStackScreenProps<
-  AuthStackParamList,
-  'ConfirmEmail'
->;
-export type ForgotPasswordProps = NativeStackScreenProps<
-  AuthStackParamList,
-  'ForgotPassword'
->;
-export type ResetPasswordProps = NativeStackScreenProps<
-  AuthStackParamList,
-  'ConfirmEmail'
->;
-
-export type HomeStackParamList = {
-  Home: undefined;
-  TripDetails: { tripId: string };
-  PostTrips: undefined;
-  UserInput: undefined;
-  Search: undefined;
+export type RootStackParamList = {
+  HomePage: undefined;
+  LoginPage: undefined;
+  OnboardPage: undefined;
+  SignUpPage: undefined;
   SignOut: undefined;
-  Login: undefined;
-  DriverHome: undefined;
+  ForgotPasswordPage: undefined;
+  ConfirmEmailPage: undefined;
+  ResetPasswordPage: undefined;
+  TripDetails: { tripId: string };
+  SearchPage: undefined;
+  UserProfile: { userId: string };
+  DriverProfile: { driverId: string };
+  EditProfile: undefined;
+  Statistics: undefined;
+  TripHistory: undefined;
 };
 
-export type PostTripsProps = NativeStackScreenProps<
-  HomeStackParamList,
-  'PostTrips'
+export type HomePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'HomePage'
 >;
 
-export type HomeProps = NativeStackScreenProps<HomeStackParamList, 'Home'>;
-export type TripDetailsProps = NativeStackScreenProps<
-  HomeStackParamList,
+export type LoginPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'LoginPage'
+>;
+
+export type OnboardPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'OnboardPage'
+>;
+
+export type SignUpPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SignUpPage'
+>;
+
+export type SignOutProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SignOut'
+>;
+
+export type ForgotPasswordPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ForgotPasswordPage'
+>;
+
+export type ConfirmEmailPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ConfirmEmailPage'
+>;
+
+export type ResetPasswordPagePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ResetPasswordPage'
+>;
+
+export type TripDetailsPageProps = NativeStackScreenProps<
+  RootStackParamList,
   'TripDetails'
 >;
-export type SearchProps = NativeStackScreenProps<HomeStackParamList, 'Search'>;
-export type SignOutProps = NativeStackScreenProps<
-  HomeStackParamList,
-  'SignOut'
+
+export type SearchPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SearchPage'
+>;
+
+export type UserProfileProps = NativeStackScreenProps<
+  RootStackParamList,
+  'UserProfile'
+>;
+
+export type EditProfileProps = NativeStackScreenProps<
+  RootStackParamList,
+  'EditProfile'
+>;
+
+export type StatisticsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'Statistics'
+>;
+
+export type TripHistoryProps = NativeStackScreenProps<
+  RootStackParamList,
+  'TripHistory'
+>;
+
+export type DriverProfileProps = NativeStackScreenProps<
+  RootStackParamList,
+  'DriverProfile'
 >;

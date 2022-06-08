@@ -7,6 +7,19 @@ export const USER_LOGIN = `
   }
 `;
 
+export const USER_PROFILE = `
+  query ($id: String!) {
+   findUserById(id: $id) {
+      id
+      name
+      surname
+      email
+      university
+      studentNumber
+   }
+  }
+`;
+
 export const USER_REGISTER = `
   mutation ($name: String!, $surname: String!, $email: String!, $university: String!, $studentNumber: String!, $password: String!) {
       register(name: $name, surname: $surname, email: $email, university: $university, studentNumber: $studentNumber, password: $password) {
@@ -23,3 +36,8 @@ export const VERIFY_EMAIL = `
     verifyEmail(id: $id)
   }
 `;
+
+export const USER_UPDATE = `
+mutation ($id: String!, $name: String!, $surname: String!, $email: String!, $university: String!, $studentNumber: String!) {
+  updateUser(id: $id, name: $name, surname: $surname, email: $email, university: $university, studentNumber: $studentNumber)
+}`;

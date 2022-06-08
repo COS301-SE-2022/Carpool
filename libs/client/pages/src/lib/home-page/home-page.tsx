@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
-import { HomeProps } from '../NavigationTypes/navigation-types';
+import { HomePageProps } from '../NavigationTypes/navigation-types';
 import {
   TripCardSmall,
   HomeOptionBox,
@@ -11,7 +11,7 @@ import {
 import { View, Text, ActivityIndicator } from 'react-native';
 import { styles } from './home-page.style';
 
-export function HomePage({ navigation }: HomeProps) {
+export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
   const tripState = useSelector((state: RootStore) => state.trips);
   const { trips, status } = tripState;
@@ -26,10 +26,10 @@ export function HomePage({ navigation }: HomeProps) {
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
-      <HomeSearchBar onPress={() => navigation.push('Search')} />
+      <HomeSearchBar onPress={() => navigation.push('SearchPage')} />
       <HomeMapView />
       <View style={styles.bottomContainer}>
-        <HomeOptionBox onPress={() => navigation.push('Search')} />
+        <HomeOptionBox onPress={() => navigation.push('SearchPage')} />
         <View style={styles.cardContainer}>
           <Text style={styles.smallTextBlack}>Upcoming trip</Text>
           {status === 'loading' ? (

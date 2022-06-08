@@ -5,6 +5,7 @@ import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
   UserVerifyCommand,
+  UserUpdateCommand,
 } from './commands/auth-command.command';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -57,5 +58,18 @@ export class AuthService {
         code: code,
       },
     });
+  }
+
+  async updateUser(
+    id: string,
+    name: string,
+    surname: string,
+    email: string,
+    university: string,
+    studentNumber: string
+  ): Promise<boolean> {
+    return await this.commandBus.execute(
+      new UserUpdateCommand(id, name, surname, email, university, studentNumber)
+    );
   }
 }

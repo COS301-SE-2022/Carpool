@@ -44,14 +44,22 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
-  async findByDriver(driverId: string): Promise<Trip[]> {
-    return await this.tripsService.findByDriver(driverId);
+  async findByDriver(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByDriver(id);
   }
 
   @Query(() => [Trip])
-  async findByPassenger(PassengerId: string): Promise<Trip[]> {
-    return await this.tripsService.findByDriver(PassengerId);
+  async findByPassenger(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByPassenger(id);
   }
+
+  // @Query(() => [Trip])
+  // async searchTrips(
+  //   @Args('startLocation') startLocation: string,
+  //   @Args('endLocation') endLocation: string
+  // ): Promise<Trip[]> {
+  //   return await this.tripsService.searchTrips(startLocation, endLocation);
+  // }
 
   // @Mutation(() => Trip)
   // async create(

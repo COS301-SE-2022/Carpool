@@ -10,152 +10,146 @@ import {
   ConfirmEmailPage,
   ResetPasswordPage,
   TripDetails,
-  PostTrips,
   SearchPage,
-  DriverHome,
   SignOut,
+  DriverProfile,
+  UserProfile,
+  EditProfile,
+  Statistics,
+  TripHistory,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useSelector } from 'react-redux';
-import { RootStore } from '@carpool/client/store';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
-//import Icon from 'react-native-vector-icons/MaterialIcons';
-// import * as SecureStore from 'expo-secure-store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Geolocation from 'react-native-geolocation-service';
 
 export type RootStackParamList = {
-  Home;
+  HomePage;
+  LoginPage;
+  OnboardPage;
+  SignUpPage;
   SignOut;
-  Login;
-};
-
-export type HomeStackParamList = {
-  HomeScreen;
-  Search;
+  ForgotPasswordPage;
+  ConfirmEmailPage;
+  ResetPasswordPage;
   TripDetails;
-  PostTrips;
-  DriverHome;
-};
-
-export type AuthStackParamList = {
-  Home;
-  Onboard;
-  Login;
-  SignUp;
-  ForgotPassword;
-  ConfirmEmail;
-  ResetPassword;
+  SearchPage;
+  UserProfile;
+  EditProfile;
+  Statistics;
+  TripHistory;
+  DriverProfile;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
-const AuthStack = createNativeStackNavigator<AuthStackParamList>();
-const HomeStackNav = createNativeStackNavigator<HomeStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
 
 store.dispatch(fetchStorage());
 
-const HomeStack = () => {
+const TabBar = () => {
   return (
-    <HomeStackNav.Navigator
-      initialRouteName="HomeScreen"
-      screenOptions={{
+    <Tab.Navigator
+      initialRouteName="HomePage"
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          switch (route.name) {
+            case 'HomePage':
+              iconName = focused ? 'home' : 'home-outline';
+              break;
+            case 'UserProfile':
+              iconName = focused ? 'account' : 'account-outline';
+              break;
+            default:
+              break;
+          }
+
+          return <Icon name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#188aed',
+        tabBarInactiveTintColor: '#188aed',
         headerShown: false,
-      }}
+        tabBarStyle: {
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          paddingTop: 10,
+          paddingBottom: 22,
+          shadowColor: '#555',
+          shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
+          elevation: 3,
+          marginTop: -15,
+        },
+      })}
     >
-      <HomeStackNav.Screen name="HomeScreen" component={HomePage} />
-      <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
-      <HomeStackNav.Screen name="DriverHome" component={DriverHome} />
-      <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
-        <HomeStackNav.Screen name="Search" component={SearchPage} />
-      </HomeStackNav.Group>
-    </HomeStackNav.Navigator>
+      <Tab.Screen
+        name="HomePage"
+        component={HomePage}
+        options={{ title: 'Home' }}
+      />
+      <Tab.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{ title: 'Profile' }}
+      />
+    </Tab.Navigator>
   );
 };
 
 const AppWrapper = () => {
-  const userState = useSelector((state: RootStore) => state.user);
-  const { user } = userState;
-
-  // SecureStore.deleteItemAsync('user');
-
   return (
     <NavigationContainer theme={navTheme}>
-      {user && user.token ? (
-        <Tab.Navigator
-          initialRouteName="Home"
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-
-              if (route.name === 'Home') {
-                iconName = focused ? 'home' : 'home-outline';
-              }
-
-              // You can return any component that you like here!
-              return <Icon name={iconName} size={size} color={color} />;
-            },
-            tabBarActiveTintColor: '#188aed',
-            tabBarInactiveTintColor: '#188aed',
-            headerShown: false,
-            tabBarStyle: {
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingTop: 10,
-              paddingBottom: 22,
-              shadowColor: '#555',
-              shadowOffset: {
-                width: 0,
-                height: 2,
-              },
-              shadowOpacity: 0.25,
-              shadowRadius: 3.84,
-              elevation: 3,
-              marginTop: -15,
-            },
-          })}
-        >
-          <Tab.Screen name="Home" component={HomeStack} />
-          <Tab.Screen name="Login" component={LoginPage} />
-          <Tab.Screen name="SignOut" component={SignOut} />
-        </Tab.Navigator>
-      ) : (
-        <AuthStack.Navigator
-          initialRouteName="Onboard"
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {/* <AuthStack.Screen name="PostTrips" component={PostTrips} /> */}
-          {/* <AuthStack.Screen name="DriverHome" component={DriverHome} /> */}
-          <HomeStackNav.Group screenOptions={{ presentation: 'modal' }}>
-            <HomeStackNav.Screen name="Search" component={SearchPage} />
-          </HomeStackNav.Group>
-          <AuthStack.Screen name="Home" component={HomePage} />
-          <AuthStack.Screen name="Onboard" component={OnboardPage} />
-          <AuthStack.Screen name="Login" component={LoginPage} />
-          <AuthStack.Screen name="SignUp" component={SignUpPage} />
-          <AuthStack.Screen
-            name="ForgotPassword"
-            component={ForgotPasswordPage}
-          />
-          <AuthStack.Screen name="ConfirmEmail" component={ConfirmEmailPage} />
-          <AuthStack.Screen
-            name="ResetPassword"
-            component={ResetPasswordPage}
-          />
-        </AuthStack.Navigator>
-      )}
+      <Stack.Navigator
+        initialRouteName="HomePage"
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="HomePage" component={TabBar} />
+        <Stack.Screen name="LoginPage" component={LoginPage} />
+        <Stack.Screen name="OnboardPage" component={OnboardPage} />
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
+        <Stack.Screen name="SignOut" component={SignOut} />
+        <Stack.Screen
+          name="ForgotPasswordPage"
+          component={ForgotPasswordPage}
+        />
+        <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} />
+        <Stack.Screen name="ResetPasswordPage" component={ResetPasswordPage} />
+        <Stack.Screen name="TripDetails" component={TripDetails} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="SearchPage" component={SearchPage} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="DriverProfile" component={DriverProfile} />
+        </Stack.Group>
+        <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="EditProfile" component={EditProfile} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="Statistics" component={Statistics} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="TripHistory" component={TripHistory} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

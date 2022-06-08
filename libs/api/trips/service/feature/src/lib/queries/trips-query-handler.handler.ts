@@ -33,7 +33,7 @@ export class FindByPassengerHandler implements IQueryHandler<FindAllQuery> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(query: FindByPassengerQuery): Promise<Trip[] | null> {
-    return await this.tripsRepository.findByDriver(query.passengerId);
+    return await this.tripsRepository.findByPassenger(query.passengerId);
   }
 }
 

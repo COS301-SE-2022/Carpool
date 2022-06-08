@@ -82,4 +82,23 @@ export class AuthResolver {
   async verifyEmail(@Args('id') id: string): Promise<boolean> {
     return await this.authService.verifyEmail(id);
   }
+
+  @Mutation(() => Boolean)
+  async updateUser(
+    @Args('id') id: string,
+    @Args('name') name: string,
+    @Args('surname') surname: string,
+    @Args('email') email: string,
+    @Args('university') university: string,
+    @Args('studentNumber') studentNumber: string
+  ): Promise<boolean> {
+    return await this.authService.updateUser(
+      id,
+      name,
+      surname,
+      email,
+      university,
+      studentNumber
+    );
+  }
 }

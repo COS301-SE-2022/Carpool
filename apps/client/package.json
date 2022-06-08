@@ -29,6 +29,7 @@
     "react-native-maps": "*",
     "react-native-maps-directions": "*",
     "react-native-google-places-autocomplete": "*",
-    "react-native-date-picker": "*"
+    "react-native-date-picker": "*",
+    "@react-native-community/geolocation": "*"
   }
 }

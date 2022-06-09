@@ -73,3 +73,9 @@ export type TripDetailsType = {
   price: string;
   coordinates: Location[];
 };
+
+export type TripBooking = {
+  tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

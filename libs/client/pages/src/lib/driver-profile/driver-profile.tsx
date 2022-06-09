@@ -4,7 +4,7 @@ import { View, Text, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export function DriverProfile({ route, navigation }: DriverProfileProps) {
-  const { driverId } = route.params;
+  // const { driverId } = route.params;
 
   return (
     <View style={{ height: '100%' }}>

@@ -36,7 +36,13 @@ export function UserProfile({ navigation }: UserProfileProps) {
         text: 'Cancel',
         style: 'cancel',
       },
-      { text: 'Yes', onPress: () => dispatch(logout()) },
+      {
+        text: 'Yes',
+        onPress: () => {
+          dispatch(logout());
+          // navigation.navigate('OnboardPage');
+        },
+      },
     ]);
   };
 

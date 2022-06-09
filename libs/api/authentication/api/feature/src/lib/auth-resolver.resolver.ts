@@ -1,6 +1,10 @@
 import { AuthService } from '@carpool/api/authentication/service';
 import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
-import { UserLogin, User } from '@carpool/api/authentication/entities';
+import {
+  UserLogin,
+  User,
+  UserUpdate,
+} from '@carpool/api/authentication/entities';
 
 @Resolver()
 export class AuthResolver {
@@ -83,7 +87,7 @@ export class AuthResolver {
     return await this.authService.verifyEmail(id);
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => User)
   async updateUser(
     @Args('id') id: string,
     @Args('name') name: string,
@@ -91,7 +95,7 @@ export class AuthResolver {
     @Args('email') email: string,
     @Args('university') university: string,
     @Args('studentNumber') studentNumber: string
-  ): Promise<boolean> {
+  ): Promise<UserUpdate | null> {
     return await this.authService.updateUser(
       id,
       name,

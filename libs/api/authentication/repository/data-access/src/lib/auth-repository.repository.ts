@@ -84,7 +84,7 @@ export class AuthRepository {
     }
   }
 
-  async updateUser(user: UserUpdate): Promise<boolean> {
+  async updateUser(user: UserUpdate): Promise<UserUpdate | null> {
     const updatedUser = await this.prisma.user.update({
       where: {
         id: user.id,
@@ -99,9 +99,7 @@ export class AuthRepository {
     });
 
     if (updatedUser) {
-      return true;
-    } else {
-      return false;
+      return updatedUser;
     }
   }
 }

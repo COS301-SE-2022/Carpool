@@ -35,15 +35,10 @@ export function LoginPage({ navigation }: LoginPageProps) {
     if (error) {
       showToast(error.message);
     }
-  }, [error]);
+  }, [error, status, navigation]);
 
   const submitHandler = () => {
-    // navigation.navigate('Home');
-    // if (user && !user.token && status !== 'success') {
-    //   navigation.navigate('Home');
-    // } else {
     dispatch(login({ email, password }));
-    // }
   };
 
   return (

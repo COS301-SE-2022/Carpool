@@ -1,0 +1,166 @@
+\documentclass[hidelinks, 12pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[T1]{fontenc}
+\usepackage{tocloft}
+\usepackage{todonotes}
+\usepackage{epstopdf} 
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{mwe}
+\usepackage{hyperref}
+\onehalfspacing
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{blulancetech@gmail.com}
+\lhead{Carpool}
+\rfoot{Page \thepage}
+
+\author{}
+\date{}
+\title
+{
+	\includegraphics[width=6cm]{images/up_logo.jpg} \\
+	Department of Computer Science \\
+	Faculty of Engineering, Built Environment \& IT\\
+	University of Pretoria \\
+	\vspace{0.5cm}
+	\Huge COS301 -
+	Software Engineering\\
+	\vspace{1cm}
+	{\Huge Carpool}\\
+	\begin{Large}
+	Carpool Coding standards document
+	\end{Large}
+	\vspace{0.5cm}
+	
+    \begin{center}
+    \noindent
+    \includegraphics[width=6cm]{images/company_logo.png} 
+    \vspace{0.5cm}
+    \begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Name  & Student Number\\ \hline
+    Benjamin Osmers & u16068344 \\ \hline
+    Ashleigh Govender &  U20528834      \\ \hline
+    Joshua Brink  & U19185678 \\ \hline
+    Jason Antalis     & U19141859     \\ \hline
+    Wesley Pachai & U20578688    \\ \hline
+            
+    \end{tabular}
+    \end{table}
+    \end{center}
+    }
+
+\begin{document}
+\maketitle
+
+
+\newpage
+\tableofcontents
+\newpage
+\section{Introduction}
+
+    The goal of this paper is to lay out the coding guidelines for the Carpool Application. It ensures that our code has a consistent style, is clear, flexible, reliable, and efficient.
+   \vspace{1cm} 
+\section{Naming Conventions}
+
+  When it comes to naming conventions, the following guidelines should be followed:
+    
+       \subsection{\large{\textbf{Classes:}}}
+        \begin{itemize}[]
+            \item Pascal Case / Camel Case...
+            \item Spaces / Underscore
+        \end{itemize}
+        
+        \vspace{0.5cm} 
+        
+         \subsection{\large{\textbf{Function headers and Variables:}}}
+        \begin{itemize}[]
+            \item  Pascal Case / Camel Case...
+            \item   Did we capitalise certain variables
+        \end{itemize}
+        
+         \vspace{0.5cm} 
+        
+         \subsection{\large{\textbf{Schema:}}}
+        \begin{itemize}[]
+            \item  How did we name the attributes?
+            \item  How did we name the tables? 
+            \item aliases?
+        \end{itemize}
+        
+        \subsection{\large{\textbf{API:}}}
+        \begin{itemize}[]
+            \item  
+            \item  
+            \item 
+        \end{itemize}
+        
+\newpage
+        
+\section{Repository Branching Structure}
+\subsection{Branching}
+\vspace{0.5cm} 
+
+\subsection{Repository Structure}
+\vspace{0.5cm} 
+
+\subsection{Pull Requests and Commits}
+\vspace{0.5cm} 
+
+\newpage  
+
+\section{Comments}
+\newpage
+
+\section{File Structure}
+Back-end
+    \begin{code}
+    
+        \begin{lstlisting}
+
+ExampleSubsystem
+    |------ Controller
+               |------ ExampleSubsystemApi
+               |------ ExampleSubsystemApiController
+    |------ Exception
+    |------ Model
+    |------ Repository
+    |------ Request
+    |------ Response
+    |------ Service
+               |------ ExampleSubsystemService
+               |------ ExampleSubsystemServiceImpl
+        \end{lstlisting}
+            
+    \end{code}
+        Front-end
+    \begin{code}
+    
+        \begin{lstlisting}
+        
+
+
+services
+    |---- ServiceName
+tabs
+    |---- ExampleTab
+            |----- TabSubPage
+        \end{lstlisting}
+            
+    \end{code}
+\end{document}

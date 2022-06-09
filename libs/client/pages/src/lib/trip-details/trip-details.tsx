@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { TripDetailsPageProps } from '../NavigationTypes/navigation-types';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { RootStore } from '@carpool/client/store';
+import { bookTrip, RootStore } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, fetchTripDetails } from '@carpool/client/store';
 import {
@@ -13,19 +13,44 @@ import {
 } from '@carpool/client/components';
 
 export function TripDetails({ route, navigation }: TripDetailsPageProps) {
-  const { tripId } = route.params;
+  const { tripId, type } = route.params;
 
   const dispatch: AppDispatch = useDispatch();
 
   const tripDetails = useSelector((state: RootStore) => state.trip);
   const { trip, status } = tripDetails;
 
+  const user = useSelector((state: RootStore) => state.user);
+  const { user: userData } = user;
+
   useEffect(() => {
     dispatch(fetchTripDetails(tripId));
   }, [dispatch, tripId]);
 
   const bookRide = (tripId: string) => {
+    console.log(JSON.stringify(trip));
     console.log(`Booking ride ${tripId}`);
+
+    // navigation.push('SetPickupPage', {
+    //   tripId,
+    //   passengerId: userData ? userData.id : '',
+    //   seatsBooked: '1',
+    //   status: 'unpaid',
+    //   price: trip ? trip.price : '',
+    // });
+    dispatch(
+      bookTrip({
+        tripId,
+        passengerId: userData ? userData.id : '',
+        //Change
+        seatsBooked: '1',
+        status: 'unpaid',
+        price: trip ? `${trip.price}` : '',
+        address: trip ? trip.coordinates[0].address : '',
+        latitude: trip ? trip.coordinates[0].latitude : '',
+        longitude: trip ? trip.coordinates[0].longitude : '',
+      })
+    );
   };
 
   return (
@@ -66,6 +91,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
             {trip && (
               <TripDetailsBottomContainer
                 trip={trip}
+                type={type}
                 onPress={() => bookRide(tripId)}
                 onPressUser={() =>
                   navigation.navigate('DriverProfile', {

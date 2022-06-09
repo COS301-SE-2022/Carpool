@@ -1,5 +1,3 @@
-import { User } from '@carpool/api/authentication/entities';
-
 export class TripsCreateCommand {
   constructor(
     public readonly driver: string,
@@ -17,12 +15,14 @@ export class TripsCreateCommand {
 
 export class BookTripCommand {
   constructor(
-    public readonly userId: string,
     public readonly tripId: string,
-    public readonly bookingDate: Date,
-    public readonly seatsBooked: number,
+    public readonly passengerId: string,
+    public readonly seatsBooked: string,
     public readonly status: string,
-    public readonly price: number
+    public readonly price: string,
+    public readonly address: string,
+    public readonly longitude: string,
+    public readonly latitude: string
   ) {}
 }
 

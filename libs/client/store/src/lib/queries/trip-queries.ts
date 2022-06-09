@@ -34,6 +34,24 @@ query ($id: String!) {
 }
 `;
 
+export const SEARCH_RESULTS = `
+  query($date: String!, $startLongitude: String!, $startLatitude: String!, $destinationLongitude: String!, $destinationLatitude: String!) {
+    searchTrips(date: $date, startLongitude: $startLongitude, startLatitude: $startLatitude, destinationLongitude: $destinationLongitude, destinationLatitude: $destinationLatitude) {
+      tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+    }
+  }
+`;
+
 export const PASSENGER_HISTORY = `
 query ($id: String!) {
   findByPassenger(id: $id) {
@@ -102,6 +120,13 @@ export const CREATE_TRIP = `
   ){
     create(driver: $driver, tripDate: $tripDate, seatsAvailable: $seatsAvailable, price: $price, startLocationAddress: $startLocationAddress, startLocationLongitutde: $startLocationLongitutde, startLocationLatitiude: $startLocationLatitiude, destinationAddress: $destinationAddress, destinationLongitutde: $destinationLongitude, destinationLatitude: $destinationLatitude){
       tripId
+    }
+  }
+`;
+export const BOOK_TRIP = `
+  mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {
+    bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, longitude: $longitude, latitude: $latitude) {
+      tripId,
     }
   }
 `;

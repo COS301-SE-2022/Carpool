@@ -1,3 +1,4 @@
+export * from './lib/set-pickup-page/set-pickup-page';
 export * from './lib/driver-profile/driver-profile';
 export * from './lib/search-results/search-results';
 export * from './lib/change-password/change-password';
@@ -5,7 +6,6 @@ export * from './lib/trip-history/trip-history';
 export * from './lib/statistics/statistics';
 export * from './lib/edit-profile/edit-profile';
 export * from './lib/user-profile/user-profile';
-export * from './lib/driver-home/driver-home';
 export * from './lib/sign-out/sign-out';
 export * from './lib/search-page/search-page';
 export * from './lib/trip-details/trip-details';
@@ -18,3 +18,4 @@ export * from './lib/onboard-page/onboard-page';
 export * from './lib/home-page/home-page';
 export * from './lib/login-page/login-page';
 export * from './lib/client-pages';
+export * from './lib/chat-screen/chat-screen';

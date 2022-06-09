@@ -53,6 +53,34 @@ export class TripsResolver {
     return await this.tripsService.findByPassenger(id);
   }
 
+  @Query(() => [Trip])
+  async searchTrips(
+    @Args('date') date: string,
+    @Args('startLongitude') startLongitude: string,
+    @Args('startLatitude') startLatitude: string,
+    @Args('destinationLongitude') destinationLongitude: string,
+    @Args('destinationLatitude') destinationLatitude: string
+  ): Promise<Trip[] | null> {
+    const trips = await this.tripsService.searchTrips(date);
+
+    const searchResults = [];
+
+    if (trips.length !== 0) {
+      trips.map((trip) => {
+        if (
+          trip.coordinates[0].longitude === startLongitude &&
+          trip.coordinates[0].latitude === startLatitude &&
+          trip.coordinates[1].longitude === destinationLongitude &&
+          trip.coordinates[1].latitude === destinationLatitude
+        ) {
+          searchResults.push(trip);
+        }
+      });
+    }
+
+    return searchResults;
+  }
+
   // @Query(() => [Trip])
   // async searchTrips(
   //   @Args('startLocation') startLocation: string,
@@ -108,22 +136,26 @@ export class TripsResolver {
   //   );
   // }
 
-  // @Mutation(() => Booking)
-  // async bookTrip(
-  //   userId: string,
-  //   tripId: string,
-  //   bookingDate: Date,
-  //   seatsBooked: number,
-  //   status: string,
-  //   price: number
-  // ): Promise<Booking> {
-  //   return await this.tripsService.bookTrip(
-  //     userId,
-  //     tripId,
-  //     bookingDate,
-  //     seatsBooked,
-  //     status,
-  //     price
-  //   );
-  // }
+  @Mutation(() => Booking)
+  async bookTrip(
+    @Args('tripId') tripId: string,
+    @Args('passengerId') passengerId: string,
+    @Args('seatsBooked') seatsBooked: string,
+    @Args('status') status: string,
+    @Args('price') price: string,
+    @Args('address') address: string,
+    @Args('longitude') longitude: string,
+    @Args('latitude') latitude: string
+  ): Promise<Booking | null> {
+    return await this.tripsService.bookTrip(
+      passengerId,
+      tripId,
+      seatsBooked,
+      status,
+      price,
+      address,
+      longitude,
+      latitude
+    );
+  }
 }

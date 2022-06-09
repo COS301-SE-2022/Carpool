@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  CreateTrip,
+  TripBooking,
   TripDetails,
   TripList,
   UpcomingTrip,
+  CreateTrip,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -12,6 +13,8 @@ import {
   fetchUpcomingTrip,
   listDriverHistory,
   listPassengerHistory,
+  listSearchResults,
+  bookTrip,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -97,6 +100,39 @@ export const driverHistorySlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listDriverHistory.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialSearchResultsState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+export const searchResultsSlice = createSlice({
+  name: 'trips',
+  initialState: initialSearchResultsState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listSearchResults.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listSearchResults.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listSearchResults.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -202,6 +238,39 @@ export const upcomingTripSlice = createSlice({
           state.error = action.payload;
         } else {
           state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const tripBookingState = {
+  tripId: null,
+  status: 'idle',
+  error: null,
+} as TripBooking;
+
+export const tripBookingSlice = createSlice({
+  name: 'trip-booking',
+  initialState: tripBookingState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(bookTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(bookTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(bookTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error (Trip Booking)' };
         }
       });
   },

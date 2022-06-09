@@ -8,12 +8,14 @@ import { TripDetailsType } from '@carpool/client/store';
 
 type props = {
   trip: TripDetailsType;
+  type: string;
   onPress: () => void;
   onPressUser: () => void;
 };
 
 export function TripDetailsBottomContainer({
   trip,
+  type,
   onPress,
   onPressUser,
 }: props) {
@@ -78,17 +80,21 @@ export function TripDetailsBottomContainer({
           <Icons name="chat-bubble" color="#188aed" size={25} />
         </View>
       </Pressable>
-      <View
-        style={[
-          styles.flexCol,
-          {
-            flex: 1,
-            justifyContent: 'flex-end',
-          },
-        ]}
-      >
-        <Button title="Book Ride" onPress={onPress} />
-      </View>
+      {type === 'booked' ? (
+        <></>
+      ) : (
+        <View
+          style={[
+            styles.flexCol,
+            {
+              flex: 1,
+              justifyContent: 'flex-end',
+            },
+          ]}
+        >
+          <Button title="Book Ride" onPress={onPress} />
+        </View>
+      )}
     </View>
   );
 }

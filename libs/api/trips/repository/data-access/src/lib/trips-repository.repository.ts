@@ -1,11 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location } from '@prisma/client';
-import {
-  BookingInput,
-  TripsInput,
-  TripsUpdate,
-} from '@carpool/api/trips/entities';
+import { TripsInput, TripsUpdate } from '@carpool/api/trips/entities';
+
+const formatDate = (date: string) => {
+  const dateObj = new Date(date);
+  const day = dateObj.getDate();
+  const month = dateObj.getMonth();
+  const year = dateObj.getFullYear();
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  return `${day} ${monthNames[month]} ${year}`;
+};
+
+const getTime = (date: string) => {
+  const dateObj = new Date(date);
+  return `${dateObj.getHours()}:${dateObj.getMinutes()}`;
+};
 
 @Injectable()
 export class TripsRepository {
@@ -99,15 +122,34 @@ export class TripsRepository {
     });
   }
 
-  async bookTrip(booking: BookingInput): Promise<Booking | null> {
+  async bookTrip(
+    tripId: string,
+    passengerId: string,
+    seatsBooked: string,
+    status: string,
+    price: string,
+    address: string,
+    longitude: string,
+    latitude: string
+  ): Promise<Booking | null> {
     return this.prisma.booking.create({
       data: {
-        userId: booking.userId,
-        tripId: booking.tripId,
-        bookingDate: booking.bookingDate,
-        seatsBooked: booking.seatsBooked,
-        status: booking.status,
-        price: booking.price,
+        trip: {
+          connect: { tripId },
+        },
+        user: {
+          connect: { id: passengerId },
+        },
+        seatsBooked: parseInt(seatsBooked),
+        status: status,
+        price: parseFloat(price),
+        pickUp: {
+          create: {
+            address,
+            latitude,
+            longitude,
+          },
+        },
       },
     });
   }
@@ -130,5 +172,60 @@ export class TripsRepository {
         tripId: id,
       },
     });
+  }
+
+  async searchTrips(date: string): Promise<Trip[]> {
+    const allTrips = await this.prisma.trip.findMany({
+      select: {
+        tripId: true,
+        tripDate: true,
+        seatsAvailable: true,
+        price: true,
+        driverId: true,
+        coordinates: true,
+        driver: {
+          select: {
+            id: true,
+            name: true,
+            profilePic: true,
+          },
+        },
+        createdAt: true,
+      },
+    });
+
+    const tripsByDate = [];
+
+    if (allTrips.length !== 0) {
+      allTrips.map((trip) => {
+        if (
+          formatDate(`${trip.tripDate}`) === formatDate(date) &&
+          getTime(`${trip.tripDate}`) === getTime(date)
+        ) {
+          tripsByDate.push(trip);
+        }
+      });
+
+      console.log(tripsByDate);
+
+      return tripsByDate;
+    } else {
+      return [];
+    }
+
+    // const searchResults = [];
+
+    // if (tripsByDate.length !== 0) {
+    //   tripsByDate.map((trip) => {
+    //     if (
+    //       trip.coordinates[0].longitude === startLongitude &&
+    //       trip.coordinates[0].latitude === startLatitude &&
+    //       trip.coordinates[1].longitude === destinationLongitude &&
+    //       trip.coordinates[1].latitude === destinationLatitude
+    //     ) {
+    //       searchResults.push(trip);
+    //     }
+    //   });
+    // }
   }
 }

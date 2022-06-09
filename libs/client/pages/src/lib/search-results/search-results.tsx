@@ -16,7 +16,7 @@ import {
   listSearchResults,
   RootStore,
 } from '@carpool/client/store';
-import { formatDate } from '@carpool/client/shared/utilities';
+import { formatDate, getTime } from '@carpool/client/shared/utilities';
 
 export function SearchResults({ navigation, route }: SearchResultsProps) {
   const {
@@ -33,6 +33,9 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
   const { trips: searchTrips, status } = searchResults;
 
   useEffect(() => {
+    console.log(getTime('2022-05-30T08:21:50.000Z'));
+    console.log(getTime('2022-05-30T08:21:31.000Z'));
+
     dispatch(
       listSearchResults({
         date,
@@ -52,7 +55,7 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
   ]);
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId, type: 'not_booked' });
   };
 
   return (
@@ -114,7 +117,7 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
                   destination={trip.coordinates[1].address}
                   created={formatDate(trip.createdAt)}
                   image={trip.driver.profilePic}
-                  date={formatDate(trip.createdAt)}
+                  date={formatDate(trip.tripDate)}
                   distance=""
                   onPress={() => viewTrip(trip.tripId)}
                 />

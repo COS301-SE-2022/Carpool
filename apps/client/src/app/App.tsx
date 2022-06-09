@@ -22,7 +22,7 @@ import {
   SetPickupPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
-import { store } from '@carpool/client/store';
+import { store, RootStore } from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -30,6 +30,7 @@ import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import Geolocation from 'react-native-geolocation-service';
+import { useSelector } from 'react-redux';
 
 export type RootStackParamList = {
   HomePage;
@@ -54,6 +55,7 @@ export type RootStackParamList = {
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const AuthStack = createNativeStackNavigator<RootStackParamList>();
 
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#fff';
@@ -118,57 +120,86 @@ const TabBar = () => {
   );
 };
 
-const AppWrapper = () => {
-  // const userState = useSelector((state: RootStore) => state.user);
-  // const { user, status, error } = userState;
+const AuthNav = () => {
+  return (
+    <AuthStack.Navigator
+      initialRouteName="OnboardPage"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <AuthStack.Screen name="HomePage" component={HomePage} />
+      <AuthStack.Screen name="LoginPage" component={LoginPage} />
+      <AuthStack.Screen name="OnboardPage" component={OnboardPage} />
+      <AuthStack.Screen name="SignUpPage" component={SignUpPage} />
+      <AuthStack.Screen name="SignOut" component={SignOut} />
+      <AuthStack.Screen
+        name="ForgotPasswordPage"
+        component={ForgotPasswordPage}
+      />
+      <AuthStack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} />
+      <AuthStack.Screen
+        name="ResetPasswordPage"
+        component={ResetPasswordPage}
+      />
+    </AuthStack.Navigator>
+  );
+};
 
-  // useEffect(() => {
-  //   console.log(user);
-  // }, [user]);
+const AppWrapper = () => {
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
 
   return (
     <NavigationContainer theme={navTheme}>
-      <Stack.Navigator
-        initialRouteName="OnboardPage"
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Stack.Screen name="HomePage" component={TabBar} />
-        <Stack.Screen name="LoginPage" component={LoginPage} />
-        <Stack.Screen name="OnboardPage" component={OnboardPage} />
-        <Stack.Screen name="SignUpPage" component={SignUpPage} />
-        <Stack.Screen name="SignOut" component={SignOut} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
-        <Stack.Screen
-          name="ForgotPasswordPage"
-          component={ForgotPasswordPage}
-        />
-        <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} />
-        <Stack.Screen name="ResetPasswordPage" component={ResetPasswordPage} />
-        <Stack.Screen name="TripDetails" component={TripDetails} />
-        <Stack.Screen name="SearchResults" component={SearchResults} />
-        {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
+      {user && user.token ? (
+        <Stack.Navigator
+          initialRouteName="HomePage"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="HomePage" component={TabBar} />
+          <Stack.Screen name="LoginPage" component={LoginPage} />
+          <Stack.Screen name="OnboardPage" component={OnboardPage} />
+          <Stack.Screen name="SignUpPage" component={SignUpPage} />
+          <Stack.Screen name="SignOut" component={SignOut} />
+          <Stack.Screen name="ChatScreen" component={ChatScreen} />
+          <Stack.Screen
+            name="ForgotPasswordPage"
+            component={ForgotPasswordPage}
+          />
+          <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} />
+          <Stack.Screen
+            name="ResetPasswordPage"
+            component={ResetPasswordPage}
+          />
+          <Stack.Screen name="TripDetails" component={TripDetails} />
+          <Stack.Screen name="SearchResults" component={SearchResults} />
+          {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="SearchPage" component={SearchPage} />
         </Stack.Group> */}
-        <Stack.Screen name="SearchPage" component={SearchPage} />
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="DriverProfile" component={DriverProfile} />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="SetPickupPage" component={SetPickupPage} />
-        </Stack.Group>
-        <Stack.Screen name="UserProfile" component={UserProfile} />
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="EditProfile" component={EditProfile} />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="Statistics" component={Statistics} />
-        </Stack.Group>
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="TripHistory" component={TripHistory} />
-        </Stack.Group>
-      </Stack.Navigator>
+          <Stack.Screen name="SearchPage" component={SearchPage} />
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="DriverProfile" component={DriverProfile} />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="SetPickupPage" component={SetPickupPage} />
+          </Stack.Group>
+          <Stack.Screen name="UserProfile" component={UserProfile} />
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="EditProfile" component={EditProfile} />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="Statistics" component={Statistics} />
+          </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="TripHistory" component={TripHistory} />
+          </Stack.Group>
+        </Stack.Navigator>
+      ) : (
+        <AuthNav />
+      )}
     </NavigationContainer>
   );
 };

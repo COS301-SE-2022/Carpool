@@ -40,11 +40,11 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
     // });
     dispatch(bookTrip({ 
       tripId, 
-      userId: userData ? userData.id : '',
+      passengerId: userData ? userData.id : '',
       //Change
-      seatsBooked: 1,
+      seatsBooked: "1",
       status: 'unpaid',
-      price: trip ? trip.price : '',
+      price: trip ? `${trip.price}` : '',
       address: trip ? trip.coordinates[0].address : '',
       latitude: trip ? trip.coordinates[0].latitude : '',
       longitude: trip ? trip.coordinates[0].longitude : '',

@@ -107,7 +107,7 @@ export const TRIP_DETAILS = `
 
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {
-    bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, latitude: $latitude, longitude: $longitude) {
+    bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, longitude: $longitude, latitude: $latitude) {
       tripId,
     }
   }

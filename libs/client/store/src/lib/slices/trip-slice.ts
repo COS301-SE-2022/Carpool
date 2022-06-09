@@ -235,7 +235,7 @@ export const tripBookingSlice = createSlice({
         if (action.payload) {
           state.error = action.payload;
         } else {
-          state.error = { message: 'Unknown error' };
+          state.error = { message: 'Unknown error (Trip Booking)' };
         }
       });
   },

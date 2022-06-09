@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { TripDetailsPageProps } from '../NavigationTypes/navigation-types';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { RootStore } from '@carpool/client/store';
+import { bookTrip, RootStore, fetchUserProfile } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, fetchTripDetails } from '@carpool/client/store';
 import {
@@ -38,6 +38,17 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
     //   status: 'unpaid',
     //   price: trip ? trip.price : '',
     // });
+    dispatch(bookTrip({ 
+      tripId, 
+      userId: userData ? userData.id : '',
+      //Change
+      seatsBooked: 1,
+      status: 'unpaid',
+      price: trip ? trip.price : '',
+      address: trip ? trip.coordinates[0].address : '',
+      latitude: trip ? trip.coordinates[0].latitude : '',
+      longitude: trip ? trip.coordinates[0].longitude : '',
+    }));
   };
 
   return (

@@ -39,6 +39,7 @@ export const createTripSlice = createSlice({
       .addCase(createTrip.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
+        state.trip = action.payload;
       })
       .addCase(createTrip.rejected, (state, action) => {
         console.log('FAIL');

@@ -51,10 +51,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
     console.log(date.toISOString());
   };
 
-  useEffect(() => {
-    navigator.geolocation = Geolocation;
-  }, []);
-
   return (
     <View style={{ flex: 1, padding: 30 }}>
       <View

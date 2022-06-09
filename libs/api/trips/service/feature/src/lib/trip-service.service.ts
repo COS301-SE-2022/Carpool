@@ -56,13 +56,15 @@ export class TripsService {
 
   async create(
     driver: string,
-    tripDate: Date,
-    seatsAvailable: number,
-    price: number,
-    startLocation: string,
-    destination: string,
-    category: string,
-    status: string
+    tripDate: string,
+    seatsAvailable: string,
+    price: string,
+    startLocationAddress: string,
+    startLocationLongitude: string,
+    startLocationLatitude: string,
+    destinationAddress: string,
+    destinationLongitude: string,
+    destinationLatitude: string
   ): Promise<Trip> {
     return await this.commandBus.execute(
       new TripsCreateCommand(
@@ -70,10 +72,12 @@ export class TripsService {
         tripDate,
         seatsAvailable,
         price,
-        startLocation,
-        destination,
-        category,
-        status
+        startLocationAddress,
+        startLocationLongitude,
+        startLocationLatitude,
+        destinationAddress,
+        destinationLongitude,
+        destinationLatitude
       )
     );
   }

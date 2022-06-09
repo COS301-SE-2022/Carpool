@@ -38,14 +38,14 @@ export class TripsInput {
   @Field()
   driverId: string;
 
-  @Field(() => Date)
-  tripDate: Date;
+  @Field()
+  tripDate: string;
 
-  @Field(() => Int)
-  seatsAvailable: number;
+  @Field()
+  seatsAvailable: string;
 
-  @Field(() => Float)
-  price: number;
+  @Field()
+  price: string;
 
   @Field(() => [LocationInput])
   coordinates: LocationInput[];

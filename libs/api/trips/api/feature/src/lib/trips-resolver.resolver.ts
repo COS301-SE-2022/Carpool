@@ -63,24 +63,28 @@ export class TripsResolver {
 
   @Mutation(() => Trip)
   async create(
-    @Args('driverId') driverId: string,
-    @Args('tripDate') tripDate: Date,
-    @Args('seatsAvailable') seatsAvailable: number,
-    @Args('price') price: number,
-    @Args('startLocation') startLocation: string,
-    @Args('destination') destination: string,
-    @Args('category') category: string,
-    @Args('status') status: string
+    @Args('driver') driver: string,
+    @Args('tripDate') tripDate: string,
+    @Args('seatsAvailable') seatsAvailable: string,
+    @Args('price') price: string,
+    @Args('startLocationAddress') startLocationAddress: string,
+    @Args('startLocationLongitutde') startLocationLongitude: string,
+    @Args('startLocationLatitiude') startLocationLatitude: string,
+    @Args('destinationAddress') destinationAddress: string,
+    @Args('destinationLongitutde') destinationLongitude: string,
+    @Args('destinationLatitiude') destinationLatitude: string
   ): Promise<Trip> {
     return await this.tripsService.create(
-      driverId,
+      driver,
       tripDate,
       seatsAvailable,
       price,
-      startLocation,
-      destination,
-      category,
-      status
+      startLocationAddress,
+      startLocationLongitude,
+      startLocationLatitude,
+      destinationAddress,
+      destinationLongitude,
+      destinationLatitude
     );
   }
 

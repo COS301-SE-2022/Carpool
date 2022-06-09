@@ -18,14 +18,31 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: TripsCreateCommand): Promise<Trip | null> {
-    const { tripDate, seatsAvailable, price, driver } = command;
+    const {
+      driver,
+      tripDate,
+      seatsAvailable,
+      price,
+      startLocationAddress,
+      startLocationLongitude,
+      startLocationLatitude,
+      destinationAddress,
+      destinationLongitude,
+      destinationLatitude,
+    } = command;
 
-    const trip = new TripsInput();
-    trip.tripDate = tripDate;
-    trip.seatsAvailable = seatsAvailable;
-    trip.price = price;
-    trip.driverId = driver;
-    return await this.tripsRepository.create(trip);
+    return await this.tripsRepository.create(
+      driver,
+      tripDate,
+      seatsAvailable,
+      price,
+      startLocationAddress,
+      startLocationLongitude,
+      startLocationLatitude,
+      destinationAddress,
+      destinationLongitude,
+      destinationLatitude
+    );
   }
 }
 

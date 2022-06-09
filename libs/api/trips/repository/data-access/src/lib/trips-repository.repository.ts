@@ -59,29 +59,40 @@ export class TripsRepository {
     });
   }
 
-  async create(trips: TripsInput): Promise<Trip> {
+  async create(
+    driver: string,
+    tripDate: string,
+    seatsAvailable: string,
+    price: string,
+    startLocationAddress: string,
+    startLocationLongitude: string,
+    startLocationLatitude: string,
+    destinationAddress: string,
+    destinationLongitude: string,
+    destinationLatitude: string
+  ): Promise<Trip> {
     return this.prisma.trip.create({
       data: {
-        tripDate: trips.tripDate,
-        seatsAvailable: trips.seatsAvailable,
-        price: trips.price,
+        tripDate: tripDate,
+        seatsAvailable: parseInt(seatsAvailable),
+        price: parseFloat(price),
         coordinates: {
           create: [
             {
-              address: trips.coordinates[0].address,
-              latitude: trips.coordinates[0].latitude,
-              longitude: trips.coordinates[0].longitude,
+              address: startLocationAddress,
+              latitude: startLocationLatitude,
+              longitude: startLocationLongitude,
             },
             {
-              address: trips.coordinates[1].address,
-              latitude: trips.coordinates[1].latitude,
-              longitude: trips.coordinates[1].longitude,
+              address: destinationAddress,
+              latitude: destinationLatitude,
+              longitude: destinationLongitude,
             },
           ],
         },
         driver: {
           connect: {
-            id: trips.driverId,
+            id: driver,
           },
         },
       },

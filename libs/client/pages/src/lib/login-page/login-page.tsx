@@ -35,7 +35,11 @@ export function LoginPage({ navigation }: LoginPageProps) {
     if (error) {
       showToast(error.message);
     }
-  }, [error]);
+
+    if (status === 'success') {
+      navigation.navigate('HomePage');
+    }
+  }, [error, status, navigation]);
 
   const submitHandler = () => {
     // navigation.navigate('Home');

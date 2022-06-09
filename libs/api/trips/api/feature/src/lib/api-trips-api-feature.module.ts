@@ -13,6 +13,7 @@ import {
   FindTripByIdHandler,
   FindCoordinatesByTripHandler,
   FindBookingByTripHandler,
+  SearchTripsHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -29,6 +30,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     FindByDriverHandler,
     FindByPassengerHandler,
     TripsCreateHandler,
+    SearchTripsHandler,
     BookTripHandler,
     FindBookingByTripHandler,
     TripsDeleteHandler,

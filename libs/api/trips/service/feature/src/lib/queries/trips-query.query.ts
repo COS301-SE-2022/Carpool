@@ -19,3 +19,7 @@ export class FindCoordinatesByTripQuery {
 export class FindTripByIdQuery {
   constructor(public readonly tripId: string) {}
 }
+
+export class SearchTripsQuery {
+  constructor(public readonly date: string) {}
+}

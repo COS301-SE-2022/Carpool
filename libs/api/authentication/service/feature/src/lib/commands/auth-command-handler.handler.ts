@@ -44,7 +44,7 @@ export class UserVerifyHandler implements ICommandHandler<UserVerifyCommand> {
 export class UserUpdateHandler implements ICommandHandler<UserUpdateCommand> {
   constructor(private readonly authRepository: AuthRepository) {}
 
-  async execute(command: UserUpdateCommand): Promise<boolean> {
+  async execute(command: UserUpdateCommand): Promise<UserUpdate | null> {
     const { id, name, surname, email, university, studentNumber } = command;
 
     const user = new UserUpdate();

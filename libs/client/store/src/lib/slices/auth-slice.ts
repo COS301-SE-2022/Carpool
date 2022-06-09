@@ -148,7 +148,7 @@ export const initialUpdateState = {
 
 export const userUpdateSlice = createSlice({
   name: 'users',
-  initialState: initialUpdateState,
+  initialState: initialProfileState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -159,6 +159,7 @@ export const userUpdateSlice = createSlice({
       .addCase(createUpdateUser.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
+        state.userProfile = action.payload;
       })
       .addCase(createUpdateUser.rejected, (state, action) => {
         console.log('FAIL');

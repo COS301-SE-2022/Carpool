@@ -1,9 +1,14 @@
 import { User } from '@carpool/api/authentication/entities';
-import { Trip, Booking, Location } from '@carpool/api/trips/entities';
+import {
+  Trip,
+  Booking,
+  Location,
+  LocationInput,
+} from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
-  // Mutation,
+  Mutation,
   Query,
   ResolveField,
   Resolver,
@@ -51,6 +56,34 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findByPassenger(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByPassenger(id);
+  }
+
+  @Query(() => [Trip])
+  async searchTrips(
+    @Args('date') date: string,
+    @Args('startLongitude') startLongitude: string,
+    @Args('startLatitude') startLatitude: string,
+    @Args('destinationLongitude') destinationLongitude: string,
+    @Args('destinationLatitude') destinationLatitude: string
+  ): Promise<Trip[] | null> {
+    const trips = await this.tripsService.searchTrips(date);
+
+    const searchResults = [];
+
+    if (trips.length !== 0) {
+      trips.map((trip) => {
+        if (
+          trip.coordinates[0].longitude === startLongitude &&
+          trip.coordinates[0].latitude === startLatitude &&
+          trip.coordinates[1].longitude === destinationLongitude &&
+          trip.coordinates[1].latitude === destinationLatitude
+        ) {
+          searchResults.push(trip);
+        }
+      });
+    }
+
+    return searchResults;
   }
 
   // @Query(() => [Trip])
@@ -104,22 +137,22 @@ export class TripsResolver {
   //   );
   // }
 
-  // @Mutation(() => Booking)
-  // async bookTrip(
-  //   userId: string,
-  //   tripId: string,
-  //   bookingDate: Date,
-  //   seatsBooked: number,
-  //   status: string,
-  //   price: number
-  // ): Promise<Booking> {
-  //   return await this.tripsService.bookTrip(
-  //     userId,
-  //     tripId,
-  //     bookingDate,
-  //     seatsBooked,
-  //     status,
-  //     price
-  //   );
-  // }
+  @Mutation(() => Booking)
+  async bookTrip(
+    passengerId: string,
+    tripId: string,
+    bookingDate: Date,
+    seatsBooked: number,
+    status: string,
+    price: number
+  ): Promise<Booking> {
+    return await this.tripsService.bookTrip(
+      passengerId,
+      tripId,
+      bookingDate,
+      seatsBooked,
+      status,
+      price
+    );
+  }
 }

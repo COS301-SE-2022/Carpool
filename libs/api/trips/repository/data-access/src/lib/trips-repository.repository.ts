@@ -3,6 +3,7 @@ import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location } from '@prisma/client';
 import {
   BookingInput,
+  LocationInput,
   TripsInput,
   TripsUpdate,
 } from '@carpool/api/trips/entities';
@@ -119,5 +120,33 @@ export class TripsRepository {
         tripId: id,
       },
     });
+  }
+
+  async searchTrips(date: string): Promise<Trip[]> {
+    const tripsByDate = await this.prisma.trip.findMany({
+      where: {
+        tripDate: date,
+      },
+      include: {
+        coordinates: true,
+      },
+    });
+
+    // const searchResults = [];
+
+    // if (tripsByDate.length !== 0) {
+    //   tripsByDate.map((trip) => {
+    //     if (
+    //       trip.coordinates[0].longitude === startLongitude &&
+    //       trip.coordinates[0].latitude === startLatitude &&
+    //       trip.coordinates[1].longitude === destinationLongitude &&
+    //       trip.coordinates[1].latitude === destinationLatitude
+    //     ) {
+    //       searchResults.push(trip);
+    //     }
+    //   });
+    // }
+
+    return tripsByDate;
   }
 }

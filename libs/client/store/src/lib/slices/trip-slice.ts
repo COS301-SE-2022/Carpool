@@ -6,6 +6,7 @@ import {
   fetchUpcomingTrip,
   listDriverHistory,
   listPassengerHistory,
+  listSearchResults,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -63,6 +64,39 @@ export const driverHistorySlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listDriverHistory.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialSearchResultsState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+export const searchResultsSlice = createSlice({
+  name: 'trips',
+  initialState: initialSearchResultsState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listSearchResults.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listSearchResults.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listSearchResults.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

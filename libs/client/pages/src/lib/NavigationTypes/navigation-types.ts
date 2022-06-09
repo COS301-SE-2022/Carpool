@@ -16,6 +16,21 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Statistics: undefined;
   TripHistory: undefined;
+  SetPickupPage: {
+    tripId: string;
+    passengerId: string;
+    seatsBooked: string;
+    status: string;
+    price: string;
+  };
+  SearchResults: {
+    date: string;
+    startLongitude: string;
+    startLatitude: string;
+    destinationLongitude: string;
+    destinationLatitude: string;
+  };
+  ChatScreen: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -91,4 +106,19 @@ export type TripHistoryProps = NativeStackScreenProps<
 export type DriverProfileProps = NativeStackScreenProps<
   RootStackParamList,
   'DriverProfile'
+>;
+
+export type SearchResultsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SearchResults'
+>;
+
+export type ChatScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ChatScreen'
+>;
+
+export type SetPickupPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SetPickupPage'
 >;

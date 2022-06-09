@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User } from '@carpool/api/authentication/entities';
+import { User, UserUpdate } from '@carpool/api/authentication/entities';
 import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
@@ -67,7 +67,7 @@ export class AuthService {
     email: string,
     university: string,
     studentNumber: string
-  ): Promise<boolean> {
+  ): Promise<UserUpdate | null> {
     return await this.commandBus.execute(
       new UserUpdateCommand(id, name, surname, email, university, studentNumber)
     );

@@ -6,7 +6,7 @@ import { SearchPageProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DatePicker from 'react-native-date-picker';
-import Geolocation from '@react-native-community/geolocation';
+// import Geolocation from '@react-native-community/geolocation';
 
 // navigator.geolocation = require('@react-native-community/geolocation');
 
@@ -42,18 +42,26 @@ export function SearchPage({ navigation }: SearchPageProps) {
   const [region, setRegion] = useState({});
 
   const search = () => {
-    alert(
-      `${origin.address} to ${destination.address} on ${date.toISOString()}`
-    );
+    // alert(
+    //   `${origin.address} to ${destination.address} on ${date.toISOString()}`
+    // );
+
+    navigation.navigate('SearchResults', {
+      date: date.toISOString(),
+      startLongitude: origin.longitude,
+      startLatitude: origin.latitude,
+      destinationLongitude: destination.longitude,
+      destinationLatitude: destination.latitude,
+    });
   };
 
   const logDate = (date: Date) => {
     console.log(date.toISOString());
   };
 
-  useEffect(() => {
-    navigator.geolocation = Geolocation;
-  }, []);
+  // useEffect(() => {
+  //   navigator.geolocation = Geolocation;
+  // }, []);
 
   return (
     <View style={{ flex: 1, padding: 30 }}>
@@ -88,9 +96,9 @@ export function SearchPage({ navigation }: SearchPageProps) {
               longitude: `${details?.geometry.location.lng}`,
             });
           }}
-          currentLocation={true}
-          currentLocationLabel="Current Location"
-          nearbyPlacesAPI="GoogleReverseGeocoding"
+          // currentLocation={true}
+          // currentLocationLabel="Current Location"
+          // nearbyPlacesAPI="GoogleReverseGeocoding"
           query={{
             key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
             language: 'en',

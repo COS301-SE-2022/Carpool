@@ -20,12 +20,24 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   const tripDetails = useSelector((state: RootStore) => state.trip);
   const { trip, status } = tripDetails;
 
+  const user = useSelector((state: RootStore) => state.user);
+  const { user: userData } = user;
+
   useEffect(() => {
     dispatch(fetchTripDetails(tripId));
   }, [dispatch, tripId]);
 
   const bookRide = (tripId: string) => {
+    console.log(JSON.stringify(trip));
     console.log(`Booking ride ${tripId}`);
+
+    // navigation.push('SetPickupPage', {
+    //   tripId,
+    //   passengerId: userData ? userData.id : '',
+    //   seatsBooked: '1',
+    //   status: 'unpaid',
+    //   price: trip ? trip.price : '',
+    // });
   };
 
   return (

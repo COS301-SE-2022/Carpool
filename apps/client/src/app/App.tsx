@@ -17,6 +17,9 @@ import {
   EditProfile,
   Statistics,
   TripHistory,
+  SearchResults,
+  ChatScreen,
+  SetPickupPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store } from '@carpool/client/store';
@@ -44,6 +47,9 @@ export type RootStackParamList = {
   Statistics;
   TripHistory;
   DriverProfile;
+  SearchResults;
+  ChatScreen;
+  SetPickupPage;
 };
 
 const Tab = createBottomTabNavigator<RootStackParamList>();
@@ -113,10 +119,17 @@ const TabBar = () => {
 };
 
 const AppWrapper = () => {
+  // const userState = useSelector((state: RootStore) => state.user);
+  // const { user, status, error } = userState;
+
+  // useEffect(() => {
+  //   console.log(user);
+  // }, [user]);
+
   return (
     <NavigationContainer theme={navTheme}>
       <Stack.Navigator
-        initialRouteName="HomePage"
+        initialRouteName="OnboardPage"
         screenOptions={{
           headerShown: false,
         }}
@@ -126,6 +139,7 @@ const AppWrapper = () => {
         <Stack.Screen name="OnboardPage" component={OnboardPage} />
         <Stack.Screen name="SignUpPage" component={SignUpPage} />
         <Stack.Screen name="SignOut" component={SignOut} />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen
           name="ForgotPasswordPage"
           component={ForgotPasswordPage}
@@ -133,11 +147,16 @@ const AppWrapper = () => {
         <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} />
         <Stack.Screen name="ResetPasswordPage" component={ResetPasswordPage} />
         <Stack.Screen name="TripDetails" component={TripDetails} />
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Screen name="SearchResults" component={SearchResults} />
+        {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="SearchPage" component={SearchPage} />
-        </Stack.Group>
+        </Stack.Group> */}
+        <Stack.Screen name="SearchPage" component={SearchPage} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="DriverProfile" component={DriverProfile} />
+        </Stack.Group>
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+          <Stack.Screen name="SetPickupPage" component={SetPickupPage} />
         </Stack.Group>
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>

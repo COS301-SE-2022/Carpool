@@ -9,11 +9,11 @@ import {
 } from 'react-native';
 import { TripHistoryProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootStore } from '@carpool/client/store';
 import {
   AppDispatch,
   listDriverHistory,
   listPassengerHistory,
+  RootStore,
 } from '@carpool/client/store';
 import { TripCard } from '@carpool/client/components';
 import { formatDate } from '@carpool/client/shared/utilities';

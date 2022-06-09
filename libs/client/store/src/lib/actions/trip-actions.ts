@@ -6,6 +6,7 @@ import {
   TRIP_DETAILS,
   DRIVER_HISTORY,
   UPCOMING_TRIP,
+  SEARCH_RESULTS,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -62,6 +63,44 @@ export const listDriverHistory = createAsyncThunk<
   }
 
   const res = response.data.data.findByDriver;
+
+  return res;
+});
+
+export type SearchInput = {
+  date: string;
+  startLongitude: string;
+  startLatitude: string;
+  destinationLongitude: string;
+  destinationLatitude: string;
+};
+
+export const listSearchResults = createAsyncThunk<
+  TripListType[],
+  SearchInput,
+  { rejectValue: Error }
+>('trips/search', async (search: SearchInput, thunkApi) => {
+  const response = await axios.post('http://localhost:3333/graphql', {
+    query: SEARCH_RESULTS,
+    variables: {
+      date: search.date,
+      startLongitude: search.startLongitude,
+      startLatitude: search.startLatitude,
+      destinationLongitude: search.destinationLongitude,
+      destinationLatitude: search.destinationLatitude,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.searchTrips;
 
   return res;
 });

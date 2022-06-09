@@ -1,11 +1,23 @@
-import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
-import { Actionsheet, Box, Button, Center, useDisclose, Text, VStack, Input, HStack } from 'native-base';
+// import RNDateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import {
+  Actionsheet,
+  Box,
+  Button,
+  Center,
+  useDisclose,
+  Text,
+  VStack,
+  Input,
+  HStack,
+} from 'native-base';
 import React, { useState } from 'react';
 import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* eslint-disable-next-line */
-export interface PostTripFormProps { setSelected : (selected : boolean) => void; }
+export interface PostTripFormProps {
+  setSelected: (selected: boolean) => void;
+}
 
 export function PostTripForm(props: PostTripFormProps) {
   const [date, setDate] = useState(new Date());
@@ -13,11 +25,11 @@ export function PostTripForm(props: PostTripFormProps) {
   const [show, setShow] = useState(false);
   const [seats, setSeats] = useState(0);
 
-  const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
+  // const onChange = (event: DateTimePickerEvent, selectedDate: Date) => {
+  //   const currentDate = selectedDate;
+  //   setShow(false);
+  //   setDate(currentDate);
+  // };
 
   const showMode = (currentMode: any) => {
     setShow(true);
@@ -31,14 +43,10 @@ export function PostTripForm(props: PostTripFormProps) {
   const showTimepicker = () => {
     showMode('time');
   };
-  const {
-    isOpen,
-    onOpen,
-    onClose
-  } = useDisclose();
+  const { isOpen, onOpen, onClose } = useDisclose();
   return (
     <Center>
-      {show && (
+      {/* {show && (
         <RNDateTimePicker
           testID="dateTimePicker"
           value={date}
@@ -46,7 +54,7 @@ export function PostTripForm(props: PostTripFormProps) {
           // is24Hour={true}
           onChange={onChange}
         />
-      )}
+      )} */}
       <Button bg={'#188aed'} borderRadius={100} onPress={onOpen}>
         <Center>
           <Icon name="car" size={20} color={'#fff'} />
@@ -67,7 +75,7 @@ export function PostTripForm(props: PostTripFormProps) {
               <VStack flex={1}>
                 <Center>
                   <Icon name="clock" size={25} />
-                  <Text >Time</Text>
+                  <Text>Time</Text>
                 </Center>
               </VStack>
               <HStack flex={3} ml={5}>
@@ -108,7 +116,6 @@ export function PostTripForm(props: PostTripFormProps) {
                   <Icon name="cash" size={25} />
                   <Text>Trip Cost</Text>
                 </Center>
-
               </VStack>
 
               <Input
@@ -131,15 +138,11 @@ export function PostTripForm(props: PostTripFormProps) {
             <HStack>
               <VStack flex={1}>
                 <Center>
-                  <Icon
-                    name="car-seat"
-                    size={25}
-                  />
-                  <Text >Seats</Text>
+                  <Icon name="car-seat" size={25} />
+                  <Text>Seats</Text>
                 </Center>
               </VStack>
               <HStack flex={3} ml={5}>
-
                 <Button
                   bg={'#188aed'}
                   w={50}
@@ -179,13 +182,12 @@ export function PostTripForm(props: PostTripFormProps) {
               borderRadius={100}
               onPress={() => props.setSelected(false)}
             >
-
-              <HStack w={'100%'} alignItems={'center'} >
-
-                <Icon name="car-connected" size={24} color="white"  />
-                <Text ml={1.5} style={{ fontSize: 20, color: 'white' }}>Post Trip</Text>
+              <HStack w={'100%'} alignItems={'center'}>
+                <Icon name="car-connected" size={24} color="white" />
+                <Text ml={1.5} style={{ fontSize: 20, color: 'white' }}>
+                  Post Trip
+                </Text>
               </HStack>
-
             </Button>
           </VStack>
           {/* <Actionsheet.Item>Delete</Actionsheet.Item>

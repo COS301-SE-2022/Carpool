@@ -9,6 +9,7 @@ import { AuthResolver } from './auth-resolver.resolver';
 import {
   UserLoginHandler,
   UserRegisterHandler,
+  UserUpdateHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -20,6 +21,7 @@ import { PrismaService } from '@carpool/api/prisma';
     AuthService,
     PrismaService,
     UserLoginHandler,
+    UserUpdateHandler,
     UserRegisterHandler,
     UserVerifyHandler,
     AuthRepository,

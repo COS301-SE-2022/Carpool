@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { UserProfileProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootStore, UserUpdate } from '@carpool/client/store';
+import { RootStore } from '@carpool/client/store';
 import {
   fetchUserProfile,
   AppDispatch,
@@ -48,7 +48,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
       setUniversity(profile.university);
       setStudentNumber(profile.studentNumber);
     }
-  }, [dispatch, userData, updateStatus]);
+  }, [dispatch, userData, updateStatus, profile]);
 
   const saveProfile = () => {
     dispatch(

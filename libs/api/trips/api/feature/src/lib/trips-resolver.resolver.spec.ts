@@ -4,37 +4,53 @@ import { Trip, Booking, Location } from '@carpool/api/trips/entities';
 import { User } from '@carpool/api/authentication/entities';
 import { TripsResolver } from './trips-resolver.resolver';
 import { TripsService } from '@carpool/api/trips/service';
+import { MailerService } from '@nestjs-modules/mailer';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthService } from '@carpool/api/authentication/service';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
 jest.mock('@carpool/api/trips/entities');
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;
 const usersMock: jest.Mocked<Booking[]> = new Array<Booking>();
-
-jest.mock('@graduates/api/authentication/entities');
-const userMock: jest.Mocked<User> = new User() as User;
-
-jest.mock('@graduates/api/trips/entities');
 const coordinatesMock: jest.Mocked<Location> = new Location() as Location;
 
-describe('ShortsReportsResolver', () => {
+jest.mock('@carpool/api/authentication/entities');
+const userMock: jest.Mocked<User> = new User() as User;
+jest.mock('@nestjs-modules/mailer');
+
+describe('TripsResolver', () => {
   let resolver: TripsResolver;
   let service: TripsService;
   let queryBus: QueryBus;
   let commandBus: CommandBus;
+  let authService: AuthService;
+  let mailerService: MailerService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [TripsResolver, TripsService, QueryBus, CommandBus],
+      providers: [
+        TripsResolver,
+        AuthService,
+        TripsService,
+        QueryBus,
+        CommandBus,
+        MailerService,
+      ],
     }).compile();
 
     await module.init();
 
+    authService = module.get<AuthService>(AuthService);
     resolver = module.get<TripsResolver>(TripsResolver);
     service = module.get<TripsService>(TripsService);
     queryBus = module.get<QueryBus>(QueryBus);
     commandBus = module.get<CommandBus>(CommandBus);
+    mailerService = module.get<MailerService>(MailerService);
   });
   it('should be defined', () => {
     expect(resolver).toBeDefined();
+    expect(authService).toBeDefined();
     expect(service).toBeDefined();
     expect(queryBus).toBeDefined();
     expect(commandBus).toBeDefined();

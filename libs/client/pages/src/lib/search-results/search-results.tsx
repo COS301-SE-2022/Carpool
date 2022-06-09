@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   SafeAreaView,
   ScrollView,
-  Pressable,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

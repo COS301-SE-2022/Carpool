@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { SetPickupPageProps } from '../NavigationTypes/navigation-types';
 import { View, Text } from 'react-native';
-import { RootStore } from '@carpool/client/store';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Button } from '@carpool/client/components';

@@ -1,7 +1,6 @@
 /* eslint-disable-next-line */
 import React from 'react';
 import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
-import { Button } from '@carpool/client/components';
 
 export function ResetPasswordPage() {
   return (

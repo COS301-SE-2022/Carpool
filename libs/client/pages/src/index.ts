@@ -6,7 +6,6 @@ export * from './lib/trip-history/trip-history';
 export * from './lib/statistics/statistics';
 export * from './lib/edit-profile/edit-profile';
 export * from './lib/user-profile/user-profile';
-export * from './lib/driver-home/driver-home';
 export * from './lib/sign-out/sign-out';
 export * from './lib/search-page/search-page';
 export * from './lib/trip-details/trip-details';

@@ -6,6 +6,7 @@ import {
   TRIP_DETAILS,
   DRIVER_HISTORY,
   UPCOMING_TRIP,
+  CREATE_TRIP,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -13,6 +14,13 @@ import {
   TripDetailsType,
   TripUpcomingType,
 } from '../types/trip-types';
+
+export type TripCreate = {
+  trip_date: string;
+  seats_avaiable: string;
+  price: string;
+  driver_id: string;
+};
 
 export const listTrips = createAsyncThunk<
   TripListType[],
@@ -146,3 +154,26 @@ export const fetchTripDetails = createAsyncThunk<
 
   return res;
 });
+
+export const createTrip = createAsyncThunk(
+  'trips/create',
+  async (trip: TripCreate) => {
+    const response = await axios.post('http://localhost:3333/graphql', {
+      query: CREATE_TRIP,
+      variables: {
+        trip_date: trip.trip_date,
+        seats_avaiable: trip.seats_avaiable,
+        price: trip.price,
+        driver: trip.driver_id,
+      },
+    });
+
+    console.log('ADDING');
+
+    const res = response.data.data.register;
+
+    SecureStore.setItemAsync('user', JSON.stringify(res));
+
+    return res;
+  }
+);

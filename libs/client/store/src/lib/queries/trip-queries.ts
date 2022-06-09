@@ -86,3 +86,7 @@ export const TRIP_DETAILS = `
     }
   }
 `;
+
+export const CREATE_TRIP = `
+
+`;

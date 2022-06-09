@@ -1,5 +1,20 @@
 import { Error } from './auth-types';
 
+export type CreateTrip = {
+  trip: TripCreateType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type TripCreateType = {
+  tripId: string;
+  driver: Driver;
+  tripDate: string;
+  createdAt: string;
+  price: number;
+  coordinates: Location[];
+};
+
 export type UpcomingTrip = {
   trip: TripUpcomingType | null;
   status: 'success' | 'loading' | 'error' | 'idle';

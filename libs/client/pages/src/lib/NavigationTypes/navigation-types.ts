@@ -68,6 +68,11 @@ export type SearchPageProps = NativeStackScreenProps<
   'SearchPage'
 >;
 
+export type PostTripsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'SearchPage'
+>;
+
 export type UserProfileProps = NativeStackScreenProps<
   RootStackParamList,
   'UserProfile'

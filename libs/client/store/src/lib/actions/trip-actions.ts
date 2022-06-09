@@ -16,10 +16,16 @@ import {
 } from '../types/trip-types';
 
 export type TripCreate = {
-  trip_date: string;
-  seats_avaiable: string;
+  driver: string;
+  tripDate: string;
+  seatsAvailable: string;
   price: string;
-  driver_id: string;
+  startLocationAddress: string;
+  startLocationLongitude: string;
+  startLocationLatitude: string;
+  destinationAddress: string;
+  destinationLongitude: string;
+  destinationLatitude: string;
 };
 
 export const listTrips = createAsyncThunk<
@@ -161,19 +167,25 @@ export const createTrip = createAsyncThunk(
     const response = await axios.post('http://localhost:3333/graphql', {
       query: CREATE_TRIP,
       variables: {
-        trip_date: trip.trip_date,
-        seats_avaiable: trip.seats_avaiable,
+        driver: trip.driver,
+        tripDate: trip.tripDate,
+        seatsAvaiable: trip.seatsAvailable,
         price: trip.price,
-        driver: trip.driver_id,
+        startLocationAddress: trip.startLocationAddress,
+        startLocationLongitude: trip.startLocationLongitude,
+        startLocationLatitude: trip.startLocationLatitude,
+        destinationAddress: trip.destinationAddress,
+        destinationLongitude: trip.destinationLongitude,
+        destinationLatitude: trip.destinationLatitude,
       },
     });
 
     console.log('ADDING');
 
-    /* const res = response.data.data.register;
+    const res = response.data.data.tripId;
 
-    SecureStore.setItemAsync('user', JSON.stringify(res));
+    // SecureStore.setItemAsync('user', JSON.stringify(res));
 
-    return res; */
+    return res;
   }
 );

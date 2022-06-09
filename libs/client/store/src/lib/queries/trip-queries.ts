@@ -88,5 +88,20 @@ export const TRIP_DETAILS = `
 `;
 
 export const CREATE_TRIP = `
-
+  mutation (
+    $driver: String!
+    $tripDate: String!
+    $seatsAvailable: String!
+    $price: String!
+    $startLocationAddress: String!
+    $startLocationLongitutde: String!
+    $startLocationLatitiude: String!
+    $destinationAddress: String!
+    $destinationLongitutde: String!
+    $destinationLatitiude: String!
+  ){
+    create(driver: $driver, tripDate: $tripDate, seatsAvailable: $seatsAvailable, price: $price, startLocationAddress: $startLocationAddress, startLocationLongitutde: $startLocationLongitutde, startLocationLatitiude: $startLocationLatitiude, destinationAddress: $destinationAddress, destinationLongitutde: $destinationLongitude, destinationLatitude: $destinationLatitude){
+      tripId
+    }
+  }
 `;

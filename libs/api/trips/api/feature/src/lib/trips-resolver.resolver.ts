@@ -3,7 +3,7 @@ import { Trip, Booking, Location } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
-  // Mutation,
+  Mutation,
   Query,
   ResolveField,
   Resolver,
@@ -61,28 +61,28 @@ export class TripsResolver {
   //   return await this.tripsService.searchTrips(startLocation, endLocation);
   // }
 
-  // @Mutation(() => Trip)
-  // async create(
-  //   driverId: string,
-  //   tripDate: Date,
-  //   seatsAvailable: number,
-  //   price: number,
-  //   startLocation: string,
-  //   destination: string,
-  //   category: string,
-  //   status: string
-  // ): Promise<Trip> {
-  //   return await this.tripsService.create(
-  //     driverId,
-  //     tripDate,
-  //     seatsAvailable,
-  //     price,
-  //     startLocation,
-  //     destination,
-  //     category,
-  //     status
-  //   );
-  // }
+  @Mutation(() => Trip)
+  async create(
+    @Args('driverId') driverId: string,
+    @Args('tripDate') tripDate: Date,
+    @Args('seatsAvailable') seatsAvailable: number,
+    @Args('price') price: number,
+    @Args('startLocation') startLocation: string,
+    @Args('destination') destination: string,
+    @Args('category') category: string,
+    @Args('status') status: string
+  ): Promise<Trip> {
+    return await this.tripsService.create(
+      driverId,
+      tripDate,
+      seatsAvailable,
+      price,
+      startLocation,
+      destination,
+      category,
+      status
+    );
+  }
 
   // @Mutation(() => Trip)
   // async delete(tripId: string): Promise<Trip> {

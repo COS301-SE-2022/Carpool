@@ -55,25 +55,25 @@ export class TripsService {
   }
 
   async create(
+    driver: string,
     tripDate: Date,
     seatsAvailable: number,
     price: number,
     startLocation: string,
     destination: string,
     category: string,
-    status: string,
-    driver: string
+    status: string
   ): Promise<Trip> {
     return await this.commandBus.execute(
       new TripsCreateCommand(
+        driver,
         tripDate,
         seatsAvailable,
         price,
         startLocation,
         destination,
         category,
-        status,
-        driver
+        status
       )
     );
   }

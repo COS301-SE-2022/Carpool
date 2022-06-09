@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TripDetails, TripList, UpcomingTrip } from '../types/trip-types';
 import {
+  CreateTrip,
+  TripDetails,
+  TripList,
+  UpcomingTrip,
+} from '../types/trip-types';
+import {
+  createTrip,
   listTrips,
   fetchTripDetails,
   fetchUpcomingTrip,
@@ -13,6 +19,33 @@ export const initialState = {
   status: 'idle',
   error: null,
 } as TripList;
+
+export const initialCreateState = {
+  trip: null,
+  status: 'idle',
+  error: null,
+} as CreateTrip;
+
+export const createTripSlice = createSlice({
+  name: 'trips',
+  initialState: initialCreateState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(createTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+      })
+      .addCase(createTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+      });
+  },
+});
 
 export const tripListSlice = createSlice({
   name: 'trips',

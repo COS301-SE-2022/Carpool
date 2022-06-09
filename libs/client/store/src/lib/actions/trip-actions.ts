@@ -170,10 +170,10 @@ export const createTrip = createAsyncThunk(
 
     console.log('ADDING');
 
-    const res = response.data.data.register;
+    /* const res = response.data.data.register;
 
     SecureStore.setItemAsync('user', JSON.stringify(res));
 
-    return res;
+    return res; */
   }
 );

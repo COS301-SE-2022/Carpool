@@ -1,12 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User } from '@carpool/api/authentication/entities';
-import {
-  Booking,
-  Trip,
-  BookingInput,
-  TripsUpdate,
-} from '@carpool/api/trips/entities';
+import { Booking, Trip } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
   FindByDriverQuery,
@@ -84,21 +78,25 @@ export class TripsService {
   }
 
   async bookTrip(
-    userId: string,
+    passengerId: string,
     tripId: string,
-    bookingDate: Date,
-    seatsBooked: number,
+    seatsBooked: string,
     status: string,
-    price: number
+    price: string,
+    address: string,
+    latitude: string,
+    longitude: string
   ): Promise<Booking> {
     return await this.commandBus.execute(
       new BookTripCommand(
-        userId,
         tripId,
-        bookingDate,
+        passengerId,
         seatsBooked,
         status,
-        price
+        price,
+        address,
+        longitude,
+        latitude
       )
     );
   }

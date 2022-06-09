@@ -7,11 +7,7 @@ import {
   TripsDeleteCommand,
   BookTripCommand,
 } from './trips-command.command';
-import {
-  BookingInput,
-  TripsInput,
-  TripsUpdate,
-} from '@carpool/api/trips/entities';
+import { TripsInput, TripsUpdate } from '@carpool/api/trips/entities';
 
 @CommandHandler(TripsCreateCommand)
 export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
@@ -34,17 +30,27 @@ export class BookTripHandler implements ICommandHandler<BookTripCommand> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: BookTripCommand): Promise<Booking | null> {
-    const { userId, tripId, bookingDate, seatsBooked, status, price } = command;
+    const {
+      tripId,
+      passengerId,
+      seatsBooked,
+      status,
+      price,
+      address,
+      longitude,
+      latitude,
+    } = command;
 
-    const booking = new BookingInput();
-    booking.userId = userId;
-    booking.tripId = tripId;
-    booking.bookingDate = bookingDate;
-    booking.seatsBooked = seatsBooked;
-    booking.status = status;
-    booking.price = price;
-
-    return await this.tripsRepository.bookTrip(booking);
+    return await this.tripsRepository.bookTrip(
+      tripId,
+      passengerId,
+      seatsBooked,
+      status,
+      price,
+      address,
+      longitude,
+      latitude
+    );
   }
 }
 

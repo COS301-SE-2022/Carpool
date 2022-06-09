@@ -7,6 +7,7 @@ import {
   DRIVER_HISTORY,
   UPCOMING_TRIP,
   SEARCH_RESULTS,
+  BOOK_TRIP,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -180,6 +181,60 @@ export const fetchTripDetails = createAsyncThunk<
   }
 
   const res = response.data.data.findTripById;
+
+  console.log(res);
+
+  return res;
+});
+
+export type BookTripType = {
+  //bookingId: string;
+  tripId: string;
+  userId: string;
+  //bookingDate: string;
+  seatsBooked: number;
+  status: string;
+  price: string;
+  address: string;
+  latitude: string;
+  longitude: string;
+}
+
+export type tripID = {
+  tripID: string;
+}
+
+export const bookTrip = createAsyncThunk<
+  string,
+  BookTripType,
+  { rejectValue: Error }
+>('trip/book', async (bookTripValues: BookTripType, thunkApi) => {
+  const response = await axios.post('http://localhost:3333/graphql', {
+    query: BOOK_TRIP,
+    variables: {
+      //bookingId: bookTripValues.bookingId,
+      tripId: bookTripValues.tripId,
+      userId: bookTripValues.userId,
+      //bookingDate: bookTripValues.bookingDate,
+      seatsBooked: bookTripValues.seatsBooked,
+      status: bookTripValues.status,
+      price: bookTripValues.price,
+      address: bookTripValues.address,
+      latitude: bookTripValues.latitude,
+      longitude: bookTripValues.longitude,
+    },
+  });
+  console.log('BOOKING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.bookTrip;
 
   console.log(res);
 

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TripDetails, TripList, UpcomingTrip } from '../types/trip-types';
+import { TripBooking, TripDetails, TripList, UpcomingTrip } from '../types/trip-types';
 import {
   listTrips,
   fetchTripDetails,
@@ -7,6 +7,7 @@ import {
   listDriverHistory,
   listPassengerHistory,
   listSearchResults,
+  bookTrip,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -202,6 +203,39 @@ export const upcomingTripSlice = createSlice({
           state.error = action.payload;
         } else {
           state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const tripBookingState = {
+  tripId: null,
+  status: 'idle',
+  error: null,
+} as TripBooking;
+
+export const tripBookingSlice = createSlice({
+  name: 'trip-booking',
+  initialState: tripBookingState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(bookTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(bookTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(bookTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error (Trip Booking)' };
         }
       });
   },

@@ -6,29 +6,10 @@ import { SearchPageProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DatePicker from 'react-native-date-picker';
-// import Geolocation from '@react-native-community/geolocation';
-
-// navigator.geolocation = require('@react-native-community/geolocation');
-
-// Geolocation.getCurrentPosition((info) => {
-//   console.log(info);
-// });
-
-/* eslint-disable-next-line */
-// navigator.geolocation = Geolocation;
-
-// navigator.geolocation = require('@react-native-community/geolocation');
 
 export function SearchPage({ navigation }: SearchPageProps) {
   type address = {
     address: string;
-    latitude: string;
-    longitude: string;
-  };
-
-  const [currentLocation, setCurrentLocation] = useState({});
-
-  type reqionType = {
     latitude: string;
     longitude: string;
   };
@@ -39,15 +20,7 @@ export function SearchPage({ navigation }: SearchPageProps) {
   const [origin, setOrigin] = useState({} as address);
   const [destination, setDestination] = useState({} as address);
 
-  const [region, setRegion] = useState({});
-
   const search = () => {
-    // alert(
-    //   `${origin.address} to ${destination.address} on ${date.toISOString()}`
-    // );
-
-    console.log(date.toISOString());
-
     navigation.navigate('SearchResults', {
       date: date.toISOString(),
       startLongitude: origin.longitude,
@@ -56,14 +29,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
       destinationLatitude: destination.latitude,
     });
   };
-
-  const logDate = (date: Date) => {
-    console.log(date.toISOString());
-  };
-
-  // useEffect(() => {
-  //   navigator.geolocation = Geolocation;
-  // }, []);
 
   return (
     <View style={{ flex: 1, padding: 30 }}>
@@ -98,9 +63,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
               longitude: `${details?.geometry.location.lng}`,
             });
           }}
-          // currentLocation={true}
-          // currentLocationLabel="Current Location"
-          // nearbyPlacesAPI="GoogleReverseGeocoding"
           query={{
             key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
             language: 'en',
@@ -174,7 +136,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
           onConfirm={(date) => {
             setOpen(false);
             setDate(date);
-            logDate(date);
           }}
           onCancel={() => {
             setOpen(false);

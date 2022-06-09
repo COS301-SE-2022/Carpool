@@ -92,23 +92,27 @@ export class TripsResolver {
   // @Mutation(() => Trip)
   // async create(
   //   driverId: string,
-  //   tripDate: Date,
-  //   seatsAvailable: number,
-  //   price: number,
-  //   startLocation: string,
-  //   destination: string,
-  //   category: string,
-  //   status: string
+  //   tripDate: string,
+  //   seatsAvailable: string,
+  //   price: string,
+  //   startLocationAddress: string,
+  //   startLocationLongitude: string,
+  //   startLocationLatitude: string,
+  //   destinationAddress: string,
+  //   destinationLongitude: string,
+  //   destinationLatitude: string
   // ): Promise<Trip> {
   //   return await this.tripsService.create(
   //     driverId,
   //     tripDate,
   //     seatsAvailable,
   //     price,
-  //     startLocation,
-  //     destination,
-  //     category,
-  //     status
+  //     startLocationAddress,
+  //     startLocationLongitude,
+  //     startLocationLatitude,
+  //     destinationAddress,
+  //     destinationLongitude,
+  //     destinationLatitude
   //   );
   // }
 
@@ -134,14 +138,14 @@ export class TripsResolver {
 
   @Mutation(() => Booking)
   async bookTrip(
-    tripId: string,
-    passengerId: string,
-    seatsBooked: string,
-    status: string,
-    price: string,
-    address: string,
-    longitude: string,
-    latitude: string
+    @Args('tripId') tripId: string,
+    @Args('passengerId') passengerId: string,
+    @Args('seatsBooked') seatsBooked: string,
+    @Args('status') status: string,
+    @Args('price') price: string,
+    @Args('address') address: string,
+    @Args('longitude') longitude: string,
+    @Args('latitude') latitude: string
   ): Promise<Booking | null> {
     return await this.tripsService.bookTrip(
       passengerId,

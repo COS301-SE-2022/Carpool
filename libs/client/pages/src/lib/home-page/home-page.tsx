@@ -21,7 +21,7 @@ export function HomePage({ navigation }: HomePageProps) {
   }, [dispatch]);
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId, type: 'booked' });
   };
 
   return (

@@ -9,7 +9,7 @@ export type RootStackParamList = {
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
   ResetPasswordPage: undefined;
-  TripDetails: { tripId: string };
+  TripDetails: { tripId: string; type: string };
   SearchPage: undefined;
   UserProfile: { userId: string };
   DriverProfile: { driverId: string };

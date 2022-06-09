@@ -13,7 +13,7 @@ import {
 } from '@carpool/client/components';
 
 export function TripDetails({ route, navigation }: TripDetailsPageProps) {
-  const { tripId } = route.params;
+  const { tripId, type } = route.params;
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -78,6 +78,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
             {trip && (
               <TripDetailsBottomContainer
                 trip={trip}
+                type={type}
                 onPress={() => bookRide(tripId)}
                 onPressUser={() =>
                   navigation.navigate('DriverProfile', {

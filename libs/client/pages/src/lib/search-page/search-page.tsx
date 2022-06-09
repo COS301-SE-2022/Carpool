@@ -46,6 +46,8 @@ export function SearchPage({ navigation }: SearchPageProps) {
     //   `${origin.address} to ${destination.address} on ${date.toISOString()}`
     // );
 
+    console.log(date.toISOString());
+
     navigation.navigate('SearchResults', {
       date: date.toISOString(),
       startLongitude: origin.longitude,

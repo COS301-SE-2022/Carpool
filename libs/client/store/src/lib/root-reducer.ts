@@ -11,6 +11,7 @@ import {
   driverHistorySlice,
   passengerHistorySlice,
   searchResultsSlice,
+  tripBookingSlice,
 } from './slices/trip-slice';
 
 const RootReducer = combineReducers({
@@ -23,6 +24,7 @@ const RootReducer = combineReducers({
   searchResults: searchResultsSlice.reducer,
   trip: tripDetailsSlice.reducer,
   upcoming: upcomingTripSlice.reducer,
+  booking: tripBookingSlice.reducer,
 });
 
 export default RootReducer;

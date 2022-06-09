@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location } from '@prisma/client';
-import {
-  BookingInput,
-  LocationInput,
-  TripsInput,
-  TripsUpdate,
-} from '@carpool/api/trips/entities';
+import { TripsInput, TripsUpdate } from '@carpool/api/trips/entities';
 
 @Injectable()
 export class TripsRepository {
@@ -89,15 +84,34 @@ export class TripsRepository {
     });
   }
 
-  async bookTrip(booking: BookingInput): Promise<Booking | null> {
+  async bookTrip(
+    tripId: string,
+    passengerId: string,
+    seatsBooked: string,
+    status: string,
+    price: string,
+    address: string,
+    longitude: string,
+    latitude: string
+  ): Promise<Booking | null> {
     return this.prisma.booking.create({
       data: {
-        userId: booking.userId,
-        tripId: booking.tripId,
-        bookingDate: booking.bookingDate,
-        seatsBooked: booking.seatsBooked,
-        status: booking.status,
-        price: booking.price,
+        trip: {
+          connect: { tripId },
+        },
+        user: {
+          connect: { id: passengerId },
+        },
+        seatsBooked: parseInt(seatsBooked),
+        status: status,
+        price: parseFloat(price),
+        pickUp: {
+          create: {
+            address,
+            latitude,
+            longitude,
+          },
+        },
       },
     });
   }

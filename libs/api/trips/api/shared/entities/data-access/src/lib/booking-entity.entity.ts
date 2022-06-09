@@ -45,14 +45,14 @@ export class BookingInput {
   tripId: string;
 
   @Field()
-  bookingDate: Date;
+  bookingDate: string;
 
   @Field()
-  seatsBooked: number;
+  seatsBooked: string;
 
   @Field()
   status: string;
 
   @Field()
-  price: number;
+  price: string;
 }

@@ -1,10 +1,5 @@
 import { User } from '@carpool/api/authentication/entities';
-import {
-  Trip,
-  Booking,
-  Location,
-  LocationInput,
-} from '@carpool/api/trips/entities';
+import { Trip, Booking, Location } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
@@ -139,20 +134,24 @@ export class TripsResolver {
 
   @Mutation(() => Booking)
   async bookTrip(
-    passengerId: string,
     tripId: string,
-    bookingDate: Date,
-    seatsBooked: number,
+    passengerId: string,
+    seatsBooked: string,
     status: string,
-    price: number
-  ): Promise<Booking> {
+    price: string,
+    address: string,
+    longitude: string,
+    latitude: string
+  ): Promise<Booking | null> {
     return await this.tripsService.bookTrip(
       passengerId,
       tripId,
-      bookingDate,
       seatsBooked,
       status,
-      price
+      price,
+      address,
+      longitude,
+      latitude
     );
   }
 }

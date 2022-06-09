@@ -35,15 +35,23 @@ export function LoginPage({ navigation }: LoginPageProps) {
     if (error) {
       showToast(error.message);
     }
+
+    // if (status === 'success') {
+    //   navigation.navigate('HomePage');
+    // }
   }, [error, status, navigation]);
 
   const submitHandler = () => {
     // navigation.navigate('HomePage');
-    if (user && !user.token && status !== 'success') {
-      navigation.navigate('HomePage');
-    } else {
-      dispatch(login({ email, password }));
-    }
+    // if (user && user.token && status === 'success') {
+    //   navigation.navigate('HomePage');
+    // } else {
+    dispatch(login({ email, password }));
+
+    //   if (user && user.token && status === 'success') {
+    //     navigation.navigate('HomePage');
+    //   }
+    // }
   };
 
   return (

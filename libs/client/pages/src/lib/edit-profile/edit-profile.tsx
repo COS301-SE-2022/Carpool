@@ -61,6 +61,9 @@ export function EditProfile({ navigation }: UserProfileProps) {
         studentNumber,
       })
     );
+    if (userData && updateStatus === 'success') {
+      dispatch(fetchUserProfile(userData.id));
+    }
   };
 
   return (

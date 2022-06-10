@@ -37,10 +37,6 @@ Benjamin is a Mechanical Engineering graduate (BEng, 2019) and current final yea
 
 Ashleigh is a final year BSc Computer Science student at the University of Pretoria. She has some experience in web development.
 
-##### Josh Brink
-
-Josh is a final year BSc computer science student with multiple web development (MERN and LAMP stacks) as well as cross platform applications (.Net Core Xamarin) projects. Mostly focusing on once off client contracts: building brochure and E-commerce websites and mobile applications. In addition: contributions to open source GitHub projects.
-
 ##### Jason Antalis
 
 Jason is a final year BSc Computer Science student at the University of Pretoria, having done small web projects on the side.

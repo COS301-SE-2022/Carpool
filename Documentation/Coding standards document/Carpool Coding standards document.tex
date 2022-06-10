@@ -82,119 +82,117 @@
     
        \subsection{\large{\textbf{Classes:}}}
         \begin{itemize}[]
-            \item Pascal Case / Camel Case...
-            \item Spaces / Underscore
+            \item When naming our classes we made use of camel Casing - If the class consisted of two words, the first letter of the first word would be lower case and the first letter of the second word would be uppercase.
+            \item If the name of our class was more then two words, we did not have spaces or underscores between them, we just differentiated the beginning and end of the world using uppercase and lowercase.
         \end{itemize}
         
         \vspace{0.5cm} 
         
          \subsection{\large{\textbf{Function headers and Variables:}}}
         \begin{itemize}[]
-            \item  Pascal Case / Camel Case...
-            \item   Did we capitalise certain variables
+            \item  For front end functions we capitalised the first letter of each word, and for back-end functions we used camel casing.
+            \item  For both front-end and back-end, we used lower case variables except in the case of ENUMS, or constants. In this case we capitalised the entire word. In testing when we made use of mock variables, we used camel case.
         \end{itemize}
         
          \vspace{0.5cm} 
         
          \subsection{\large{\textbf{Schema:}}}
         \begin{itemize}[]
-            \item  How did we name the attributes?
-            \item  How did we name the tables? 
-            \item aliases?
-        \end{itemize}
-        
-        \subsection{\large{\textbf{API:}}}
-        \begin{itemize}[]
-            \item  
-            \item  
-            \item 
+            \item  When naming attributes in the schema, we made use of Camel case.
+            \item If the attribute was two words, we did not use a space or a underscore, we just differentiated the beginning and end of the world using uppercase and lowercase.e.g userId
+            \item ENUM attributes are named using Capital letters
+            \item  When naming tables in the schema, we made use of Pascal case.
+            \item If the table name was two words, we did not use a space or a underscore, we just differentiated the beginning and end of the world using uppercase and lowercase.e.g PickUpLocation.
+            \item No two tables are named the same.
         \end{itemize}
         
 \newpage
         
 \section{Repository Branching Structure}
 \subsection{Branching}
-\vspace{0.5cm} 
-The format of branching will be as follows: name/category/feature.
-Meaning category may have three options, namely: client, api, db.
-For example: ben/client/auth.
-\subsection{Repository Structure}
+Since we split the coding aspect of this project into use cases. Each member of the group creates a branch with their name, whether they are working client side or back end side(API, database), and exactly what use case/ feature they are working on. .The format of branching will be as follows: name/category/feature. Meaning category may have three options, namely: client, api, db.For example "jason/client/bookseat" is a vaild branch. These branches are then periodically merged into the main branch by another member of the team once it as passed the CI tests and the other member has reviewed the changes
+\vspace{0.2cm} 
+\begin{center}
+    \includegraphics[width=6cm]{images/Branching.png} \\
+\end{center}
 \vspace{0.5cm} 
 
 \subsection{Pull Requests and Commits}
-\vspace{0.5cm} 
 Commits will need to have detailed naming along with a suitable gitmoji to help describe what has been done within that commit.
+Every pull request has to pass the CI tests and has to be reviewed by another member of the group before it is merged into the main branch.  The person who made the pull request cannot merger their branch to the main branch.
+\vspace{0.5cm} 
+\newpage
+\subsection{Repository Structure}
+Below is a screenshot of our repository structure, at the top we have all our code and files, and towards the bottom of the page we have links to our documentation as well as a brief bio on every member in the group
+\begin{center}
+    \includegraphics[width=6cm]{images/GitHub.png} \\
+\end{center}
+\vspace{0.5cm} 
+
 \newpage  
 
 \section{Comments}
-\newpage
+    
+        When Adding comments code the following principles will be used:\\
+        
+        Single Line Comments:
+        \begin{code}
+         \begin{lstlisting}
+         /* Insert comment about code */   
+        // Insert comment about code
+         \end{lstlisting}
+       \end{code}
+       
+        multi-line comment:
+         \begin{code}
+    
+        \begin{lstlisting}
+        /** 
+        * Comment spreads across multiple lines
+        * This could be used for large comments.
+        */
+        \end{lstlisting}
+            
+        \end{code}               
+ 
 
-\section{Technology Choices}
-\subsection{Front-End}
-The chosen front-end technology is React Native along side redux.
-React Native allows us to create mobile applications using website technology and create cross-platform mobile applications, Android and iOS for example.
-It allows faster development since the apps do not need to be recompiled but rather the app can be reloaded and the changes will be reflected on the device.
-Flutter and Angular are also popular front-end technologies.
-We opted for React Native since it provides accessibility to intelligent debugging tools and error reporting.
-As well as, Flutter cannot create apps for android and Angular has lowered app performance when compared with React Native.
-Unfortunately, React Native does not support parallel threading and multi-processing.
-\newline
-\newline
-Looking at the candidates of redux, flux and mvc, we chose redux as it is a state management framework that is easy to use and easy to understand.
-All of these candidates revolve around the Model View Controller pattern.
-Rather than placing state information in multiple Stores across the application, Redux keeps everything in one region of the app.
-\subsection{Back-End}
-NestJS, GraphQL and the Prisma Client are all the choices for the back-end technologies.
-Looking at our architecture, we chose NestJS as it is can be based on the Model View Controller pattern.
-While ExpressJs does not follow the MVCPattern which our architecture is based on, it does not have as much structure as NestJs causing it to be inefficient.
-On the API side, we chose GraphQL as it is a query language and REST is more of an architectural pattern/style.
-Due to using the Prisma ORM, it is logical to therefore use the prisma client for our database needs.
-\subsection{Database}
-Database systems are used to store and retrieve data.
-The two options were PostgreSQL and MySQL.
-We opted for PostgreSQL since it has much more functionality than MySQL.
-For example PostgreSQL allows us to create different data types for a specific array of data.
-Another advantage over MySQL is that it is supports analytic functions.
-\newline
-\newline
-Onto Object Relational Mapping (ORM) frameworks, we chose Prisma.
-It makes database access easy with auto-generated query builder for TypeScript.
-\subsection{Hosting}
-When looking at hosting options, there many options which range from AWS, Azure and Google.
-We chose Google Hosting because it is the most cost effective and it is also a popular option.
-There is not a lot of difference between the various hosting services and generally comes down to preference.
+        function header comment:
+            
+        \begin{code}
+        
+        \begin{lstlisting}
+        /** 
+        * Describe what the function does
+        * 
+        * @param parameterName- brief over view of each parameter passed into the function
+        * 
+        * @return a short description of what the function returns.
+        */
+        \end{lstlisting}
+        \end{code}
 \newpage
 
 \section{File Structure}
-Back-end
-    
-        \begin{lstlisting}
+Our system is broken up into front-end and back-end. Our file structure represents that split.
+\begin{center}
+    \includegraphics[width=6cm]{images/File Structure 1.png} \\
+\end{center}
+\vspace{0.5cm} 
+Back-end can be found at libs/API where as front-end can be found at libs/Client 
+\newpage Back-end is further split up into API, Service and Repository layers.
+\begin{center}
+    \includegraphics[width=6cm]{images/File Structure 3.png} \\
+\end{center}
+\vspace{0.5cm} 
+Each of these layers have their own spec.ts (usually used for unit testing) file and .ts files(resolver, data access, service)
+\begin{center}
+    \includegraphics[width=6cm]{images/File Structure 5.png} \\
+\end{center}
+\vspace{0.5cm} 
+The front-end splits the pages, store and componments up.
+\begin{center}
+    \includegraphics[width=6cm]{images/File Structure 6.png} \\
+\end{center}
+\vspace{0.5cm} 
 
-ExampleSubsystem
-    |------ Controller
-               |------ ExampleSubsystemApi
-               |------ ExampleSubsystemApiController
-    |------ Exception
-    |------ Model
-    |------ Repository
-    |------ Request
-    |------ Response
-    |------ Service
-               |------ ExampleSubsystemService
-               |------ ExampleSubsystemServiceImpl
-        \end{lstlisting}
-            
-        Front-end
-    
-        \begin{lstlisting}
-        
-
-
-services
-    |---- ServiceName
-tabs
-    |---- ExampleTab
-            |----- TabSubPage
-        \end{lstlisting}
-            
 \end{document}

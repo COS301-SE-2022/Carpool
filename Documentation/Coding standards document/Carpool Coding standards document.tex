@@ -115,21 +115,58 @@
 \section{Repository Branching Structure}
 \subsection{Branching}
 \vspace{0.5cm} 
-
+The format of branching will be as follows: name/category/feature.
+Meaning category may have three options, namely: client, api, db.
+For example: ben/client/auth.
 \subsection{Repository Structure}
 \vspace{0.5cm} 
 
 \subsection{Pull Requests and Commits}
 \vspace{0.5cm} 
-
+Commits will need to have detailed naming along with a suitable gitmoji to help describe what has been done within that commit.
 \newpage  
 
 \section{Comments}
 \newpage
 
+\section{Technology Choices}
+\subsection{Front-End}
+The chosen front-end technology is React Native along side redux.
+React Native allows us to create mobile applications using website technology and create cross-platform mobile applications, Android and iOS for example.
+It allows faster development since the apps do not need to be recompiled but rather the app can be reloaded and the changes will be reflected on the device.
+Flutter and Angular are also popular front-end technologies.
+We opted for React Native since it provides accessibility to intelligent debugging tools and error reporting.
+As well as, Flutter cannot create apps for android and Angular has lowered app performance when compared with React Native.
+Unfortunately, React Native does not support parallel threading and multi-processing.
+\newline
+\newline
+Looking at the candidates of redux, flux and mvc, we chose redux as it is a state management framework that is easy to use and easy to understand.
+All of these candidates revolve around the Model View Controller pattern.
+Rather than placing state information in multiple Stores across the application, Redux keeps everything in one region of the app.
+\subsection{Back-End}
+NestJS, GraphQL and the Prisma Client are all the choices for the back-end technologies.
+Looking at our architecture, we chose NestJS as it is can be based on the Model View Controller pattern.
+While ExpressJs does not follow the MVCPattern which our architecture is based on, it does not have as much structure as NestJs causing it to be inefficient.
+On the API side, we chose GraphQL as it is a query language and REST is more of an architectural pattern/style.
+Due to using the Prisma ORM, it is logical to therefore use the prisma client for our database needs.
+\subsection{Database}
+Database systems are used to store and retrieve data.
+The two options were PostgreSQL and MySQL.
+We opted for PostgreSQL since it has much more functionality than MySQL.
+For example PostgreSQL allows us to create different data types for a specific array of data.
+Another advantage over MySQL is that it is supports analytic functions.
+\newline
+\newline
+Onto Object Relational Mapping (ORM) frameworks, we chose Prisma.
+It makes database access easy with auto-generated query builder for TypeScript.
+\subsection{Hosting}
+When looking at hosting options, there many options which range from AWS, Azure and Google.
+We chose Google Hosting because it is the most cost effective and it is also a popular option.
+There is not a lot of difference between the various hosting services and generally comes down to preference.
+\newpage
+
 \section{File Structure}
 Back-end
-    \begin{code}
     
         \begin{lstlisting}
 
@@ -147,9 +184,7 @@ ExampleSubsystem
                |------ ExampleSubsystemServiceImpl
         \end{lstlisting}
             
-    \end{code}
         Front-end
-    \begin{code}
     
         \begin{lstlisting}
         
@@ -162,5 +197,4 @@ tabs
             |----- TabSubPage
         \end{lstlisting}
             
-    \end{code}
 \end{document}

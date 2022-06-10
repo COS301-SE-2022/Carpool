@@ -5,15 +5,13 @@ import { User } from '@carpool/api/authentication/entities';
 import { TripsResolver } from './trips-resolver.resolver';
 import { TripsService } from '@carpool/api/trips/service';
 import { MailerService } from '@nestjs-modules/mailer';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from '@carpool/api/authentication/service';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-import { join } from 'path';
 
 jest.mock('@carpool/api/trips/entities');
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;
 const usersMock: jest.Mocked<Booking[]> = new Array<Booking>();
 const coordinatesMock: jest.Mocked<Location> = new Location() as Location;
+const bookingMock: jest.Mocked<Booking> = new Booking() as Booking;
 
 jest.mock('@carpool/api/authentication/entities');
 const userMock: jest.Mocked<User> = new User() as User;
@@ -25,7 +23,6 @@ describe('TripsResolver', () => {
   let queryBus: QueryBus;
   let commandBus: CommandBus;
   let authService: AuthService;
-  let mailerService: MailerService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -46,7 +43,6 @@ describe('TripsResolver', () => {
     service = module.get<TripsService>(TripsService);
     queryBus = module.get<QueryBus>(QueryBus);
     commandBus = module.get<CommandBus>(CommandBus);
-    mailerService = module.get<MailerService>(MailerService);
   });
   it('should be defined', () => {
     expect(resolver).toBeDefined();
@@ -69,6 +65,8 @@ describe('TripsResolver', () => {
       expect(await resolver.coordinates(tripMock)).toMatchObject(result);
     });
   });
+
+  //findCoordinatesByTrip
 
   /**
    * Test the passengers field resolver method
@@ -116,7 +114,7 @@ describe('TripsResolver', () => {
    * Test the findTripById method
    */
   describe('findTripById', () => {
-    it('should return an array of trips', async () => {
+    it('should return a trip', async () => {
       jest
         .spyOn(resolver, 'findTripById')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
@@ -139,6 +137,25 @@ describe('TripsResolver', () => {
     });
   });
 
+  describe('searchTrips', () => {
+    const result = [tripMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(resolver, 'searchTrips')
+        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+
+      expect(
+        await resolver.searchTrips(
+          '2022-05-30T08:21:50.000Z',
+          '28.1760277',
+          '-25.8858077',
+          '28.2314476',
+          '-25.7545492'
+        )
+      ).toBe(result);
+    });
+  });
+
   describe('findByPassenger', () => {
     const result = [tripMock];
     it('should return an array of trips', async () => {
@@ -147,6 +164,30 @@ describe('TripsResolver', () => {
         .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
 
       expect(await resolver.findByPassenger('1')).toBe(result);
+    });
+  });
+
+  //bookTrip
+  describe('bookTrip', () => {
+    it('should book a trip', async () => {
+      jest
+        .spyOn(resolver, 'bookTrip')
+        .mockImplementation(
+          (): Promise<Booking> => Promise.resolve(bookingMock)
+        );
+
+      expect(
+        await resolver.bookTrip(
+          '1',
+          '2',
+          '1',
+          'unpaid',
+          '30',
+          'address',
+          'longitude',
+          'latitude'
+        )
+      ).toBe(bookingMock);
     });
   });
 });

@@ -1,13 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TripsRepository } from './trips-repository.repository';
 import { PrismaService } from '@carpool/api/prisma';
-import { Booking, Trip } from '@carpool/api/trips/entities';
+import {
+  Booking,
+  Trip,
+  Location,
+  TripsUpdate,
+} from '@carpool/api/trips/entities';
 
-jest.mock('@carpool/api/trips/api/shared');
+jest.mock('@carpool/api/trips/entities');
 
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;
+const tripUpdateMock: jest.Mocked<TripsUpdate> =
+  new TripsUpdate() as TripsUpdate;
 const tripsMock: jest.Mocked<Trip[]> = new Array<Trip>();
 const bookingMock: jest.Mocked<Booking> = new Booking() as Booking;
+const locationMock: jest.Mocked<Location> = new Location() as Location;
 
 describe('TripsRepository', () => {
   let repository: TripsRepository;
@@ -36,6 +44,41 @@ describe('TripsRepository', () => {
       expect(await repository.findAll()).toEqual(
         expect.arrayContaining(result)
       );
+    });
+  });
+
+  //findTripById
+  describe('findTripById', () => {
+    it('should a trip based on tripId', async () => {
+      jest
+        .spyOn(repository, 'findTripById')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
+
+      expect(await repository.findTripById('1')).toMatchObject(tripMock);
+    });
+  });
+
+  //findCoordinatesByTrip
+  describe('findCoordinatesByTrip', () => {
+    const result = [locationMock];
+    it('should return Coordinates', async () => {
+      jest
+        .spyOn(repository, 'findCoordinatesByTrip')
+        .mockImplementation((): Promise<Location[]> => Promise.resolve(result));
+
+      expect(await repository.findCoordinatesByTrip('1')).toMatchObject(result);
+    });
+  });
+
+  //searchTrips
+  describe('searchTrips', () => {
+    const result = [tripMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(repository, 'searchTrips')
+        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+
+      expect(await repository.searchTrips('1')).toMatchObject(result);
     });
   });
 
@@ -72,6 +115,16 @@ describe('TripsRepository', () => {
   });
 
   //find booking by trip****************************
+  describe('findBookingByTrip', () => {
+    const result = [bookingMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(repository, 'findBookingByTrip')
+        .mockImplementation((): Promise<Booking[]> => Promise.resolve(result));
+
+      expect(await repository.findBookingByTrip('1')).toMatchObject(result);
+    });
+  });
 
   describe('create', () => {
     it('should return a trip', async () => {
@@ -84,6 +137,28 @@ describe('TripsRepository', () => {
   });
 
   //book trip*****************************************
+  describe('bookTrip', () => {
+    it('should be able to book a trip', async () => {
+      jest
+        .spyOn(repository, 'bookTrip')
+        .mockImplementation(
+          (): Promise<Booking> => Promise.resolve(bookingMock)
+        );
+
+      expect(
+        await repository.bookTrip(
+          'passengerId',
+          'tripId',
+          'seatsBooked',
+          'status',
+          'price',
+          'address',
+          'latitude',
+          'longitude'
+        )
+      ).toMatchObject(bookingMock);
+    });
+  });
 
   describe('update', () => {
     it('should return a trip', async () => {
@@ -91,13 +166,15 @@ describe('TripsRepository', () => {
         .spyOn(repository, 'update')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await repository.update('1', tripMock)).toMatchObject(tripMock);
+      expect(await repository.update('1', tripUpdateMock)).toMatchObject(
+        tripMock
+      );
     });
 
     it('should return null', async () => {
       jest.spyOn(repository, 'update').mockResolvedValue(null);
 
-      expect(await repository.update('1', tripMock)).toEqual(null);
+      expect(await repository.update('1', tripUpdateMock)).toEqual(null);
     });
   });
 

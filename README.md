@@ -14,7 +14,8 @@ This is a React Native application that helps students find and join safe car tr
 
 #### Video
 
-[BluLance Technologies-Demo 1]()
+[BluLance Technologies-Demo 1](https://drive.google.com/file/d/1Ygoif67u4aPwdwbWmDB1_o0UsMAF9qAe/view?usp=sharing)
+[BluLance Technologies-Demo 2](https://drive.google.com/file/d/1XLrvGDelzesQ-VT_03pnAnkyqUJ_8pdu/view?usp=sharing)
 
 #### Requirements Specification
 

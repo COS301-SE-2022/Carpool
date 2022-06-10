@@ -11,6 +11,7 @@ import {
   TripDetailsIcons,
   TripDetailsBottomContainer,
 } from '@carpool/client/components';
+import Toast from 'react-native-toast-message';
 
 export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   const { tripId, type } = route.params;
@@ -23,13 +24,22 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: message,
+      topOffset: 300,
+    });
+  };
+
   useEffect(() => {
     dispatch(fetchTripDetails(tripId));
   }, [dispatch, tripId]);
 
   const bookRide = (tripId: string) => {
-    console.log(JSON.stringify(trip));
-    console.log(`Booking ride ${tripId}`);
+    // console.log(JSON.stringify(trip));
+    // console.log(`Booking ride ${tripId}`);
 
     // navigation.push('SetPickupPage', {
     //   tripId,
@@ -51,6 +61,9 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
         longitude: trip ? trip.coordinates[0].longitude : '',
       })
     );
+
+    showToast('Trip booked successfully');
+    navigation.popToTop();
   };
 
   return (

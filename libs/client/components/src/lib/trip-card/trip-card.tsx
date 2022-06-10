@@ -1,8 +1,8 @@
 /* eslint-disable-next-line */
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-// import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { formatDate, getTime } from '@carpool/client/shared/utilities';
 
 type cardProps = {
   tripId: string;
@@ -126,10 +126,10 @@ export function TripCard({
         </View>
         <View style={[styles.flexRow, { marginTop: 15, marginHorizontal: 3 }]}>
           <View>
-            <Text style={{ color: '#808080' }}>{date}</Text>
+            <Text style={{ color: '#808080' }}>{formatDate(date)}</Text>
           </View>
           <View>
-            <Text style={{ color: '#808080' }}>{distance}km away</Text>
+            <Text style={{ color: '#808080' }}>{getTime(date)}</Text>
           </View>
         </View>
       </View>

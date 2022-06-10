@@ -19,6 +19,7 @@ import {
   SearchResults,
   ChatScreen,
   SetPickupPage,
+  PostTrips,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -49,7 +50,7 @@ export type RootStackParamList = {
   SearchResults;
   ChatScreen;
   SetPickupPage;
-  s;
+  PostTrips;
 };
 
 export type TabBarParamList = {
@@ -218,6 +219,7 @@ const AppWrapper = () => {
           }}
         >
           <Stack.Screen name="HomePage" component={TabBar} />
+          <Stack.Screen name="PostTrips" component={PostTrips} />
           {/* <Stack.Screen name="LoginPage" component={LoginPage} /> */}
           {/* <Stack.Screen name="OnboardPage" component={OnboardPage} /> */}
           {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}

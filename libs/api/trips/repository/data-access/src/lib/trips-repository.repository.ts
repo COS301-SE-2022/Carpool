@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location } from '@prisma/client';
-import { TripsInput, TripsUpdate } from '@carpool/api/trips/entities';
+import { TripsUpdate } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -23,11 +23,6 @@ const formatDate = (date: string) => {
     'Dec',
   ];
   return `${day} ${monthNames[month]} ${year}`;
-};
-
-const getTime = (date: string) => {
-  const dateObj = new Date(date);
-  return `${dateObj.getHours()}:${dateObj.getMinutes()}`;
 };
 
 @Injectable()
@@ -198,10 +193,7 @@ export class TripsRepository {
 
     if (allTrips.length !== 0) {
       allTrips.map((trip) => {
-        if (
-          formatDate(`${trip.tripDate}`) === formatDate(date) &&
-          getTime(`${trip.tripDate}`) === getTime(date)
-        ) {
+        if (formatDate(`${trip.tripDate}`) === formatDate(date)) {
           tripsByDate.push(trip);
         }
       });

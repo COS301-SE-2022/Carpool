@@ -25,7 +25,7 @@ const RootReducer = combineReducers({
   searchResults: searchResultsSlice.reducer,
   trip: tripDetailsSlice.reducer,
   upcoming: upcomingTripSlice.reducer,
-  createTrip: createTripSlice.reducer,
+  createdTrip: createTripSlice.reducer,
   booking: tripBookingSlice.reducer,
 });
 

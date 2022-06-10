@@ -1,11 +1,12 @@
 /* eslint-disable-next-line */
 import React, { useState, useEffect } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import { Text, StyleSheet, View, Pressable } from 'react-native';
 import { Button } from '@carpool/client/components';
 import { SearchPageProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import DatePicker from 'react-native-date-picker';
+import { formatDate } from '@carpool/client/shared/utilities';
 
 export function SearchPage({ navigation }: SearchPageProps) {
   type address = {
@@ -31,17 +32,17 @@ export function SearchPage({ navigation }: SearchPageProps) {
   };
 
   return (
-    <View style={{ flex: 1, padding: 30 }}>
+    <View style={{ flex: 1, paddingHorizontal: 30, paddingVertical: 60 }}>
       <View
         style={{
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginBottom: 15,
+          marginBottom: 20,
         }}
       >
         <Icon
-          name="close-circle"
+          name="arrow-left"
           size={22}
           style={{ flex: 2, color: '#808080' }}
           onPress={() => navigation.goBack()}
@@ -55,8 +56,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
           placeholder="Search"
           fetchDetails={true}
           onPress={(data, details = null) => {
-            console.log('Hello');
-            console.log(data, details);
             setOrigin({
               address: data.description,
               latitude: `${details?.geometry.location.lat}`,
@@ -89,7 +88,6 @@ export function SearchPage({ navigation }: SearchPageProps) {
           placeholder="Search"
           fetchDetails={true}
           onPress={(data, details = null) => {
-            console.log(data, details);
             setDestination({
               address: data.description,
               latitude: `${details?.geometry.location.lat}`,
@@ -125,12 +123,25 @@ export function SearchPage({ navigation }: SearchPageProps) {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: 30,
+          marginTop: 10,
         }}
       >
-        <Button title="Open" onPress={() => setOpen(true)} />
+        <Pressable
+          style={{
+            borderWidth: 1,
+            borderColor: '#808080',
+            width: '100%',
+            paddingVertical: 12,
+            paddingHorizontal: 20,
+            borderRadius: 25,
+          }}
+          onPress={() => setOpen(true)}
+        >
+          <Text>{formatDate(date.toISOString())}</Text>
+        </Pressable>
         <DatePicker
           modal
+          mode="date"
           open={open}
           date={date}
           onConfirm={(date) => {

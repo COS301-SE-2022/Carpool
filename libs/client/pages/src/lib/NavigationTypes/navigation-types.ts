@@ -31,6 +31,7 @@ export type RootStackParamList = {
     destinationLatitude: string;
   };
   ChatScreen: undefined;
+  PostTrips: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -83,11 +84,6 @@ export type SearchPageProps = NativeStackScreenProps<
   'SearchPage'
 >;
 
-export type PostTripsProps = NativeStackScreenProps<
-  RootStackParamList,
-  'SearchPage'
->;
-
 export type UserProfileProps = NativeStackScreenProps<
   RootStackParamList,
   'UserProfile'
@@ -126,4 +122,9 @@ export type ChatScreenProps = NativeStackScreenProps<
 export type SetPickupPageProps = NativeStackScreenProps<
   RootStackParamList,
   'SetPickupPage'
+>;
+
+export type PostTripsProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PostTrips'
 >;

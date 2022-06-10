@@ -6,11 +6,12 @@ import { colors } from '@carpool/client/shared/utilities';
 
 type props = {
   onPress: () => void;
+  onPressCreate: () => void;
 };
 
 const { blue, black, white } = colors;
 
-export function HomeOptionBox({ onPress }: props) {
+export function HomeOptionBox({ onPress, onPressCreate }: props) {
   return (
     <View style={[styles.absoluteBox, styles.shadow]}>
       <View
@@ -24,7 +25,10 @@ export function HomeOptionBox({ onPress }: props) {
         <Icons name="directions-run" size={20} style={styles.iconStyle} />
         <Text style={styles.bigText}>Find a Trip</Text>
       </Pressable>
-      <Pressable style={[styles.optionButton, { marginBottom: 0 }]}>
+      <Pressable
+        style={[styles.optionButton, { marginBottom: 0 }]}
+        onPress={onPressCreate}
+      >
         <Icons name="directions-car" size={20} style={styles.iconStyle} />
         <Text style={styles.bigText}>Create a Trip</Text>
       </Pressable>

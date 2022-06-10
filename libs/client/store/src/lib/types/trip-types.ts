@@ -1,7 +1,7 @@
 import { Error } from './auth-types';
 
 export type CreateTrip = {
-  trip: TripCreateType | null;
+  trip: string;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };

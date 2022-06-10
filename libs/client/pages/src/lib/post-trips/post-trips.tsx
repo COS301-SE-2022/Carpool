@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  Text,
+  StyleSheet,
+  View,
+  Pressable,
+  ActivityIndicator,
+} from 'react-native';
 import { Button } from '@carpool/client/components';
 import { PostTripsProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -8,6 +14,8 @@ import DatePicker from 'react-native-date-picker';
 import { createTrip, RootStore, AppDispatch } from '@carpool/client/store';
 import { useSelector, useDispatch } from 'react-redux';
 import { Input } from '@carpool/client/components';
+import { formatDate } from '@carpool/client/shared/utilities';
+import Toast from 'react-native-toast-message';
 
 /* eslint-disable-next-line */
 
@@ -29,12 +37,24 @@ export function PostTrips({ navigation }: PostTripsProps) {
   const [origin, setOrigin] = useState({} as address);
   const [destination, setDestination] = useState({} as address);
 
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: message,
+      topOffset: 300,
+    });
+  };
+
   const logDate = (date: Date) => {
     console.log(date.toISOString());
   };
 
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
+
+  const createTripState = useSelector((state: RootStore) => state.createdTrip);
+  const { trip, status } = createTripState;
 
   const confirmTrip = () => {
     console.log('Confirming New Trip');
@@ -53,139 +73,160 @@ export function PostTrips({ navigation }: PostTripsProps) {
         destinationLatitude: destination.latitude,
       })
     );
+
+    showToast('Trip created successfully');
+    navigation.navigate('HomePage');
   };
 
   return (
-    <View style={{ flex: 1, padding: 30 }}>
+    <View style={{ flex: 1, paddingHorizontal: 30, paddingVertical: 60 }}>
       <View
         style={{
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
-          marginBottom: 15,
+          marginBottom: 20,
         }}
       >
         <Icon
-          name="close-circle"
+          name="arrow-left"
           size={22}
-          style={{ flex: 2, color: '#808080' }}
+          style={{ flex: 2.5, color: '#808080' }}
           onPress={() => navigation.goBack()}
         />
         <Text style={{ fontWeight: '700', fontSize: 20, flex: 6 }}>
           Create trips
         </Text>
       </View>
-      <Input
-        onChangeText={setPrice}
-        inputValue={price}
-        inputPlaceholder="Price"
-        iconName="attach-money"
-      />
-
-      <Input
-        onChangeText={setSeats}
-        inputValue={seats}
-        inputPlaceholder="Seats"
-        iconName="event-seat"
-      />
-
-      <View style={styles.locationDetailsContainer}>
-        <GooglePlacesAutocomplete
-          placeholder="Search"
-          fetchDetails={true}
-          onPress={(data, details = null) => {
-            console.log('Hello');
-            console.log(data, details);
-            setOrigin({
-              address: data.description,
-              latitude: `${details?.geometry.location.lat}`,
-              longitude: `${details?.geometry.location.lng}`,
-            });
-          }}
-          query={{
-            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
-            language: 'en',
-            components: 'country:za',
-          }}
-          textInputProps={{
-            placeholder: 'Start Location',
-          }}
-          enablePoweredByContainer={false}
-          styles={{
-            container: {
-              zIndex: 20,
-              flex: 0,
-            },
-            textInput: {
-              borderWidth: 1,
-              borderColor: '#808080',
-              borderRadius: 25,
-              paddingLeft: 20,
-            },
-          }}
+      <View style={{ marginBottom: 20 }}>
+        <Input
+          onChangeText={setPrice}
+          inputValue={price}
+          inputPlaceholder="Price"
+          iconName="account-cash"
         />
-
-        <GooglePlacesAutocomplete
-          placeholder="Search"
-          fetchDetails={true}
-          onPress={(data, details = null) => {
-            console.log('Hello');
-            console.log(data, details);
-            setDestination({
-              address: data.description,
-              latitude: `${details?.geometry.location.lat}`,
-              longitude: `${details?.geometry.location.lng}`,
-            });
-          }}
-          query={{
-            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
-            language: 'en',
-            components: 'country:za',
-          }}
-          textInputProps={{
-            placeholder: 'Destination',
-          }}
-          enablePoweredByContainer={false}
-          styles={{
-            container: {
-              zIndex: 20,
-              flex: 0,
-            },
-            textInput: {
-              borderWidth: 1,
-              borderColor: '#808080',
-              borderRadius: 25,
-              paddingLeft: 20,
-            },
-          }}
+        <Input
+          onChangeText={setSeats}
+          inputValue={seats}
+          inputPlaceholder="Seats"
+          iconName="account"
         />
       </View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: 30,
-        }}
-      >
-        <Button title="Open" onPress={() => setOpen(true)} />
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          onConfirm={(date) => {
-            setOpen(false);
-            setDate(date);
-            logDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
-      </View>
-      <View style={{ marginTop: 30 }}>
-        <Button onPress={confirmTrip} title="Confirm" />
-      </View>
+      {status === 'loading' ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <View style={styles.locationDetailsContainer}>
+            <GooglePlacesAutocomplete
+              placeholder="Search"
+              fetchDetails={true}
+              onPress={(data, details = null) => {
+                console.log('Hello');
+                console.log(data, details);
+                setOrigin({
+                  address: data.description,
+                  latitude: `${details?.geometry.location.lat}`,
+                  longitude: `${details?.geometry.location.lng}`,
+                });
+              }}
+              query={{
+                key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+                language: 'en',
+                components: 'country:za',
+              }}
+              textInputProps={{
+                placeholder: 'Start Location',
+              }}
+              enablePoweredByContainer={false}
+              styles={{
+                container: {
+                  zIndex: 20,
+                  flex: 0,
+                },
+                textInput: {
+                  borderWidth: 1,
+                  borderColor: '#808080',
+                  borderRadius: 25,
+                  paddingLeft: 20,
+                },
+              }}
+            />
+
+            <GooglePlacesAutocomplete
+              placeholder="Search"
+              fetchDetails={true}
+              onPress={(data, details = null) => {
+                console.log('Hello');
+                console.log(data, details);
+                setDestination({
+                  address: data.description,
+                  latitude: `${details?.geometry.location.lat}`,
+                  longitude: `${details?.geometry.location.lng}`,
+                });
+              }}
+              query={{
+                key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+                language: 'en',
+                components: 'country:za',
+              }}
+              textInputProps={{
+                placeholder: 'Destination',
+              }}
+              enablePoweredByContainer={false}
+              styles={{
+                container: {
+                  zIndex: 20,
+                  flex: 0,
+                },
+                textInput: {
+                  borderWidth: 1,
+                  borderColor: '#808080',
+                  borderRadius: 25,
+                  paddingLeft: 20,
+                },
+              }}
+            />
+          </View>
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginTop: 2,
+            }}
+          >
+            <Pressable
+              style={{
+                borderWidth: 1,
+                borderColor: '#808080',
+                width: '100%',
+                paddingVertical: 12,
+                paddingHorizontal: 20,
+                borderRadius: 25,
+              }}
+              onPress={() => setOpen(true)}
+            >
+              <Text>{formatDate(date.toISOString())}</Text>
+            </Pressable>
+            <DatePicker
+              modal
+              open={open}
+              date={date}
+              onConfirm={(date) => {
+                setOpen(false);
+                setDate(date);
+                logDate(date);
+              }}
+              onCancel={() => {
+                setOpen(false);
+              }}
+            />
+          </View>
+          <View style={{ marginTop: 30 }}>
+            <Button onPress={confirmTrip} title="Confirm" />
+          </View>
+        </>
+      )}
     </View>
   );
 }

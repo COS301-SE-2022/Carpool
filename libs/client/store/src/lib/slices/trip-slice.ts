@@ -24,7 +24,7 @@ export const initialState = {
 } as TripList;
 
 export const initialCreateState = {
-  trip: null,
+  trip: '',
   status: 'idle',
   error: null,
 } as CreateTrip;
@@ -47,6 +47,11 @@ export const createTripSlice = createSlice({
       .addCase(createTrip.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
       });
   },
 });

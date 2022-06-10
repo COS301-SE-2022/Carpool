@@ -29,7 +29,10 @@ export function HomePage({ navigation }: HomePageProps) {
       <HomeSearchBar onPress={() => navigation.push('SearchPage')} />
       <HomeMapView />
       <View style={styles.bottomContainer}>
-        <HomeOptionBox onPress={() => navigation.push('SearchPage')} />
+        <HomeOptionBox
+          onPress={() => navigation.push('SearchPage')}
+          onPressCreate={() => navigation.push('PostTrips')}
+        />
         <View style={styles.cardContainer}>
           <Text style={styles.smallTextBlack}>Upcoming trip</Text>
           {status === 'loading' ? (

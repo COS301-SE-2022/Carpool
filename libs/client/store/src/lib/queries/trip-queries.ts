@@ -106,23 +106,13 @@ export const TRIP_DETAILS = `
 `;
 
 export const CREATE_TRIP = `
-  mutation (
-    $driver: String!
-    $tripDate: String!
-    $seatsAvailable: String!
-    $price: String!
-    $startLocationAddress: String!
-    $startLocationLongitutde: String!
-    $startLocationLatitiude: String!
-    $destinationAddress: String!
-    $destinationLongitutde: String!
-    $destinationLatitiude: String!
-  ){
-    create(driver: $driver, tripDate: $tripDate, seatsAvailable: $seatsAvailable, price: $price, startLocationAddress: $startLocationAddress, startLocationLongitutde: $startLocationLongitutde, startLocationLatitiude: $startLocationLatitiude, destinationAddress: $destinationAddress, destinationLongitutde: $destinationLongitude, destinationLatitude: $destinationLatitude){
+  mutation ($driver: String!, $tripDate: String!, $seatsAvailable: String!, $price: String!, $startLocationAddress: String!, $startLocationLongitude: String!, $startLocationLatitude: String!, $destinationAddress: String!, $destinationLongitude: String!, $destinationLatitude: String!) {
+    create(driver: $driver, tripDate: $tripDate, seatsAvailable: $seatsAvailable, price: $price, startLocationAddress: $startLocationAddress, startLocationLongitude: $startLocationLongitude, startLocationLatitude: $startLocationLatitude, destinationAddress: $destinationAddress, destinationLongitude: $destinationLongitude, destinationLatitude: $destinationLatitude) {
       tripId
     }
   }
 `;
+
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {
     bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, longitude: $longitude, latitude: $latitude) {

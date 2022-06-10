@@ -20,19 +20,6 @@ import { Platform } from 'react-native';
 
 const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
-export type TripCreate = {
-  driver: string;
-  tripDate: string;
-  seatsAvailable: string;
-  price: string;
-  startLocationAddress: string;
-  startLocationLongitude: string;
-  startLocationLatitude: string;
-  destinationAddress: string;
-  destinationLongitude: string;
-  destinationLatitude: string;
-};
-
 export const listTrips = createAsyncThunk<
   TripListType[],
   undefined,
@@ -199,39 +186,64 @@ export const fetchTripDetails = createAsyncThunk<
 
   const res = response.data.data.findTripById;
 
-  console.log(res);
+  return res;
+});
+
+export type TripCreate = {
+  driver: string;
+  tripDate: string;
+  seatsAvailable: string;
+  price: string;
+  startLocationAddress: string;
+  startLocationLongitude: string;
+  startLocationLatitude: string;
+  destinationAddress: string;
+  destinationLongitude: string;
+  destinationLatitude: string;
+};
+
+export const createTrip = createAsyncThunk<
+  string,
+  TripCreate,
+  { rejectValue: Error }
+>('trip/create', async (trip: TripCreate, thunkApi) => {
+  console.log(trip);
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: CREATE_TRIP,
+    variables: {
+      driver: trip.driver,
+      tripDate: trip.tripDate,
+      seatsAvaiable: trip.seatsAvailable,
+      price: trip.price,
+      startLocationAddress: trip.startLocationAddress,
+      startLocationLongitude: trip.startLocationLongitude,
+      startLocationLatitude: trip.startLocationLatitude,
+      destinationAddress: trip.destinationAddress,
+      destinationLongitude: trip.destinationLongitude,
+      destinationLatitude: trip.destinationLatitude,
+    },
+  });
+
+  console.log('ADDING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  console.log(response.data.data);
+
+  const res = response.data.data.create.tripId;
+
+  // SecureStore.setItemAsync('user', JSON.stringify(res));
 
   return res;
 });
 
-export const createTrip = createAsyncThunk(
-  'trips/create',
-  async (trip: TripCreate) => {
-    const response = await axios.post('http://localhost:3333/graphql', {
-      query: CREATE_TRIP,
-      variables: {
-        driver: trip.driver,
-        tripDate: trip.tripDate,
-        seatsAvaiable: trip.seatsAvailable,
-        price: trip.price,
-        startLocationAddress: trip.startLocationAddress,
-        startLocationLongitude: trip.startLocationLongitude,
-        startLocationLatitude: trip.startLocationLatitude,
-        destinationAddress: trip.destinationAddress,
-        destinationLongitude: trip.destinationLongitude,
-        destinationLatitude: trip.destinationLatitude,
-      },
-    });
-
-    console.log('ADDING');
-
-    const res = response.data.data.tripId;
-
-    // SecureStore.setItemAsync('user', JSON.stringify(res));
-
-    return res;
-  }
-);
 export type BookTripType = {
   //bookingId: string;
   tripId: string;
@@ -243,11 +255,11 @@ export type BookTripType = {
   address: string;
   latitude: string;
   longitude: string;
-}
+};
 
 export type tripID = {
   tripID: string;
-}
+};
 
 export const bookTrip = createAsyncThunk<
   string,

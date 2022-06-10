@@ -96,11 +96,11 @@ export class TripsResolver {
     @Args('seatsAvailable') seatsAvailable: string,
     @Args('price') price: string,
     @Args('startLocationAddress') startLocationAddress: string,
-    @Args('startLocationLongitutde') startLocationLongitude: string,
-    @Args('startLocationLatitiude') startLocationLatitude: string,
+    @Args('startLocationLongitude') startLocationLongitude: string,
+    @Args('startLocationLatitude') startLocationLatitude: string,
     @Args('destinationAddress') destinationAddress: string,
-    @Args('destinationLongitutde') destinationLongitude: string,
-    @Args('destinationLatitiude') destinationLatitude: string
+    @Args('destinationLongitude') destinationLongitude: string,
+    @Args('destinationLatitude') destinationLatitude: string
   ): Promise<Trip> {
     return await this.tripsService.create(
       driver,

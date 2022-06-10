@@ -35,17 +35,17 @@ This is a React Native application that helps students find and join safe car tr
 [SRS Document V2](https://drive.google.com/file/d/1ekFqTZmof5iJyZ1Du5e16v480FMoTlUG/view?usp=sharing)
 
 #### Architectural Requirements
-[SRS Document V2](https://drive.google.com/file/d/1WrfJ1_IwiJ1sTmPWSSKPBTUli7uVEliJ/view?usp=sharing)
+[Architectural Requirements](https://drive.google.com/file/d/1WrfJ1_IwiJ1sTmPWSSKPBTUli7uVEliJ/view?usp=sharing)
 
 #### User Manual
-[SRS Document V2](https://drive.google.com/file/d/1KlvlLOOeucwxxL5vRmlpzNnRzG1NiBal/view?usp=sharing)
+[ User Manual](https://drive.google.com/file/d/1KlvlLOOeucwxxL5vRmlpzNnRzG1NiBal/view?usp=sharing)
 
 #### Coding Standards
-[SRS Document V2](https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing)
+[Coding Standards](https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing)
 
 #### Project Management
 
-[BluLance Technologies](https://sharing.clickup.com/37420985/b/h/5-109399496-2/b7d190b78a422b1)
+[BluLance Technologies](https://sharing.clickup.com/37420985/b/13nzxt-468/board)
 
 #### Team Members
 

@@ -1,3 +1,9 @@
+
+
+
+
+
+
 ![alt text](https://github.com/COS301-SE-2022/Carpool/blob/main/Asset%203%404x.png)
 
 # Carpool
@@ -52,21 +58,9 @@ This is a React Native application that helps students find and join safe car tr
 
 #### Team Members
 
-##### Benjamin Osmers
-
-Benjamin is a Mechanical Engineering graduate (BEng, 2019) and current final year Multimedia (BIS) student at the University of Pretoria. During 2019-2021, he ran his own web development company alongside his studies. During which he developed various websites and web apps, mostly focusing on E-Commerce stores. Most of the projects were built using the MERN development stack: MongoDB (or MySQL), Express, React, Node.js.
-
-- [LinkedIn]()
-- [GitHub]()
-
-##### Ashleigh Govender
-
-Ashleigh is a final year BSc Computer Science student at the University of Pretoria. She has some experience in web development.
-
-##### Jason Antalis
-
-Jason is a final year BSc Computer Science student at the University of Pretoria, having done small web projects on the side.
-
-##### Wesley Pachai
-
-Wesley is a final year BSc Computer Science student at the University of Pretoria with small web development projects done.
+ **Team Member** <br><img width=300/>  | **Description**         |  <img width=300/>  |
+|---------------------------------------|--------------------|--------------------|
+| <img src="https://drive.google.com/uc?export=view&id=14BsidG-haaxrPHZf7M3Rlp9_bxyBafsM" width=200px height=150x> <br/>  **Benjamin Osmers**  |Team Lead. <br> Benjamin is a Mechanical Engineering graduate (BEng, 2019) and current final year Multimedia (BIS) student at the University of Pretoria. During 2019-2021, he ran his own web development company alongside his studies. During which he developed various websites and web apps, mostly focusing on E-Commerce stores. Most of the projects were built using the MERN development stack: MongoDB (or MySQL), Express, React, Node.js.  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BenjaminOsmers)|
+| <img src="https://drive.google.com/uc?export=view&id=1-VcUHeLtk6pzeQnRzwb5F9oFG7C2bFqU" width=200px height=150x> <br/> **Asheigh Govender**  |Ashleigh is a final year BSc Computer Science student at the University of Pretoria. She has some experience in web development.  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)|
+| <img src="https://drive.google.com/uc?export=view&id=1nve8jZoIWGo2Fk8822RMbE2zf8FRxcWK" width=200px height=150x> <br/> **Jason Antalis**  |Jason is a final year BSc Computer Science student at the University of Pretoria, having done small web projects on the side.| [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)|
+| <img src="https://drive.google.com/uc?export=view&id=1fwVZHFdJoZ84XASNv3v4BB4XRjtI4XJT" width=200px height=150x> <br/> **Wesley Pachai**  |Wesley is a final year BSc Computer Science student at the University of Pretoria with small web development projects done.| [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/)|

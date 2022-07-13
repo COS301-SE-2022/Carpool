@@ -12,17 +12,17 @@ This is a React Native application that helps students find and join safe car tr
 
 
 ## Documentation
-<div><a href="https://drive.google.com/file/d/1ekFqTZmof5iJyZ1Du5e16v480FMoTlUG/view?usp=sharing">📄 SRS Document</a></div>
-<div><a href="https://drive.google.com/file/d/1WrfJ1_IwiJ1sTmPWSSKPBTUli7uVEliJ/view?usp=sharing">📄 Architectural Requirements</a></div>
-<div><a href="https://drive.google.com/file/d/1KlvlLOOeucwxxL5vRmlpzNnRzG1NiBal/view?usp=sharing">📄 User Manual</a></div>
-<div><a href="https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing">📄 Coding Standards</a></div>
-<div><a href="">📄 Technical Installation Manual</a></div>
+<div><a href="https://drive.google.com/file/d/1ekFqTZmof5iJyZ1Du5e16v480FMoTlUG/view?usp=sharing">🧾 SRS Document</a></div>
+<div><a href="https://drive.google.com/file/d/1WrfJ1_IwiJ1sTmPWSSKPBTUli7uVEliJ/view?usp=sharing">🧾 Architectural Requirements</a></div>
+<div><a href="https://drive.google.com/file/d/1KlvlLOOeucwxxL5vRmlpzNnRzG1NiBal/view?usp=sharing">🧾 User Manual</a></div>
+<div><a href="https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing">🧾 Coding Standards</a></div>
+<div><a href="">🧾 Technical Installation Manual</a></div>
 
 ## Demo Recordings
-<div><a href="https://drive.google.com/file/d/1Ygoif67u4aPwdwbWmDB1_o0UsMAF9qAe/view?usp=sharing">📺 Demo 1</a></div>
-<div><a href="https://drive.google.com/file/d/1XLrvGDelzesQ-VT_03pnAnkyqUJ_8pdu/view?usp=sharing">📺 Demo 2</a></div>
-<div><a href="">📺 Demo 3</a></div>
-<div><a href="">📺 Demo 4</a></div>
+<div><a href="https://drive.google.com/file/d/1Ygoif67u4aPwdwbWmDB1_o0UsMAF9qAe/view?usp=sharing">📽️ Demo 1</a></div>
+<div><a href="https://drive.google.com/file/d/1XLrvGDelzesQ-VT_03pnAnkyqUJ_8pdu/view?usp=sharing">📽️ Demo 2</a></div>
+<div><a href="">📽️ Demo 3</a></div>
+<div><a href="">📽️ Demo 4</a></div>
 
 ## Project Management
 <div><a href="https://sharing.clickup.com/37420985/b/13nzxt-468/board">📅 Project Board</a></div>

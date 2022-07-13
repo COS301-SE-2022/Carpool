@@ -25,7 +25,7 @@ This is a React Native application that helps students find and join safe car tr
 <div><a href="">📺 Demo 4</a></div>
 
 ## Project Management
-<div><a href="(https://sharing.clickup.com/37420985/b/13nzxt-468/board">📅 Project Board</a></div>
+<div><a href="https://sharing.clickup.com/37420985/b/13nzxt-468/board">📅 Project Board</a></div>
 
 ## Team Members
 

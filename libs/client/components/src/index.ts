@@ -14,3 +14,4 @@ export * from './lib/trip-details-map-view/trip-details-map-view';
 export * from './lib/trip-details-locations/trip-details-locations';
 export * from './lib/trip-details-icons/trip-details-icons';
 export * from './lib/trip-details-bottom-container/trip-details-bottom-container';
+export * from './lib/trip-card-checkout/trip-card-checkout';

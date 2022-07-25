@@ -28,6 +28,9 @@
     "react-native-toast-message": "*",
     "react-native-vector-icons": "*",
     "react-redux": "*",
-    "redux": "*"
+    "redux": "*",
+    "react-hook-form": "*",
+    "lottie-react-native": "*",
+    "rn-credit-card": "*"
   }
 }

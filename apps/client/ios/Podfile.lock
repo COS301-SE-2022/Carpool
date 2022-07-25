@@ -119,6 +119,10 @@ PODS:
   - GoogleMaps/Maps (6.1.1):
     - GoogleMaps/Base
   - libevent (2.1.12)
+  - lottie-ios (3.2.3)
+  - lottie-react-native (5.1.3):
+    - lottie-ios (~> 3.2.3)
+    - React-Core
   - OpenSSL-Universal (1.1.1100)
   - RCT-Folly (2021.06.28.00-v2):
     - boost
@@ -466,6 +470,7 @@ DEPENDENCIES:
   - glog (from `../../../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - Google-Maps-iOS-Utils
   - GoogleMaps
+  - lottie-react-native (from `../../../node_modules/lottie-react-native`)
   - OpenSSL-Universal (= 1.1.1100)
   - RCT-Folly (from `../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../../../node_modules/react-native/Libraries/RCTRequired`)
@@ -525,6 +530,7 @@ SPEC REPOS:
     - Google-Maps-iOS-Utils
     - GoogleMaps
     - libevent
+    - lottie-ios
     - OpenSSL-Universal
     - SocketRocket
     - YogaKit
@@ -550,6 +556,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/glog.podspec"
+  lottie-react-native:
+    :path: "../../../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -654,6 +662,8 @@ SPEC CHECKSUMS:
   Google-Maps-iOS-Utils: 3343332b18dfd5be8f1f44edd7d481ace3da4d9a
   GoogleMaps: 94e6e0851beece6678af9f508f4918b7a7c61722
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  lottie-react-native: a501112fa980529ccb80b9f3ee117a7f98c6af3a
   OpenSSL-Universal: ebc357f1e6bc71fa463ccb2fe676756aff50e88c
   RCT-Folly: 4d8508a426467c48885f1151029bc15fa5d7b3b8
   RCTRequired: 00581111c53531e39e3c6346ef0d2c0cf52a5a37

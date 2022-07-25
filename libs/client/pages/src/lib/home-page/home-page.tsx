@@ -11,6 +11,17 @@ import {
 import { View, Text, ActivityIndicator } from 'react-native';
 import { styles } from './home-page.style';
 
+// import { FormProvider, useForm } from 'react-hook-form';
+// import {
+//   Alert,
+//   StyleSheet,
+//   KeyboardAvoidingView,
+//   Platform,
+//   SafeAreaView,
+// } from 'react-native';
+// import LottieView from 'lottie-react-native';
+// import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
+
 export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
   const tripState = useSelector((state: RootStore) => state.trips);
@@ -24,9 +35,49 @@ export function HomePage({ navigation }: HomePageProps) {
     navigation.push('TripDetails', { tripId, type: 'booked' });
   };
 
+  // const formMethods = useForm<FormModel>({
+  //   mode: 'onBlur',
+  //   defaultValues: {
+  //     holderName: '',
+  //     cardNumber: '',
+  //     expiration: '',
+  //     cvv: '',
+  //   },
+  // });
+  // const { handleSubmit, formState } = formMethods;
+
+  // const onSubmit = (model: FormModel) => {
+  //   Alert.alert('Success: ' + JSON.stringify(model, null, 2));
+  // };
+
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
       <HomeSearchBar onPress={() => navigation.push('SearchPage')} />
+      {/* <FormProvider {...formMethods}>
+        <SafeAreaView style={styles.container}>
+          <KeyboardAvoidingView
+            style={styles.avoider}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          >
+            <CreditCardForm
+              LottieView={LottieView}
+              horizontalStart
+              overrides={{
+                labelText: {
+                  marginTop: 16,
+                },
+              }}
+            />
+          </KeyboardAvoidingView>
+          {formState.isValid && (
+            <Button
+              style={styles.button}
+              title={'CONFIRM PAYMENT'}
+              onPress={handleSubmit(onSubmit)}
+            />
+          )}
+        </SafeAreaView>
+      </FormProvider> */}
       <HomeMapView />
       <View style={styles.bottomContainer}>
         <HomeOptionBox

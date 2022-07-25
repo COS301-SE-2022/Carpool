@@ -59,6 +59,6 @@ export class TripsUpdate {
   @Field()
   price: number;
 
-  // @Field()
-  // status: string;
+  @Field()
+  status: string;
 }

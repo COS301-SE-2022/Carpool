@@ -81,7 +81,7 @@ export class TripsUpdateHandler implements ICommandHandler<TripsUpdateCommand> {
     const tripUpdate = new TripsUpdate();
     tripUpdate.seatsAvailable = seatsAvailable;
     tripUpdate.price = price;
-    tripUpdate.status = status;
+    // tripUpdate.status = status;
     return await this.tripsRepository.update(tripId, tripUpdate);
   }
 }

@@ -126,14 +126,16 @@ describe('TripsService', () => {
 
       expect(
         await service.create(
-          new Date(),
-          3,
-          10.0,
-          'start',
-          'end',
-          'cat',
-          'upcoming',
-          'john'
+          'John',
+          '01/01/2022',
+          '3',
+          'R85',
+          'startLocationAddress',
+          'startLocationLongitude',
+          'startLocationLatitude',
+          'destinationAddress',
+          'destinationLongitude',
+          'destinationLatitude'
           // userMock
         )
       ).toBe(tripMock);

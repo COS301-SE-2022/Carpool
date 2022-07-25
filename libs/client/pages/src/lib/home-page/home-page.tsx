@@ -10,6 +10,7 @@ import {
 } from '@carpool/client/components';
 import { View, Text, ActivityIndicator } from 'react-native';
 import { styles } from './home-page.style';
+import Icon from 'react-native-vector-icons/Feather';
 
 // import { FormProvider, useForm } from 'react-hook-form';
 // import {
@@ -85,7 +86,20 @@ export function HomePage({ navigation }: HomePageProps) {
           onPressCreate={() => navigation.push('PostTrips')}
         />
         <View style={styles.cardContainer}>
-          <Text style={styles.smallTextBlack}>Upcoming trip</Text>
+          <Text style={styles.smallTextBlack}>Upcoming trip
+          <Icon
+            name="shopping-cart"
+            size={30}
+            style={{ color: '#188aed', alignSelf: 'flex-end'}}
+            onPress={() =>navigation.push('CheckoutTrips')}
+          />
+        </Text>
+        <Icon
+            name="credit-card"
+            size={30}
+            style={{ color: '#188aed'}}
+            onPress={() =>navigation.push('CreditCard')}
+          />
           {status === 'loading' ? (
             <ActivityIndicator size="large" />
           ) : trips ? (

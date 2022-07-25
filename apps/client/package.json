@@ -13,7 +13,6 @@
     "@testing-library/react-native": "*",
     "expo-secure-store": "9.3.0",
     "graphql": "*",
-    "material-icons-react": "*",
     "native-base": "*",
     "react": "*",
     "react-native": "*",
@@ -28,6 +27,7 @@
     "react-native-toast-message": "*",
     "react-native-vector-icons": "*",
     "react-redux": "*",
-    "redux": "*"
+    "redux": "*",
+    "axios": "*"
   }
 }

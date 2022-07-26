@@ -32,6 +32,9 @@ export type RootStackParamList = {
   };
   ChatScreen: undefined;
   PostTrips: undefined;
+  AcceptRequest: undefined;
+  DriverActiveTrip: undefined;
+  PassengerActiveTrip: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -127,4 +130,19 @@ export type SetPickupPageProps = NativeStackScreenProps<
 export type PostTripsProps = NativeStackScreenProps<
   RootStackParamList,
   'PostTrips'
+>;
+
+export type DriverActiveTripProps = NativeStackScreenProps<
+  RootStackParamList,
+  'DriverActiveTrip'
+>;
+
+export type PassengerActiveTripProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PassengerActiveTrip'
+>;
+
+export type AcceptRequestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'AcceptRequest'
 >;

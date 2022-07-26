@@ -8,6 +8,10 @@ export class FindByPassengerQuery {
   constructor(public readonly passengerId: string) {}
 }
 
+export class findByConfirmedTripsrQuery {
+  constructor(public readonly passengerId: string) {}
+}
+
 export class FindBookingByTripQuery {
   constructor(public readonly tripId: string) {}
 }

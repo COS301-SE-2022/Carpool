@@ -34,15 +34,7 @@ export function CreditCard({ navigation }: CreditCardProps) {
 
   return (
     <FormProvider {...formMethods}>
-          <Icon
-    name="chevron-left"
-    size={25}
-    style={{
-      color: '#000',
-      flex: 1,
-    }}
-    onPress={() => navigation.goBack()}
-  />
+
         <SafeAreaView style={{flex: 1}}>
           <KeyboardAvoidingView
             style={{flex: 1, padding: 36,}}

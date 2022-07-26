@@ -11,9 +11,9 @@ import { CheckoutTripsProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   AppDispatch,
-  listDriverHistory,
   listPassengerHistory,
   RootStore,
+  listConfirmedTrips,
 } from '@carpool/client/store';
 import { TripCardCheckout, Button } from '@carpool/client/components';
 import { formatDate } from '@carpool/client/shared/utilities';
@@ -27,8 +27,8 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
-  const driverHistory = useSelector((state: RootStore) => state.driverHistory);
-  const { trips: driverTrips, status: driverHistoryStatus } = driverHistory;
+  const confirmedTrip = useSelector((state: RootStore) => state.confirmedTrip);
+  const { trips: cTrips, status: cStatus } = confirmedTrip;
 
   const passengerHistory = useSelector(
     (state: RootStore) => state.passengerHistory
@@ -38,14 +38,14 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
 
   useEffect(() => {
     if (userData) {
-      dispatch(listDriverHistory(userData.id));
+      dispatch(listConfirmedTrips(userData.id));
     }
   }, [dispatch, userData]);
 
   const asConfirmed = () => {
     setConfirmed(true);
     console.log('As Confirmed Trips');
-    userData && dispatch(listDriverHistory(userData.id));
+    userData && dispatch(listConfirmedTrips(userData.id));
   };
 
   const asPending = () => {
@@ -143,16 +143,16 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
           </Text>
         </Pressable>
       </View>
-      {driverHistoryStatus === 'loading' ||
+      {cStatus === 'loading' ||
       passengerHistoryStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
           {confirmed ? (
-            driverTrips?.length === 0 ? (
+            cTrips?.length === 0 ? (
               <Text>You have not offered any trips...</Text>
             ) : (
-              driverTrips?.map((trip) => (
+              cTrips?.map((trip) => (
                 <View>
                   <TripCardCheckout
                   key={trip.tripId}

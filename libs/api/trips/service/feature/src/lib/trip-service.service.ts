@@ -9,6 +9,7 @@ import {
   FindTripByIdQuery,
   FindCoordinatesByTripQuery,
   SearchTripsQuery,
+  findByConfirmedTripsrQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -41,6 +42,10 @@ export class TripsService {
     return await this.queryBus.execute(new FindByPassengerQuery(passengerId));
   }
 
+  async findByConfirmedTrips(passengerId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(new findByConfirmedTripsrQuery(passengerId));
+  }
+
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
     return await this.queryBus.execute(new FindBookingByTripQuery(tripID));
   }
@@ -58,6 +63,7 @@ export class TripsService {
     tripDate: string,
     seatsAvailable: string,
     price: string,
+    status: string,
     startLocationAddress: string,
     startLocationLongitude: string,
     startLocationLatitude: string,
@@ -71,6 +77,7 @@ export class TripsService {
         tripDate,
         seatsAvailable,
         price,
+        status,
         startLocationAddress,
         startLocationLongitude,
         startLocationLatitude,

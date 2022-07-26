@@ -15,6 +15,7 @@ import {
   listPassengerHistory,
   listSearchResults,
   bookTrip,
+  listConfirmedTrips,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -280,3 +281,38 @@ export const tripBookingSlice = createSlice({
       });
   },
 });
+
+export const initialConfirmedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+
+export const confirmedTripSlice = createSlice({
+  name: 'confirmed-trips',
+  initialState: initialConfirmedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listConfirmedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listConfirmedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listConfirmedTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+

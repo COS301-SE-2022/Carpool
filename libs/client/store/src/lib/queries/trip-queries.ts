@@ -52,6 +52,25 @@ export const SEARCH_RESULTS = `
   }
 `;
 
+export const CONFIRMED_TRIPS = `
+  query( $status: String!) {
+    findByConfirmedTrips(status: $status) {
+      tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+    price,
+    }
+  }
+`;
+
 export const PASSENGER_HISTORY = `
 query ($id: String!) {
   findByPassenger(id: $id) {

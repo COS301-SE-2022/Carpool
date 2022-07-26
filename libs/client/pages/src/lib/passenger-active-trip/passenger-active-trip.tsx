@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 
-import { OnboardPageProps } from '../NavigationTypes/navigation-types';
+import { PassengerActiveTripProps } from '../NavigationTypes/navigation-types';
 
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
@@ -32,7 +32,7 @@ type props = {
 };
 
 export function PassengerActiveTrip(
-  { navigation }: OnboardPageProps,
+  { navigation }: PassengerActiveTripProps,
   { trip }: props
 ) {
   const { width, height } = Dimensions.get('window');

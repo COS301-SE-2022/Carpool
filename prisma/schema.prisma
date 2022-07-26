@@ -67,7 +67,7 @@ model Trip {
     // startLocation String @map("start_location")
     // destination String
     // category    String
-    // status      String
+    status      String @default("confirmed")
 
     driver        User @relation(fields:[driverId], references: [id])
     passengers    Booking[]
@@ -84,7 +84,7 @@ model Booking {
   tripId         String @map("trip_id")
   bookingDate    DateTime @map("booking_date") @default(now())
   seatsBooked    Int @map("seats_booked")
-  status         String
+  status         String @default("confirmed")
   price          Float
 
   pickUp         PickupLocation? @relation("pickup_location")

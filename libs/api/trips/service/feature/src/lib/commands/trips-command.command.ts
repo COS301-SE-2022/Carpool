@@ -4,6 +4,7 @@ export class TripsCreateCommand {
     public readonly tripDate: string,
     public readonly seatsAvailable: string,
     public readonly price: string,
+    public readonly status: string,
     public readonly startLocationAddress: string,
     public readonly startLocationLongitude: string,
     public readonly startLocationLatitude: string,

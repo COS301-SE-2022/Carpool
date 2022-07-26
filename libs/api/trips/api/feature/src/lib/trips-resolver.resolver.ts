@@ -54,6 +54,11 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
+  async findByConfirmedTrips(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByConfirmedTrips(id);
+  }
+
+  @Query(() => [Trip])
   async searchTrips(
     @Args('date') date: string,
     @Args('startLongitude') startLongitude: string,
@@ -95,6 +100,7 @@ export class TripsResolver {
     @Args('tripDate') tripDate: string,
     @Args('seatsAvailable') seatsAvailable: string,
     @Args('price') price: string,
+    @Args('status') status: string,
     @Args('startLocationAddress') startLocationAddress: string,
     @Args('startLocationLongitude') startLocationLongitude: string,
     @Args('startLocationLatitude') startLocationLatitude: string,
@@ -107,6 +113,7 @@ export class TripsResolver {
       tripDate,
       seatsAvailable,
       price,
+      status,
       startLocationAddress,
       startLocationLongitude,
       startLocationLatitude,

@@ -137,6 +137,7 @@ describe('TripsRepository', () => {
         '01/01/2022',
         '3',
         'R85',
+        'confirmed',
         'startLocationAddress',
         'startLocationLongitude',
         'startLocationLatitude',

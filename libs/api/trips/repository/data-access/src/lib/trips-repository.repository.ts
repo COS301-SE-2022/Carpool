@@ -67,9 +67,24 @@ export class TripsRepository {
         passengers: {
           some: {
             userId: passengerId,
+            status: "unpaid"
           },
         },
         status:"confirmed",
+      },
+    });
+  }
+
+  async findByRequestedTrips(passengerId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        passengers: {
+          some: {
+            userId: passengerId,
+            status: "unpaid"
+          },
+        },
+        status:"requested",
       },
     });
   }

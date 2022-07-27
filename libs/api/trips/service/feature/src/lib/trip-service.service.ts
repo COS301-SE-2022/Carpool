@@ -9,7 +9,7 @@ import {
   FindTripByIdQuery,
   FindCoordinatesByTripQuery,
   SearchTripsQuery,
-  findByConfirmedTripsrQuery,
+  findByConfirmedTripsQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -43,7 +43,7 @@ export class TripsService {
   }
 
   async findByConfirmedTrips(passengerId: string): Promise<Trip[] | null> {
-    return await this.queryBus.execute(new findByConfirmedTripsrQuery(passengerId));
+    return await this.queryBus.execute(new findByConfirmedTripsQuery(passengerId));
   }
 
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {

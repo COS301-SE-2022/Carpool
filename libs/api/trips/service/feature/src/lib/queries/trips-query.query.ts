@@ -8,7 +8,7 @@ export class FindByPassengerQuery {
   constructor(public readonly passengerId: string) {}
 }
 
-export class findByConfirmedTripsrQuery {
+export class findByConfirmedTripsQuery {
   constructor(public readonly passengerId: string) {}
 }
 

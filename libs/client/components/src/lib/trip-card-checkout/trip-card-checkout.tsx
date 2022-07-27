@@ -16,7 +16,7 @@ type cardProps = {
   destination: string;
   date: string;
   type: string;
-  price: number;
+  price: string;
   onPress: () => void;
 };
 
@@ -60,7 +60,7 @@ export function TripCardCheckout({
             <Text style={styles.date}>{formatDate(date)}</Text>
           </View>
           <View>
-            <Text style={{ color: blue, fontSize: 18 }}> R30 </Text>
+            <Text style={{ color: blue, fontSize: 18 }}> {price} </Text>
             <Text style={{ color: black }}>{getTime(date)}</Text>
           </View>
         </View>

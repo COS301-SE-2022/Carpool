@@ -55,7 +55,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   };
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId, type:"completed"});
   };
 
   return (
@@ -139,7 +139,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
           }}
         >
           <Text style={{ color: !confirmed ? '#fff' : '#000', fontWeight: '600' }}>
-            Pending
+            Requested
           </Text>
         </Pressable>
       </View>
@@ -152,17 +152,17 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
             cTrips?.length === 0 ? (
               <Text>You have not offered any trips...</Text>
             ) : (
-              cTrips?.map((trip) => (
-                <View>
+              cTrips?.map((trip, index) => (
+                <View key={index}>
                   <TripCardCheckout
-                  key={trip.tripId}
                   startLocation={trip.coordinates[0].address}
                   destination={trip.coordinates[1].address}
                   date={trip.tripDate}
                   type="passenger"
-                  price={30}
+                  price={trip.price}
                   onPress={() => viewTrip(trip.tripId)}
                 />
+                <Button title="Pay Now"onPress={() =>navigation.push('CreditCard')} />
               </View>
               ))
             )
@@ -176,7 +176,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
               destination={trip.coordinates[1].address}
               date={trip.tripDate}
               type="passenger"
-              price={30}
+              price={trip.price}
               onPress={() => viewTrip(trip.tripId)}
             />
             ))

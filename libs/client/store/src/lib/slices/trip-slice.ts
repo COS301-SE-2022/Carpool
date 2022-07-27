@@ -16,6 +16,7 @@ import {
   listSearchResults,
   bookTrip,
   listConfirmedTrips,
+  listRequestedTrips,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -305,6 +306,40 @@ export const confirmedTripSlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listConfirmedTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialRequestedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+
+export const requestedTripSlice = createSlice({
+  name: 'requested-trips',
+  initialState: initialRequestedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listRequestedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listRequestedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listRequestedTrips.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

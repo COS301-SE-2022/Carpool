@@ -10,6 +10,7 @@ import {
   SEARCH_RESULTS,
   BOOK_TRIP,
   CONFIRMED_TRIPS,
+  REQUESTED_TRIPS,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -95,6 +96,32 @@ export const listConfirmedTrips = createAsyncThunk<
   }
 
   const res = response.data.data.findByConfirmedTrips;
+
+  return res;
+});
+
+export const listRequestedTrips = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/checkout', async (tripId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: REQUESTED_TRIPS,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByRequestedTrips;
 
   return res;
 });

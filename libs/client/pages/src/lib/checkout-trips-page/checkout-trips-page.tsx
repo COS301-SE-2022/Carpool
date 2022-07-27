@@ -11,12 +11,11 @@ import { CheckoutTripsProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   AppDispatch,
-  listPassengerHistory,
   RootStore,
   listConfirmedTrips,
+  listRequestedTrips,
 } from '@carpool/client/store';
 import { TripCardCheckout, Button } from '@carpool/client/components';
-import { formatDate } from '@carpool/client/shared/utilities';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
@@ -30,11 +29,8 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   const confirmedTrip = useSelector((state: RootStore) => state.confirmedTrip);
   const { trips: cTrips, status: cStatus } = confirmedTrip;
 
-  const passengerHistory = useSelector(
-    (state: RootStore) => state.passengerHistory
-  );
-  const { trips: passengerTrips, status: passengerHistoryStatus } =
-    passengerHistory;
+  const requestedTrip = useSelector((state: RootStore) => state.requestedTrip);
+  const { trips: pTrips, status: pStatus } =  requestedTrip;
 
   useEffect(() => {
     if (userData) {
@@ -48,10 +44,10 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
     userData && dispatch(listConfirmedTrips(userData.id));
   };
 
-  const asPending = () => {
+  const asRequested = () => {
     setConfirmed(false);
-    console.log('As Pending Trips');
-    userData && dispatch(listPassengerHistory(userData.id));
+    console.log('As Requested Trips');
+    userData && dispatch(listRequestedTrips(userData.id));
   };
 
   const viewTrip = (tripId: string) => {
@@ -130,7 +126,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
           </Text>
         </Pressable>
         <Pressable
-          onPress={asPending}
+          onPress={asRequested}
           style={{
             paddingVertical: 5,
             paddingHorizontal: 10,
@@ -144,7 +140,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
         </Pressable>
       </View>
       {cStatus === 'loading' ||
-      passengerHistoryStatus === 'loading' ? (
+      pStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
@@ -166,10 +162,10 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
               </View>
               ))
             )
-          ) : passengerTrips?.length === 0 ? (
+          ) : pTrips?.length === 0 ? (
             <Text>You have not taking any trips...</Text>
           ) : (
-            passengerTrips?.map((trip) => (
+            pTrips?.map((trip) => (
               <TripCardCheckout
               key={trip.tripId}
               startLocation={trip.coordinates[0].address}

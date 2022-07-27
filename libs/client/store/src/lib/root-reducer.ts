@@ -14,6 +14,7 @@ import {
   searchResultsSlice,
   tripBookingSlice,
   confirmedTripSlice,
+  requestedTripSlice,
 } from './slices/trip-slice';
 
 const RootReducer = combineReducers({
@@ -29,6 +30,7 @@ const RootReducer = combineReducers({
   createdTrip: createTripSlice.reducer,
   booking: tripBookingSlice.reducer,
   confirmedTrip: confirmedTripSlice.reducer,
+  requestedTrip: requestedTripSlice.reducer,
 });
 
 export default RootReducer;

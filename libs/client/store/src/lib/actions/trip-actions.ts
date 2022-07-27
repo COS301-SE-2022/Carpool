@@ -77,11 +77,11 @@ export const listConfirmedTrips = createAsyncThunk<
   TripListType[],
   string,
   { rejectValue: Error }
->('trips/checkout', async (_, thunkApi) => {
+>('trips/checkout', async (tripId: string, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
     query: CONFIRMED_TRIPS,
     variables: {
-      status: 'confirmed',
+      id: tripId,
     },
   });
   console.log('FETCHING');

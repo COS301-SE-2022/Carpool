@@ -39,7 +39,7 @@ export type TripListType = {
   tripDate: string;
   createdAt: string;
   coordinates: Location[];
-  price: number;
+  price: string;
 };
 
 export type Location = {

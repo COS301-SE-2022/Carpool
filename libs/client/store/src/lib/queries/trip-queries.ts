@@ -53,8 +53,8 @@ export const SEARCH_RESULTS = `
 `;
 
 export const CONFIRMED_TRIPS = `
-  query( $status: String!) {
-    findByConfirmedTrips(status: $status) {
+  query($id: String!) {
+    findByConfirmedTrips(id: $id) {
       tripId,
     driver {
 			profilePic,

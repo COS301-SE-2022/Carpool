@@ -41,7 +41,7 @@ export function DriverActiveTrip(
         <Icon
           name="arrow-left"
           size={35}
-          style={{ color: 'black' }}
+          style={{ color: '#808080' }}
           onPress={() => navigation.goBack()}
         />
         <View style={{ display: 'flex', flex: 0.8, justifyContent: 'center' }}>

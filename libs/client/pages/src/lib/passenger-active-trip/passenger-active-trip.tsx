@@ -46,7 +46,7 @@ export function PassengerActiveTrip(
         <Icon
           name="arrow-left"
           size={35}
-          style={{ color: 'black' }}
+          style={{ color: '#808080' }}
           onPress={() => navigation.goBack()}
         />
         <View

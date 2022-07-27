@@ -56,3 +56,12 @@ export class BookingInput {
   @Field()
   price: string;
 }
+
+@InputType()
+export class BookingStatusUpdate {
+  @Field(() => ID)
+  bookingId: string;
+
+  @Field()
+  status: string;
+}

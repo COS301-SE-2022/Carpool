@@ -1,5 +1,5 @@
 import { User } from '@carpool/api/authentication/entities';
-import { Trip, Booking, Location } from '@carpool/api/trips/entities';
+import { Trip, Booking, Location, BookingStatusUpdate } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
@@ -147,6 +147,15 @@ export class TripsResolver {
   //     status
   //   );
   // }
+
+  @Mutation(() => Booking)
+  async updatePaymentStatus(
+    @Args('bookingId') bookingId: string,
+  ): Promise<BookingStatusUpdate> {
+    return await this.tripsService.updatePaymentStatus(
+      bookingId
+    );
+  }
 
   @Mutation(() => Booking)
   async bookTrip(

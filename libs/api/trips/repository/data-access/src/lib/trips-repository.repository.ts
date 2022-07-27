@@ -191,6 +191,17 @@ export class TripsRepository {
     });
   }
 
+  async updatePaymentStatus(id: string): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: {
+        bookingId: id,
+      },
+      data: {
+        status: "paid"
+      },
+    });
+  }
+
   async delete(id: string): Promise<Trip> {
     return this.prisma.trip.delete({
       where: {

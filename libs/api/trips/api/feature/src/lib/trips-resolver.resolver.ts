@@ -59,6 +59,11 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
+  async findByRequestedTrips(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByRequestedTrips(id);
+  }
+
+  @Query(() => [Trip])
   async searchTrips(
     @Args('date') date: string,
     @Args('startLongitude') startLongitude: string,

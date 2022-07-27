@@ -79,7 +79,9 @@ export function HomePage({ navigation }: HomePageProps) {
           )}
         </SafeAreaView>
       </FormProvider> */}
+
       <HomeMapView />
+
       <View style={styles.bottomContainer}>
         <HomeOptionBox
           onPress={() => navigation.push('SearchPage')}
@@ -92,14 +94,8 @@ export function HomePage({ navigation }: HomePageProps) {
             size={30}
             style={{ color: '#188aed', alignSelf: 'flex-end'}}
             onPress={() =>navigation.push('CheckoutTrips')}
-          />
+        />
         </Text>
-        <Icon
-            name="credit-card"
-            size={30}
-            style={{ color: '#188aed'}}
-            onPress={() =>navigation.push('CreditCard')}
-          />
           {status === 'loading' ? (
             <ActivityIndicator size="large" />
           ) : trips ? (

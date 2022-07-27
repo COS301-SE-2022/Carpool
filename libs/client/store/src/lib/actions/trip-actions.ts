@@ -11,12 +11,14 @@ import {
   BOOK_TRIP,
   CONFIRMED_TRIPS,
   REQUESTED_TRIPS,
+  PAYMENT_STATUS_UPDATE,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
   TripListType,
   TripDetailsType,
   TripUpcomingType,
+  Passenger,
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 
@@ -348,6 +350,24 @@ export const bookTrip = createAsyncThunk<
   const res = response.data.data.bookTrip;
 
   console.log(res);
+
+  return res;
+});
+
+export const updateBookingPaymentStatus = createAsyncThunk<
+Passenger[],
+  string,
+  { rejectValue: Error }
+>('trips/checkout', async (bookingId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: PAYMENT_STATUS_UPDATE,
+    variables: {
+      id: bookingId,
+    },
+  });
+  console.log('UPDATING');
+
+  const res = response.data.data.updateBookingPaymentStatus;
 
   return res;
 });

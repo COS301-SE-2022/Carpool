@@ -158,3 +158,8 @@ export const BOOK_TRIP = `
     }
   }
 `;
+
+export const PAYMENT_STATUS_UPDATE = `
+mutation ($bookingId: String!) {
+  updatePaymentStatus(bookingId: $id)
+}`;

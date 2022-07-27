@@ -12,10 +12,22 @@ import {
 } from 'react-native';
 import LottieView from 'lottie-react-native';
 import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
-
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  AppDispatch,
+  RootStore,
+  updateBookingPaymentStatus,
+} from '@carpool/client/store';
 
 
 export function CreditCard({ navigation }: CreditCardProps) {
+
+  const user = useSelector((state: RootStore) => state.user);
+  const { user: userData } = user;
+
+  const dispatch: AppDispatch = useDispatch();
+
+
   const formMethods = useForm<FormModel>({
     mode: 'onBlur',
     defaultValues: {
@@ -28,14 +40,24 @@ export function CreditCard({ navigation }: CreditCardProps) {
   const { handleSubmit, formState } = formMethods;
 
   const onSubmit = (model: FormModel) => {
+    userData && dispatch(updateBookingPaymentStatus(userData.bookingId));
+
+    // Check if the onSubmit is suscessful
     Alert.alert('Success: ' + JSON.stringify(model, null, 2));
 
   };
 
   return (
-    <FormProvider {...formMethods}>
 
+    <FormProvider {...formMethods}>
+        <Icon
+          name="chevron-left"
+          size={25}
+          style={{color: '#000' }}
+          onPress={() => navigation.goBack()}
+        />
         <SafeAreaView style={{flex: 1}}>
+
           <KeyboardAvoidingView
             style={{flex: 1, padding: 36,}}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -57,6 +79,7 @@ export function CreditCard({ navigation }: CreditCardProps) {
               onPress={handleSubmit(onSubmit)}
             />
           )}
+
         </SafeAreaView>
       </FormProvider>
 

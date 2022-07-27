@@ -80,3 +80,9 @@ export type TripBooking = {
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
+
+export type UpdatePaymentStatusType = {
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+

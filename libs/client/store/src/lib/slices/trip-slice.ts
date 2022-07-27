@@ -5,6 +5,7 @@ import {
   TripList,
   UpcomingTrip,
   CreateTrip,
+  UpdatePaymentStatusType,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -17,6 +18,7 @@ import {
   bookTrip,
   listConfirmedTrips,
   listRequestedTrips,
+  updateBookingPaymentStatus,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -347,6 +349,33 @@ export const requestedTripSlice = createSlice({
         } else {
           state.error = { message: 'Unknown error' };
         }
+      });
+  },
+});
+
+export const initialUpdatePaymentStatusState = {
+  status: 'idle',
+  error: null,
+} as UpdatePaymentStatusType;
+
+export const PaymentStatusUpdateSlice = createSlice({
+  name: 'update-payment-status',
+  initialState: initialUpdatePaymentStatusState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateBookingPaymentStatus.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(updateBookingPaymentStatus.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        // state.userProfile = action.payload;
+      })
+      .addCase(updateBookingPaymentStatus.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
       });
   },
 });

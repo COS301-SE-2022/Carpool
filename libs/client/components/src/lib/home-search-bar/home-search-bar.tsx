@@ -33,12 +33,6 @@ export function HomeSearchBar({ onPress }: props) {
             </Text>
           </View>
           </TouchableOpacity>
-          <Icon
-          name="shopping-cart"
-          size={30}
-          style={{ color: '#188aed' }}
-          // onPress={() =>navigation.push('CheckoutTrips')}
-        />
         </View>
 
 

@@ -265,20 +265,20 @@ export const bookTrip = createAsyncThunk<
   string,
   BookTripType,
   { rejectValue: Error }
->('trip/book', async (bookTripValues: BookTripType, thunkApi) => {
+>('trip/book', async (acceptTripRequestValues: BookTripType, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
     query: BOOK_TRIP,
     variables: {
-      //bookingId: bookTripValues.bookingId,
-      tripId: bookTripValues.tripId,
-      passengerId: bookTripValues.passengerId,
-      //bookingDate: bookTripValues.bookingDate,
-      seatsBooked: bookTripValues.seatsBooked,
-      status: bookTripValues.status,
-      price: bookTripValues.price,
-      address: bookTripValues.address,
-      latitude: bookTripValues.latitude,
-      longitude: bookTripValues.longitude,
+      //bookingId: acceptTripRequestValues.bookingId,
+      tripId: acceptTripRequestValues.tripId,
+      passengerId: acceptTripRequestValues.passengerId,
+      //bookingDate: acceptTripRequestValues.bookingDate,
+      seatsBooked: acceptTripRequestValues.seatsBooked,
+      status: acceptTripRequestValues.status,
+      price: acceptTripRequestValues.price,
+      address: acceptTripRequestValues.address,
+      latitude: acceptTripRequestValues.latitude,
+      longitude: acceptTripRequestValues.longitude,
     },
   });
   console.log('BOOKING');
@@ -292,6 +292,110 @@ export const bookTrip = createAsyncThunk<
   }
 
   const res = response.data.data.bookTrip;
+
+  console.log(res);
+
+  return res;
+});
+
+export type AcceptTripReqType = {
+  tripId: string;
+  passengerId: string;
+  seatsAvailable: string;
+  status: string;
+};
+
+export const acceptTripRequest = createAsyncThunk<
+  string,
+  AcceptTripReqType,
+  { rejectValue: Error }
+>(
+  'trip/accept',
+  async (acceptTripRequestValues: AcceptTripReqType, thunkApi) => {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
+      query: BOOK_TRIP,
+      variables: {
+        tripId: acceptTripRequestValues.tripId,
+        passengerId: acceptTripRequestValues.passengerId,
+        seatsAvailable: acceptTripRequestValues.seatsAvailable,
+        status: acceptTripRequestValues.status,
+      },
+    });
+    console.log('ACCEPTING');
+
+    if (response.data.errors) {
+      const error = {
+        message: response.data.errors[0].message,
+      } as Error;
+
+      return thunkApi.rejectWithValue(error);
+    }
+
+    const res = response.data.data.acceptTripRequest;
+
+    console.log(res);
+
+    return res;
+  }
+);
+
+export type TripStatusType = {
+  tripId: string;
+  status: string;
+};
+
+export const startTrip = createAsyncThunk<
+  string,
+  TripStatusType,
+  { rejectValue: Error }
+>('trip/start', async (tripStatusValues: TripStatusType, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: BOOK_TRIP,
+    variables: {
+      tripId: tripStatusValues.tripId,
+      status: tripStatusValues.status,
+    },
+  });
+  console.log('ACCEPTING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.acceptTripRequest;
+
+  console.log(res);
+
+  return res;
+});
+
+export const endTrip = createAsyncThunk<
+  string,
+  TripStatusType,
+  { rejectValue: Error }
+>('trip/start', async (tripStatusValues: TripStatusType, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: BOOK_TRIP,
+    variables: {
+      tripId: tripStatusValues.tripId,
+      status: tripStatusValues.status,
+    },
+  });
+  console.log('ACCEPTING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.acceptTripRequest;
 
   console.log(res);
 

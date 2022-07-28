@@ -5,6 +5,9 @@ import {
   TripList,
   UpcomingTrip,
   CreateTrip,
+  AcceptTripRequest,
+  StartTrip,
+  EndTrip,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -15,6 +18,9 @@ import {
   listPassengerHistory,
   listSearchResults,
   bookTrip,
+  acceptTripRequest,
+  startTrip,
+  endTrip,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -276,6 +282,105 @@ export const tripBookingSlice = createSlice({
           state.error = action.payload;
         } else {
           state.error = { message: 'Unknown error (Trip Booking)' };
+        }
+      });
+  },
+});
+
+export const acceptTripRequestState = {
+  tripId: null,
+  status: 'idle',
+  error: null,
+} as AcceptTripRequest;
+
+export const acceptTripRequestSlice = createSlice({
+  name: 'accept-trip-request',
+  initialState: acceptTripRequestState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(acceptTripRequest.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(acceptTripRequest.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(acceptTripRequest.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error (Accept Trip Request)' };
+        }
+      });
+  },
+});
+
+export const startTripState = {
+  tripId: null,
+  status: 'idle',
+  error: null,
+} as StartTrip;
+
+export const startTripSlice = createSlice({
+  name: 'start-trip',
+  initialState: startTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(startTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(startTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(startTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error (Start Trip)' };
+        }
+      });
+  },
+});
+
+export const endTripState = {
+  tripId: null,
+  status: 'idle',
+  error: null,
+} as EndTrip;
+
+export const endTripSlice = createSlice({
+  name: 'end-trip',
+  initialState: endTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(endTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(endTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(endTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error (End Trip)' };
         }
       });
   },

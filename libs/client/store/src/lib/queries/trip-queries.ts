@@ -120,3 +120,9 @@ export const BOOK_TRIP = `
     }
   }
 `;
+
+export const ACCEPT_REQ = ``;
+
+export const START_TRIP = ``;
+
+export const END_TRIP = ``;

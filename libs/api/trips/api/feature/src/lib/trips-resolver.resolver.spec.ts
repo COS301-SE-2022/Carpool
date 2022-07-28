@@ -180,6 +180,7 @@ describe('TripsResolver', () => {
           '2022-05-30T08:21:50.000Z',
           '1',
           '30',
+          'upcoming',
           'Start Address',
           '1.276',
           '1.256',

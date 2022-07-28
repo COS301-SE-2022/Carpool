@@ -4,13 +4,13 @@ import {
   TripDetails,
   TripList,
   UpcomingTrip,
-  CreateTrip,
   AcceptTripRequest,
   StartTrip,
   EndTrip,
   UpdatePaymentStatusType,
   BookingIdType,
   DeclineTripRequest,
+  CreateTripState,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -42,7 +42,7 @@ export const initialCreateState = {
   trip: '',
   status: 'idle',
   error: null,
-} as CreateTrip;
+} as CreateTripState;
 
 export const createTripSlice = createSlice({
   name: 'trips',

@@ -6,8 +6,6 @@ import {
   Trip,
   Location,
   TripsUpdate,
-  AcceptTripRequestUpdate,
-  TripStatusUpdate,
 } from '@carpool/api/trips/entities';
 
 jest.mock('@carpool/api/trips/entities');
@@ -15,10 +13,6 @@ jest.mock('@carpool/api/trips/entities');
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;
 const tripUpdateMock: jest.Mocked<TripsUpdate> =
   new TripsUpdate() as TripsUpdate;
-const AcceptTripRequestUpdateMock: jest.Mocked<AcceptTripRequestUpdate> =
-  new AcceptTripRequestUpdate() as AcceptTripRequestUpdate;
-const TripStatusUpdateMock: jest.Mocked<TripStatusUpdate> =
-  new TripStatusUpdate() as TripStatusUpdate;
 const tripsMock: jest.Mocked<Trip[]> = new Array<Trip>();
 const bookingMock: jest.Mocked<Booking> = new Booking() as Booking;
 const locationMock: jest.Mocked<Location> = new Location() as Location;
@@ -220,9 +214,9 @@ describe('TripsRepository', () => {
         .spyOn(repository, 'acceptTripRequest')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(
-        await repository.acceptTripRequest('1', AcceptTripRequestUpdateMock)
-      ).toMatchObject(tripMock);
+      expect(await repository.acceptTripRequest('1', '2')).toMatchObject(
+        tripMock
+      );
     });
   });
 
@@ -232,9 +226,7 @@ describe('TripsRepository', () => {
         .spyOn(repository, 'startTrip')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(
-        await repository.startTrip('1', TripStatusUpdateMock)
-      ).toMatchObject(tripMock);
+      expect(await repository.startTrip('1')).toMatchObject(tripMock);
     });
   });
 
@@ -244,9 +236,7 @@ describe('TripsRepository', () => {
         .spyOn(repository, 'endTrip')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await repository.endTrip('1', TripStatusUpdateMock)).toMatchObject(
-        tripMock
-      );
+      expect(await repository.endTrip('1')).toMatchObject(tripMock);
     });
   });
 });

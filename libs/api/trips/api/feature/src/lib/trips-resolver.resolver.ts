@@ -15,7 +15,6 @@ import {
   Root,
 } from '@nestjs/graphql';
 import { AuthService } from '@carpool/api/authentication/service';
-import { acceptTripRequest } from '@carpool/client/store';
 
 @Resolver(() => Trip)
 export class TripsResolver {
@@ -206,7 +205,7 @@ export class TripsResolver {
   @Mutation(() => Trip)
   async acceptTripRequest(
     @Args('id') tripId: string,
-    @Args('seatsAvailable') seatsAvailable: string,
+    @Args('seatsAvailable') seatsAvailable: number,
     @Args('status') status: string
   ): Promise<Trip> {
     return await this.tripsService.acceptTripRequest(

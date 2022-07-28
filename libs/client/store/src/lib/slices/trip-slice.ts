@@ -316,10 +316,9 @@ export const acceptTripRequestSlice = createSlice({
       })
       .addCase(acceptTripRequest.rejected, (state, action) => {
         state.error = { message: 'Unknown error (Accept Trip Request)' };
-    });
+      });
   },
 });
-
 
 export const initialConfirmedTripState = {
   trips: null,
@@ -378,8 +377,8 @@ export const startTripSlice = createSlice({
       .addCase(startTrip.rejected, (state, action) => {
         state.error = { message: 'Unknown error (Start Trip)' };
       });
-    },
-  });
+  },
+});
 
 export const initialRequestedTripState = {
   trips: null,
@@ -442,6 +441,11 @@ export const getBookingIdSlice = createSlice({
           state.error = action.payload;
         } else {
           state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
 export const endTripState = {
   tripId: null,
   status: 'idle',

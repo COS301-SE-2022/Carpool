@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip, User, Booking, Location } from '@prisma/client';
+import { Trip, Booking, Location } from '@prisma/client';
 import {
   TripsUpdate,
   AcceptTripRequestUpdate,

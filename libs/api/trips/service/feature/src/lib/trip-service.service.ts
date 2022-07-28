@@ -141,7 +141,7 @@ export class TripsService {
 
   async update(
     tripId: string,
-    seatsAvailable: string,
+    seatsAvailable: number,
     price: number,
     status: string
   ): Promise<Trip> {
@@ -162,7 +162,7 @@ export class TripsService {
 
   async acceptTripRequest(
     tripId: string,
-    seatsAvailable: string,
+    seatsAvailable: number,
     status: string
   ): Promise<Trip> {
     return await this.commandBus.execute(

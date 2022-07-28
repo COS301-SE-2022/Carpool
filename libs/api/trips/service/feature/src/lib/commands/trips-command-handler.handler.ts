@@ -6,8 +6,16 @@ import {
   TripsUpdateCommand,
   TripsDeleteCommand,
   BookTripCommand,
+  AcceptTripRequestCommand,
+  StartTripCommand,
+  EndTripCommand,
 } from './trips-command.command';
-import { TripsInput, TripsUpdate } from '@carpool/api/trips/entities';
+import {
+  TripsInput,
+  TripsUpdate,
+  AcceptTripRequestUpdate,
+  TripStatusUpdate,
+} from '@carpool/api/trips/entities';
 
 @CommandHandler(TripsCreateCommand)
 export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
@@ -81,7 +89,7 @@ export class TripsUpdateHandler implements ICommandHandler<TripsUpdateCommand> {
     const tripUpdate = new TripsUpdate();
     tripUpdate.seatsAvailable = seatsAvailable;
     tripUpdate.price = price;
-    // tripUpdate.status = status;
+    tripUpdate.status = status;
     return await this.tripsRepository.update(tripId, tripUpdate);
   }
 }
@@ -94,5 +102,47 @@ export class TripsDeleteHandler implements ICommandHandler<TripsDeleteCommand> {
     const { tripId } = command;
 
     return await this.tripsRepository.delete(tripId);
+  }
+}
+
+@CommandHandler(AcceptTripRequestCommand)
+export class AcceptTripRequestHandler
+  implements ICommandHandler<AcceptTripRequestCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: AcceptTripRequestCommand): Promise<Trip | null> {
+    const { tripId, seatsAvailable, status } = command;
+
+    const tripUpdate = new AcceptTripRequestUpdate();
+    tripUpdate.seatsAvailable = seatsAvailable;
+    tripUpdate.status = status;
+    return await this.tripsRepository.acceptTripRequest(tripId, tripUpdate);
+  }
+}
+
+@CommandHandler(StartTripCommand)
+export class StartTripHandler implements ICommandHandler<StartTripCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: StartTripCommand): Promise<Trip | null> {
+    const { tripId, status } = command;
+
+    const tripUpdate = new TripStatusUpdate();
+    tripUpdate.status = status;
+    return await this.tripsRepository.startTrip(tripId, tripUpdate);
+  }
+}
+
+@CommandHandler(EndTripCommand)
+export class EndTripHandler implements ICommandHandler<EndTripCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: EndTripCommand): Promise<Trip | null> {
+    const { tripId, status } = command;
+
+    const tripUpdate = new TripStatusUpdate();
+    tripUpdate.status = status;
+    return await this.tripsRepository.endTrip(tripId, tripUpdate);
   }
 }

@@ -1,5 +1,10 @@
 import { User } from '@carpool/api/authentication/entities';
-import { Trip, Booking, Location } from '@carpool/api/trips/entities';
+import {
+  Trip,
+  Booking,
+  Location,
+  BookingStatusUpdate,
+} from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
@@ -72,6 +77,24 @@ export class TripsResolver {
     return await this.tripsService.findByPassenger(id);
   }
 
+  @Query(() => Booking)
+  async findBookingByTripAndUserId(
+    @Args('tripId') tripId: string,
+    @Args('userId') userId: string
+  ): Promise<Booking> {
+    return await this.tripsService.findBookingByTripAndUserId(tripId, userId);
+  }
+
+  @Query(() => [Trip])
+  async findByConfirmedTrips(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByConfirmedTrips(id);
+  }
+
+  @Query(() => [Trip])
+  async findByRequestedTrips(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByRequestedTrips(id);
+  }
+
   @Query(() => [Trip])
   async searchTrips(
     @Args('date') date: string,
@@ -106,6 +129,7 @@ export class TripsResolver {
     @Args('tripDate') tripDate: string,
     @Args('seatsAvailable') seatsAvailable: string,
     @Args('price') price: string,
+    @Args('status') status: string,
     @Args('startLocationAddress') startLocationAddress: string,
     @Args('startLocationLongitude') startLocationLongitude: string,
     @Args('startLocationLatitude') startLocationLatitude: string,
@@ -118,6 +142,7 @@ export class TripsResolver {
       tripDate,
       seatsAvailable,
       price,
+      status,
       startLocationAddress,
       startLocationLongitude,
       startLocationLatitude,
@@ -146,6 +171,13 @@ export class TripsResolver {
   //     status
   //   );
   // }
+
+  @Mutation(() => Booking)
+  async updatePaymentStatus(
+    @Args('bookingId') bookingId: string
+  ): Promise<BookingStatusUpdate> {
+    return await this.tripsService.updatePaymentStatus(bookingId);
+  }
 
   @Mutation(() => Booking)
   async bookTrip(

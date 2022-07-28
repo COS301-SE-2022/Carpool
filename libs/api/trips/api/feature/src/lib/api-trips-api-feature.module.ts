@@ -14,6 +14,10 @@ import {
   FindCoordinatesByTripHandler,
   FindBookingByTripHandler,
   SearchTripsHandler,
+  FindByConfirmedTripHandler,
+  FindByRequestedTripHandler,
+  BookingUpdatePaymentStatusHandler,
+  FindBookingByTripAndUserIdHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -38,6 +42,10 @@ import { AuthService } from '@carpool/api/authentication/service';
     FindCoordinatesByTripHandler,
     FindTripByIdHandler,
     AuthService,
+    FindByConfirmedTripHandler,
+    FindByRequestedTripHandler,
+    BookingUpdatePaymentStatusHandler,
+    FindBookingByTripAndUserIdHandler,
   ],
 })
 export class TripsModule {}

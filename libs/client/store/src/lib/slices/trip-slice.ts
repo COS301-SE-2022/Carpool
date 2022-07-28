@@ -5,6 +5,8 @@ import {
   TripList,
   UpcomingTrip,
   CreateTrip,
+  UpdatePaymentStatusType,
+  BookingIdType,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -15,6 +17,10 @@ import {
   listPassengerHistory,
   listSearchResults,
   bookTrip,
+  listConfirmedTrips,
+  listRequestedTrips,
+  updateBookingPaymentStatus,
+  findBookingId,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -277,6 +283,132 @@ export const tripBookingSlice = createSlice({
         } else {
           state.error = { message: 'Unknown error (Trip Booking)' };
         }
+      });
+  },
+});
+
+export const initialConfirmedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+export const confirmedTripSlice = createSlice({
+  name: 'confirmed-trips',
+  initialState: initialConfirmedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listConfirmedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listConfirmedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listConfirmedTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialRequestedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+export const requestedTripSlice = createSlice({
+  name: 'requested-trips',
+  initialState: initialRequestedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listRequestedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listRequestedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listRequestedTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialBookingIdState = {
+  bookingId: null,
+  status: 'idle',
+  error: null,
+} as BookingIdType;
+
+export const getBookingIdSlice = createSlice({
+  name: 'booking-id',
+  initialState: initialBookingIdState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(findBookingId.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(findBookingId.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.bookingId = action.payload;
+      })
+      .addCase(findBookingId.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialUpdatePaymentStatusState = {
+  status: 'idle',
+  error: null,
+} as UpdatePaymentStatusType;
+
+export const PaymentStatusUpdateSlice = createSlice({
+  name: 'update-payment-status',
+  initialState: initialUpdatePaymentStatusState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateBookingPaymentStatus.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(updateBookingPaymentStatus.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        // state.userProfile = action.payload;
+      })
+      .addCase(updateBookingPaymentStatus.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
       });
   },
 });

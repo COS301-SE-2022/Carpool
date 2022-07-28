@@ -52,6 +52,49 @@ export const SEARCH_RESULTS = `
   }
 `;
 
+export const CONFIRMED_TRIPS = `
+  query($id: String!) {
+    findByConfirmedTrips(id: $id) {
+      tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+    price,
+    passengers {
+      bookingId,
+      tripId,
+      userId
+    }
+    }
+  }
+`;
+
+export const REQUESTED_TRIPS = `
+  query($id: String!) {
+    findByRequestedTrips(id: $id) {
+      tripId,
+    driver {
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+    price,
+    }
+  }
+`;
+
 export const PASSENGER_HISTORY = `
 query ($id: String!) {
   findByPassenger(id: $id) {
@@ -120,3 +163,18 @@ export const BOOK_TRIP = `
     }
   }
 `;
+
+export const BOOKING_ID = `
+query($tripId: String!, $userId: String!) {
+  findBookingByTripAndUserId(tripId: $tripId, userId: $userId) {
+    bookingId,
+  }
+}
+`;
+
+export const PAYMENT_STATUS_UPDATE = `
+mutation ($bookingId: String!) {
+  updatePaymentStatus(bookingId: $bookingId) {
+    bookingId
+  }
+}`;

@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { Booking, Trip } from '@carpool/api/trips/entities';
+import {
+  Booking,
+  Trip,
+  BookingStatusUpdate,
+} from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
   FindByDriverQuery,
@@ -9,6 +13,9 @@ import {
   FindTripByIdQuery,
   FindCoordinatesByTripQuery,
   SearchTripsQuery,
+  findByConfirmedTripsQuery,
+  findByRequestedTripsQuery,
+  FindBookingByTripAndUserIdQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -16,6 +23,7 @@ import {
   TripsUpdateCommand,
   BookTripCommand,
   TripsDeleteCommand,
+  BookingUpdatePaymentStatusCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -41,8 +49,29 @@ export class TripsService {
     return await this.queryBus.execute(new FindByPassengerQuery(passengerId));
   }
 
+  async findByConfirmedTrips(passengerId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findByConfirmedTripsQuery(passengerId)
+    );
+  }
+
+  async findByRequestedTrips(passengerId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findByRequestedTripsQuery(passengerId)
+    );
+  }
+
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
     return await this.queryBus.execute(new FindBookingByTripQuery(tripID));
+  }
+
+  async findBookingByTripAndUserId(
+    tripID: string,
+    userId: string
+  ): Promise<Booking> {
+    return await this.queryBus.execute(
+      new FindBookingByTripAndUserIdQuery(tripID, userId)
+    );
   }
 
   async findCoordinatesByTrip(tripID: string): Promise<Location[] | null> {
@@ -58,6 +87,7 @@ export class TripsService {
     tripDate: string,
     seatsAvailable: string,
     price: string,
+    status: string,
     startLocationAddress: string,
     startLocationLongitude: string,
     startLocationLatitude: string,
@@ -71,6 +101,7 @@ export class TripsService {
         tripDate,
         seatsAvailable,
         price,
+        status,
         startLocationAddress,
         startLocationLongitude,
         startLocationLatitude,
@@ -113,6 +144,12 @@ export class TripsService {
   ): Promise<Trip> {
     return await this.commandBus.execute(
       new TripsUpdateCommand(tripId, seatsAvailable, price, status)
+    );
+  }
+
+  async updatePaymentStatus(bookingId: string): Promise<BookingStatusUpdate> {
+    return await this.commandBus.execute(
+      new BookingUpdatePaymentStatusCommand(bookingId)
     );
   }
 

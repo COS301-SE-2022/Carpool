@@ -75,7 +75,7 @@ describe('TripsService', () => {
     });
   });
 
-  //find booking by trips**********
+  //find booking by trips
   describe('findBookingByTrip', () => {
     const result = [bookingMock];
     it('should return an array of trips', async () => {
@@ -123,6 +123,7 @@ describe('TripsService', () => {
           '01/01/2022',
           '3',
           'R85',
+          'upcoming',
           'startLocationAddress',
           'startLocationLongitude',
           'startLocationLatitude',
@@ -176,6 +177,38 @@ describe('TripsService', () => {
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
       expect(await service.delete('1')).toBe(tripMock);
+    });
+  });
+
+  describe('acceptTripRequest', () => {
+    it('should return a trip', async () => {
+      jest
+        .spyOn(service, 'acceptTripRequest')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
+
+      expect(await service.acceptTripRequest('1', 1, 'upcoming')).toBe(
+        tripMock
+      );
+    });
+  });
+
+  describe('startTrip', () => {
+    it('should return a trip', async () => {
+      jest
+        .spyOn(service, 'startTrip')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
+
+      expect(await service.startTrip('1', 'active')).toBe(tripMock);
+    });
+  });
+
+  describe('endTrip', () => {
+    it('should return a trip', async () => {
+      jest
+        .spyOn(service, 'endTrip')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
+
+      expect(await service.endTrip('1', 'completed')).toBe(tripMock);
     });
   });
 });

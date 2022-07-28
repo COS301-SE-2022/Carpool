@@ -1,6 +1,6 @@
 import { Error } from './auth-types';
 
-export type CreateTrip = {
+export type CreateTripState = {
   trip: string;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;

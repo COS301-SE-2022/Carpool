@@ -61,6 +61,34 @@ export class TripsRepository {
     });
   }
 
+  async findByConfirmedTrips(passengerId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        passengers: {
+          some: {
+            userId: passengerId,
+            status: "unpaid"
+          },
+        },
+        status:"confirmed",
+      },
+    });
+  }
+
+  async findByRequestedTrips(passengerId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        passengers: {
+          some: {
+            userId: passengerId,
+            status: "unpaid"
+          },
+        },
+        status:"requested",
+      },
+    });
+  }
+
   async findBookingByTrip(tripID: string): Promise<Booking[]> {
     return this.prisma.booking.findMany({
       where: {
@@ -82,6 +110,7 @@ export class TripsRepository {
     tripDate: string,
     seatsAvailable: string,
     price: string,
+    status: string,
     startLocationAddress: string,
     startLocationLongitude: string,
     startLocationLatitude: string,
@@ -94,6 +123,7 @@ export class TripsRepository {
         tripDate: tripDate,
         seatsAvailable: parseInt(seatsAvailable),
         price: parseFloat(price),
+        status: status,
         coordinates: {
           create: [
             {
@@ -157,6 +187,17 @@ export class TripsRepository {
       data: {
         seatsAvailable: trips.seatsAvailable,
         price: trips.price,
+      },
+    });
+  }
+
+  async updatePaymentStatus(id: string): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: {
+        bookingId: id,
+      },
+      data: {
+        status: "paid"
       },
     });
   }

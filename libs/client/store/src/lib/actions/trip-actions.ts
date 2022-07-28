@@ -9,12 +9,16 @@ import {
   CREATE_TRIP,
   SEARCH_RESULTS,
   BOOK_TRIP,
+  CONFIRMED_TRIPS,
+  REQUESTED_TRIPS,
+  PAYMENT_STATUS_UPDATE,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
   TripListType,
   TripDetailsType,
   TripUpcomingType,
+  Passenger,
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 
@@ -68,6 +72,58 @@ export const listDriverHistory = createAsyncThunk<
   }
 
   const res = response.data.data.findByDriver;
+
+  return res;
+});
+
+export const listConfirmedTrips = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/checkout', async (tripId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: CONFIRMED_TRIPS,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByConfirmedTrips;
+
+  return res;
+});
+
+export const listRequestedTrips = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/checkout', async (tripId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: REQUESTED_TRIPS,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByRequestedTrips;
 
   return res;
 });
@@ -294,6 +350,24 @@ export const bookTrip = createAsyncThunk<
   const res = response.data.data.bookTrip;
 
   console.log(res);
+
+  return res;
+});
+
+export const updateBookingPaymentStatus = createAsyncThunk<
+Passenger[],
+  string,
+  { rejectValue: Error }
+>('trips/checkout', async (bookingId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: PAYMENT_STATUS_UPDATE,
+    variables: {
+      id: bookingId,
+    },
+  });
+  console.log('UPDATING');
+
+  const res = response.data.data.updateBookingPaymentStatus;
 
   return res;
 });

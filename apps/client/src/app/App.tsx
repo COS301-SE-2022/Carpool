@@ -20,6 +20,8 @@ import {
   ChatScreen,
   SetPickupPage,
   PostTrips,
+  CheckoutTrips,
+  CreditCard,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -51,6 +53,8 @@ export type RootStackParamList = {
   ChatScreen;
   SetPickupPage;
   PostTrips;
+  CheckoutTrips;
+  CreditCard;
 };
 
 export type TabBarParamList = {
@@ -71,6 +75,8 @@ export type HomeStackParamList = {
   HomePage;
   SearchPage;
   TripDetails;
+  CheckoutTrips;
+  CreditCard;
 };
 
 export type ProfileStackParamList = {
@@ -103,6 +109,8 @@ const HomeStack = () => {
       <HomeStackNav.Screen name="HomePage" component={HomePage} />
       <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
       <HomeStackNav.Screen name="SearchPage" component={SearchPage} />
+      <HomeStackNav.Screen name="CheckoutTrips" component={CheckoutTrips} />
+      <HomeStackNav.Screen name="CreditCard" component={CreditCard} />
     </HomeStackNav.Navigator>
   );
 };

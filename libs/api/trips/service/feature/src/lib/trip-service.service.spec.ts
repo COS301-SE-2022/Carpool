@@ -129,8 +129,7 @@ describe('TripsService', () => {
           'startLocationLatitude',
           'destinationAddress',
           'destinationLongitude',
-          'destinationLatitude',
-          ''
+          'destinationLatitude'
         )
       ).toBe(tripMock);
     });
@@ -187,9 +186,7 @@ describe('TripsService', () => {
         .spyOn(service, 'acceptTripRequest')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await service.acceptTripRequest('1', 1, 'upcoming')).toBe(
-        tripMock
-      );
+      expect(await service.acceptTripRequest('1', '2')).toBe(tripMock);
     });
   });
 
@@ -199,7 +196,7 @@ describe('TripsService', () => {
         .spyOn(service, 'startTrip')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await service.startTrip('1', 'active')).toBe(tripMock);
+      expect(await service.startTrip('1')).toBe(tripMock);
     });
   });
 
@@ -209,7 +206,7 @@ describe('TripsService', () => {
         .spyOn(service, 'endTrip')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await service.endTrip('1', 'completed')).toBe(tripMock);
+      expect(await service.endTrip('1')).toBe(tripMock);
     });
   });
 });

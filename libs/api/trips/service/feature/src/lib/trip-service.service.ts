@@ -16,6 +16,7 @@ import {
   findByConfirmedTripsQuery,
   findByRequestedTripsQuery,
   FindBookingByTripAndUserIdQuery,
+  FindAllTripRequestsQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -179,5 +180,9 @@ export class TripsService {
 
   async endTrip(tripId: string): Promise<Trip> {
     return await this.commandBus.execute(new EndTripCommand(tripId));
+  }
+
+  async findAllTripRequests(userId: string): Promise<Booking[]> {
+    return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
   }
 }

@@ -3,17 +3,17 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './home-search-bar.style';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Feather';
-// import { HomePageProps } from '@carpool/client/pages';
 
 type props = {
   onPress: () => void;
+  onPressCart: () => void;
 };
 
-export function HomeSearchBar({ onPress }: props) {
+export function HomeSearchBar({ onPress, onPressCart }: props) {
   return (
     <View style={styles.searchBarContainer}>
-        <View style={[styles.searchBar, styles.shadow]}>
-          <TouchableOpacity
+      <View style={[styles.searchBar, styles.shadow]}>
+        <TouchableOpacity
           onPress={onPress}
           style={{
             flex: 6,
@@ -32,11 +32,23 @@ export function HomeSearchBar({ onPress }: props) {
               Where are you going?
             </Text>
           </View>
-          </TouchableOpacity>
-        </View>
-
-
-
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          backgroundColor: '#188aed',
+          padding: 12,
+          borderRadius: 50,
+          marginLeft: 10,
+        }}
+      >
+        <Icon
+          name="shopping-cart"
+          size={20}
+          style={{ color: '#fff' }}
+          onPress={onPressCart}
+        />
+      </View>
     </View>
   );
 }

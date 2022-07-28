@@ -11,6 +11,7 @@ import {
   BookingIdType,
   DeclineTripRequest,
   CreateTripState,
+  TripRequestState,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -30,6 +31,7 @@ import {
   findBookingId,
   declineTripRequest,
   listUpcomingTrips,
+  listTripRequests,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -332,7 +334,9 @@ export const acceptTripRequestState = {
 export const acceptTripRequestSlice = createSlice({
   name: 'accept-trip-request',
   initialState: acceptTripRequestState,
-  reducers: {},
+  reducers: {
+    resetAccept: () => acceptTripRequestState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(acceptTripRequest.pending, (state, action) => {
@@ -359,7 +363,9 @@ export const declineTripRequestState = {
 export const declineTripRequestSlice = createSlice({
   name: 'decline-trip-request',
   initialState: declineTripRequestState,
-  reducers: {},
+  reducers: {
+    resetDecline: () => declineTripRequestState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(declineTripRequest.pending, (state, action) => {
@@ -567,5 +573,40 @@ export const getBookingIdSlice = createSlice({
   },
 });
 
+export const initialTripRequestListState = {
+  requests: null,
+  status: 'idle',
+  error: null,
+} as TripRequestState;
+
+export const getAllTripRequestsSlice = createSlice({
+  name: 'trips',
+  initialState: initialTripRequestListState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listTripRequests.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listTripRequests.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.requests = action.payload;
+      })
+      .addCase(listTripRequests.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
 export const { resetStart } = startTripSlice.actions;
 export const { resetEnd } = endTripSlice.actions;
+export const { resetAccept } = acceptTripRequestSlice.actions;
+export const { resetDecline } = declineTripRequestSlice.actions;

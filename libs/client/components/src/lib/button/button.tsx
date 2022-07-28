@@ -1,4 +1,3 @@
-import { background } from 'native-base/lib/typescript/theme/styled-system';
 import React from 'react';
 import {
   TouchableOpacity,
@@ -16,21 +15,19 @@ export function Button({
   title: string;
   colour?: string;
 }) {
-  if(colour==="#282D46") {
+  if (colour === '#282D46') {
     return (
       <TouchableOpacity onPress={onPress} style={styles.container2}>
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     );
-  }else{
+  } else {
     return (
       <TouchableOpacity onPress={onPress} style={styles.container}>
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     );
   }
-
-  
 }
 
 const styles = StyleSheet.create({

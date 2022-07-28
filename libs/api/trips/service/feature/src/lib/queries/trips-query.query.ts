@@ -35,3 +35,7 @@ export class FindTripByIdQuery {
 export class SearchTripsQuery {
   constructor(public readonly date: string) {}
 }
+
+export class FindAllTripRequestsQuery {
+  constructor(public readonly userId: string) {}
+}

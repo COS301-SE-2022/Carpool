@@ -296,7 +296,7 @@ export class TripsRepository {
         bookingId: bookingId,
       },
       data: {
-        status: 'unpaid',
+        status: 'declined',
       },
     });
   }
@@ -319,6 +319,17 @@ export class TripsRepository {
       },
       data: {
         status: 'completed',
+      },
+    });
+  }
+
+  async findAllTripRequests(userId: string): Promise<Booking[]> {
+    return this.prisma.booking.findMany({
+      where: {
+        trip: {
+          driverId: userId,
+        },
+        status: 'requested',
       },
     });
   }

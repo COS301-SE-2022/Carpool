@@ -15,6 +15,30 @@ export type TripCreateType = {
   coordinates: Location[];
 };
 
+export type TripRequestType = {
+  bookingId: string;
+  user: User;
+  trip: TripRequest;
+};
+
+export type TripRequestState = {
+  requests: TripRequestType[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type TripRequest = {
+  tripDate: string;
+  tripId: string;
+  coordinates: Location[];
+};
+
+export type User = {
+  id: string;
+  name: string;
+  surname: string;
+};
+
 export type UpcomingTrip = {
   trip: TripUpcomingType | null;
   status: 'success' | 'loading' | 'error' | 'idle';

@@ -62,7 +62,10 @@ export function HomePage({ navigation }: HomePageProps) {
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
-      <HomeSearchBar onPress={() => navigation.push('SearchPage')} />
+      <HomeSearchBar
+        onPress={() => navigation.push('SearchPage')}
+        onPressCart={() => navigation.push('CheckoutTrips')}
+      />
       <HomeMapView />
       <View style={styles.bottomContainer}>
         <HomeOptionBox
@@ -83,12 +86,12 @@ export function HomePage({ navigation }: HomePageProps) {
           ) : (
             <Text style={styles.smallTextBlack}>
               Upcoming trip
-              <Icon
+              {/* <Icon
                 name="shopping-cart"
                 size={30}
                 style={{ color: '#188aed', alignSelf: 'flex-end' }}
                 onPress={() => navigation.push('CheckoutTrips')}
-              />
+              /> */}
             </Text>
           )}
 

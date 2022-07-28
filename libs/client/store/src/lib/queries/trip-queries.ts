@@ -236,3 +236,23 @@ mutation ($bookingId: String!) {
     bookingId
   }
 }`;
+
+export const FIND_REQUESTS = `
+query ($userId: String!) {
+  findAllTripRequests(userId: $userId) {
+    bookingId,
+    user {
+			id,
+      name,
+      surname
+    },
+    trip {
+      tripDate,
+      tripId,
+      coordinates {
+        address
+      }
+    }
+  }
+}
+`;

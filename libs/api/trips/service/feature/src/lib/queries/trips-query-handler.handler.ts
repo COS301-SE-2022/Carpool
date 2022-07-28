@@ -12,6 +12,7 @@ import {
   findByConfirmedTripsQuery,
   findByRequestedTripsQuery,
   FindBookingByTripAndUserIdQuery,
+  FindAllTripRequestsQuery,
 } from './trips-query.query';
 
 @QueryHandler(FindAllQuery)
@@ -109,5 +110,15 @@ export class SearchTripsHandler implements IQueryHandler<SearchTripsQuery> {
 
   async execute(query: SearchTripsQuery): Promise<Trip[] | null> {
     return await this.tripsRepository.searchTrips(query.date);
+  }
+}
+@QueryHandler(FindAllTripRequestsQuery)
+export class FindAllTripRequestsHandler
+  implements IQueryHandler<FindAllTripRequestsQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindAllTripRequestsQuery): Promise<Booking[] | null> {
+    return await this.tripsRepository.findAllTripRequests(query.userId);
   }
 }

@@ -6,6 +6,7 @@
     "api-authentication-api-shared-entities-data-access": "libs/api/authentication/api/shared/entities/data-access",
     "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
     "api-authentication-service-feature": "libs/api/authentication/service/feature",
+    "api-bookings-api-feature": "libs/api/bookings/api/feature",
     "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",
     "api-trips-api-feature": "libs/api/trips/api/feature",

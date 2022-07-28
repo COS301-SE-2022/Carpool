@@ -27,6 +27,9 @@
       "@carpool/api/authentication/service": [
         "libs/api/authentication/service/feature/src/index.ts"
       ],
+      "@carpool/api/bookings/resolvers": [
+        "libs/api/bookings/api/feature/src/index.ts"
+      ],
       "@carpool/api/prisma": [
         "libs/api/shared/services/prisma/data-access/src/index.ts"
       ],

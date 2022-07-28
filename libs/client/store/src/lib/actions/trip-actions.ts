@@ -17,12 +17,14 @@ import {
   DECLINE_REQ,
   START_TRIP,
   END_TRIP,
+  FIND_REQUESTS,
 } from '../queries/trip-queries';
 import {
   TripListType,
   TripDetailsType,
   TripUpcomingType,
   Passenger,
+  TripRequestType,
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 
@@ -47,6 +49,35 @@ export const listTrips = createAsyncThunk<
   }
 
   const res = response.data.data.findAllTrips;
+
+  // SecureStore.deleteItemAsync('trips');
+  // SecureStore.setItemAsync('trips', JSON.stringify(res));
+
+  return res;
+});
+
+export const listTripRequests = createAsyncThunk<
+  TripRequestType[],
+  string,
+  { rejectValue: Error }
+>('trips/listRequests', async (userId, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: FIND_REQUESTS,
+    variables: {
+      userId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findAllTripRequests;
 
   // SecureStore.deleteItemAsync('trips');
   // SecureStore.setItemAsync('trips', JSON.stringify(res));
@@ -470,7 +501,6 @@ export const acceptTripRequest = createAsyncThunk<
 });
 
 export type DeclineTripReqType = {
-  id: string;
   bookingId: string;
 };
 
@@ -478,7 +508,7 @@ export const declineTripRequest = createAsyncThunk<
   string,
   DeclineTripReqType,
   { rejectValue: Error }
->('trip/accept', async ({ bookingId }, thunkApi) => {
+>('trip/decline', async ({ bookingId }, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
     query: DECLINE_REQ,
     variables: {

@@ -11,7 +11,12 @@ import {
 import { UserProfileProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
-import { fetchUserProfile, AppDispatch, logout } from '@carpool/client/store';
+import {
+  fetchUserProfile,
+  AppDispatch,
+  logout,
+  listTripRequests,
+} from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
 
@@ -21,12 +26,16 @@ export function UserProfile({ navigation }: UserProfileProps) {
   const userProfile = useSelector((state: RootStore) => state.userProfile);
   const { userProfile: profile, status } = userProfile;
 
+  const requestsState = useSelector((state: RootStore) => state.tripRequests);
+  const { requests, status: requestsStatus } = requestsState;
+
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
   useEffect(() => {
     if (userData && !profile) {
       dispatch(fetchUserProfile(userData.id));
+      dispatch(listTripRequests(userData.id));
     }
   }, [dispatch, userData, profile]);
 
@@ -48,7 +57,7 @@ export function UserProfile({ navigation }: UserProfileProps) {
 
   return (
     <SafeAreaView style={{ height: '100%' }}>
-      {status === 'loading' ? (
+      {status === 'loading' || requestsStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         profile && (
@@ -141,29 +150,8 @@ export function UserProfile({ navigation }: UserProfileProps) {
                   }}
                 />
               </View>
-              {/* <Pressable
-              style={{
-                width: '50%',
-                backgroundColor: '#188aed',
-                borderRadius: 30,
-                paddingVertical: 8,
-              }}
-              onPress={editProfile}
-            >
-              <Text
-                style={{
-                  color: '#fff',
-                  fontSize: 18,
-                  fontWeight: '600',
-                  textAlign: 'center',
-                }}
-              >
-                Edit Profile
-              </Text>
-            </Pressable> */}
             </View>
             <View style={{ flex: 5, display: 'flex', flexDirection: 'column' }}>
-              {/* <Text>Logged In {profile.id}</Text> */}
               <View
                 style={{
                   backgroundColor: '#d5d5d5',
@@ -278,7 +266,7 @@ export function UserProfile({ navigation }: UserProfileProps) {
                         fontWeight: '700',
                       }}
                     >
-                      1
+                      {requests && requests.length}
                     </Text>
                   </View>
                 </View>

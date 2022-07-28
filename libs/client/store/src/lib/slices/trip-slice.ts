@@ -6,6 +6,7 @@ import {
   UpcomingTrip,
   CreateTrip,
   UpdatePaymentStatusType,
+  BookingIdType,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -19,6 +20,7 @@ import {
   listConfirmedTrips,
   listRequestedTrips,
   updateBookingPaymentStatus,
+  findBookingId,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -291,7 +293,6 @@ export const initialConfirmedTripState = {
   error: null,
 } as TripList;
 
-
 export const confirmedTripSlice = createSlice({
   name: 'confirmed-trips',
   initialState: initialConfirmedTripState,
@@ -325,7 +326,6 @@ export const initialRequestedTripState = {
   error: null,
 } as TripList;
 
-
 export const requestedTripSlice = createSlice({
   name: 'requested-trips',
   initialState: initialRequestedTripState,
@@ -342,6 +342,39 @@ export const requestedTripSlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listRequestedTrips.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialBookingIdState = {
+  bookingId: null,
+  status: 'idle',
+  error: null,
+} as BookingIdType;
+
+export const getBookingIdSlice = createSlice({
+  name: 'booking-id',
+  initialState: initialBookingIdState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(findBookingId.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(findBookingId.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.bookingId = action.payload;
+      })
+      .addCase(findBookingId.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -379,4 +412,3 @@ export const PaymentStatusUpdateSlice = createSlice({
       });
   },
 });
-

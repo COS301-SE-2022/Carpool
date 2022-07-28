@@ -104,6 +104,43 @@ export function UserProfile({ navigation }: UserProfileProps) {
               >
                 {profile.name} {profile.surname}
               </Text>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  width: '100%',
+                }}
+              >
+                <View style={{ display: 'flex', alignItems: 'center' }}>
+                  <Icon
+                    name="car"
+                    size={30}
+                    style={{
+                      color: '#188aed',
+                    }}
+                  />
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#188aed',
+                        fontSize: 15,
+                        fontWeight: '700',
+                      }}
+                    >
+                      100
+                    </Text>
+                  </View>
+                </View>
+                <Icon
+                  name="account"
+                  size={20}
+                  style={{
+                    color: '#188aed',
+                  }}
+                />
+              </View>
               {/* <Pressable
               style={{
                 width: '50%',
@@ -209,10 +246,41 @@ export function UserProfile({ navigation }: UserProfileProps) {
                     }}
                   />
                 </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
+                <View
+                  style={{
+                    flex: 12,
+                    paddingLeft: 15,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
                   <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Statistics
+                    Requests
                   </Text>
+                  <View
+                    style={{
+                      backgroundColor: '#188aed',
+                      borderRadius: 50,
+                      zIndex: 10,
+                      paddingLeft: 4,
+                      paddingRight: 4,
+                      paddingTop: 1,
+                      paddingBottom: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        textAlign: 'center',
+                        color: '#fff',
+                        fontSize: 13,
+                        fontWeight: '700',
+                      }}
+                    >
+                      1
+                    </Text>
+                  </View>
                 </View>
                 <View
                   style={{

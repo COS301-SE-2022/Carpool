@@ -17,7 +17,7 @@ import {
   FindByConfirmedTripHandler,
   FindByRequestedTripHandler,
   BookingUpdatePaymentStatusHandler,
-
+  FindBookingByTripAndUserIdHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -45,6 +45,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     FindByConfirmedTripHandler,
     FindByRequestedTripHandler,
     BookingUpdatePaymentStatusHandler,
+    FindBookingByTripAndUserIdHandler,
   ],
 })
 export class TripsModule {}

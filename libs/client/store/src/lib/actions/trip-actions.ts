@@ -12,6 +12,7 @@ import {
   CONFIRMED_TRIPS,
   REQUESTED_TRIPS,
   PAYMENT_STATUS_UPDATE,
+  BOOKING_ID,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -98,6 +99,48 @@ export const listConfirmedTrips = createAsyncThunk<
   }
 
   const res = response.data.data.findByConfirmedTrips;
+
+  return res;
+});
+
+type BookingIdInput = {
+  tripId: string;
+  userId: string;
+};
+
+export const findBookingId = createAsyncThunk<
+  string,
+  BookingIdInput,
+  { rejectValue: Error }
+>('trips/booking-id', async ({ tripId, userId }, thunkApi) => {
+  console.log('FIND BOOKING ID');
+
+  console.log(tripId);
+  console.log(userId);
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: BOOKING_ID,
+    variables: {
+      tripId: tripId,
+      userId: userId,
+    },
+  });
+
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  console.log(response);
+
+  const res = response.data.data.findBookingByTripAndUserId.bookingId;
+
+  console.log(res);
 
   return res;
 });
@@ -355,17 +398,22 @@ export const bookTrip = createAsyncThunk<
 });
 
 export const updateBookingPaymentStatus = createAsyncThunk<
-Passenger[],
+  Passenger[],
   string,
   { rejectValue: Error }
->('trips/checkout', async (bookingId: string, thunkApi) => {
+>('trips/updatePayment', async (bookingId: string, thunkApi) => {
+  console.log('updating booking payment status');
+
   const response = await axios.post(`http://${host}:3333/graphql`, {
     query: PAYMENT_STATUS_UPDATE,
     variables: {
-      id: bookingId,
+      bookingId: bookingId,
     },
   });
+
   console.log('UPDATING');
+
+  console.log(response);
 
   const res = response.data.data.updateBookingPaymentStatus;
 

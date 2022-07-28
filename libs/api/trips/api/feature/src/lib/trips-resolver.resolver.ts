@@ -1,5 +1,10 @@
 import { User } from '@carpool/api/authentication/entities';
-import { Trip, Booking, Location, BookingStatusUpdate } from '@carpool/api/trips/entities';
+import {
+  Trip,
+  Booking,
+  Location,
+  BookingStatusUpdate,
+} from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
   Args,
@@ -51,6 +56,14 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findByPassenger(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByPassenger(id);
+  }
+
+  @Query(() => Booking)
+  async findBookingByTripAndUserId(
+    @Args('tripId') tripId: string,
+    @Args('userId') userId: string
+  ): Promise<Booking> {
+    return await this.tripsService.findBookingByTripAndUserId(tripId, userId);
   }
 
   @Query(() => [Trip])
@@ -150,11 +163,9 @@ export class TripsResolver {
 
   @Mutation(() => Booking)
   async updatePaymentStatus(
-    @Args('bookingId') bookingId: string,
+    @Args('bookingId') bookingId: string
   ): Promise<BookingStatusUpdate> {
-    return await this.tripsService.updatePaymentStatus(
-      bookingId
-    );
+    return await this.tripsService.updatePaymentStatus(bookingId);
   }
 
   @Mutation(() => Booking)

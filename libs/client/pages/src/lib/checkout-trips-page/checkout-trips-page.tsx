@@ -30,7 +30,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   const { trips: cTrips, status: cStatus } = confirmedTrip;
 
   const requestedTrip = useSelector((state: RootStore) => state.requestedTrip);
-  const { trips: pTrips, status: pStatus } =  requestedTrip;
+  const { trips: pTrips, status: pStatus } = requestedTrip;
 
   useEffect(() => {
     if (userData) {
@@ -51,7 +51,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   };
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId, type:"completed"});
+    navigation.push('TripDetails', { tripId, type: 'completed' });
   };
 
   return (
@@ -134,13 +134,14 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
             borderRadius: 15,
           }}
         >
-          <Text style={{ color: !confirmed ? '#fff' : '#000', fontWeight: '600' }}>
+          <Text
+            style={{ color: !confirmed ? '#fff' : '#000', fontWeight: '600' }}
+          >
             Requested
           </Text>
         </Pressable>
       </View>
-      {cStatus === 'loading' ||
-      pStatus === 'loading' ? (
+      {cStatus === 'loading' || pStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
@@ -151,15 +152,22 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
               cTrips?.map((trip, index) => (
                 <View key={index}>
                   <TripCardCheckout
-                  startLocation={trip.coordinates[0].address}
-                  destination={trip.coordinates[1].address}
-                  date={trip.tripDate}
-                  type="passenger"
-                  price={trip.price}
-                  onPress={() => viewTrip(trip.tripId)}
-                />
-                <Button title="Pay Now"onPress={() =>navigation.push('CreditCard')} />
-              </View>
+                    startLocation={trip.coordinates[0].address}
+                    destination={trip.coordinates[1].address}
+                    date={trip.tripDate}
+                    type="passenger"
+                    price={trip.price}
+                    onPress={() =>
+                      navigation.push('CreditCard', { tripId: trip.tripId })
+                    }
+                  />
+                  {/* <Button
+                    title="Pay Now"
+                    onPress={() =>
+                      navigation.push('CreditCard', { tripId: trip.tripId })
+                    }
+                  /> */}
+                </View>
               ))
             )
           ) : pTrips?.length === 0 ? (
@@ -167,14 +175,14 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
           ) : (
             pTrips?.map((trip) => (
               <TripCardCheckout
-              key={trip.tripId}
-              startLocation={trip.coordinates[0].address}
-              destination={trip.coordinates[1].address}
-              date={trip.tripDate}
-              type="passenger"
-              price={trip.price}
-              onPress={() => viewTrip(trip.tripId)}
-            />
+                key={trip.tripId}
+                startLocation={trip.coordinates[0].address}
+                destination={trip.coordinates[1].address}
+                date={trip.tripDate}
+                type="passenger"
+                price={trip.price}
+                onPress={() => viewTrip(trip.tripId)}
+              />
             ))
           )}
         </ScrollView>

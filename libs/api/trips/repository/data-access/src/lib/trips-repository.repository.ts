@@ -67,26 +67,27 @@ export class TripsRepository {
         passengers: {
           some: {
             userId: passengerId,
-            status: "unpaid"
+            status: 'unpaid',
           },
         },
-        status:"confirmed",
+        status: 'confirmed',
       },
     });
   }
 
   async findByRequestedTrips(passengerId: string): Promise<Trip[]> {
-    return this.prisma.trip.findMany({
+    const trips = await this.prisma.trip.findMany({
       where: {
         passengers: {
           some: {
             userId: passengerId,
-            status: "unpaid"
+            status: 'unpaid',
           },
         },
-        status:"requested",
+        status: 'requested',
       },
     });
+    return trips;
   }
 
   async findBookingByTrip(tripID: string): Promise<Booking[]> {
@@ -95,6 +96,20 @@ export class TripsRepository {
         tripId: tripID,
       },
     });
+  }
+
+  async findBookingByTripAndUserId(
+    tripID: string,
+    userId: string
+  ): Promise<Booking> {
+    const booking = await this.prisma.booking.findMany({
+      where: {
+        tripId: tripID,
+        userId: userId,
+      },
+    });
+
+    return booking[0];
   }
 
   async findCoordinatesByTrip(tripID: string): Promise<Location[]> {
@@ -197,7 +212,7 @@ export class TripsRepository {
         bookingId: id,
       },
       data: {
-        status: "paid"
+        status: 'paid',
       },
     });
   }

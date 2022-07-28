@@ -86,3 +86,8 @@ export type UpdatePaymentStatusType = {
   error: Error | null;
 };
 
+export type BookingIdType = {
+  bookingId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

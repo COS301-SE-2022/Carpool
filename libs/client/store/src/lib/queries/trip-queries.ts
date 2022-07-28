@@ -67,6 +67,11 @@ export const CONFIRMED_TRIPS = `
     tripDate,
     createdAt,
     price,
+    passengers {
+      bookingId,
+      tripId,
+      userId
+    }
     }
   }
 `;
@@ -159,7 +164,17 @@ export const BOOK_TRIP = `
   }
 `;
 
+export const BOOKING_ID = `
+query($tripId: String!, $userId: String!) {
+  findBookingByTripAndUserId(tripId: $tripId, userId: $userId) {
+    bookingId,
+  }
+}
+`;
+
 export const PAYMENT_STATUS_UPDATE = `
 mutation ($bookingId: String!) {
-  updatePaymentStatus(bookingId: $id)
+  updatePaymentStatus(bookingId: $bookingId) {
+    bookingId
+  }
 }`;

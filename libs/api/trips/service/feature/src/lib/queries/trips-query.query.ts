@@ -20,6 +20,10 @@ export class FindBookingByTripQuery {
   constructor(public readonly tripId: string) {}
 }
 
+export class FindBookingByTripAndUserIdQuery {
+  constructor(public readonly tripId: string, public readonly userId: string) {}
+}
+
 export class FindCoordinatesByTripQuery {
   constructor(public readonly tripId: string) {}
 }

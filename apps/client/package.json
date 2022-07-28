@@ -2,6 +2,11 @@
   "name": "client",
   "version": "0.0.1",
   "private": true,
+  "rnpm": {
+    "assets": [
+      "assets/fonts"
+    ]
+  },
   "dependencies": {
     "@react-native-async-storage/async-storage": "*",
     "@react-navigation/bottom-tabs": "*",
@@ -31,6 +36,9 @@
     "react-hook-form": "*",
     "lottie-react-native": "*",
     "rn-credit-card": "*",
-    "axios": "*"
+    "axios": "*",
+    "react-native-credit-card": "*",
+    "react-native-flip-card": "*",
+    "payment": "*"
   }
 }

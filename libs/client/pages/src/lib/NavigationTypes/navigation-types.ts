@@ -32,8 +32,8 @@ export type RootStackParamList = {
   };
   ChatScreen: undefined;
   PostTrips: undefined;
-  CheckoutTrips : undefined;
-  CreditCard: undefined;
+  CheckoutTrips: undefined;
+  CreditCard: { tripId: string };
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -140,6 +140,3 @@ export type CreditCardProps = NativeStackScreenProps<
   RootStackParamList,
   'CreditCard'
 >;
-
-
-

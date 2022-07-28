@@ -21,3 +21,6 @@ export * from './lib/client-pages';
 export * from './lib/chat-screen/chat-screen';
 export * from './lib/checkout-trips-page/checkout-trips-page';
 export * from './lib/credit-card-page/credit-card-page';
+export * from './lib/driver-active-trip/driver-active-trip';
+export * from './lib/passenger-active-trip/passenger-active-trip';
+export * from './lib/accept-request/accept-request';

@@ -34,6 +34,9 @@ export type RootStackParamList = {
   PostTrips: undefined;
   CheckoutTrips: undefined;
   CreditCard: { tripId: string };
+  AcceptRequest: undefined;
+  DriverActiveTrip: undefined;
+  PassengerActiveTrip: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -139,4 +142,18 @@ export type CheckoutTripsProps = NativeStackScreenProps<
 export type CreditCardProps = NativeStackScreenProps<
   RootStackParamList,
   'CreditCard'
+>;
+export type DriverActiveTripProps = NativeStackScreenProps<
+  RootStackParamList,
+  'DriverActiveTrip'
+>;
+
+export type PassengerActiveTripProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PassengerActiveTrip'
+>;
+
+export type AcceptRequestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'AcceptRequest'
 >;

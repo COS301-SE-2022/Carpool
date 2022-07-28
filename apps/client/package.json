@@ -30,6 +30,7 @@
     "redux": "*",
     "react-hook-form": "*",
     "lottie-react-native": "*",
-    "rn-credit-card": "*"
+    "rn-credit-card": "*",
+    "axios": "*"
   }
 }

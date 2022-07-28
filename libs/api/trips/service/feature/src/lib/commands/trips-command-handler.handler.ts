@@ -9,6 +9,7 @@ import {
   AcceptTripRequestCommand,
   StartTripCommand,
   EndTripCommand,
+  BookingUpdatePaymentStatusCommand,
 } from './trips-command.command';
 import {
   TripsInput,
@@ -27,6 +28,7 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
       tripDate,
       seatsAvailable,
       price,
+      status,
       startLocationAddress,
       startLocationLongitude,
       startLocationLatitude,
@@ -40,6 +42,7 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
       tripDate,
       seatsAvailable,
       price,
+      status,
       startLocationAddress,
       startLocationLongitude,
       startLocationLatitude,
@@ -91,6 +94,21 @@ export class TripsUpdateHandler implements ICommandHandler<TripsUpdateCommand> {
     tripUpdate.price = price;
     tripUpdate.status = status;
     return await this.tripsRepository.update(tripId, tripUpdate);
+  }
+}
+
+@CommandHandler(BookingUpdatePaymentStatusCommand)
+export class BookingUpdatePaymentStatusHandler
+  implements ICommandHandler<BookingUpdatePaymentStatusCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(
+    command: BookingUpdatePaymentStatusCommand
+  ): Promise<Booking | null> {
+    const { bookingId } = command;
+
+    return await this.tripsRepository.updatePaymentStatus(bookingId);
   }
 }
 

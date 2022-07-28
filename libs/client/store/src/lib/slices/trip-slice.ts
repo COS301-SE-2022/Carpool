@@ -8,6 +8,7 @@ import {
   AcceptTripRequest,
   StartTrip,
   EndTrip,
+  UpdatePaymentStatusType,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -21,6 +22,9 @@ import {
   acceptTripRequest,
   startTrip,
   endTrip,
+  listConfirmedTrips,
+  listRequestedTrips,
+  updateBookingPaymentStatus,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -309,12 +313,41 @@ export const acceptTripRequestSlice = createSlice({
         state.tripId = action.payload;
       })
       .addCase(acceptTripRequest.rejected, (state, action) => {
+        state.error = { message: 'Unknown error (Accept Trip Request)' };
+    });
+  },
+});
+
+        
+export const initialConfirmedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+
+export const confirmedTripSlice = createSlice({
+  name: 'confirmed-trips',
+  initialState: initialConfirmedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listConfirmedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listConfirmedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listConfirmedTrips.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
           state.error = action.payload;
         } else {
-          state.error = { message: 'Unknown error (Accept Trip Request)' };
+          state.error = { message: 'Unknown error' };
         }
       });
   },
@@ -342,12 +375,40 @@ export const startTripSlice = createSlice({
         state.tripId = action.payload;
       })
       .addCase(startTrip.rejected, (state, action) => {
+        state.error = { message: 'Unknown error (Start Trip)' };
+      });
+    },
+  });
+  
+export const initialRequestedTripState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+
+export const requestedTripSlice = createSlice({
+  name: 'requested-trips',
+  initialState: initialRequestedTripState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listRequestedTrips.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listRequestedTrips.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listRequestedTrips.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
           state.error = action.payload;
         } else {
-          state.error = { message: 'Unknown error (Start Trip)' };
+          state.error = { message: 'Unknown error' };
         }
       });
   },
@@ -378,10 +439,37 @@ export const endTripSlice = createSlice({
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
-          state.error = action.payload;
+          //state.error = action.payload;
         } else {
           state.error = { message: 'Unknown error (End Trip)' };
         }
       });
   },
 });
+export const initialUpdatePaymentStatusState = {
+  status: 'idle',
+  error: null,
+} as UpdatePaymentStatusType;
+
+export const PaymentStatusUpdateSlice = createSlice({
+  name: 'update-payment-status',
+  initialState: initialUpdatePaymentStatusState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateBookingPaymentStatus.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(updateBookingPaymentStatus.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        // state.userProfile = action.payload;
+      })
+      .addCase(updateBookingPaymentStatus.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+      });
+  },
+});
+

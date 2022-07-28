@@ -19,3 +19,5 @@ export * from './lib/home-page/home-page';
 export * from './lib/login-page/login-page';
 export * from './lib/client-pages';
 export * from './lib/chat-screen/chat-screen';
+export * from './lib/checkout-trips-page/checkout-trips-page';
+export * from './lib/credit-card-page/credit-card-page';

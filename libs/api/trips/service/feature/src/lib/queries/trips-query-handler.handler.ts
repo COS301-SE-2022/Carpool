@@ -9,6 +9,8 @@ import {
   FindTripByIdQuery,
   FindCoordinatesByTripQuery,
   SearchTripsQuery,
+  findByConfirmedTripsQuery,
+  findByRequestedTripsQuery,
 } from './trips-query.query';
 
 @QueryHandler(FindAllQuery)
@@ -35,6 +37,24 @@ export class FindByPassengerHandler implements IQueryHandler<FindAllQuery> {
 
   async execute(query: FindByPassengerQuery): Promise<Trip[] | null> {
     return await this.tripsRepository.findByPassenger(query.passengerId);
+  }
+}
+
+@QueryHandler(findByConfirmedTripsQuery)
+export class FindByConfirmedTripHandler implements IQueryHandler<FindAllQuery> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindByPassengerQuery): Promise<Trip[] | null> {
+    return await this.tripsRepository.findByConfirmedTrips(query.passengerId);
+  }
+}
+
+@QueryHandler(findByRequestedTripsQuery)
+export class FindByRequestedTripHandler implements IQueryHandler<FindAllQuery> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindByPassengerQuery): Promise<Trip[] | null> {
+    return await this.tripsRepository.findByRequestedTrips(query.passengerId);
   }
 }
 

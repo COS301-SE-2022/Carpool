@@ -94,8 +94,8 @@ export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
             <View style={styles.bottomSection}>
               <View style={[styles.flexCol, styles.userContainer]}>
                 <Button
-                  title="Emergency Contact"
-                  onPress={() => handleEmergency()}
+                  title="End Trip"
+                  onPress={() => endTripHandle(tripId)}
                   colour="red"
                 />
               </View>
@@ -104,8 +104,8 @@ export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
             <View style={styles.bottomSection}>
               <View style={[styles.flexCol, styles.userContainer]}>
                 <Button
-                  title="End Trip"
-                  onPress={() => endTripHandle(tripId)}
+                  title="Emergency Contact"
+                  onPress={() => handleEmergency()}
                   colour="red"
                 />
               </View>

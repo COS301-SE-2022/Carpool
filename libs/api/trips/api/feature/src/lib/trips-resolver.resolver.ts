@@ -38,21 +38,40 @@ export class TripsResolver {
     return await this.authService.findUserById(trip.driverId);
   }
 
+  /**
+   * Query to find all trips
+   * @returns {Promise<Trip[]>}
+   */
   @Query(() => [Trip])
   async findAllTrips(): Promise<Trip[]> {
     return await this.tripsService.findAll();
   }
 
+  /**
+   * Query to find a trip by id
+   * @param {string} id The id of the trip to find
+   * @returns {Promise<Trip>}
+   */
   @Query(() => Trip)
   async findTripById(@Args('id') id: string): Promise<Trip> {
     return await this.tripsService.findTripById(id);
   }
 
+  /**
+   * Query to find trips by driver id
+   * @param {string} id The id of the driver to find the trips by
+   * @returns {Promise<Trip[]>}
+   */
   @Query(() => [Trip])
   async findByDriver(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByDriver(id);
   }
 
+  /**
+   * Query to find trips by passenger id
+   * @param {string} id The id of the passenger to find the trips by
+   * @returns {Promise<Trip[]>}
+   */
   @Query(() => [Trip])
   async findByPassenger(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByPassenger(id);
@@ -103,14 +122,6 @@ export class TripsResolver {
 
     return searchResults;
   }
-
-  // @Query(() => [Trip])
-  // async searchTrips(
-  //   @Args('startLocation') startLocation: string,
-  //   @Args('endLocation') endLocation: string
-  // ): Promise<Trip[]> {
-  //   return await this.tripsService.searchTrips(startLocation, endLocation);
-  // }
 
   @Mutation(() => Trip)
   async create(
@@ -189,5 +200,34 @@ export class TripsResolver {
       longitude,
       latitude
     );
+  }
+
+  @Mutation(() => Trip)
+  async acceptTripRequest(
+    @Args('id') tripId: string,
+    @Args('seatsAvailable') seatsAvailable: number,
+    @Args('status') status: string
+  ): Promise<Trip> {
+    return await this.tripsService.acceptTripRequest(
+      tripId,
+      seatsAvailable,
+      status
+    );
+  }
+
+  @Mutation(() => Trip)
+  async startTrip(
+    @Args('id') tripId: string,
+    @Args('status') status: string
+  ): Promise<Trip> {
+    return await this.tripsService.startTrip(tripId, status);
+  }
+
+  @Mutation(() => Trip)
+  async endTrip(
+    @Args('id') tripId: string,
+    @Args('status') status: string
+  ): Promise<Trip> {
+    return await this.tripsService.endTrip(tripId, status);
   }
 }

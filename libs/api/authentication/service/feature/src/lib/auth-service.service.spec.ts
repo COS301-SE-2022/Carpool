@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { User, UserUpdate } from '@carpool/api/authentication/entities';
 import { MailerService } from '@nestjs-modules/mailer';
-import { AuthService } from '@carpool/api/authentication/service';
+import { AuthService } from './auth-service.service';
 
 jest.mock('@carpool/api/authentication/entities');
 const userMock: jest.Mocked<User> = new User() as User;

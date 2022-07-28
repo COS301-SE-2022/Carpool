@@ -171,6 +171,11 @@ query($tripId: String!, $userId: String!) {
   }
 }
 `;
+export const ACCEPT_REQ = ``;
+
+export const START_TRIP = ``;
+
+export const END_TRIP = ``;
 
 export const PAYMENT_STATUS_UPDATE = `
 mutation ($bookingId: String!) {

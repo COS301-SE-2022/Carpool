@@ -81,6 +81,12 @@ export type TripBooking = {
   error: Error | null;
 };
 
+export type AcceptTripRequest = {
+  tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type UpdatePaymentStatusType = {
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
@@ -88,6 +94,17 @@ export type UpdatePaymentStatusType = {
 
 export type BookingIdType = {
   bookingId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+export type StartTrip = {
+  tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type EndTrip = {
+  tripId: string | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };

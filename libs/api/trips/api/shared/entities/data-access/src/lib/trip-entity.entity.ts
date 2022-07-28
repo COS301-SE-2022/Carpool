@@ -62,3 +62,18 @@ export class TripsUpdate {
   @Field()
   status: string;
 }
+
+@InputType()
+export class AcceptTripRequestUpdate {
+  @Field()
+  seatsAvailable: number;
+
+  @Field()
+  status: string;
+}
+
+@InputType()
+export class TripStatusUpdate {
+  @Field()
+  status: string;
+}

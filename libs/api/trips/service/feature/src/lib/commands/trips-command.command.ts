@@ -37,11 +37,25 @@ export class TripsUpdateCommand {
 }
 
 export class BookingUpdatePaymentStatusCommand {
-  constructor(
-    public readonly bookingId: string,
-  ) {}
+  constructor(public readonly bookingId: string) {}
 }
 
 export class TripsDeleteCommand {
   constructor(public readonly tripId: string) {}
+}
+
+export class AcceptTripRequestCommand {
+  constructor(
+    public readonly tripId: string,
+    public readonly seatsAvailable: number,
+    public readonly status: string
+  ) {}
+}
+
+export class StartTripCommand {
+  constructor(public readonly tripId: string, public readonly status: string) {}
+}
+
+export class EndTripCommand {
+  constructor(public readonly tripId: string, public readonly status: string) {}
 }

@@ -10,13 +10,9 @@ import {
   StartTripCommand,
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
+  DeclineTripRequestCommand,
 } from './trips-command.command';
-import {
-  TripsInput,
-  TripsUpdate,
-  AcceptTripRequestUpdate,
-  TripStatusUpdate,
-} from '@carpool/api/trips/entities';
+import { TripsUpdate } from '@carpool/api/trips/entities';
 
 @CommandHandler(TripsCreateCommand)
 export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
@@ -130,12 +126,20 @@ export class AcceptTripRequestHandler
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: AcceptTripRequestCommand): Promise<Trip | null> {
-    const { tripId, seatsAvailable, status } = command;
+    const { tripId, bookingId } = command;
+    return await this.tripsRepository.acceptTripRequest(tripId, bookingId);
+  }
+}
 
-    const tripUpdate = new AcceptTripRequestUpdate();
-    tripUpdate.seatsAvailable = seatsAvailable;
-    tripUpdate.status = status;
-    return await this.tripsRepository.acceptTripRequest(tripId, tripUpdate);
+@CommandHandler(DeclineTripRequestCommand)
+export class DeclineTripRequestHandler
+  implements ICommandHandler<DeclineTripRequestCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: DeclineTripRequestCommand): Promise<Booking | null> {
+    const { bookingId } = command;
+    return await this.tripsRepository.declineTripRequest(bookingId);
   }
 }
 
@@ -144,11 +148,9 @@ export class StartTripHandler implements ICommandHandler<StartTripCommand> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: StartTripCommand): Promise<Trip | null> {
-    const { tripId, status } = command;
+    const { tripId } = command;
 
-    const tripUpdate = new TripStatusUpdate();
-    tripUpdate.status = status;
-    return await this.tripsRepository.startTrip(tripId, tripUpdate);
+    return await this.tripsRepository.startTrip(tripId);
   }
 }
 
@@ -157,10 +159,8 @@ export class EndTripHandler implements ICommandHandler<EndTripCommand> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: EndTripCommand): Promise<Trip | null> {
-    const { tripId, status } = command;
+    const { tripId } = command;
 
-    const tripUpdate = new TripStatusUpdate();
-    tripUpdate.status = status;
-    return await this.tripsRepository.endTrip(tripId, tripUpdate);
+    return await this.tripsRepository.endTrip(tripId);
   }
 }

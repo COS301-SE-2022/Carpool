@@ -1,233 +1,201 @@
-import React, { useRef } from 'react';
+import React, { useEffect } from 'react';
 
-import { Button, HomeMapView } from '@carpool/client/components';
-
+import { Button, TripDetailsMapView } from '@carpool/client/components';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Text,
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from 'react-native';
+  AppDispatch,
+  fetchTripDetails,
+  RootStore,
+  endTrip,
+} from '@carpool/client/store';
+
+import { Text, View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
 
 import { DriverActiveTripProps } from '../NavigationTypes/navigation-types';
 
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-
-import MapViewDirections from 'react-native-maps-directions';
-
-import { TripDetailsType } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng';
+export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
+  const { tripId } = route.params;
 
-type props = {
-  trip: TripDetailsType;
-};
+  const dispatch: AppDispatch = useDispatch();
 
-export function DriverActiveTrip(
-  { navigation }: DriverActiveTripProps,
-  { trip }: props
-) {
-  const { width, height } = Dimensions.get('window');
+  const tripDetails = useSelector((state: RootStore) => state.trip);
+  const { trip, status } = tripDetails;
 
-  const mapView = useRef<MapView>(null);
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user: userData } = userState;
+
+  const endTripState = useSelector((state: RootStore) => state.endTrip);
+  const { status: endTripStatus } = endTripState;
+
+  useEffect(() => {
+    dispatch(fetchTripDetails(tripId));
+
+    if (endTripStatus === 'success') {
+      navigation.popToTop();
+    }
+  }, [dispatch, tripId, endTripStatus, navigation]);
+
+  const endTripHandle = (tripId: string) => {
+    dispatch(endTrip({ id: tripId }));
+  };
+
+  const handleEmergency = () => {
+    Alert.alert('Contacting emergency contact...', '', [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+    ]);
+  };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.flexColumn}>
-        <View style={{ display: 'flex', flex: 0.05 }} />
-        <Icon
-          name="arrow-left"
-          size={35}
-          style={{ color: '#808080' }}
-          onPress={() => navigation.goBack()}
-        />
-        <View style={{ display: 'flex', flex: 0.8, justifyContent: 'center' }}>
-          <Text
-            style={{
-              marginTop: 10,
-
-              textAlign: 'center',
-
-              fontSize: 24,
-
-              fontWeight: '700',
-
-              textDecorationLine: 'underline',
-            }}
-          >
-            Active Trip
-          </Text>
-
-          <Text
-            style={{
-              textAlign: 'center',
-
-              fontSize: 20,
-
-              fontWeight: '900',
-
-              color: '#808080',
-
-              marginTop: 8,
-
-              marginBottom: 20,
-
-              lineHeight: 20,
-            }}
-          >
-            1 of 2 options
-          </Text>
-
-          <Text
-            style={{ textAlign: 'center', fontSize: 16, fontWeight: '700' }}
-          >
-            Pickup:{' '}
-            {
-              //trip.pickup
-
-              'Eco Lake, Tamarillo Street, Eco-Park Estate, Centurion, South Africa'
-            }
-          </Text>
-        </View>
-
-        <View style={{ marginBottom: 20 }} />
-
+    <View
+      style={[
+        styles.flexCol,
+        {
+          height: '100%',
+        },
+      ]}
+    >
+      {status === 'loading' || endTripStatus === 'loading' ? (
         <View
-          style={{
-            flex: 4,
-
-            marginTop: 5,
-          }}
-        >
-          <MapView
-            initialRegion={{
-              latitude: -25.8858077,
-
-              longitude: 28.1760277,
-
-              latitudeDelta: 0.05,
-
-              longitudeDelta: 0,
-            }}
-            zoomEnabled={false}
-            zoomTapEnabled={false}
-            zoomControlEnabled={false}
-            rotateEnabled={false}
-            scrollEnabled={false}
-            style={styles.map}
-            provider={PROVIDER_GOOGLE}
-            ref={mapView}
-          >
-            <Marker
-              coordinate={{
-                latitude: parseFloat('-25.8858077'),
-
-                longitude: parseFloat('28.1760277'),
-              }}
-              pinColor="#188aed"
-            />
-
-            <Marker
-              coordinate={{
-                latitude: parseFloat('-25.7545492'),
-
-                longitude: parseFloat('28.2314476'),
-              }}
-              pinColor="#188aed"
-            />
-
+          style={[
+            styles.flexRow,
             {
-              //trip.coordinates.length
-
-              2 >= 2 && (
-                <MapViewDirections
-                  origin={{
-                    latitude: parseFloat('-25.8858077'),
-
-                    longitude: parseFloat('28.1760277'),
-                  }}
-                  destination={{
-                    latitude: parseFloat('-25.7545492'),
-
-                    longitude: parseFloat('28.2314476'),
-                  }}
-                  apikey={GOOGLE_MAPS_APIKEY}
-                  strokeWidth={3}
-                  strokeColor="#188aed"
-                  optimizeWaypoints={true}
-                  onStart={(params) => {
-                    console.log(
-                      `Started routing between "${params.origin}" and "${params.destination}"`
-                    );
-                  }}
-                  onReady={(result) => {
-                    console.log(`Distance: ${result.distance} km`);
-
-                    console.log(`Duration: ${result.duration} min.`);
-
-                    mapView.current?.fitToCoordinates(result.coordinates, {
-                      edgePadding: {
-                        right: width / 20,
-
-                        bottom: height / 20,
-
-                        left: width / 20,
-
-                        top: height / 10,
-                      },
-
-                      animated: true,
-                    });
-                  }}
+              height: '100%',
+              width: '100%',
+            },
+          ]}
+        >
+          <ActivityIndicator size="large" color="#188aed" />
+        </View>
+      ) : trip ? (
+        <>
+          {trip && (
+            <View style={[styles.shadow, styles.flexRow, styles.topBar]}>
+              <Icon
+                name="arrow-left"
+                size={22}
+                style={{ color: '#fff', flex: 1 }}
+                onPress={() => navigation.navigate('HomePage')}
+              />
+              <View style={{ flex: 4 }}>
+                <Text style={styles.textLargeWhite}>Driving To</Text>
+                <Text style={styles.textSmallWhite} numberOfLines={2}>
+                  {trip && trip.coordinates[0].address}
+                </Text>
+              </View>
+            </View>
+          )}
+          {trip && <TripDetailsMapView trip={trip} />}
+          {userData?.id === trip.driver.id ? (
+            <View style={styles.bottomSection}>
+              <View style={[styles.flexCol, styles.userContainer]}>
+                <Button
+                  title="End Trip"
+                  onPress={() => endTripHandle(tripId)}
+                  colour="red"
                 />
-              )
-            }
-          </MapView>
-        </View>
-
-        {/* <Image
-
-  
-
-   source={require('../assets/title.png')}
-
-  
-
-   style={{ resizeMode: 'cover' }}
-
-  
-
-  /> */}
-
-        <View
-          style={{
-            flex: 0.7,
-
-            justifyContent: 'flex-end',
-
-            marginBottom: 10,
-
-            display: 'flex',
-
-            flexDirection: 'column',
-          }}
-        >
-          <View style={{ marginVertical: 10 }}>
-            <Button
-              title="Completed 1 of 2 options"
-              onPress={() => navigation.push('LoginPage')}
-            />
-          </View>
-        </View>
-      </View>
-    </SafeAreaView>
+              </View>
+            </View>
+          ) : (
+            <View style={styles.bottomSection}>
+              <View style={[styles.flexCol, styles.userContainer]}>
+                <Button
+                  title="Emergency Contact"
+                  onPress={() => handleEmergency()}
+                  colour="red"
+                />
+              </View>
+            </View>
+          )}
+        </>
+      ) : (
+        /* eslint-disable-next-line */
+        <></>
+      )}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  userContainer: {
+    flex: 1,
+    backgroundColor: '#f8f8f8',
+    padding: 20,
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  flexCol: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  line: {
+    width: 4,
+    flex: 3.1,
+    backgroundColor: '#188aed',
+    marginLeft: -0.8,
+  },
+  startIcon: {
+    flex: 1,
+    color: '#188aed',
+    zIndex: 200,
+  },
+  endIcon: {
+    flex: 1.2,
+    marginTop: -4,
+    color: '#188aed',
+  },
+  textLargeBlack: {
+    fontWeight: '600',
+    fontSize: 18,
+  },
+  topBar: {
+    backgroundColor: '#188aed',
+    flex: 2,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    paddingTop: 40,
+    marginBottom: -10,
+    paddingHorizontal: 30,
+    zIndex: 20,
+  },
+  textLargeWhite: {
+    color: '#fff',
+    fontWeight: '800',
+    fontSize: 35,
+    marginBottom: 5,
+  },
+  textSmallWhite: {
+    color: '#fff',
+    fontWeight: '500',
+    maxWidth: '80%',
+    lineHeight: 20,
+  },
+  bottomSection: {
+    flex: 2,
+    display: 'flex',
+    zIndex: 20,
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
   container: {
     // alignItems: 'center',
 

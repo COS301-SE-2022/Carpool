@@ -47,15 +47,18 @@ export class TripsDeleteCommand {
 export class AcceptTripRequestCommand {
   constructor(
     public readonly tripId: string,
-    public readonly seatsAvailable: number,
-    public readonly status: string
+    public readonly bookingId: string
   ) {}
 }
 
 export class StartTripCommand {
-  constructor(public readonly tripId: string, public readonly status: string) {}
+  constructor(public readonly tripId: string) {}
 }
 
 export class EndTripCommand {
-  constructor(public readonly tripId: string, public readonly status: string) {}
+  constructor(public readonly tripId: string) {}
+}
+
+export class DeclineTripRequestCommand {
+  constructor(public readonly bookingId: string) {}
 }

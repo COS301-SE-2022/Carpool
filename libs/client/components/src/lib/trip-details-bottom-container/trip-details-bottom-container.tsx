@@ -1,14 +1,21 @@
-import React from 'react';
-import { Image, Text, View, Pressable } from 'react-native';
+import React, { useEffect } from 'react';
+import { Image, Text, View, Pressable, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
+import { useSelector, useDispatch } from 'react-redux';
 import { styles } from './trip-details-bottom-container.style';
-import { TripDetailsType } from '@carpool/client/store';
+import {
+  TripDetailsType,
+  RootStore,
+  startTrip,
+  AppDispatch,
+} from '@carpool/client/store';
 
 type props = {
   trip: TripDetailsType;
   type: string;
+  userId: string;
   onPress: () => void;
   onPressUser: () => void;
 };
@@ -18,6 +25,7 @@ export function TripDetailsBottomContainer({
   type,
   onPress,
   onPressUser,
+  userId,
 }: props) {
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
@@ -80,7 +88,7 @@ export function TripDetailsBottomContainer({
           <Icons name="chat-bubble" color="#188aed" size={25} />
         </View>
       </Pressable>
-      {type === 'booked' ? (
+      {Number(trip.seatsAvailable) === 0 || type === 'booked' ? (
         <></>
       ) : (
         <View
@@ -94,6 +102,23 @@ export function TripDetailsBottomContainer({
         >
           <Button title="Book Ride" onPress={onPress} />
         </View>
+      )}
+      {trip.status !== 'active' &&
+      trip.driver.id === userId &&
+      trip.status !== 'completed' ? (
+        <View
+          style={[
+            styles.flexCol,
+            {
+              flex: 1,
+              justifyContent: 'flex-end',
+            },
+          ]}
+        >
+          <Button title="Start Trip" onPress={onPress} />
+        </View>
+      ) : (
+        <></>
       )}
     </View>
   );

@@ -1,6 +1,13 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootStore, AppDispatch, listTrips } from '@carpool/client/store';
+import {
+  RootStore,
+  AppDispatch,
+  TripListType,
+  resetStart,
+  resetEnd,
+  listUpcomingTrips,
+} from '@carpool/client/store';
 import { HomePageProps } from '../NavigationTypes/navigation-types';
 import {
   TripCardSmall,
@@ -12,105 +19,90 @@ import { View, Text, ActivityIndicator } from 'react-native';
 import { styles } from './home-page.style';
 import Icon from 'react-native-vector-icons/Feather';
 
-// import { FormProvider, useForm } from 'react-hook-form';
-// import {
-//   Alert,
-//   StyleSheet,
-//   KeyboardAvoidingView,
-//   Platform,
-//   SafeAreaView,
-// } from 'react-native';
-// import LottieView from 'lottie-react-native';
-// import CreditCardForm, { Button, FormModel } from 'rn-credit-card';
-
 export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
-  const tripState = useSelector((state: RootStore) => state.trips);
+
+  const tripState = useSelector((state: RootStore) => state.upcomingTrips);
   const { trips, status } = tripState;
 
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user: userData } = userState;
+
+  const startTripState = useSelector((state: RootStore) => state.startTrip);
+  const { status: tripStartStatus } = startTripState;
+
+  const endTripState = useSelector((state: RootStore) => state.endTrip);
+  const { status: endTripStatus } = endTripState;
+
   useEffect(() => {
-    dispatch(listTrips());
-  }, [dispatch]);
+    dispatch(listUpcomingTrips());
 
-  const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId, type: 'booked' });
+    if (endTripStatus === 'success') {
+      dispatch(resetEnd());
+    }
+
+    if (tripStartStatus === 'success') {
+      dispatch(resetStart());
+    }
+  }, [dispatch, endTripStatus, tripStartStatus]);
+
+  const viewTrip = (tripId: string, trip: TripListType) => {
+    if (trip.status === 'active') {
+      if (trip.driver.id === userData?.id) {
+        //**Driver active screen */
+        navigation.navigate('DriverActiveTrip', { tripId });
+      } else {
+        //** Passenger active screen */
+        navigation.navigate('DriverActiveTrip', { tripId });
+      }
+    } else {
+      navigation.push('TripDetails', { tripId, type: 'booked' });
+    }
   };
-
-  // const formMethods = useForm<FormModel>({
-  //   mode: 'onBlur',
-  //   defaultValues: {
-  //     holderName: '',
-  //     cardNumber: '',
-  //     expiration: '',
-  //     cvv: '',
-  //   },
-  // });
-  // const { handleSubmit, formState } = formMethods;
-
-  // const onSubmit = (model: FormModel) => {
-  //   Alert.alert('Success: ' + JSON.stringify(model, null, 2));
-  // };
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
       <HomeSearchBar onPress={() => navigation.push('SearchPage')} />
-      {/* <FormProvider {...formMethods}>
-        <SafeAreaView style={styles.container}>
-          <KeyboardAvoidingView
-            style={styles.avoider}
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          >
-            <CreditCardForm
-              LottieView={LottieView}
-              horizontalStart
-              overrides={{
-                labelText: {
-                  marginTop: 16,
-                },
-              }}
-            />
-          </KeyboardAvoidingView>
-          {formState.isValid && (
-            <Button
-              style={styles.button}
-              title={'CONFIRM PAYMENT'}
-              onPress={handleSubmit(onSubmit)}
-            />
-          )}
-        </SafeAreaView>
-      </FormProvider> */}
-
       <HomeMapView />
-
       <View style={styles.bottomContainer}>
         <HomeOptionBox
           onPress={() => navigation.push('SearchPage')}
           onPressCreate={() => navigation.push('PostTrips')}
         />
         <View style={styles.cardContainer}>
-          <Text style={styles.smallTextBlack}>Upcoming trip
-          <Icon
-            name="shopping-cart"
-            size={30}
-            style={{ color: '#188aed', alignSelf: 'flex-end'}}
-            onPress={() =>navigation.push('CheckoutTrips')}
-        />
-        </Text>
+          {trips && trips.length !== 0 && trips[0].status === 'active' ? (
+            <Text style={styles.smallTextBlack}>
+              Active trip
+              <Icon
+                name="shopping-cart"
+                size={30}
+                style={{ color: '#188aed', alignSelf: 'flex-end' }}
+                onPress={() => navigation.push('CheckoutTrips')}
+              />
+            </Text>
+          ) : (
+            <Text style={styles.smallTextBlack}>
+              Upcoming trip
+              <Icon
+                name="shopping-cart"
+                size={30}
+                style={{ color: '#188aed', alignSelf: 'flex-end' }}
+                onPress={() => navigation.push('CheckoutTrips')}
+              />
+            </Text>
+          )}
+
           {status === 'loading' ? (
             <ActivityIndicator size="large" />
-          ) : trips ? (
-            <>
-              {trips.map((trip) => (
-                <TripCardSmall
-                  key={trip.tripId}
-                  startLocation={trip.coordinates[0].address}
-                  destination={trip.coordinates[1].address}
-                  date={trip.tripDate}
-                  type="passenger"
-                  onPress={() => viewTrip(trip.tripId)}
-                />
-              ))}
-            </>
+          ) : trips && trips.length !== 0 ? (
+            <TripCardSmall
+              key={trips[0].tripId}
+              startLocation={trips[0].coordinates[0].address}
+              destination={trips[0].coordinates[1].address}
+              date={trips[0].tripDate}
+              type="passenger"
+              onPress={() => viewTrip(trips[0].tripId, trips[0])}
+            />
           ) : (
             <View style={styles.noTripContainer}>
               <Text style={[styles.bigText]}>You have no upcoming trips</Text>

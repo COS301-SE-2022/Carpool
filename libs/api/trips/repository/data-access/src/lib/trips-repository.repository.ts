@@ -1,11 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location } from '@prisma/client';
-import {
-  TripsUpdate,
-  AcceptTripRequestUpdate,
-  TripStatusUpdate,
-} from '@carpool/api/trips/entities';
+import { TripsUpdate } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -34,7 +30,11 @@ export class TripsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findAll(): Promise<Trip[]> {
-    return await this.prisma.trip.findMany();
+    return await this.prisma.trip.findMany({
+      orderBy: {
+        tripDate: 'desc',
+      },
+    });
   }
 
   async findTripById(id: string): Promise<Trip> {
@@ -264,55 +264,61 @@ export class TripsRepository {
     } else {
       return [];
     }
-
-    // const searchResults = [];
-
-    // if (tripsByDate.length !== 0) {
-    //   tripsByDate.map((trip) => {
-    //     if (
-    //       trip.coordinates[0].longitude === startLongitude &&
-    //       trip.coordinates[0].latitude === startLatitude &&
-    //       trip.coordinates[1].longitude === destinationLongitude &&
-    //       trip.coordinates[1].latitude === destinationLatitude
-    //     ) {
-    //       searchResults.push(trip);
-    //     }
-    //   });
-    // }
   }
 
-  async acceptTripRequest(
-    id: string,
-    trips: AcceptTripRequestUpdate
-  ): Promise<Trip> {
-    return this.prisma.trip.update({
+  async acceptTripRequest(id: string, bookingId: string): Promise<Trip> {
+    const trip = await this.prisma.trip.update({
       where: {
         tripId: id,
       },
       data: {
-        seatsAvailable: trips.seatsAvailable,
+        seatsAvailable: {
+          decrement: 1,
+        },
+      },
+    });
+
+    await this.prisma.booking.update({
+      where: {
+        bookingId: bookingId,
+      },
+      data: {
+        status: 'unpaid',
+      },
+    });
+
+    return trip;
+  }
+
+  async declineTripRequest(bookingId: string): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: {
+        bookingId: bookingId,
+      },
+      data: {
+        status: 'unpaid',
       },
     });
   }
 
-  async startTrip(id: string, trips: TripStatusUpdate): Promise<Trip> {
+  async startTrip(id: string): Promise<Trip> {
     return this.prisma.trip.update({
       where: {
         tripId: id,
       },
       data: {
-        status: trips.status,
+        status: 'active',
       },
     });
   }
 
-  async endTrip(id: string, trips: TripStatusUpdate): Promise<Trip> {
+  async endTrip(id: string): Promise<Trip> {
     return this.prisma.trip.update({
       where: {
         tripId: id,
       },
       data: {
-        status: trips.status,
+        status: 'completed',
       },
     });
   }

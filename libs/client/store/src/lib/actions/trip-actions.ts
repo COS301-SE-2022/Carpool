@@ -13,8 +13,11 @@ import {
   REQUESTED_TRIPS,
   PAYMENT_STATUS_UPDATE,
   BOOKING_ID,
+  ACCEPT_REQ,
+  DECLINE_REQ,
+  START_TRIP,
+  END_TRIP,
 } from '../queries/trip-queries';
-import * as SecureStore from 'expo-secure-store';
 import {
   TripListType,
   TripDetailsType,
@@ -45,10 +48,44 @@ export const listTrips = createAsyncThunk<
 
   const res = response.data.data.findAllTrips;
 
-  SecureStore.deleteItemAsync('trips');
-  SecureStore.setItemAsync('trips', JSON.stringify(res));
+  // SecureStore.deleteItemAsync('trips');
+  // SecureStore.setItemAsync('trips', JSON.stringify(res));
 
   return res;
+});
+
+export const listUpcomingTrips = createAsyncThunk<
+  TripListType[],
+  undefined,
+  { rejectValue: Error }
+>('trips/listUpcoming', async (__, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: LIST_TRIPS,
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findAllTrips;
+
+  const tripsArr: TripListType[] = [];
+
+  res.map((trip: TripDetailsType) => {
+    if (trip.status !== 'completed') {
+      tripsArr.push(trip);
+    }
+  });
+
+  // SecureStore.deleteItemAsync('trips');
+  // SecureStore.setItemAsync('trips', JSON.stringify(res));
+
+  return tripsArr.reverse();
 });
 
 export const listDriverHistory = createAsyncThunk<
@@ -313,7 +350,7 @@ export const createTrip = createAsyncThunk<
     variables: {
       driver: trip.driver,
       tripDate: trip.tripDate,
-      seatsAvaiable: trip.seatsAvailable,
+      seatsAvailable: trip.seatsAvailable,
       price: trip.price,
       startLocationAddress: trip.startLocationAddress,
       startLocationLongitude: trip.startLocationLongitude,
@@ -321,6 +358,7 @@ export const createTrip = createAsyncThunk<
       destinationAddress: trip.destinationAddress,
       destinationLongitude: trip.destinationLongitude,
       destinationLatitude: trip.destinationLatitude,
+      status: 'confirmed',
     },
   });
 
@@ -398,61 +436,113 @@ export const bookTrip = createAsyncThunk<
 });
 
 export type AcceptTripReqType = {
-  tripId: string;
-  passengerId: string;
-  seatsAvailable: string;
-  status: string;
+  id: string;
+  bookingId: string;
 };
 
 export const acceptTripRequest = createAsyncThunk<
   string,
   AcceptTripReqType,
   { rejectValue: Error }
->(
-  'trip/accept',
-  async (acceptTripRequestValues: AcceptTripReqType, thunkApi) => {
-    const response = await axios.post(`http://${host}:3333/graphql`, {
-      query: BOOK_TRIP,
-      variables: {
-        tripId: acceptTripRequestValues.tripId,
-        passengerId: acceptTripRequestValues.passengerId,
-        seatsAvailable: acceptTripRequestValues.seatsAvailable,
-        status: acceptTripRequestValues.status,
-      },
-    });
-    console.log('ACCEPTING');
+>('trip/accept', async ({ id, bookingId }, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: ACCEPT_REQ,
+    variables: {
+      id: id,
+      bookingId: bookingId,
+    },
+  });
+  console.log('ACCEPTING');
 
-    if (response.data.errors) {
-      const error = {
-        message: response.data.errors[0].message,
-      } as Error;
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
 
-      return thunkApi.rejectWithValue(error);
-    }
-
-    const res = response.data.data.acceptTripRequest;
-
-    console.log(res);
-
-    return res;
+    return thunkApi.rejectWithValue(error);
   }
-);
+
+  const res = response.data.data.acceptTripRequest;
+
+  console.log(res);
+
+  return res;
+});
+
+export type DeclineTripReqType = {
+  id: string;
+  bookingId: string;
+};
+
+export const declineTripRequest = createAsyncThunk<
+  string,
+  DeclineTripReqType,
+  { rejectValue: Error }
+>('trip/accept', async ({ bookingId }, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: DECLINE_REQ,
+    variables: {
+      bookingId: bookingId,
+    },
+  });
+  console.log('ACCEPTING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.declineTripRequest;
+
+  console.log(res);
+
+  return res;
+});
 
 export type TripStatusType = {
-  tripId: string;
-  status: string;
+  id: string;
 };
 
 export const startTrip = createAsyncThunk<
   string,
   TripStatusType,
   { rejectValue: Error }
->('trip/start', async (tripStatusValues: TripStatusType, thunkApi) => {
+>('trip/start', async ({ id }, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
-    query: BOOK_TRIP,
+    query: START_TRIP,
     variables: {
-      tripId: tripStatusValues.tripId,
-      status: tripStatusValues.status,
+      id: id,
+    },
+  });
+  console.log('STARTING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.startTrip;
+
+  console.log(res);
+
+  return res;
+});
+
+export const endTrip = createAsyncThunk<
+  string,
+  TripStatusType,
+  { rejectValue: Error }
+>('trip/end', async ({ id }, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: END_TRIP,
+    variables: {
+      id: id,
     },
   });
   console.log('STARTING');
@@ -470,33 +560,6 @@ export const startTrip = createAsyncThunk<
   console.log(res);
 
   return res;
-});
-
-export const endTrip = createAsyncThunk<
-  string,
-  TripStatusType,
-  { rejectValue: Error }
->('trip/end', async (tripStatusValues: TripStatusType, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
-    query: BOOK_TRIP,
-    variables: {
-      tripId: tripStatusValues.tripId,
-      status: tripStatusValues.status,
-    },
-  });
-  console.log('ENDING');
-
-  if (response.data.errors) {
-    const error = {
-      message: response.data.errors[0].message,
-    } as Error;
-
-    return thunkApi.rejectWithValue(error);
-  }
-
-  const res = response.data.data.endTrip;
-
-  console.log(res);
 });
 
 export const updateBookingPaymentStatus = createAsyncThunk<

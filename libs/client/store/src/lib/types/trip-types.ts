@@ -40,6 +40,7 @@ export type TripListType = {
   createdAt: string;
   coordinates: Location[];
   price: string;
+  status: string;
 };
 
 export type Location = {
@@ -73,6 +74,7 @@ export type TripDetailsType = {
   seatsAvailable?: string;
   price: string;
   coordinates: Location[];
+  status: string;
 };
 
 export type TripBooking = {
@@ -83,6 +85,12 @@ export type TripBooking = {
 
 export type AcceptTripRequest = {
   tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type DeclineTripRequest = {
+  bookingId: string | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };

@@ -129,7 +129,8 @@ describe('TripsService', () => {
           'startLocationLatitude',
           'destinationAddress',
           'destinationLongitude',
-          'destinationLatitude'
+          'destinationLatitude',
+          ''
         )
       ).toBe(tripMock);
     });

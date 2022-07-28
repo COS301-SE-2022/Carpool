@@ -3,6 +3,7 @@ export const LIST_TRIPS = `
     findAllTrips {
       tripId,
        driver {
+        id,
         name,
         surname,
         profilePic
@@ -11,7 +12,8 @@ export const LIST_TRIPS = `
       createdAt,
       coordinates {
         address,
-      }
+      },
+      status
     }
   }
 `;
@@ -143,14 +145,38 @@ export const TRIP_DETAILS = `
         address,
         latitude
         longitude,
-      }
+      },
+      status
     }
   }
 `;
 
 export const CREATE_TRIP = `
-  mutation ($driver: String!, $tripDate: String!, $seatsAvailable: String!, $price: String!, $startLocationAddress: String!, $startLocationLongitude: String!, $startLocationLatitude: String!, $destinationAddress: String!, $destinationLongitude: String!, $destinationLatitude: String!) {
-    create(driver: $driver, tripDate: $tripDate, seatsAvailable: $seatsAvailable, price: $price, startLocationAddress: $startLocationAddress, startLocationLongitude: $startLocationLongitude, startLocationLatitude: $startLocationLatitude, destinationAddress: $destinationAddress, destinationLongitude: $destinationLongitude, destinationLatitude: $destinationLatitude) {
+  mutation (
+    $driver: String!,
+    $tripDate: String!,
+    $seatsAvailable: String!,
+    $price: String!,
+    $status: String!,
+    $startLocationAddress: String!,
+    $startLocationLongitude: String!,
+    $startLocationLatitude: String!,
+    $destinationAddress: String!,
+    $destinationLongitude: String!,
+    $destinationLatitude: String!) {
+    create(
+      driver: $driver,
+      tripDate: $tripDate,
+      seatsAvailable: $seatsAvailable,
+      price: $price,
+      status: $status,
+      startLocationAddress: $startLocationAddress,
+      startLocationLongitude: $startLocationLongitude,
+      startLocationLatitude: $startLocationLatitude,
+      destinationAddress: $destinationAddress,
+      destinationLongitude: $destinationLongitude,
+      destinationLatitude: $destinationLatitude
+      ) {
       tripId
     }
   }
@@ -171,11 +197,38 @@ query($tripId: String!, $userId: String!) {
   }
 }
 `;
-export const ACCEPT_REQ = ``;
 
-export const START_TRIP = ``;
+export const ACCEPT_REQ = `
+mutation ($bookingId: String!, $id: String!) {
+  acceptTripRequest(bookingId: $bookingId, id: $id) {
+    tripId
+  }
+}
+`;
 
-export const END_TRIP = ``;
+export const DECLINE_REQ = `
+mutation ($bookingId: String!) {
+  declineTripRequest(bookingId: $bookingId) {
+    bookingId
+  }
+}
+`;
+
+export const START_TRIP = `
+mutation ($id: String!) {
+  startTrip(id: $id) {
+    tripId
+  }
+}
+`;
+
+export const END_TRIP = `
+mutation ($id: String!) {
+  endTrip (id: $id) {
+    tripId
+  }
+}
+`;
 
 export const PAYMENT_STATUS_UPDATE = `
 mutation ($bookingId: String!) {

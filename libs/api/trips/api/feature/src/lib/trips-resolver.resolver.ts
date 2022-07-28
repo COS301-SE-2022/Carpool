@@ -152,26 +152,6 @@ export class TripsResolver {
     );
   }
 
-  // @Mutation(() => Trip)
-  // async delete(tripId: string): Promise<Trip> {
-  //   return await this.tripsService.delete(tripId);
-  // }
-
-  // @Mutation(() => Trip)
-  // async update(
-  //   tripId: string,
-  //   seatsAvailable: number,
-  //   price: number,
-  //   status: string
-  // ): Promise<Trip> {
-  //   return await this.tripsService.update(
-  //     tripId,
-  //     seatsAvailable,
-  //     price,
-  //     status
-  //   );
-  // }
-
   @Mutation(() => Booking)
   async updatePaymentStatus(
     @Args('bookingId') bookingId: string
@@ -205,29 +185,25 @@ export class TripsResolver {
   @Mutation(() => Trip)
   async acceptTripRequest(
     @Args('id') tripId: string,
-    @Args('seatsAvailable') seatsAvailable: number,
-    @Args('status') status: string
+    @Args('bookingId') bookingId: string
   ): Promise<Trip> {
-    return await this.tripsService.acceptTripRequest(
-      tripId,
-      seatsAvailable,
-      status
-    );
+    return await this.tripsService.acceptTripRequest(tripId, bookingId);
+  }
+
+  @Mutation(() => Booking)
+  async declineTripRequest(
+    @Args('bookingId') bookingId: string
+  ): Promise<Booking> {
+    return await this.tripsService.declineTripRequest(bookingId);
   }
 
   @Mutation(() => Trip)
-  async startTrip(
-    @Args('id') tripId: string,
-    @Args('status') status: string
-  ): Promise<Trip> {
-    return await this.tripsService.startTrip(tripId, status);
+  async startTrip(@Args('id') tripId: string): Promise<Trip> {
+    return await this.tripsService.startTrip(tripId);
   }
 
   @Mutation(() => Trip)
-  async endTrip(
-    @Args('id') tripId: string,
-    @Args('status') status: string
-  ): Promise<Trip> {
-    return await this.tripsService.endTrip(tripId, status);
+  async endTrip(@Args('id') tripId: string): Promise<Trip> {
+    return await this.tripsService.endTrip(tripId);
   }
 }

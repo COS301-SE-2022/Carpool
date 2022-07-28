@@ -26,6 +26,9 @@ export class Trip {
   @Field(() => User)
   driver: User;
 
+  @Field()
+  status: string;
+
   @Field(() => [Booking])
   passengers: Booking[];
 

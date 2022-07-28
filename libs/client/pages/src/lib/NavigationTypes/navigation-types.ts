@@ -35,7 +35,7 @@ export type RootStackParamList = {
   CheckoutTrips: undefined;
   CreditCard: { tripId: string };
   AcceptRequest: undefined;
-  DriverActiveTrip: undefined;
+  DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
 };
 

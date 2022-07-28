@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { TripDetailsType } from '@carpool/client/store';
@@ -29,9 +29,7 @@ export function TripDetailsMapView({ trip }: props) {
     <View
       style={[
         styles.flexRow,
-        {
-          flex: 2.5,
-        },
+        trip.status === 'active' ? newStyles.flexStyle2 : newStyles.flexStyle1,
       ]}
     >
       <MapView
@@ -107,4 +105,12 @@ export function TripDetailsMapView({ trip }: props) {
   );
 }
 
+const newStyles = StyleSheet.create({
+  flexStyle1: {
+    flex: 2.5,
+  },
+  flexStyle2: {
+    flex: 9,
+  },
+});
 export default TripDetailsMapView;

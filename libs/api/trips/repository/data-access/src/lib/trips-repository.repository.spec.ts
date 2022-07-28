@@ -132,19 +132,21 @@ describe('TripsRepository', () => {
         .spyOn(repository, 'create')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await repository.create(
-        'John',
-        '01/01/2022',
-        '3',
-        'R85',
-        'confirmed',
-        'startLocationAddress',
-        'startLocationLongitude',
-        'startLocationLatitude',
-        'destinationAddress',
-        'destinationLongitude',
-        'destinationLatitude'
-      )).toMatchObject(tripMock);
+      expect(
+        await repository.create(
+          'John',
+          '01/01/2022',
+          '3',
+          'R85',
+          'confirmed',
+          'startLocationAddress',
+          'startLocationLongitude',
+          'startLocationLatitude',
+          'destinationAddress',
+          'destinationLongitude',
+          'destinationLatitude'
+        )
+      ).toMatchObject(tripMock);
     });
   });
 

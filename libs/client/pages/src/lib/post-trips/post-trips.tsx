@@ -56,6 +56,14 @@ export function PostTrips({ navigation }: PostTripsProps) {
   const createTripState = useSelector((state: RootStore) => state.createdTrip);
   const { trip, status } = createTripState;
 
+  useEffect(() => {
+    if (status === 'success') {
+      showToast('Trip created successfully');
+      navigation.navigate('HomePage');
+      // navigation.popToTop();
+    }
+  }, [status, trip, navigation]);
+
   const confirmTrip = () => {
     console.log('Confirming New Trip');
 
@@ -74,8 +82,8 @@ export function PostTrips({ navigation }: PostTripsProps) {
       })
     );
 
-    showToast('Trip created successfully');
-    navigation.navigate('HomePage');
+    // showToast('Trip created successfully');
+    // navigation.navigate('HomePage');
   };
 
   return (

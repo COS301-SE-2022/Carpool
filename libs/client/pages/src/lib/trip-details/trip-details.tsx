@@ -3,7 +3,11 @@ import { TripDetailsPageProps } from '../NavigationTypes/navigation-types';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { bookTrip, RootStore } from '@carpool/client/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, fetchTripDetails } from '@carpool/client/store';
+import {
+  AppDispatch,
+  fetchTripDetails,
+  startTrip,
+} from '@carpool/client/store';
 import {
   TripDetailsMapView,
   TripDetailsTopBar,
@@ -24,6 +28,13 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
+  const startTripState = useSelector((state: RootStore) => state.startTrip);
+  const { status: tripStartStatus } = startTripState;
+
+  const startTripHandle = (tripId: string) => {
+    dispatch(startTrip({ id: tripId }));
+  };
+
   const showToast = (message: string) => {
     Toast.show({
       type: 'success',
@@ -35,35 +46,33 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
 
   useEffect(() => {
     dispatch(fetchTripDetails(tripId));
-  }, [dispatch, tripId]);
+
+    if (tripStartStatus === 'success') {
+      navigation.navigate('DriverActiveTrip', { tripId });
+      navigation.popToTop();
+    }
+  }, [dispatch, tripId, tripStartStatus, navigation]);
 
   const bookRide = (tripId: string) => {
-    // console.log(JSON.stringify(trip));
-    // console.log(`Booking ride ${tripId}`);
+    if (trip?.driver.id === userData?.id) {
+      startTripHandle(tripId);
+    } else {
+      dispatch(
+        bookTrip({
+          tripId,
+          passengerId: userData ? userData.id : '',
+          seatsBooked: '1',
+          status: 'unpaid',
+          price: trip ? `${trip.price}` : '',
+          address: trip ? trip.coordinates[0].address : '',
+          latitude: trip ? trip.coordinates[0].latitude : '',
+          longitude: trip ? trip.coordinates[0].longitude : '',
+        })
+      );
 
-    // navigation.push('SetPickupPage', {
-    //   tripId,
-    //   passengerId: userData ? userData.id : '',
-    //   seatsBooked: '1',
-    //   status: 'unpaid',
-    //   price: trip ? trip.price : '',
-    // });
-    dispatch(
-      bookTrip({
-        tripId,
-        passengerId: userData ? userData.id : '',
-        //Change
-        seatsBooked: '1',
-        status: 'unpaid',
-        price: trip ? `${trip.price}` : '',
-        address: trip ? trip.coordinates[0].address : '',
-        latitude: trip ? trip.coordinates[0].latitude : '',
-        longitude: trip ? trip.coordinates[0].longitude : '',
-      })
-    );
-
-    showToast('Trip booked successfully');
-    navigation.popToTop();
+      showToast('Trip booked successfully');
+      navigation.popToTop();
+    }
   };
 
   return (
@@ -75,7 +84,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
         },
       ]}
     >
-      {status === 'loading' ? (
+      {status === 'loading' || tripStartStatus === 'loading' ? (
         <View
           style={[
             styles.flexRow,
@@ -111,6 +120,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
                     driverId: trip.driver.id,
                   })
                 }
+                userId={userData ? userData.id : ''}
               />
             )}
           </View>

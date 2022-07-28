@@ -185,7 +185,8 @@ describe('TripsResolver', () => {
           '1.256',
           'End Address',
           '1.345',
-          '1.543'
+          '1.543',
+          ''
         )
       ).toBe(tripMock);
     });

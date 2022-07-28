@@ -9,6 +9,7 @@ import {
   tripDetailsSlice,
   upcomingTripSlice,
   driverHistorySlice,
+  tripUpcomingListSlice,
   passengerHistorySlice,
   createTripSlice,
   searchResultsSlice,
@@ -20,6 +21,7 @@ import {
   requestedTripSlice,
   PaymentStatusUpdateSlice,
   getBookingIdSlice,
+  declineTripRequestSlice,
 } from './slices/trip-slice';
 
 const RootReducer = combineReducers({
@@ -35,12 +37,14 @@ const RootReducer = combineReducers({
   createdTrip: createTripSlice.reducer,
   booking: tripBookingSlice.reducer,
   acceptTrip: acceptTripRequestSlice.reducer,
+  declineTrip: declineTripRequestSlice.reducer,
   startTrip: startTripSlice.reducer,
   endTrip: endTripSlice.reducer,
   confirmedTrip: confirmedTripSlice.reducer,
   requestedTrip: requestedTripSlice.reducer,
   updatePaymentStatus: PaymentStatusUpdateSlice.reducer,
   bookingId: getBookingIdSlice.reducer,
+  upcomingTrips: tripUpcomingListSlice.reducer,
 });
 
 export default RootReducer;

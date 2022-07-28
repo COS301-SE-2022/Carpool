@@ -23,6 +23,9 @@ import {
   TripsUpdateCommand,
   BookTripCommand,
   TripsDeleteCommand,
+  AcceptTripRequestCommand,
+  StartTripCommand,
+  EndTripCommand,
   BookingUpdatePaymentStatusCommand,
 } from './commands/trips-command.command';
 
@@ -138,7 +141,7 @@ export class TripsService {
 
   async update(
     tripId: string,
-    seatsAvailable: number,
+    seatsAvailable: string,
     price: number,
     status: string
   ): Promise<Trip> {
@@ -155,5 +158,23 @@ export class TripsService {
 
   async delete(tripId: string): Promise<Trip> {
     return await this.commandBus.execute(new TripsDeleteCommand(tripId));
+  }
+
+  async acceptTripRequest(
+    tripId: string,
+    seatsAvailable: string,
+    status: string
+  ): Promise<Trip> {
+    return await this.commandBus.execute(
+      new AcceptTripRequestCommand(tripId, seatsAvailable, status)
+    );
+  }
+
+  async startTrip(tripId: string, status: string): Promise<Trip> {
+    return await this.commandBus.execute(new StartTripCommand(tripId, status));
+  }
+
+  async endTrip(tripId: string, status: string): Promise<Trip> {
+    return await this.commandBus.execute(new EndTripCommand(tripId, status));
   }
 }

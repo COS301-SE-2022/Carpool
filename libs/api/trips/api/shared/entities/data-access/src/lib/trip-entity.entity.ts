@@ -54,11 +54,26 @@ export class TripsInput {
 @InputType()
 export class TripsUpdate {
   @Field()
-  seatsAvailable: number;
+  seatsAvailable: string;
 
   @Field()
   price: number;
 
+  @Field()
+  status: string;
+}
+
+@InputType()
+export class AcceptTripRequestUpdate {
+  @Field()
+  seatsAvailable: string;
+
+  @Field()
+  status: string;
+}
+
+@InputType()
+export class TripStatusUpdate {
   @Field()
   status: string;
 }

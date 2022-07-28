@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip, Booking, Location } from '@prisma/client';
-import { TripsUpdate } from '@carpool/api/trips/entities';
+import { Trip, User, Booking, Location } from '@prisma/client';
+import {
+  TripsUpdate,
+  AcceptTripRequestUpdate,
+  TripStatusUpdate,
+} from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -275,5 +279,41 @@ export class TripsRepository {
     //     }
     //   });
     // }
+  }
+
+  async acceptTripRequest(
+    id: string,
+    trips: AcceptTripRequestUpdate
+  ): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
+      },
+      data: {
+        seatsAvailable: trips.seatsAvailable,
+      },
+    });
+  }
+
+  async startTrip(id: string, trips: TripStatusUpdate): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
+      },
+      data: {
+        status: trips.status,
+      },
+    });
+  }
+
+  async endTrip(id: string, trips: TripStatusUpdate): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
+      },
+      data: {
+        status: trips.status,
+      },
+    });
   }
 }

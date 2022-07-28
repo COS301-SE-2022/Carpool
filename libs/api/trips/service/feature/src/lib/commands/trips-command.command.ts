@@ -30,7 +30,7 @@ export class BookTripCommand {
 export class TripsUpdateCommand {
   constructor(
     public readonly tripId: string,
-    public readonly seatsAvailable: number,
+    public readonly seatsAvailable: string,
     public readonly price: number,
     public readonly status: string
   ) {}
@@ -44,4 +44,20 @@ export class BookingUpdatePaymentStatusCommand {
 
 export class TripsDeleteCommand {
   constructor(public readonly tripId: string) {}
+}
+
+export class AcceptTripRequestCommand {
+  constructor(
+    public readonly tripId: string,
+    public readonly seatsAvailable: string,
+    public readonly status: string
+  ) {}
+}
+
+export class StartTripCommand {
+  constructor(public readonly tripId: string, public readonly status: string) {}
+}
+
+export class EndTripCommand {
+  constructor(public readonly tripId: string, public readonly status: string) {}
 }

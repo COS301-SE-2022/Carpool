@@ -12,6 +12,9 @@ import {
   CONFIRMED_TRIPS,
   REQUESTED_TRIPS,
   PAYMENT_STATUS_UPDATE,
+  START_TRIP,
+  END_TRIP,
+  ACCEPT_REQ,
 } from '../queries/trip-queries';
 import * as SecureStore from 'expo-secure-store';
 import {
@@ -369,10 +372,9 @@ export const acceptTripRequest = createAsyncThunk<
   'trip/accept',
   async (acceptTripRequestValues: AcceptTripReqType, thunkApi) => {
     const response = await axios.post(`http://${host}:3333/graphql`, {
-      query: BOOK_TRIP,
+      query: ACCEPT_REQ,
       variables: {
         tripId: acceptTripRequestValues.tripId,
-        passengerId: acceptTripRequestValues.passengerId,
         seatsAvailable: acceptTripRequestValues.seatsAvailable,
         status: acceptTripRequestValues.status,
       },
@@ -406,7 +408,7 @@ export const startTrip = createAsyncThunk<
   { rejectValue: Error }
 >('trip/start', async (tripStatusValues: TripStatusType, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
-    query: BOOK_TRIP,
+    query: START_TRIP,
     variables: {
       tripId: tripStatusValues.tripId,
       status: tripStatusValues.status,
@@ -435,7 +437,7 @@ export const endTrip = createAsyncThunk<
   { rejectValue: Error }
 >('trip/end', async (tripStatusValues: TripStatusType, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
-    query: BOOK_TRIP,
+    query: END_TRIP,
     variables: {
       tripId: tripStatusValues.tripId,
       status: tripStatusValues.status,

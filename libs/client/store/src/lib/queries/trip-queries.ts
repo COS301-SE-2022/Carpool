@@ -159,11 +159,29 @@ export const BOOK_TRIP = `
   }
 `;
 
-export const ACCEPT_REQ = ``;
+export const ACCEPT_REQ = `
+  mutation($tripId: String!, $status: String!, $seatsAvailable: String!) {
+    acceptTripRequest(tripId: $tripId, status: $status, seatsAvailable: $seatsAvailable){
+      tripId,
+    }
+  }
+`;
 
-export const START_TRIP = ``;
+export const START_TRIP = `
+mutation($tripId: String!, $status: String!) {
+  acceptTripRequest(tripId: $tripId, status: $status){
+    tripId,
+  }
+}
+`;
 
-export const END_TRIP = ``;
+export const END_TRIP = `
+mutation($tripId: String!, $status: String!) {
+  acceptTripRequest(tripId: $tripId, status: $status){
+    tripId,
+  }
+}
+`;
 
 export const PAYMENT_STATUS_UPDATE = `
 mutation ($bookingId: String!) {

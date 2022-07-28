@@ -137,6 +137,17 @@ describe('TripsResolver', () => {
     });
   });
 
+  describe('findByPassenger', () => {
+    const result = [tripMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(resolver, 'findByPassenger')
+        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+
+      expect(await resolver.findByPassenger('1')).toBe(result);
+    });
+  });
+
   describe('searchTrips', () => {
     const result = [tripMock];
     it('should return an array of trips', async () => {
@@ -156,14 +167,27 @@ describe('TripsResolver', () => {
     });
   });
 
-  describe('findByPassenger', () => {
-    const result = [tripMock];
-    it('should return an array of trips', async () => {
+  //createTrip
+  describe('create', () => {
+    it('should create a trip', async () => {
       jest
-        .spyOn(resolver, 'findByPassenger')
-        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+        .spyOn(resolver, 'create')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await resolver.findByPassenger('1')).toBe(result);
+      expect(
+        await resolver.create(
+          '1',
+          '2022-05-30T08:21:50.000Z',
+          '1',
+          '30',
+          'Start Address',
+          '1.276',
+          '1.256',
+          'End Address',
+          '1.345',
+          '1.543'
+        )
+      ).toBe(tripMock);
     });
   });
 

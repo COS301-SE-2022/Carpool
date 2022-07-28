@@ -33,18 +33,18 @@ export class TripsRepository {
     return await this.prisma.trip.findMany();
   }
 
-  async findByDriver(driverId: string): Promise<Trip[]> {
-    return await this.prisma.trip.findMany({
-      where: {
-        driverId: driverId,
-      },
-    });
-  }
-
   async findTripById(id: string): Promise<Trip> {
     return this.prisma.trip.findUnique({
       where: {
         tripId: id,
+      },
+    });
+  }
+
+  async findByDriver(driverId: string): Promise<Trip[]> {
+    return await this.prisma.trip.findMany({
+      where: {
+        driverId: driverId,
       },
     });
   }

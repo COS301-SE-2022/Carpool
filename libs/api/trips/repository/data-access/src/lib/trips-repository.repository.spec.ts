@@ -58,30 +58,6 @@ describe('TripsRepository', () => {
     });
   });
 
-  //findCoordinatesByTrip
-  describe('findCoordinatesByTrip', () => {
-    const result = [locationMock];
-    it('should return Coordinates', async () => {
-      jest
-        .spyOn(repository, 'findCoordinatesByTrip')
-        .mockImplementation((): Promise<Location[]> => Promise.resolve(result));
-
-      expect(await repository.findCoordinatesByTrip('1')).toMatchObject(result);
-    });
-  });
-
-  //searchTrips
-  describe('searchTrips', () => {
-    const result = [tripMock];
-    it('should return an array of trips', async () => {
-      jest
-        .spyOn(repository, 'searchTrips')
-        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
-
-      expect(await repository.searchTrips('1')).toMatchObject(result);
-    });
-  });
-
   describe('findByDriver', () => {
     it('should return an array of trips', async () => {
       jest
@@ -91,20 +67,50 @@ describe('TripsRepository', () => {
       expect(await repository.findByDriver('1')).toMatchObject(tripMock);
     });
 
-    it('should return null', async () => {
-      jest.spyOn(repository, 'findByDriver').mockResolvedValue(null);
+    //findCoordinatesByTrip
+    describe('findCoordinatesByTrip', () => {
+      const result = [locationMock];
+      it('should return Coordinates', async () => {
+        jest
+          .spyOn(repository, 'findCoordinatesByTrip')
+          .mockImplementation(
+            (): Promise<Location[]> => Promise.resolve(result)
+          );
 
-      expect(await repository.findByDriver('1')).toEqual(null);
+        expect(await repository.findCoordinatesByTrip('1')).toMatchObject(
+          result
+        );
+      });
     });
-  });
 
-  describe('findByPassenger', () => {
-    it('should return an array of trips', async () => {
-      jest
-        .spyOn(repository, 'findByPassenger')
-        .mockImplementation((): Promise<Trip[]> => Promise.resolve(tripsMock));
+    describe('findByPassenger', () => {
+      it('should return an array of trips', async () => {
+        jest
+          .spyOn(repository, 'findByPassenger')
+          .mockImplementation(
+            (): Promise<Trip[]> => Promise.resolve(tripsMock)
+          );
 
-      expect(await repository.findByPassenger('1')).toMatchObject(tripMock);
+        expect(await repository.findByPassenger('1')).toMatchObject(tripMock);
+      });
+
+      it('should return null', async () => {
+        jest.spyOn(repository, 'findByDriver').mockResolvedValue(null);
+
+        expect(await repository.findByDriver('1')).toEqual(null);
+      });
+    });
+
+    //searchTrips
+    describe('searchTrips', () => {
+      const result = [tripMock];
+      it('should return an array of trips', async () => {
+        jest
+          .spyOn(repository, 'searchTrips')
+          .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+
+        expect(await repository.searchTrips('1')).toMatchObject(result);
+      });
     });
 
     it('should return null', async () => {
@@ -126,24 +132,50 @@ describe('TripsRepository', () => {
     });
   });
 
+  //find coordinates by trip****************************
+  describe('findCoordinatesByTrip', () => {
+    const result = [locationMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(repository, 'findCoordinatesByTrip')
+        .mockImplementation((): Promise<Location[]> => Promise.resolve(result));
+
+      expect(await repository.findCoordinatesByTrip('1')).toMatchObject(result);
+    });
+  });
+
+  //search for trips
+  describe('searchTrips', () => {
+    const result = [tripMock];
+    it('should return an array of trips', async () => {
+      jest
+        .spyOn(repository, 'searchTrips')
+        .mockImplementation((): Promise<Trip[]> => Promise.resolve(result));
+
+      expect(await repository.searchTrips('1')).toMatchObject(result);
+    });
+  });
+
   describe('create', () => {
     it('should return a trip', async () => {
       jest
         .spyOn(repository, 'create')
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
-      expect(await repository.create(
-        'John',
-        '01/01/2022',
-        '3',
-        'R85',
-        'startLocationAddress',
-        'startLocationLongitude',
-        'startLocationLatitude',
-        'destinationAddress',
-        'destinationLongitude',
-        'destinationLatitude'
-      )).toMatchObject(tripMock);
+      expect(
+        await repository.create(
+          'John',
+          '01/01/2022',
+          '3',
+          'R85',
+          'startLocationAddress',
+          'startLocationLongitude',
+          'startLocationLatitude',
+          'destinationAddress',
+          'destinationLongitude',
+          'destinationLatitude'
+        )
+      ).toMatchObject(tripMock);
     });
   });
 

@@ -1,19 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PrismaService } from '@carpool/api/prisma';
 import { Booking, Trip, Location } from '@carpool/api/trips/entities';
 import { TripsService } from './trip-service.service';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User } from '@carpool/api/authentication/entities';
 
 jest.mock('@carpool/api/trips/entities');
 const tripMock: jest.Mocked<Trip> = new Trip() as Trip;
 const bookingMock: jest.Mocked<Booking> = new Booking() as Booking;
 const locationMock: jest.Mocked<Location> = new Location() as Location;
-
-jest.mock('@carpool/api/authentication/entities');
-const userMock: jest.Mocked<User> = new User() as User;
-
-const datetime = new Date();
 
 describe('TripsService', () => {
   let service: TripsService;
@@ -136,18 +129,8 @@ describe('TripsService', () => {
           'destinationAddress',
           'destinationLongitude',
           'destinationLatitude'
-          // userMock
         )
       ).toBe(tripMock);
-    });
-  });
-  describe('delete', () => {
-    it('should return a trip', async () => {
-      jest
-        .spyOn(service, 'delete')
-        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
-
-      expect(await service.delete('1')).toBe(tripMock);
     });
   });
 
@@ -183,6 +166,16 @@ describe('TripsService', () => {
         .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
 
       expect(await service.update('1', 3, 10.0, 'upcoming')).toBe(tripMock);
+    });
+  });
+
+  describe('delete', () => {
+    it('should return a trip', async () => {
+      jest
+        .spyOn(service, 'delete')
+        .mockImplementation((): Promise<Trip> => Promise.resolve(tripMock));
+
+      expect(await service.delete('1')).toBe(tripMock);
     });
   });
 });

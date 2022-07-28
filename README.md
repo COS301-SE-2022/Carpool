@@ -16,7 +16,7 @@ This is a React Native application that helps students find and join safe car tr
 <div><a href="https://drive.google.com/file/d/1WrfJ1_IwiJ1sTmPWSSKPBTUli7uVEliJ/view?usp=sharing">🧾 Architectural Requirements</a></div>
 <div><a href="https://drive.google.com/file/d/1KlvlLOOeucwxxL5vRmlpzNnRzG1NiBal/view?usp=sharing">🧾 User Manual</a></div>
 <div><a href="https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing">🧾 Coding Standards</a></div>
-<div><a href="">🧾 Technical Installation Manual</a></div>
+<div><a href="https://drive.google.com/file/d/1qWp8dVjO1tv77Wgio6e4k68ZSxbeDgsF/view?usp=sharing">🧾 Technical Installation Manual</a></div>
 
 
 ## Demo Recordings

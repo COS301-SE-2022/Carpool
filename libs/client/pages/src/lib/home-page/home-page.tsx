@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   RootStore,
@@ -99,9 +100,25 @@ export function HomePage({ navigation }: HomePageProps) {
         />
         <View style={styles.cardContainer}>
           {trips && trips.length !== 0 && trips[0].status === 'active' ? (
-            <Text style={styles.smallTextBlack}>Active trip</Text>
+            <Text style={styles.smallTextBlack}>
+              Active trip
+              <Icon
+                name="shopping-cart"
+                size={30}
+                style={{ color: '#188aed', alignSelf: 'flex-end' }}
+                onPress={() => navigation.push('CheckoutTrips')}
+              />
+            </Text>
           ) : (
-            <Text style={styles.smallTextBlack}>Upcoming trip</Text>
+            <Text style={styles.smallTextBlack}>
+              Upcoming trip
+              {/* <Icon
+                name="shopping-cart"
+                size={30}
+                style={{ color: '#188aed', alignSelf: 'flex-end' }}
+                onPress={() => navigation.push('CheckoutTrips')}
+              /> */}
+            </Text>
           )}
 
           {status === 'loading' ? (

@@ -25,3 +25,4 @@ export * from './lib/credit-card-page/credit-card-page';
 export * from './lib/driver-active-trip/driver-active-trip';
 export * from './lib/passenger-active-trip/passenger-active-trip';
 export * from './lib/accept-request/accept-request';
+export * from './lib/review-page/review-page';

@@ -10,20 +10,34 @@ export function Button({
   onPress,
   title,
   colour,
+  marginBottom,
 }: {
   onPress: (event: GestureResponderEvent) => void;
   title: string;
   colour?: string;
+  marginBottom?: number;
 }) {
   if (colour === '#282D46') {
     return (
-      <TouchableOpacity onPress={onPress} style={styles.container2}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[styles.container2, { marginBottom: marginBottom || 0 }]}
+      >
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     );
   } else {
     return (
-      <TouchableOpacity onPress={onPress} style={styles.container}>
+      <TouchableOpacity
+        onPress={onPress}
+        style={[
+          styles.container,
+          {
+            marginBottom: marginBottom || 0,
+            backgroundColor: colour || '#188aed',
+          },
+        ]}
+      >
         <Text style={styles.text}>{title}</Text>
       </TouchableOpacity>
     );

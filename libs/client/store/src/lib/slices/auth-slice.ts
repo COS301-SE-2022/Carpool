@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
+  DriverState,
   UpdateUserType,
   UserProfileState,
   UserState,
@@ -12,6 +13,7 @@ import {
   logout,
   fetchUserProfile,
   createUpdateUser,
+  registerDriver,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -23,7 +25,14 @@ export const initialState = {
 export const userLoginSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    updateDriverState: (state: any) => {
+      state.user = {
+        ...state.user,
+        isDriver: true,
+      };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state, action) => {
@@ -108,6 +117,39 @@ export const userLoginSlice = createSlice({
   },
 });
 
+export const initialDriverState = {
+  driver: null,
+  status: 'idle',
+  error: null,
+} as DriverState;
+
+export const driverRegisterSlice = createSlice({
+  name: 'users',
+  initialState: initialDriverState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerDriver.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(registerDriver.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.driver = action.payload;
+      })
+      .addCase(registerDriver.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
 export const initialProfileState = {
   userProfile: null,
   status: 'idle',
@@ -167,3 +209,5 @@ export const userUpdateSlice = createSlice({
       });
   },
 });
+
+export const { updateDriverState } = userLoginSlice.actions;

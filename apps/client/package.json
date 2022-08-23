@@ -39,6 +39,7 @@
     "axios": "*",
     "react-native-credit-card": "*",
     "react-native-flip-card": "*",
-    "payment": "*"
+    "payment": "*",
+    "expo-image-picker": "*"
   }
 }

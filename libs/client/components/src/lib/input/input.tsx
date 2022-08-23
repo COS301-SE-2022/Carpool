@@ -2,12 +2,14 @@
 import React from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MIcon from 'react-native-vector-icons/MaterialIcons';
 
 type Props = {
   onChangeText: (text: string) => void;
   inputValue: string;
   inputPlaceholder: string;
   iconName: string;
+  iconType?: string;
 };
 
 export function Input({
@@ -15,6 +17,7 @@ export function Input({
   inputPlaceholder,
   inputValue,
   iconName,
+  iconType,
 }: Props) {
   return (
     <View
@@ -25,11 +28,20 @@ export function Input({
         alignItems: 'center',
       }}
     >
-      <MaterialIcon
-        name={iconName}
-        size={22}
-        style={{ flex: 1, color: '#808080', marginRight: 8 }}
-      />
+      {iconType && iconType === 'Material' ? (
+        <MIcon
+          name={iconName}
+          size={22}
+          style={{ flex: 1, color: '#808080', marginRight: 8 }}
+        />
+      ) : (
+        <MaterialIcon
+          name={iconName}
+          size={22}
+          style={{ flex: 1, color: '#808080', marginRight: 8 }}
+        />
+      )}
+
       <TextInput
         value={inputValue}
         placeholder={inputPlaceholder}

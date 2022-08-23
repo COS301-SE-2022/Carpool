@@ -4,6 +4,7 @@ import {
   UserLogin,
   User,
   UserUpdate,
+  Driver,
 } from '@carpool/api/authentication/entities';
 
 @Resolver()
@@ -26,6 +27,7 @@ export class AuthResolver {
       const user = new UserLogin();
       user.id = userObj.id;
       user.email = userObj.email;
+      user.isDriver = userObj.isDriver;
 
       if (userObj.isValidated) {
         user.token = 'generate';
@@ -77,6 +79,27 @@ export class AuthResolver {
       console.log('after email');
 
       return user;
+    } else {
+      throw new Error('Something went wrong!');
+    }
+  }
+
+  @Mutation(() => Driver)
+  async registerDriver(
+    @Args('ID') ID: string,
+    @Args('licensePlate') licensePlate: string,
+    @Args('carModel') carModel: string,
+    @Args('userId') userId: string
+  ): Promise<Driver | null> {
+    const driverObj = await this.authService.registerDriver(
+      userId,
+      licensePlate,
+      carModel,
+      ID
+    );
+
+    if (driverObj) {
+      return driverObj;
     } else {
       throw new Error('Something went wrong!');
     }

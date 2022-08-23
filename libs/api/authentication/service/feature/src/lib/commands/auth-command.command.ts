@@ -9,6 +9,15 @@ export class UserRegisterCommand {
   ) {}
 }
 
+export class DriverRegisterCommand {
+  constructor(
+    public readonly ID: string,
+    public readonly licensePlate: string,
+    public readonly carModel: string,
+    public readonly userId: string
+  ) {}
+}
+
 export class UserVerifyCommand {
   constructor(public readonly id: string) {}
 }

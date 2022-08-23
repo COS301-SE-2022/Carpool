@@ -46,6 +46,12 @@
       "@carpool/api/trips/service": [
         "libs/api/trips/service/feature/src/index.ts"
       ],
+      "@carpool/api/weather/api/feature": [
+        "libs/api/weather/api/feature/src/index.ts"
+      ],
+      "@carpool/api/weather/entities": [
+        "libs/api/weather/api/shared/entities/data-access/src/index.ts"
+      ],
       "@carpool/client/components": ["libs/client/components/src/index.ts"],
       "@carpool/client/pages": ["libs/client/pages/src/index.ts"],
       "@carpool/client/shared/utilities": [

@@ -3,6 +3,7 @@ import {
   userLoginSlice,
   userProfileSlice,
   userUpdateSlice,
+  driverRegisterSlice,
 } from './slices/auth-slice';
 import {
   tripListSlice,
@@ -24,6 +25,7 @@ import {
   declineTripRequestSlice,
   getAllTripRequestsSlice,
 } from './slices/trip-slice';
+import { getWeatherSlice } from './slices/weather-slices';
 
 const RootReducer = combineReducers({
   user: userLoginSlice.reducer,
@@ -47,6 +49,8 @@ const RootReducer = combineReducers({
   bookingId: getBookingIdSlice.reducer,
   upcomingTrips: tripUpcomingListSlice.reducer,
   tripRequests: getAllTripRequestsSlice.reducer,
+  weather: getWeatherSlice.reducer,
+  driver: driverRegisterSlice.reducer,
 });
 
 export default RootReducer;

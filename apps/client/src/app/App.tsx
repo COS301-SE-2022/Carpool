@@ -23,6 +23,7 @@ import {
   CheckoutTrips,
   CreditCard,
   DriverActiveTrip,
+  RegisterDriver,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -57,6 +58,7 @@ export type RootStackParamList = {
   CheckoutTrips;
   CreditCard;
   DriverActiveTrip;
+  RegisterDriver;
 };
 
 export type TabBarParamList = {
@@ -229,6 +231,7 @@ const AppWrapper = () => {
           }}
         >
           <Stack.Screen name="HomePage" component={TabBar} />
+          <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />
           <Stack.Screen name="DriverActiveTrip" component={DriverActiveTrip} />
           {/* <Stack.Screen name="LoginPage" component={LoginPage} /> */}

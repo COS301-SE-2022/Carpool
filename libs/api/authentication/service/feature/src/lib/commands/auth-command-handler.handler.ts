@@ -1,12 +1,17 @@
-import { User } from '@prisma/client';
+import { User, Driver } from '@prisma/client';
 import { AuthRepository } from '@carpool/api/authentication/repository';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import {
   UserRegisterCommand,
   UserUpdateCommand,
   UserVerifyCommand,
+  DriverRegisterCommand,
 } from './auth-command.command';
-import { UserInput, UserUpdate } from '@carpool/api/authentication/entities';
+import {
+  UserInput,
+  UserUpdate,
+  DriverInput,
+} from '@carpool/api/authentication/entities';
 
 @CommandHandler(UserRegisterCommand)
 export class UserRegisterHandler
@@ -27,6 +32,25 @@ export class UserRegisterHandler
     user.password = password;
 
     return await this.authRepository.register(user);
+  }
+}
+
+@CommandHandler(DriverRegisterCommand)
+export class DriverRegisterHandler
+  implements ICommandHandler<DriverRegisterCommand>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(command: DriverRegisterCommand): Promise<Driver | null> {
+    const { userId, licensePlate, carModel, ID } = command;
+
+    const driver = new DriverInput();
+    driver.userId = userId;
+    driver.licensePlate = licensePlate;
+    driver.carModel = carModel;
+    driver.ID = ID;
+
+    return await this.authRepository.registerDriver(driver);
   }
 }
 

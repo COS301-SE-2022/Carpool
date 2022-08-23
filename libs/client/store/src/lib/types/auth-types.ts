@@ -7,6 +7,23 @@ export type UserState = {
 export type User = {
   id: string;
   token?: string;
+  email: string;
+  isDriver: boolean;
+};
+
+export type DriverState = {
+  driver: Driver | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type Driver = {
+  userId: string;
+  idNumber: string;
+  license: string;
+  licensePlate: string;
+  model: string;
+  carPicture: string;
 };
 
 export type Error = {

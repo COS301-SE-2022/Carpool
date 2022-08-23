@@ -6,10 +6,12 @@ import {
   USER_REGISTER,
   VERIFY_EMAIL,
   USER_UPDATE,
+  DRIVER_REGISTER,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
-import { User, UserProfile } from '../types/auth-types';
+import { User, UserProfile, Driver } from '../types/auth-types';
 import { Platform } from 'react-native';
+import { updateDriverState } from '../slices/auth-slice';
 
 const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
@@ -29,6 +31,13 @@ export type UserRegister = {
   university: string;
   studentNumber: string;
   password: string;
+};
+
+export type DriverRegister = {
+  ID: string;
+  userId: string;
+  licensePlate: string;
+  carModel: string;
 };
 
 export type Verify = {
@@ -121,6 +130,43 @@ export const register = createAsyncThunk(
     const res = response.data.data.register;
 
     SecureStore.setItemAsync('user', JSON.stringify(res));
+
+    return res;
+  }
+);
+
+export const registerDriver = createAsyncThunk<
+  Driver,
+  DriverRegister,
+  { rejectValue: Error }
+>(
+  'users/registerDriver',
+  async (driver: DriverRegister, { rejectWithValue, dispatch }) => {
+    console.log('driver', driver);
+
+    const response = await axios.post(`http://${host}:3333/graphql`, {
+      query: DRIVER_REGISTER,
+      variables: {
+        ID: driver.ID,
+        userId: driver.userId,
+        licensePlate: driver.licensePlate,
+        carModel: driver.carModel,
+      },
+    });
+
+    console.log('ADDING');
+
+    if (response.data.errors) {
+      const error = {
+        message: response.data.errors[0].message,
+      } as Error;
+
+      return rejectWithValue(error);
+    }
+
+    const res = response.data.data.registerDriver;
+
+    dispatch(updateDriverState());
 
     return res;
   }

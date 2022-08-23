@@ -13,6 +13,8 @@
     "api-trips-api-shared-entities-data-access": "libs/api/trips/api/shared/entities/data-access",
     "api-trips-repository-data-access": "libs/api/trips/repository/data-access",
     "api-trips-service-feature": "libs/api/trips/service/feature",
+    "api-weather-api-feature": "libs/api/weather/api/feature",
+    "api-weather-api-shared-entities-data-access": "libs/api/weather/api/shared/entities/data-access",
     "client": "apps/client",
     "client-components": "libs/client/components",
     "client-e2e": "apps/client-e2e",

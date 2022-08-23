@@ -3,10 +3,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { User, Driver } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import * as bcrypt from 'bcrypt';
-import { UserInput, UserUpdate } from '@carpool/api/authentication/entities';
+import {
+  UserInput,
+  UserUpdate,
+  DriverInput,
+} from '@carpool/api/authentication/entities';
 @Injectable()
 export class AuthRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -64,6 +68,40 @@ export class AuthRepository {
           profilePic: '',
         },
       });
+    }
+  }
+
+  async registerDriver(driver: DriverInput): Promise<Driver | null> {
+    const driverExist = await this.prisma.driver.findUnique({
+      where: {
+        userId: driver.userId,
+      },
+    });
+
+    if (driverExist) {
+      throw new Error(`User with already registered as driver`);
+    } else {
+      const driverCreated = await this.prisma.driver.create({
+        data: {
+          idNumber: driver.ID,
+          licensePlate: driver.licensePlate,
+          model: driver.carModel,
+          userId: driver.userId,
+          license: '',
+          carPicture: '',
+        },
+      });
+
+      await this.prisma.user.update({
+        where: {
+          id: driver.userId,
+        },
+        data: {
+          isDriver: true,
+        },
+      });
+
+      return driverCreated;
     }
   }
 

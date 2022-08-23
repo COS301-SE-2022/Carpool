@@ -15,9 +15,8 @@ import {
   HomeSearchBar,
   HomeMapView,
 } from '@carpool/client/components';
-import { View, Text, ActivityIndicator } from 'react-native';
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { styles } from './home-page.style';
-import Icon from 'react-native-vector-icons/Feather';
 
 export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -60,6 +59,32 @@ export function HomePage({ navigation }: HomePageProps) {
     }
   };
 
+  const createTrip = () => {
+    if (userData && userData.isDriver) {
+      navigation.navigate('PostTrips');
+    } else {
+      Alert.alert(
+        'You are not registered as a driver',
+        'Would you like to register?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Yes',
+            onPress: () => {
+              navigation.navigate('RegisterDriver', {
+                userId: userData ? userData.id : '',
+              });
+              // navigation.navigate('OnboardPage');
+            },
+          },
+        ]
+      );
+    }
+  };
+
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
       <HomeSearchBar
@@ -70,29 +95,13 @@ export function HomePage({ navigation }: HomePageProps) {
       <View style={styles.bottomContainer}>
         <HomeOptionBox
           onPress={() => navigation.push('SearchPage')}
-          onPressCreate={() => navigation.push('PostTrips')}
+          onPressCreate={() => createTrip()}
         />
         <View style={styles.cardContainer}>
           {trips && trips.length !== 0 && trips[0].status === 'active' ? (
-            <Text style={styles.smallTextBlack}>
-              Active trip
-              <Icon
-                name="shopping-cart"
-                size={30}
-                style={{ color: '#188aed', alignSelf: 'flex-end' }}
-                onPress={() => navigation.push('CheckoutTrips')}
-              />
-            </Text>
+            <Text style={styles.smallTextBlack}>Active trip</Text>
           ) : (
-            <Text style={styles.smallTextBlack}>
-              Upcoming trip
-              {/* <Icon
-                name="shopping-cart"
-                size={30}
-                style={{ color: '#188aed', alignSelf: 'flex-end' }}
-                onPress={() => navigation.push('CheckoutTrips')}
-              /> */}
-            </Text>
+            <Text style={styles.smallTextBlack}>Upcoming trip</Text>
           )}
 
           {status === 'loading' ? (
@@ -102,6 +111,8 @@ export function HomePage({ navigation }: HomePageProps) {
               key={trips[0].tripId}
               startLocation={trips[0].coordinates[0].address}
               destination={trips[0].coordinates[1].address}
+              endLat={trips[0].coordinates[1].latitude}
+              endLong={trips[0].coordinates[1].longitude}
               date={trips[0].tripDate}
               type="passenger"
               onPress={() => viewTrip(trips[0].tripId, trips[0])}

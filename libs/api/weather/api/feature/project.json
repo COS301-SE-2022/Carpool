@@ -1,0 +1,22 @@
+{
+  "root": "libs/api/weather/api/feature",
+  "sourceRoot": "libs/api/weather/api/feature/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/weather/api/feature/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/weather/api/feature"],
+      "options": {
+        "jestConfig": "libs/api/weather/api/feature/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

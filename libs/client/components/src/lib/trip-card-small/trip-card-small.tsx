@@ -1,5 +1,5 @@
 /* eslint-disable-next-line */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -8,12 +8,16 @@ import {
   getDay,
   colors,
 } from '@carpool/client/shared/utilities';
+import { getWeather, AppDispatch, RootStore } from '@carpool/client/store';
+import { useSelector, useDispatch } from 'react-redux';
 
 type cardProps = {
   startLocation: string;
   destination: string;
   date: string;
   type: string;
+  endLat: string;
+  endLong: string;
   onPress: () => void;
 };
 
@@ -24,8 +28,24 @@ export function TripCardSmall({
   destination,
   date,
   type,
+  endLat,
+  endLong,
   onPress,
 }: cardProps) {
+  const dispatch: AppDispatch = useDispatch();
+
+  const weatherState = useSelector((state: RootStore) => state.weather);
+  const { weather, status, error } = weatherState;
+
+  // useEffect(() => {
+  //   dispatch(
+  //     getWeather({
+  //       long: endLong,
+  //       lat: endLat,
+  //     })
+  //   );
+  // }, [dispatch, endLat, endLong]);
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.card, styles.shadow]}>
@@ -49,6 +69,11 @@ export function TripCardSmall({
             </Text>
             <Text style={styles.date}>{formatDate(date)}</Text>
           </View>
+          {status === 'success' && (
+            <View style={{ marginRight: 5 }}>
+              <Text>{weather && weather.temperature}</Text>
+            </View>
+          )}
           <View>
             <Text style={{ color: black }}>{getTime(date)}</Text>
           </View>

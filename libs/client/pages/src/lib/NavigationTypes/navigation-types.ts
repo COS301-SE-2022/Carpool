@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 
 export type RootStackParamList = {
   HomePage: undefined;
+  RegisterDriver: { userId: string };
   LoginPage: undefined;
   OnboardPage: undefined;
   SignUpPage: undefined;
@@ -42,6 +43,11 @@ export type RootStackParamList = {
 export type HomePageProps = NativeStackScreenProps<
   RootStackParamList,
   'HomePage'
+>;
+
+export type RegisterDriverProps = NativeStackScreenProps<
+  RootStackParamList,
+  'RegisterDriver'
 >;
 
 export type LoginPageProps = NativeStackScreenProps<

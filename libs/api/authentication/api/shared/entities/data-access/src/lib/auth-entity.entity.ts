@@ -54,6 +54,9 @@ export class UserLogin {
   @Field()
   email: string;
 
+  @Field(() => Boolean)
+  isDriver: boolean;
+
   @Field()
   token: string;
 
@@ -83,6 +86,45 @@ export class UserInput {
 
   @Field()
   studentNumber: string;
+}
+
+@InputType()
+export class DriverInput {
+  @Field()
+  userId: string;
+
+  @Field()
+  ID: string;
+
+  @Field()
+  licensePlate: string;
+
+  @Field()
+  carModel: string;
+}
+
+@ObjectType()
+export class Driver {
+  @Field()
+  userId: string;
+
+  @Field()
+  idNumber: string;
+
+  @Field()
+  license: string;
+
+  @Field()
+  licensePlate: string;
+
+  @Field()
+  model: string;
+
+  @Field()
+  carPicture: string;
+
+  @Field(() => User)
+  user: User;
 }
 
 @InputType()

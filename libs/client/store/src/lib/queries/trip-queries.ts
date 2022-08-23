@@ -12,6 +12,8 @@ export const LIST_TRIPS = `
       createdAt,
       coordinates {
         address,
+        latitude,
+        longitude
       },
       status
     }

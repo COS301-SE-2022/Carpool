@@ -3,6 +3,8 @@ export const USER_LOGIN = `
      login(email: $email, password: $password) {
         id
         token
+        email
+        isDriver
      }
   }
 `;
@@ -27,6 +29,19 @@ export const USER_REGISTER = `
         email
         verificationCode
         expires
+      }
+  }
+`;
+
+export const DRIVER_REGISTER = `
+  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!) {
+      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId) {
+        userId
+        idNumber
+        license
+        licensePlate
+        model
+        carPicture
       }
   }
 `;

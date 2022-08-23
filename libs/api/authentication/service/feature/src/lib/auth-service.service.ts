@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User, UserUpdate } from '@carpool/api/authentication/entities';
+import { User, UserUpdate, Driver } from '@carpool/api/authentication/entities';
 import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
   UserVerifyCommand,
   UserUpdateCommand,
+  DriverRegisterCommand,
 } from './commands/auth-command.command';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -42,6 +43,17 @@ export class AuthService {
         studentNumber,
         password
       )
+    );
+  }
+
+  async registerDriver(
+    ID: string,
+    licensePlate: string,
+    carModel: string,
+    userId: string
+  ): Promise<Driver | null> {
+    return await this.commandBus.execute(
+      new DriverRegisterCommand(userId, licensePlate, carModel, ID)
     );
   }
 

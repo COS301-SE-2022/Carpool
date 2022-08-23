@@ -112,12 +112,12 @@ export function HomePage({ navigation }: HomePageProps) {
           ) : (
             <Text style={styles.smallTextBlack}>
               Upcoming trip
-              {/* <Icon
-                name="shopping-cart"
+              { <Icon
+                name="star"
                 size={30}
-                style={{ color: '#188aed', alignSelf: 'flex-end' }}
-                onPress={() => navigation.push('CheckoutTrips')}
-              /> */}
+                style={{ color: '#FFFF00', alignSelf: 'flex-end' }}
+                onPress={() => navigation.push('ReviewPage')}
+              />}
             </Text>
           )}
 

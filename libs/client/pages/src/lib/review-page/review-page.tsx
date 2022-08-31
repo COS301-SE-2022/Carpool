@@ -16,6 +16,7 @@ export function ReviewPage({ navigation }: ReviewPageProps) {
   const reviewToNothing = () => {
     console.log("Change from Review Modal to Nothing")
     setModalVisible(false)
+    navigation.navigate('HomePage');
   };
   return (
     <View style={styles.centeredView}>
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   centeredView: {
-    flex: 1,
+    flex:1,
     justifyContent: "center",
     alignItems: "center",
   },

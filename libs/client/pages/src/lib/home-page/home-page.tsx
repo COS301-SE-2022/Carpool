@@ -18,7 +18,14 @@ import {
   RatingCard,
   ReviewCard,
 } from '@carpool/client/components';
-import { View, Text, ActivityIndicator, Alert, TouchableOpacity, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  Alert,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
 import { styles } from './home-page.style';
 
 export function HomePage({ navigation }: HomePageProps) {
@@ -40,14 +47,13 @@ export function HomePage({ navigation }: HomePageProps) {
   const [modalVisible2, setModalVisible2] = useState(false);
 
   const changeToReview = () => {
-    console.log("Change from Rating to Review Modal")
-    setModalVisible(true)
-    setModalVisible2(false)
-
+    console.log('Change from Rating to Review Modal');
+    setModalVisible(true);
+    setModalVisible2(false);
   };
   const reviewToNothing = () => {
-    console.log("Change from Review Modal to Nothing")
-    setModalVisible(false)
+    console.log('Change from Review Modal to Nothing');
+    setModalVisible(false);
   };
 
   useEffect(() => {
@@ -104,6 +110,15 @@ export function HomePage({ navigation }: HomePageProps) {
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
+      <View
+        style={{
+          backgroundColor: '#188aed',
+          width: '100%',
+          paddingVertical: 30,
+        }}
+      >
+        <Text>Hello</Text>
+      </View>
       <HomeSearchBar
         onPress={() => navigation.push('SearchPage')}
         onPressCart={() => navigation.push('CheckoutTrips')}
@@ -128,13 +143,15 @@ export function HomePage({ navigation }: HomePageProps) {
           ) : (
             <Text style={styles.smallTextBlack}>
               Upcoming trip
-              { <Icon
-                name="star"
-                size={30}
-                style={{ color: '#edda02', alignSelf: 'flex-end' }}
-                // onPress={() => setModalVisible2(true)}
-                onPress={() => navigation.navigate('ReviewPage')}
-              />}
+              {
+                <Icon
+                  name="star"
+                  size={30}
+                  style={{ color: '#edda02', alignSelf: 'flex-end' }}
+                  // onPress={() => setModalVisible2(true)}
+                  onPress={() => navigation.navigate('ReviewPage')}
+                />
+              }
             </Text>
           )}
 
@@ -158,44 +175,34 @@ export function HomePage({ navigation }: HomePageProps) {
           )}
         </View>
       </View>
-    <View style={styles.centeredView}>
-
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <ReviewCard />
-            <TouchableOpacity
-              style={[styles.container2]}
-              onPress={reviewToNothing}
-            >
-              <Text style={styles.text}>Review</Text>
-            </TouchableOpacity>
+      <View style={styles.centeredView}>
+        <Modal animationType="slide" transparent={true} visible={modalVisible}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <ReviewCard />
+              <TouchableOpacity
+                style={[styles.container2]}
+                onPress={reviewToNothing}
+              >
+                <Text style={styles.text}>Review</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
-      <Modal
-       animationType="slide"
-       transparent={true}
-       visible={modalVisible2}>
-         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          <RatingCard/>
-          <TouchableOpacity
-            onPress={changeToReview}
-            style={[styles.container2]}>
-            <Text style={styles.text}>Rate</Text>
-         </TouchableOpacity>
+        </Modal>
+        <Modal animationType="slide" transparent={true} visible={modalVisible2}>
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <RatingCard />
+              <TouchableOpacity
+                onPress={changeToReview}
+                style={[styles.container2]}
+              >
+                <Text style={styles.text}>Rate</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-
-
-      </Modal>
-
-    </View>
+        </Modal>
+      </View>
     </View>
   );
 }

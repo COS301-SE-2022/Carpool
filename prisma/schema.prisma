@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 ////////////////////////////////
@@ -35,6 +36,9 @@ model User {
     driver      Driver? @relation("driver_id")
     bookings    Booking[]
 
+    sender Message[] @relation("sender")
+    receiver Message[] @relation("receiver")
+
     @@map("user")
 }
 
@@ -43,7 +47,7 @@ model User {
 ////////////////////////////////
 
 model BankingDetails {
-    userId      String @map("user_id")
+    userId      String @map("user_id") @unique
     bankAccount Int @unique @id @map("bank_account")
     expireDate  DateTime @map("expire_date")
     branch      String
@@ -155,4 +159,16 @@ model Driver {
 enum Role {
     DRIVER
     PASSENGER
+}
+
+model Message {
+  id        String @id @default(cuid())
+  message   String
+  senderId  String @map("sender_id")
+  receiverId String @map("receiver_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  sender    User @relation(name: "sender", fields: [senderId], references: [id])
+  receiver  User @relation(name: "receiver", fields: [receiverId], references: [id])
 }

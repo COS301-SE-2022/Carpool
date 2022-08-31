@@ -126,8 +126,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginRight: 15,
     borderWidth: 3,
-    borderColor: '#188aed',
-    float: 'left',
+    borderColor: '#188aed'
   },
   textLargeBlack: {
     fontWeight: '600',
@@ -147,7 +146,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginTop: 10,
     borderRadius: 15,
-    // left: '-10%'
   },
   text: {
     color: '#fff',

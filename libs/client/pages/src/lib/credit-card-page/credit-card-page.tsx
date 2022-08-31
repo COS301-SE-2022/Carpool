@@ -19,6 +19,8 @@ import Toast from 'react-native-toast-message';
 
 import { Button } from '@carpool/client/components';
 
+import {PayFastWebView} from "react-native-payfast";
+
 export function CreditCard({ navigation, route }: CreditCardProps) {
   const { tripId } = route.params;
 
@@ -84,11 +86,20 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
   };
 
   const submitPayment = () => {
-    if (bookingId) {
-      dispatch(updateBookingPaymentStatus(bookingId));
-    }
+    // if (bookingId) {
+    //   dispatch(updateBookingPaymentStatus(bookingId));
+    // }
     console.log('first');
+    navigation.navigate('PayfastPage');
   };
+
+  const paymentData = {
+    merchant_id : 10026673,
+    merchant_key: '7zctrsta1c3ys',
+    amount: 30.00,
+    item_name: 'React Native Purchase',
+    sandbox: true,
+};
 
   return (
     <SafeAreaView
@@ -235,7 +246,7 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
               }}
             >
               <TextInput
-                value={expiry}
+                value={expiry === 'MM/YY'?'' : expiry}
                 placeholder={'MM/YY'}
                 onChangeText={(value) => onExpiryChange(value)}
                 style={[styles.input, { flex: 1, marginRight: 8 }]}
@@ -252,7 +263,9 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
               />
             </View>
             <View>
-              <Button title="Pay Now" onPress={submitPayment} />
+             <Button title="Pay Now" onPress={submitPayment} />
+
+
             </View>
           </View>
         </>

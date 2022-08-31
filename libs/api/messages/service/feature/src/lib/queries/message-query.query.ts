@@ -4,3 +4,7 @@ export class GetMessagesQuery {
     public readonly receiverId: string
   ) {}
 }
+
+export class GetChatsQuery {
+  constructor(public readonly userId: string) {}
+}

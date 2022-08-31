@@ -75,6 +75,10 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
     }
   };
 
+  const openChat = (senderId: string, receiverId: string) => {
+    navigation.navigate('ChatScreen', { senderId, receiverId });
+  };
+
   return (
     <View
       style={[
@@ -96,7 +100,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
         >
           <ActivityIndicator size="large" color="#188aed" />
         </View>
-      ) : trip ? (
+      ) : trip && userData ? (
         <>
           {trip && (
             <TripDetailsTopBar
@@ -120,6 +124,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
                     driverId: trip.driver.id,
                   })
                 }
+                chat={() => openChat(userData.id, trip.driver.id)}
                 userId={userData ? userData.id : ''}
               />
             )}

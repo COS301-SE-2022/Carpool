@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { Message } from '@carpool/api/messages/entities';
-import { GetMessagesQuery } from './queries/message-query.query';
+import { GetMessagesQuery, GetChatsQuery } from './queries/message-query.query';
 import { CreateMessageCommand } from './commands/message-command.command';
 
 @Injectable()
@@ -15,6 +15,10 @@ export class MessageService {
     return await this.queryBus.execute(
       new GetMessagesQuery(senderId, receiverId)
     );
+  }
+
+  async getChats(userId: string): Promise<Message[]> {
+    return await this.queryBus.execute(new GetChatsQuery(userId));
   }
 
   async createMessage(senderId: string, receiverId: string, message: string) {

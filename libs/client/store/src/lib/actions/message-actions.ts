@@ -1,0 +1,73 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { GET_MESSAGES, SEND_MESSAGE } from '../queries/message-queries';
+import { Platform } from 'react-native';
+import { Message } from '../types/message-types';
+
+const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
+
+export type GetMessageInput = {
+  senderId: string;
+  receiverId: string;
+};
+
+export type SendMessageInput = {
+  senderId: string;
+  receiverId: string;
+  message: string;
+};
+
+export const getMessages = createAsyncThunk<
+  Message[],
+  GetMessageInput,
+  { rejectValue: Error }
+>('messages/getMessages', async (message: GetMessageInput, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: GET_MESSAGES,
+    variables: {
+      senderId: message.senderId,
+      receiverId: message.receiverId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.getMessages;
+
+  return res;
+});
+
+export const sendMessage = createAsyncThunk<
+  Message,
+  SendMessageInput,
+  { rejectValue: Error }
+>('messageSend/sendMessage', async (message: SendMessageInput, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: SEND_MESSAGE,
+    variables: {
+      senderId: message.senderId,
+      receiverId: message.receiverId,
+      message: message.message,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.createMessage;
+
+  return res;
+});

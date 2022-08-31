@@ -78,8 +78,10 @@ export function HomePage({ navigation }: HomePageProps) {
         navigation.navigate('DriverActiveTrip', { tripId });
       }
     } else {
-      navigation.push('TripDetails', { tripId, type: 'booked' });
+      navigation.push('TripDetails', { tripId, type: '__' });
     }
+
+    //* FIX THIS */
   };
 
   const createTrip = () => {
@@ -100,7 +102,6 @@ export function HomePage({ navigation }: HomePageProps) {
               navigation.navigate('RegisterDriver', {
                 userId: userData ? userData.id : '',
               });
-              // navigation.navigate('OnboardPage');
             },
           },
         ]

@@ -4,6 +4,7 @@ import {
   MessageService,
   CreateMessageHandler,
   GetMessagesHandler,
+  GetChatsHandler,
 } from '@carpool/api/messages/service/feature';
 import { MessageResolver } from './message-resolver.resolver';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -20,6 +21,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     PrismaService,
     AuthService,
     MessageRepository,
+    GetChatsHandler,
   ],
 })
 export class MessageModule {}

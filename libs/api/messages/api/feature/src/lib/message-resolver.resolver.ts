@@ -25,7 +25,7 @@ export class MessageResolver {
 
   @ResolveField(() => User)
   async receiver(@Root() message: Message): Promise<User> {
-    return await this.authService.findUserById(message.senderId);
+    return await this.authService.findUserById(message.receiverId);
   }
 
   @Query(() => [Message])
@@ -36,12 +36,19 @@ export class MessageResolver {
     return await this.messageService.getMessages(senderId, receiverId);
   }
 
+  @Query(() => [Message])
+  async getChats(@Args('userId') userId: string): Promise<Message[]> {
+    return await this.messageService.getChats(userId);
+  }
+
   @Mutation(() => Message)
   async createMessage(
     @Args('message') message: string,
     @Args('senderId') senderId: string,
     @Args('receiverId') receiverId: string
   ): Promise<Message> {
+    console.log('HIT');
+
     return await this.messageService.createMessage(
       senderId,
       receiverId,

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message } from '@prisma/client';
+import { Message, Chat } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import { MessageInput } from '@carpool/api/messages/entities';
 
@@ -8,8 +8,15 @@ export class MessageRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createMessage(message: MessageInput): Promise<Message | null> {
+    console.log('HIT');
+
     return this.prisma.message.create({
-      data: message,
+      data: {
+        chatId: '',
+        senderId: message.senderId,
+        receiverId: message.receiverId,
+        message: message.message,
+      },
     });
   }
 
@@ -24,6 +31,21 @@ export class MessageRepository {
           {
             senderId: receiverId,
             receiverId: senderId,
+          },
+        ],
+      },
+    });
+  }
+
+  async getChats(userId: string): Promise<Chat[]> {
+    return this.prisma.chat.findMany({
+      where: {
+        OR: [
+          {
+            userOneId: userId,
+          },
+          {
+            userTwoId: userId,
           },
         ],
       },

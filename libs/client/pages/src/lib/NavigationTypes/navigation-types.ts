@@ -31,7 +31,7 @@ export type RootStackParamList = {
     destinationLongitude: string;
     destinationLatitude: string;
   };
-  ChatScreen: undefined;
+  ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
   CreditCard: { tripId: string };

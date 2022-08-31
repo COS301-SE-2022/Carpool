@@ -39,6 +39,7 @@ export type RootStackParamList = {
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
   ReviewPage: undefined;
+  PayfastPage: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -168,4 +169,9 @@ export type AcceptRequestProps = NativeStackScreenProps<
 export type ReviewPageProps = NativeStackScreenProps<
   RootStackParamList,
   'ReviewPage'
+>;
+
+export type PayfastPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PayfastPage'
 >;

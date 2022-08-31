@@ -39,6 +39,9 @@
     "axios": "*",
     "react-native-credit-card": "*",
     "react-native-flip-card": "*",
-    "payment": "*"
+    "payment": "*",
+    "react-native-ratings": "*",
+    "react-native-payfast": "*",
+    "react-native-webview": "*"
   }
 }

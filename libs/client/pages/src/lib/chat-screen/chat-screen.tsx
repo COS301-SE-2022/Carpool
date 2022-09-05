@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,48 +8,113 @@ import {
 } from 'react-native';
 import { ChatScreenProps } from '../NavigationTypes/navigation-types';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  AppDispatch,
-  getMessages,
-  RootStore,
-  sendMessage,
-} from '@carpool/client/store';
+import { useSelector } from 'react-redux';
+import { RootStore } from '@carpool/client/store';
 import { Message } from '@carpool/client/store';
+import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
+
+const GET_MESSAGES = gql`
+  query GetMessages($senderId: String!, $receiverId: String!) {
+    getMessages(senderId: $senderId, receiverId: $receiverId) {
+      id
+      message
+      senderId
+      receiverId
+      sender {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+      createdAt
+    }
+  }
+`;
+
+const SEND_MESSAGE = gql`
+  mutation createMessage(
+    $senderId: String!
+    $receiverId: String!
+    $message: String!
+  ) {
+    createMessage(
+      senderId: $senderId
+      receiverId: $receiverId
+      message: $message
+    ) {
+      id
+      message
+      senderId
+      receiverId
+      sender {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+      createdAt
+    }
+  }
+`;
+
+const MSG_SUB = gql`
+  subscription Subscription {
+    messageSent {
+      id
+      message
+      senderId
+      receiverId
+      sender {
+        id
+        name
+      }
+      receiver {
+        id
+        name
+      }
+      createdAt
+    }
+  }
+`;
 
 export function ChatScreen({ navigation, route }: ChatScreenProps) {
   const { senderId, receiverId } = route.params;
 
-  const dispatch: AppDispatch = useDispatch();
-
   const [messages, setMessages] = useState<Message[]>([]);
 
-  const messagesState = useSelector((state: RootStore) => state.messages);
-  const { messages: storeMessages, status } = messagesState;
-
-  const messageState = useSelector((state: RootStore) => state.message);
-  const { status: messageStatus } = messageState;
+  const { data, loading, error } = useQuery(GET_MESSAGES, {
+    variables: { senderId, receiverId },
+    onCompleted(data) {
+      setMessages(data.getMessages);
+    },
+  });
 
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
   const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    if (!storeMessages) {
-      dispatch(getMessages({ senderId, receiverId }));
-    } else {
-      setMessages(storeMessages);
-    }
-  }, [dispatch, senderId, receiverId, storeMessages]);
+  const [sendMessage] = useMutation(SEND_MESSAGE, {
+    variables: { senderId, receiverId, message },
+    onCompleted(data) {
+      setMessage('');
+    },
+  });
 
-  const sendMessageHandler = () => {
-    dispatch(sendMessage({ senderId, receiverId, message }));
-  };
+  const { data: subData } = useSubscription(MSG_SUB, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log(data);
+      setMessages((prevMessages) => [...prevMessages, data.messageSent]);
+    },
+  });
 
   return (
     <View style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {status === 'loading' ? (
+      {loading ? (
         <View
           style={[
             styles.flexRow,
@@ -63,8 +128,7 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
         </View>
       ) : (
         messages &&
-        user &&
-        messages.length > 0 && (
+        user && (
           <>
             <View style={[styles.shadow, styles.flexRow, styles.topBar]}>
               <Icon
@@ -75,12 +139,12 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
               />
               <View style={{ flex: 4 }}>
                 <Text style={styles.textSmallWhite} numberOfLines={2}>
-                  {messages[0].receiver.name}
+                  Benjamin Osmers
                 </Text>
               </View>
             </View>
             <View style={{ backgroundColor: '#f2f2f2', flex: 10, padding: 15 }}>
-              {messages.map((message) => (
+              {messages.map((message: Message) => (
                 <View
                   key={message.id}
                   style={{
@@ -160,7 +224,15 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                   marginLeft: 5,
                   marginTop: -15,
                 }}
-                onPress={sendMessageHandler}
+                onPress={() =>
+                  sendMessage({
+                    variables: {
+                      senderId,
+                      receiverId,
+                      message,
+                    },
+                  })
+                }
               />
             </View>
           </>

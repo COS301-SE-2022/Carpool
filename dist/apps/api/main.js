@@ -1218,7 +1218,6 @@ let MessageResolver = class MessageResolver {
     }
     createMessage(message, senderId, receiverId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            console.log('HIT');
             const newMessage = yield this.messageService.createMessage(senderId, receiverId, message);
             pubSub.publish('messageSent', { messageSent: newMessage });
             return newMessage;
@@ -1321,7 +1320,7 @@ exports.ApiMessagesApiSharedEntitiesDataAccessModule = ApiMessagesApiSharedEntit
 
 var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.MessageInput = exports.Message = void 0;
+exports.MessageInput = exports.Chat = exports.Message = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 const entities_1 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
@@ -1363,6 +1362,20 @@ Message = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
 ], Message);
 exports.Message = Message;
+let Chat = class Chat {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], Chat.prototype, "userId", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], Chat.prototype, "name", void 0);
+Chat = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], Chat);
+exports.Chat = Chat;
 let MessageInput = class MessageInput {
 };
 tslib_1.__decorate([
@@ -1429,16 +1442,15 @@ exports.MessageRepository = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const common_1 = __webpack_require__("@nestjs/common");
 const prisma_1 = __webpack_require__("./libs/api/shared/services/prisma/data-access/src/index.ts");
+// import { Chat } from '@carpool/api/messages/entities';
 let MessageRepository = class MessageRepository {
     constructor(prisma) {
         this.prisma = prisma;
     }
     createMessage(message) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            console.log('HIT');
             return this.prisma.message.create({
                 data: {
-                    chatId: '',
                     senderId: message.senderId,
                     receiverId: message.receiverId,
                     message: message.message,

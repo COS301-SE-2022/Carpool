@@ -1,3 +1,4 @@
+export * from './lib/chat-list/chat-list';
 export * from './lib/register-driver/register-driver';
 export * from './lib/set-pickup-page/set-pickup-page';
 export * from './lib/driver-profile/driver-profile';

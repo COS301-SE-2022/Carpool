@@ -28,6 +28,15 @@ export class Message {
   updatedAt: Date;
 }
 
+@ObjectType()
+export class Chat {
+  @Field()
+  userId: string;
+
+  @Field()
+  name: string;
+}
+
 @InputType()
 export class MessageInput {
   @Field()

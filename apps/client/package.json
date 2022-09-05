@@ -42,6 +42,7 @@
     "payment": "*",
     "react-native-ratings": "*",
     "react-native-payfast": "*",
-    "react-native-webview": "*"
+    "react-native-webview": "*",
+    "@apollo/client": "*"
   }
 }

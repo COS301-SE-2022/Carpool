@@ -51,8 +51,6 @@ export class MessageResolver {
     @Args('senderId') senderId: string,
     @Args('receiverId') receiverId: string
   ): Promise<Message> {
-    console.log('HIT');
-
     const newMessage = await this.messageService.createMessage(
       senderId,
       receiverId,

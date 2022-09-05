@@ -17,6 +17,9 @@ import { MessageModule } from '@carpool/api/messages/api/feature';
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       driver: ApolloDriver,
+      subscriptions: {
+        'graphql-ws': true,
+      },
     }),
   ],
 })

@@ -6,10 +6,14 @@ import {
   Mutation,
   ResolveField,
   Root,
+  Subscription,
 } from '@nestjs/graphql';
 import { Message } from '@carpool/api/messages/entities';
 import { User } from '@carpool/api/authentication/entities';
 import { AuthService } from '@carpool/api/authentication/service';
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
 
 @Resolver(() => Message)
 export class MessageResolver {
@@ -49,10 +53,19 @@ export class MessageResolver {
   ): Promise<Message> {
     console.log('HIT');
 
-    return await this.messageService.createMessage(
+    const newMessage = await this.messageService.createMessage(
       senderId,
       receiverId,
       message
     );
+
+    pubSub.publish('messageSent', { messageSent: newMessage });
+
+    return newMessage;
+  }
+
+  @Subscription(() => Message, { name: 'messageSent' })
+  messageSent() {
+    return pubSub.asyncIterator('messageSent');
   }
 }

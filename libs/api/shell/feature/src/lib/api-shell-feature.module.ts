@@ -19,6 +19,7 @@ import { MessageModule } from '@carpool/api/messages/api/feature';
       driver: ApolloDriver,
       subscriptions: {
         'graphql-ws': true,
+        'subscriptions-transport-ws': true,
       },
     }),
   ],

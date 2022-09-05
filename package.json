@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@nestjs-modules/mailer": "^1.6.1",
     "@nestjs/apollo": "^10.0.9",
     "@nestjs/common": "^8.4.4",
@@ -33,7 +34,7 @@
     "core-js": "^3.6.5",
     "expo-secure-store": "9.3.0",
     "glob": "^8.0.3",
-    "graphql": "^16.4.0",
+    "graphql": "^16.6.0",
     "graphql-subscriptions": "^2.0.0",
     "handlebars": "^4.7.7",
     "lottie-react-native": "^5.1.3",

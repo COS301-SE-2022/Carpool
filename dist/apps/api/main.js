@@ -1167,7 +1167,7 @@ MessageModule = tslib_1.__decorate([
             prisma_1.PrismaService,
             service_1.AuthService,
             data_access_1.MessageRepository,
-            feature_1.GetChatsHandler,
+            // GetChatsHandler,
         ],
     })
 ], MessageModule);
@@ -1189,6 +1189,8 @@ const graphql_1 = __webpack_require__("@nestjs/graphql");
 const entities_1 = __webpack_require__("./libs/api/messages/api/shared/entities/data-access/src/index.ts");
 const entities_2 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
 const service_1 = __webpack_require__("./libs/api/authentication/service/feature/src/index.ts");
+const graphql_subscriptions_1 = __webpack_require__("graphql-subscriptions");
+const pubSub = new graphql_subscriptions_1.PubSub();
 let MessageResolver = class MessageResolver {
     constructor(messageService, authService) {
         this.messageService = messageService;
@@ -1217,8 +1219,13 @@ let MessageResolver = class MessageResolver {
     createMessage(message, senderId, receiverId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             console.log('HIT');
-            return yield this.messageService.createMessage(senderId, receiverId, message);
+            const newMessage = yield this.messageService.createMessage(senderId, receiverId, message);
+            pubSub.publish('messageSent', { messageSent: newMessage });
+            return newMessage;
         });
+    }
+    messageSent() {
+        return pubSub.asyncIterator('messageSent');
     }
 };
 tslib_1.__decorate([
@@ -1259,6 +1266,12 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [String, String, String]),
     tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], MessageResolver.prototype, "createMessage", null);
+tslib_1.__decorate([
+    (0, graphql_1.Subscription)(() => entities_1.Message, { name: 'messageSent' }),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", void 0)
+], MessageResolver.prototype, "messageSent", null);
 MessageResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(() => entities_1.Message),
     tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof feature_1.MessageService !== "undefined" && feature_1.MessageService) === "function" ? _h : Object, typeof (_j = typeof service_1.AuthService !== "undefined" && service_1.AuthService) === "function" ? _j : Object])
@@ -1451,22 +1464,6 @@ let MessageRepository = class MessageRepository {
             });
         });
     }
-    getChats(userId) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return this.prisma.chat.findMany({
-                where: {
-                    OR: [
-                        {
-                            userOneId: userId,
-                        },
-                        {
-                            userTwoId: userId,
-                        },
-                    ],
-                },
-            });
-        });
-    }
 };
 MessageRepository = tslib_1.__decorate([
     (0, common_1.Injectable)(),
@@ -1613,9 +1610,9 @@ exports.MessageService = MessageService;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b;
+var _a;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GetChatsHandler = exports.GetMessagesHandler = void 0;
+exports.GetMessagesHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const data_access_1 = __webpack_require__("./libs/api/messages/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -1635,21 +1632,13 @@ GetMessagesHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof data_access_1.MessageRepository !== "undefined" && data_access_1.MessageRepository) === "function" ? _a : Object])
 ], GetMessagesHandler);
 exports.GetMessagesHandler = GetMessagesHandler;
-let GetChatsHandler = class GetChatsHandler {
-    constructor(messageRepository) {
-        this.messageRepository = messageRepository;
-    }
-    execute(query) {
-        return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield this.messageRepository.getChats(query.userId);
-        });
-    }
-};
-GetChatsHandler = tslib_1.__decorate([
-    (0, cqrs_1.QueryHandler)(message_query_query_1.GetChatsQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof data_access_1.MessageRepository !== "undefined" && data_access_1.MessageRepository) === "function" ? _b : Object])
-], GetChatsHandler);
-exports.GetChatsHandler = GetChatsHandler;
+// @QueryHandler(GetChatsQuery)
+// export class GetChatsHandler implements IQueryHandler<GetChatsQuery> {
+//   constructor(private readonly messageRepository: MessageRepository) {}
+//   async execute(query: GetChatsQuery): Promise<Message[]> {
+//     return await this.messageRepository.getChats(query.userId);
+//   }
+// }
 
 
 /***/ }),
@@ -1781,6 +1770,10 @@ ApiShellFeatureModule = tslib_1.__decorate([
             graphql_1.GraphQLModule.forRoot({
                 autoSchemaFile: true,
                 driver: apollo_1.ApolloDriver,
+                subscriptions: {
+                    'graphql-ws': true,
+                    'subscriptions-transport-ws': true,
+                },
             }),
         ],
     })
@@ -3830,6 +3823,13 @@ module.exports = require("axios");
 /***/ ((module) => {
 
 module.exports = require("bcrypt");
+
+/***/ }),
+
+/***/ "graphql-subscriptions":
+/***/ ((module) => {
+
+module.exports = require("graphql-subscriptions");
 
 /***/ }),
 

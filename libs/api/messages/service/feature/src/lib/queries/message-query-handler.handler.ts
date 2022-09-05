@@ -15,11 +15,11 @@ export class GetMessagesHandler implements IQueryHandler<GetMessagesQuery> {
   }
 }
 
-@QueryHandler(GetChatsQuery)
-export class GetChatsHandler implements IQueryHandler<GetChatsQuery> {
-  constructor(private readonly messageRepository: MessageRepository) {}
+// @QueryHandler(GetChatsQuery)
+// export class GetChatsHandler implements IQueryHandler<GetChatsQuery> {
+//   constructor(private readonly messageRepository: MessageRepository) {}
 
-  async execute(query: GetChatsQuery): Promise<Message[]> {
-    return await this.messageRepository.getChats(query.userId);
-  }
-}
+//   async execute(query: GetChatsQuery): Promise<Message[]> {
+//     return await this.messageRepository.getChats(query.userId);
+//   }
+// }

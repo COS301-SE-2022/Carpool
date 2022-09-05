@@ -1,3 +1,5 @@
+import { Error } from './auth-types';
+
 export type MessageState = {
   messages: Message[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -26,6 +28,6 @@ export type Message = {
   createdAt: string;
 };
 
-export type Error = {
-  message: string;
-};
+// export type Error = {
+//   message: string;
+// };

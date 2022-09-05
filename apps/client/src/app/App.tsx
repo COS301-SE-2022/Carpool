@@ -36,6 +36,13 @@ import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  useQuery,
+  gql,
+} from '@apollo/client';
 
 export type RootStackParamList = {
   HomePage;
@@ -286,16 +293,21 @@ const AppWrapper = () => {
   );
 };
 
-export const App = () => {
-  // navigator.geolocation = Geolocation;
+const client = new ApolloClient({
+  uri: 'http://localhost:3000/graphql',
+  cache: new InMemoryCache(),
+});
 
+export const App = () => {
   return (
-    <NativeBaseProvider>
-      <Provider store={store}>
-        <AppWrapper />
-        <Toast />
-      </Provider>
-    </NativeBaseProvider>
+    <ApolloProvider client={client}>
+      <NativeBaseProvider>
+        <Provider store={store}>
+          <AppWrapper />
+          <Toast />
+        </Provider>
+      </NativeBaseProvider>
+    </ApolloProvider>
   );
 };
 

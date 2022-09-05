@@ -38,8 +38,8 @@ model User {
 
     sender Message[] @relation("sender")
     receiver Message[] @relation("receiver")
-    chatOne Chat[] @relation("userOne")
-    chatTwo Chat[] @relation("userTwo")
+    // chatOne Chat[] @relation("userOne")
+    // chatTwo Chat[] @relation("userTwo")
 
     @@map("user")
 }
@@ -163,19 +163,19 @@ enum Role {
     PASSENGER
 }
 
-model Chat {
-  id        String @id @default(cuid())
-  userOneId   String @map("user_one")
-  userTwoId   String @map("user_two")
-  createdAt DateTime @default(now()) @map("created_at")
+// model Chat {
+//   id        String @id @default(cuid())
+//   userOneId   String @map("user_one")
+//   userTwoId   String @map("user_two")
+//   createdAt DateTime @default(now()) @map("created_at")
 
-  messages Message[]
+//   messages Message[]
 
-  userOne User @relation(name: "userOne",fields: [userOneId], references: [id])
-  userTwo User @relation(name: "userTwo",fields: [userTwoId], references: [id])
+//   userOne User @relation(name: "userOne",fields: [userOneId], references: [id])
+//   userTwo User @relation(name: "userTwo",fields: [userTwoId], references: [id])
 
-  @@map("chat")
-}
+//   @@map("chat")
+// }
 
 model Message {
   id        String @id @default(cuid())
@@ -188,5 +188,5 @@ model Message {
 
   sender    User @relation(name: "sender", fields: [senderId], references: [id])
   receiver  User @relation(name: "receiver", fields: [receiverId], references: [id])
-  chat      Chat @relation(fields: [chatId], references: [id])
+  // chat      Chat @relation(fields: [chatId], references: [id])
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Message, Chat } from '@prisma/client';
+import { Message } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import { MessageInput } from '@carpool/api/messages/entities';
 
@@ -37,18 +37,18 @@ export class MessageRepository {
     });
   }
 
-  async getChats(userId: string): Promise<Chat[]> {
-    return this.prisma.chat.findMany({
-      where: {
-        OR: [
-          {
-            userOneId: userId,
-          },
-          {
-            userTwoId: userId,
-          },
-        ],
-      },
-    });
-  }
+  // async getChats(userId: string): Promise<Chat[]> {
+  //   return this.prisma.chat.findMany({
+  //     where: {
+  //       OR: [
+  //         {
+  //           userOneId: userId,
+  //         },
+  //         {
+  //           userTwoId: userId,
+  //         },
+  //       ],
+  //     },
+  //   });
+  // }
 }

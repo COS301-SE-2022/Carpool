@@ -15,14 +15,17 @@ import {
   RootStore,
   sendMessage,
 } from '@carpool/client/store';
+import { Message } from '@carpool/client/store';
 
 export function ChatScreen({ navigation, route }: ChatScreenProps) {
   const { senderId, receiverId } = route.params;
 
   const dispatch: AppDispatch = useDispatch();
 
+  const [messages, setMessages] = useState<Message[]>([]);
+
   const messagesState = useSelector((state: RootStore) => state.messages);
-  const { messages, status } = messagesState;
+  const { messages: storeMessages, status } = messagesState;
 
   const messageState = useSelector((state: RootStore) => state.message);
   const { status: messageStatus } = messageState;
@@ -33,8 +36,12 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    dispatch(getMessages({ senderId, receiverId }));
-  }, [dispatch, senderId, receiverId]);
+    if (!storeMessages) {
+      dispatch(getMessages({ senderId, receiverId }));
+    } else {
+      setMessages(storeMessages);
+    }
+  }, [dispatch, senderId, receiverId, storeMessages]);
 
   const sendMessageHandler = () => {
     dispatch(sendMessage({ senderId, receiverId, message }));

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Message } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import { MessageInput } from '@carpool/api/messages/entities';
-// import { Chat } from '@carpool/api/messages/entities';
+import { Chat } from '@carpool/api/messages/entities';
 
 @Injectable()
 export class MessageRepository {
@@ -35,45 +35,45 @@ export class MessageRepository {
     });
   }
 
-  // async getChats(userId: string): Promise<Chat[]> {
-  //   const chatsWhereReceiver = await this.prisma.message.findMany({
-  //     where: {
-  //       receiverId: userId,
-  //     },
-  //     select: {
-  //       senderId: true,
-  //       sender: {
-  //         select: {
-  //           name: true,
-  //           surname: true,
-  //         },
-  //       },
-  //     },
-  //   });
+  async getChats(userId: string): Promise<Chat[]> {
+    const chats = await this.prisma.message.findMany({
+      where: {
+        OR: [{ receiverId: userId }, { senderId: userId }],
+      },
+      select: {
+        senderId: true,
+        receiverId: true,
+        sender: {
+          select: {
+            name: true,
+            surname: true,
+          },
+        },
+        receiver: {
+          select: {
+            name: true,
+            surname: true,
+          },
+        },
+      },
+    });
 
-  //   const chatsWhereSender = await this.prisma.message.findMany({
-  //     where: {
-  //       senderId: userId,
-  //     },
-  //     select: {
-  //       receiverId: true,
-  //       receiver: {
-  //         select: {
-  //           name: true,
-  //           surname: true,
-  //         },
-  //       },
-  //     },
-  //   });
+    const uniqueChats = [];
 
-  //   const chats = [...chatsWhereReceiver, ...chatsWhereSender];
+    chats.map((chat) => {
+      const chatObj = new Chat();
 
-  //   const uniqueChats = chats.reduce((acc, chat) => {
-  //     const chatId = chat.senderId || chat.receiverId;
-  //     const chatName = chat.sender?.name || chat.receiver?.name;
-  //     const chatSurname = chat.sender?.surname || chat.receiver?.surname;
-  //   });
+      if (chat.senderId === userId) {
+        chatObj.userId = chat.receiverId;
+        chatObj.name = `${chat.receiver.name} ${chat.receiver.surname}`;
+      } else {
+        chatObj.userId = chat.senderId;
+        chatObj.name = `${chat.sender.name} ${chat.sender.surname}`;
+      }
 
-  //   return chats;
-  // }
+      uniqueChats.push(chatObj);
+    });
+
+    return uniqueChats;
+  }
 }

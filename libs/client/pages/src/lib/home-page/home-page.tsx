@@ -111,7 +111,7 @@ export function HomePage({ navigation }: HomePageProps) {
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
-      <View
+      {/* <View
         style={{
           backgroundColor: '#188aed',
           width: '100%',
@@ -119,7 +119,7 @@ export function HomePage({ navigation }: HomePageProps) {
         }}
       >
         <Text>Hello</Text>
-      </View>
+      </View> */}
       <HomeSearchBar
         onPress={() => navigation.push('SearchPage')}
         onPressCart={() => navigation.push('CheckoutTrips')}

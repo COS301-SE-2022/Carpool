@@ -40,11 +40,17 @@ export type RootStackParamList = {
   PassengerActiveTrip: undefined;
   ReviewPage: undefined;
   PayfastPage: undefined;
+  ChatList: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
   RootStackParamList,
   'HomePage'
+>;
+
+export type ChatListProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ChatList'
 >;
 
 export type RegisterDriverProps = NativeStackScreenProps<

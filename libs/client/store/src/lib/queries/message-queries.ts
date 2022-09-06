@@ -37,3 +37,12 @@ export const SEND_MESSAGE = `
     }
   }
 `;
+
+export const GET_CHATS = `
+  query ($userId: String!) {
+    getChats(userId: $userId) {
+      name,
+      userId
+    }
+  }
+`;

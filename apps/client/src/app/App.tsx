@@ -26,6 +26,7 @@ import {
   RegisterDriver,
   ReviewPage,
   PayfastPage,
+  ChatList,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -40,14 +41,13 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
   HttpLink,
   split,
-  gql,
 } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
+import * as SecureStore from 'expo-secure-store';
 
 export type RootStackParamList = {
   HomePage;
@@ -75,11 +75,13 @@ export type RootStackParamList = {
   RegisterDriver;
   ReviewPage;
   PayfastPage;
+  ChatList;
 };
 
 export type TabBarParamList = {
   Home;
   Profile;
+  ChatList;
 };
 
 export type AuthStackParamList = {
@@ -170,6 +172,9 @@ const TabBar = () => {
             case 'Profile':
               iconName = focused ? 'account' : 'account-outline';
               break;
+            case 'ChatList':
+              iconName = focused ? 'chat' : 'chat-outline';
+              break;
             default:
               break;
           }
@@ -203,6 +208,11 @@ const TabBar = () => {
         name="Home"
         component={HomeStack}
         options={{ title: 'Home' }}
+      />
+      <Tab.Screen
+        name="ChatList"
+        component={ChatList}
+        options={{ title: 'Messages' }}
       />
       <Tab.Screen
         name="Profile"
@@ -326,6 +336,8 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
+  // SecureStore.deleteItemAsync('user');
+
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>

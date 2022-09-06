@@ -123,6 +123,7 @@ let AuthResolver = class AuthResolver {
     }
     findUserById(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            console.log('iuserId', id);
             return yield this.authService.findUserById(id);
         });
     }
@@ -1167,7 +1168,7 @@ MessageModule = tslib_1.__decorate([
             prisma_1.PrismaService,
             service_1.AuthService,
             data_access_1.MessageRepository,
-            // GetChatsHandler,
+            feature_1.GetChatsHandler,
         ],
     })
 ], MessageModule);
@@ -1188,6 +1189,7 @@ const feature_1 = __webpack_require__("./libs/api/messages/service/feature/src/i
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 const entities_1 = __webpack_require__("./libs/api/messages/api/shared/entities/data-access/src/index.ts");
 const entities_2 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
+const entities_3 = __webpack_require__("./libs/api/messages/api/shared/entities/data-access/src/index.ts");
 const service_1 = __webpack_require__("./libs/api/authentication/service/feature/src/index.ts");
 const graphql_subscriptions_1 = __webpack_require__("graphql-subscriptions");
 const pubSub = new graphql_subscriptions_1.PubSub();
@@ -1250,7 +1252,7 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
 ], MessageResolver.prototype, "getMessages", null);
 tslib_1.__decorate([
-    (0, graphql_1.Query)(() => [entities_1.Message]),
+    (0, graphql_1.Query)(() => [entities_3.Chat]),
     tslib_1.__param(0, (0, graphql_1.Args)('userId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
@@ -1442,7 +1444,7 @@ exports.MessageRepository = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const common_1 = __webpack_require__("@nestjs/common");
 const prisma_1 = __webpack_require__("./libs/api/shared/services/prisma/data-access/src/index.ts");
-// import { Chat } from '@carpool/api/messages/entities';
+const entities_1 = __webpack_require__("./libs/api/messages/api/shared/entities/data-access/src/index.ts");
 let MessageRepository = class MessageRepository {
     constructor(prisma) {
         this.prisma = prisma;
@@ -1474,6 +1476,45 @@ let MessageRepository = class MessageRepository {
                     ],
                 },
             });
+        });
+    }
+    getChats(userId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const chats = yield this.prisma.message.findMany({
+                where: {
+                    OR: [{ receiverId: userId }, { senderId: userId }],
+                },
+                select: {
+                    senderId: true,
+                    receiverId: true,
+                    sender: {
+                        select: {
+                            name: true,
+                            surname: true,
+                        },
+                    },
+                    receiver: {
+                        select: {
+                            name: true,
+                            surname: true,
+                        },
+                    },
+                },
+            });
+            const uniqueChats = [];
+            chats.map((chat) => {
+                const chatObj = new entities_1.Chat();
+                if (chat.senderId === userId) {
+                    chatObj.userId = chat.receiverId;
+                    chatObj.name = `${chat.receiver.name} ${chat.receiver.surname}`;
+                }
+                else {
+                    chatObj.userId = chat.senderId;
+                    chatObj.name = `${chat.sender.name} ${chat.sender.surname}`;
+                }
+                uniqueChats.push(chatObj);
+            });
+            return uniqueChats;
         });
     }
 };
@@ -1622,9 +1663,9 @@ exports.MessageService = MessageService;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a;
+var _a, _b;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.GetMessagesHandler = void 0;
+exports.GetChatsHandler = exports.GetMessagesHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const data_access_1 = __webpack_require__("./libs/api/messages/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -1644,13 +1685,21 @@ GetMessagesHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof data_access_1.MessageRepository !== "undefined" && data_access_1.MessageRepository) === "function" ? _a : Object])
 ], GetMessagesHandler);
 exports.GetMessagesHandler = GetMessagesHandler;
-// @QueryHandler(GetChatsQuery)
-// export class GetChatsHandler implements IQueryHandler<GetChatsQuery> {
-//   constructor(private readonly messageRepository: MessageRepository) {}
-//   async execute(query: GetChatsQuery): Promise<Message[]> {
-//     return await this.messageRepository.getChats(query.userId);
-//   }
-// }
+let GetChatsHandler = class GetChatsHandler {
+    constructor(messageRepository) {
+        this.messageRepository = messageRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.messageRepository.getChats(query.userId);
+        });
+    }
+};
+GetChatsHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(message_query_query_1.GetChatsQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof data_access_1.MessageRepository !== "undefined" && data_access_1.MessageRepository) === "function" ? _b : Object])
+], GetChatsHandler);
+exports.GetChatsHandler = GetChatsHandler;
 
 
 /***/ }),

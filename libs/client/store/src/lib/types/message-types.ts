@@ -28,6 +28,13 @@ export type Message = {
   createdAt: string;
 };
 
-// export type Error = {
-//   message: string;
-// };
+export type ChatState = {
+  chats: Chat[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type Chat = {
+  userId: string;
+  name: string;
+};

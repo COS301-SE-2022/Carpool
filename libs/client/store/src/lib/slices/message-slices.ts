@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getMessages, sendMessage } from '../actions/message-actions';
-import { MessageState, MessageSendState } from '../types/message-types';
+import { getMessages, sendMessage, getChats } from '../actions/message-actions';
+import {
+  MessageState,
+  MessageSendState,
+  ChatState,
+} from '../types/message-types';
 
 const initialState = {
   messages: null,
@@ -24,6 +28,39 @@ export const getMessagesSlice = createSlice({
         state.messages = action.payload;
       })
       .addCase(getMessages.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+const initialChatState = {
+  chats: null,
+  status: 'idle',
+  error: null,
+} as ChatState;
+
+export const getChatsSlice = createSlice({
+  name: 'chats',
+  initialState: initialChatState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getChats.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(getChats.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.chats = action.payload;
+      })
+      .addCase(getChats.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

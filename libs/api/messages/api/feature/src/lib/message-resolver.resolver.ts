@@ -10,6 +10,7 @@ import {
 } from '@nestjs/graphql';
 import { Message } from '@carpool/api/messages/entities';
 import { User } from '@carpool/api/authentication/entities';
+import { Chat } from '@carpool/api/messages/entities';
 import { AuthService } from '@carpool/api/authentication/service';
 import { PubSub } from 'graphql-subscriptions';
 
@@ -40,8 +41,8 @@ export class MessageResolver {
     return await this.messageService.getMessages(senderId, receiverId);
   }
 
-  @Query(() => [Message])
-  async getChats(@Args('userId') userId: string): Promise<Message[]> {
+  @Query(() => [Chat])
+  async getChats(@Args('userId') userId: string): Promise<Chat[]> {
     return await this.messageService.getChats(userId);
   }
 

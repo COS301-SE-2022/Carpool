@@ -4,15 +4,15 @@ import { View, StyleSheet, Button, Text } from "react-native";
 import { WebView } from "react-native-webview";
 
 
-export const PayfastView = (props: { sandbox: any; signature: any; passphrase: string; title: any; data: { [x: string]: string | number | boolean; }; }) => {
+export const PayfastView = (props: { sandbox: boolean; signature: boolean; passphrase: string; title: string; data: { [x: string]: string | number | boolean; }; }) => {
   // State constants
   const [showWebView, setShowWebView] = useState(false);
   const [postBody, setPostBody] = useState("");
   const uri = props.sandbox ? "https://sandbox.payfast.co.za/eng/process" : "http://www.payfast.co.za/eng/process";
   const closeUriRegex = /https?:\/\/([a-z]|\.)+\/eng\/process\/finish\/([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+/gi;
   const paymentData = {
-    merchant_id : 10000100,
-    merchant_key: '46f0cd694581a',
+    merchant_id : 10026673,
+    merchant_key: '7zctrsta1c3ys',
     amount: 60.00,
     item_name: 'React Native Purchase'
 }

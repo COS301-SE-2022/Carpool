@@ -41,6 +41,7 @@ export type RootStackParamList = {
   ReviewPage: undefined;
   PayfastPage: undefined;
   ChatList: undefined;
+  TripRatingPage: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -180,4 +181,9 @@ export type ReviewPageProps = NativeStackScreenProps<
 export type PayfastPageProps = NativeStackScreenProps<
   RootStackParamList,
   'PayfastPage'
+>;
+
+export type TripRatingPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'TripRatingPage'
 >;

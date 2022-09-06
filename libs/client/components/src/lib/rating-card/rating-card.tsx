@@ -1,12 +1,17 @@
 /* eslint-disable-next-line */
-import React from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Image, Modal, TouchableOpacity } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
+import {ReviewCard} from '@carpool/client/components';
 
 
 export function RatingCard(){
+  const [modalVisible, setModalVisible] = useState(false);
+
   const ratingCompleted = (rating:number) => {
     console.log("Rating is: " + rating)
+    setModalVisible(true)
+
   }
   return (
     <View>
@@ -31,75 +36,11 @@ export function RatingCard(){
         showRating={false}
         onFinishRating={ratingCompleted}
       />
-
+        {
+          modalVisible?  <ReviewCard /> : null
+        }
 
     </View>
-  //   <View style={[styles.flexCol, styles.userContainer]}>
-  //   <View
-  //     style={[
-  //       styles.flexRow,
-  //       {
-  //         flex: 1,
-  //       },
-  //     ]}
-  //   >
-  //     <View
-  //       style={[
-  //         styles.flexRow,
-  //         {
-  //           flex: 1,
-  //           justifyContent: 'flex-start',
-  //           paddingHorizontal: 20,
-  //           paddingVertical: 15,
-  //           borderRadius: 15,
-  //           marginVertical: 10,
-  //           backgroundColor: '#fff',
-  //           shadowColor: '#000',
-  //           shadowOffset: {
-  //             width: 0,
-  //             height: 2,
-  //           },
-  //           shadowOpacity: 0.25,
-  //           shadowRadius: 3.84,
-  //           elevation: 5,
-
-  //         },
-  //       ]}
-  //     >
-  //       <Image
-  //         source={require('./lighter_grey.png')}
-  //         resizeMode="contain"
-  //         style={styles.image}
-  //       />
-  //       <View>
-  //         <Text
-  //           style={[
-  //             styles.textLargeBlack,
-  //             {
-  //               marginBottom: 5,
-  //             },
-  //           ]}
-  //         >
-  //           How was your trip with Benjamin?
-  //         </Text>
-  //         <Text style={styles.textMediumLight}>Tuesday morning to University of Pretoria</Text>
-  //         <AirbnbRating
-  //           count={5}
-  //           defaultRating={3}
-  //           size={20}
-  //           showRating={false}
-  //           onFinishRating={ratingCompleted}
-  //           // ratingContainerStyle={{left: '-10%'}}
-  //           />
-  //     <TouchableOpacity
-  //       onPress={submitHandler}
-  //       style={[styles.container,]}>
-  //       <Text style={styles.text}>Rate</Text>
-  //     </TouchableOpacity>
-  //       </View>
-  //     </View>
-  //   </View>
-  // </View>
 );
 }
 
@@ -167,6 +108,9 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 25,
   },
+  hide:{
+    display: 'none',
+  }
 
 });
 

@@ -142,18 +142,7 @@ export function HomePage({ navigation }: HomePageProps) {
               />
             </Text>
           ) : (
-            <Text style={styles.smallTextBlack}>
-              Upcoming trip
-              {
-                <Icon
-                  name="star"
-                  size={30}
-                  style={{ color: '#edda02', alignSelf: 'flex-end' }}
-                  // onPress={() => setModalVisible2(true)}
-                  onPress={() => navigation.navigate('ReviewPage')}
-                />
-              }
-            </Text>
+            <Text style={styles.smallTextBlack}>Upcoming trip</Text>
           )}
 
           {status === 'loading' ? (

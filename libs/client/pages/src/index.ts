@@ -28,3 +28,4 @@ export * from './lib/passenger-active-trip/passenger-active-trip';
 export * from './lib/accept-request/accept-request';
 export * from './lib/review-page/review-page';
 export * from './lib/payfast-page/payfast-page';
+export * from './lib/trip-rating-page/trip-rating-page';

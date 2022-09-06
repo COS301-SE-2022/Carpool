@@ -278,6 +278,9 @@ const AppWrapper = () => {
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="TripHistory" component={TripHistory} />
           </Stack.Group>
+          <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="ReviewPage" component={ReviewPage} />
+          </Stack.Group>
         </Stack.Navigator>
       ) : (
         <AuthNav />

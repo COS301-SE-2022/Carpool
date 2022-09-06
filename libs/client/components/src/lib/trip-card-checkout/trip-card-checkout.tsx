@@ -22,12 +22,6 @@ type cardProps = {
 
 const { blue, black, grey, lightGrey, white } = colors;
 
-const paymentData = {
-  merchant_id: 10026673,
-  merchant_key: '7zctrsta1c3ys',
-  amount: 60.0,
-  item_name: 'React Native Purchase',
-};
 export function TripCardCheckout({
   startLocation,
   destination,
@@ -60,7 +54,7 @@ export function TripCardCheckout({
             <Text style={styles.date}>{formatDate(date)}</Text>
           </View>
           <View>
-            <Text style={{ color: blue, fontSize: 18 }}> {price} </Text>
+            <Text style={{ color: blue, fontSize: 18 }}> R {price} </Text>
             <Text style={{ color: black }}>{getTime(date)}</Text>
           </View>
         </View>
@@ -98,8 +92,6 @@ export function TripCardCheckout({
               {destination}
             </Text>
           </View>
-
-          {/* <PayFastWebView title='Pay Now' data={paymentData} sandbox={true}/> */}
         </View>
       </View>
     </TouchableOpacity>

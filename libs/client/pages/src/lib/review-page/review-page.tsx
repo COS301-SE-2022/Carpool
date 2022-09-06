@@ -1,62 +1,42 @@
 import React, { useState } from 'react';
 import { ReviewPageProps } from '../NavigationTypes/navigation-types';
 import { RatingCard, ReviewCard} from '@carpool/client/components';
-import { View, StyleSheet, TouchableOpacity, Text, Modal } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image } from 'react-native';
 
 export function ReviewPage({ navigation }: ReviewPageProps) {
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(true);
-  const changeToReview = () => {
-    console.log("Change from Rating to Review Modal")
-    setModalVisible(true)
-    setModalVisible2(false)
+  const [modalVisible, setModalVisible] = useState(true);
 
-  };
   const reviewToNothing = () => {
     console.log("Change from Review Modal to Nothing")
     setModalVisible(false)
-    navigation.navigate('HomePage');
   };
   return (
     <View style={styles.centeredView}>
+      {modalVisible?
+         <View style={styles.modalView}>
+             <RatingCard/>
 
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <ReviewCard />
             <TouchableOpacity
-              style={[styles.container]}
               onPress={reviewToNothing}
-            >
-              <Text style={styles.text}>Review</Text>
+              style={[styles.container,]}>
+              <Text style={styles.text}>Rate</Text>
             </TouchableOpacity>
-          </View>
         </View>
-      </Modal>
-      <Modal
-       animationType="slide"
-       transparent={true}
-       visible={modalVisible2}>
-         <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-          <RatingCard/>
-          <TouchableOpacity
-            onPress={changeToReview}
-            style={[styles.container,]}>
-            <Text style={styles.text}>Rate</Text>
-         </TouchableOpacity>
-          </View>
+        :
+        <View style={styles.Thankyou}>
+                  <Text style ={{color:'#4BB543', textAlign: 'center',fontSize: 20,}}>
+                    Thank you for Reviewing!
+                  </Text>
+        <Image
+                  source={require('./thankYou.png')}
+                  resizeMode="contain"
+        />
+
         </View>
-
-
-      </Modal>
-
+      }
     </View>
+
   );
 }
 
@@ -105,12 +85,12 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   centeredView: {
-    flex:1,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
   modalView: {
-    position: "absolute",
+    position: 'absolute',
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
@@ -120,7 +100,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    bottom: '8%',
     width: '100%',
     padding: 10,
     marginHorizontal:'10%',
@@ -147,6 +126,12 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  Thankyou: {
+    position: 'absolute',
+    width: '100%',
+    padding: 10,
+    marginHorizontal:'10%',
   }
 });
 

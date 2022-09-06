@@ -1,9 +1,10 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TripDetailsType } from '@carpool/client/store';
 import { formatDate } from '@carpool/client/shared/utilities';
 import { styles } from './trip-details-top-bar.style';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 
 type props = {
   trip: TripDetailsType;
@@ -27,6 +28,11 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
           Trip to {trip && trip.coordinates[0].address}
         </Text>
       </View>
+      <Pressable>
+        <View style={[styles.shadow, styles.cancelButton]}>
+          <Icons name="cancel" color="#000000" size={30} />
+        </View>
+      </Pressable>
     </View>
   );
 }

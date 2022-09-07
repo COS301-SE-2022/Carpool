@@ -318,12 +318,12 @@ const AppWrapper = () => {
 };
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3333/graphql',
+  uri: 'https://carpoolcos301.herokuapp.com/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'ws://localhost:3333/graphql',
+    url: 'ws://carpoolcos301.herokuapp.com/graphql',
   })
 );
 

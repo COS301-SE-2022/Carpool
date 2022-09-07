@@ -2,6 +2,9 @@
   "name": "carpool",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
   "scripts": {
     "start": "nx serve",
     "start:api": "yarn start api",

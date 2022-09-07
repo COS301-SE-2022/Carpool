@@ -7,9 +7,10 @@ import {
 } from '../queries/message-queries';
 import { Platform } from 'react-native';
 import { Message, Chat } from '../types/message-types';
+import { url } from '../config';
 
 const host =
-  Platform.OS === 'ios' ? 'https://e6de-102-33-32-67.eu.ngrok.io' : '10.0.2.2';
+  Platform.OS === 'ios' ? 'https://a5a7-102-33-32-76.eu.ngrok.io' : '10.0.2.2';
 
 export type GetMessageInput = {
   senderId: string;
@@ -27,7 +28,7 @@ export const getMessages = createAsyncThunk<
   GetMessageInput,
   { rejectValue: Error }
 >('messages/getMessages', async (message: GetMessageInput, thunkApi) => {
-  const response = await axios.post(`${host}/graphql`, {
+  const response = await axios.post(`${url}/graphql`, {
     query: GET_MESSAGES,
     variables: {
       senderId: message.senderId,
@@ -54,7 +55,7 @@ export const getChats = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('chats/getChats', async (userId: string, thunkApi) => {
-  const response = await axios.post(`${host}/graphql`, {
+  const response = await axios.post(`${url}/graphql`, {
     query: GET_CHATS,
     variables: {
       userId,
@@ -80,7 +81,7 @@ export const sendMessage = createAsyncThunk<
   SendMessageInput,
   { rejectValue: Error }
 >('messageSend/sendMessage', async (message: SendMessageInput, thunkApi) => {
-  const response = await axios.post(`${host}/graphql`, {
+  const response = await axios.post(`${url}/graphql`, {
     query: SEND_MESSAGE,
     variables: {
       senderId: message.senderId,

@@ -58,7 +58,7 @@ export class MessageRepository {
       },
     });
 
-    const uniqueChats = [];
+    let uniqueChats = [];
 
     chats.map((chat) => {
       const chatObj = new Chat();
@@ -73,6 +73,16 @@ export class MessageRepository {
 
       uniqueChats.push(chatObj);
     });
+
+    console.log(uniqueChats);
+
+    uniqueChats = uniqueChats.filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.name === value.name && t.userId === value.userId
+        )
+    );
 
     return uniqueChats;
   }

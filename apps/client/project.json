@@ -17,7 +17,9 @@
     },
     "run-ios": {
       "executor": "@nrwl/react-native:run-ios",
-      "options": {}
+      "options": {
+        "device": "Benjamin’s iPhone"
+      }
     },
     "bundle-ios": {
       "executor": "@nrwl/react-native:bundle",

@@ -69,7 +69,12 @@
       "@carpool/client/shared/utilities": [
         "libs/client/shared/utilities/src/index.ts"
       ],
-      "@carpool/client/store": ["libs/client/store/src/index.ts"]
+      "@carpool/client/store": ["libs/client/store/src/index.ts"],
+      "@carpool/dashboard/components": [
+        "libs/dashboard/components/src/index.ts"
+      ],
+      "@carpool/dashboard/pages": ["libs/dashboard/pages/src/index.ts"],
+      "@carpool/dashboard/redux": ["libs/dashboard/redux/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

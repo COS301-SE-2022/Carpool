@@ -24,6 +24,11 @@
     "client-e2e": "apps/client-e2e",
     "client-pages": "libs/client/pages",
     "client-shared-utilities": "libs/client/shared/utilities",
-    "client-store": "libs/client/store"
+    "client-store": "libs/client/store",
+    "dashboard": "apps/dashboard",
+    "dashboard-components": "libs/dashboard/components",
+    "dashboard-e2e": "apps/dashboard-e2e",
+    "dashboard-pages": "libs/dashboard/pages",
+    "dashboard-redux": "libs/dashboard/redux"
   }
 }

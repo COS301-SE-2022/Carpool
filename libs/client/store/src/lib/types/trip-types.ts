@@ -8,7 +8,7 @@ export type CreateTripState = {
 
 export type TripCreateType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   price: number;
@@ -17,7 +17,7 @@ export type TripCreateType = {
 
 export type TripRequestType = {
   bookingId: string;
-  user: User;
+  user: UserTrip;
   trip: TripRequest;
 };
 
@@ -33,7 +33,7 @@ export type TripRequest = {
   coordinates: Location[];
 };
 
-export type User = {
+export type UserTrip = {
   id: string;
   name: string;
   surname: string;
@@ -59,7 +59,7 @@ export type TripList = {
 
 export type TripListType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   coordinates: Location[];
@@ -77,7 +77,7 @@ export type Passenger = {
   bookingId: string;
 };
 
-export type Driver = {
+export type DriverTrip = {
   id: string;
   name: string;
   surname: string;
@@ -92,7 +92,7 @@ export type TripDetails = {
 
 export type TripDetailsType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   seatsAvailable?: string;

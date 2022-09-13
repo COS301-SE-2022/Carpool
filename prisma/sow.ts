@@ -13,6 +13,8 @@ async function main() {
   await prisma.trip.deleteMany({});
 
   await prisma.user.deleteMany({});
+
+  await prisma.message.deleteMany({});
 }
 
 main()

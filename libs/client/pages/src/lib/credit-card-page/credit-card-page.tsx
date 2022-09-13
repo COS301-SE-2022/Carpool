@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ImageBackground,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -17,9 +18,7 @@ import {
 } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 
-import { Button } from '@carpool/client/components';
-
-import {PayFastWebView} from "react-native-payfast";
+import { Button, PayfastView } from '@carpool/client/components';
 
 export function CreditCard({ navigation, route }: CreditCardProps) {
   const { tripId } = route.params;
@@ -86,20 +85,19 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
   };
 
   const submitPayment = () => {
-    // if (bookingId) {
-    //   dispatch(updateBookingPaymentStatus(bookingId));
-    // }
-    console.log('first');
-    navigation.navigate('PayfastPage');
+    if (bookingId) {
+      dispatch(updateBookingPaymentStatus(bookingId));
+    }
+    console.log('Make Payment');
+    navigation.push('PayfastPage');
   };
 
   const paymentData = {
     merchant_id : 10026673,
     merchant_key: '7zctrsta1c3ys',
-    amount: 30.00,
-    item_name: 'React Native Purchase',
-    sandbox: true,
-};
+    amount: 60.00,
+    item_name: 'React Native Purchase'
+}
 
   return (
     <SafeAreaView
@@ -263,7 +261,11 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
               />
             </View>
             <View>
-             <Button title="Pay Now" onPress={submitPayment} />
+             <Button title="Continue" onPress={submitPayment} />
+             {/* <TouchableOpacity onPress={submitPayment}>
+             <PayfastView title ="Pay Now" data = {paymentData} sandbox={true} signature = {false} passphrase = {""}/>
+             </TouchableOpacity> */}
+
 
 
             </View>

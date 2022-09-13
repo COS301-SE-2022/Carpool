@@ -8,6 +8,7 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 ////////////////////////////////
@@ -74,6 +75,7 @@ model Trip {
     // start         Location @relation("start_location")
     // destination   Location @relation("destination")
     coordinates     Location[]
+    reviewed        Boolean @default(false)
 
     @@map("trip")
 }
@@ -86,6 +88,7 @@ model Booking {
   seatsBooked    Int @map("seats_booked")
   status         String @default("confirmed")
   price          Float
+  reviewed       Boolean @default(false)
 
   pickUp         PickupLocation? @relation("pickup_location")
   user           User @relation(fields:[userId], references: [id])

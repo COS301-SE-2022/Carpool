@@ -13,7 +13,7 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
   const paymentData = {
     merchant_id : 10026673,
     merchant_key: '7zctrsta1c3ys',
-    amount: 60.00,
+    amount: 30.00,
     item_name: 'React Native Purchase'
 }
   const setContainerStyles = () => {
@@ -97,13 +97,17 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
 const styles = StyleSheet.create({
   webViewWrapper: {
       width: "100%",
-      flex: 1
   },
   pfWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: '10%',
   },
   pfButton: {
-      height: 40,
-      width: "100%"
+    backgroundColor: '#188aed',
+    width: '100%',
+    padding: 12,
+    borderRadius: 25,
   }
 });
 

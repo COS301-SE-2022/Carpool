@@ -45,6 +45,34 @@ export class TripsRepository {
     });
   }
 
+  async findUpcomingTrip(id: string): Promise<Trip> {
+    const trips = await this.prisma.trip.findMany({
+      where: {
+        OR: [
+          {
+            driverId: id,
+          },
+          {
+            passengers: {
+              some: {
+                userId: id,
+              },
+            },
+          },
+        ],
+        tripDate: {
+          gte: formatDate(new Date().toISOString()),
+        },
+        status: 'confirmed',
+      },
+      orderBy: {
+        tripDate: 'desc',
+      },
+    });
+
+    return trips[0];
+  }
+
   async findByDriver(driverId: string): Promise<Trip[]> {
     return await this.prisma.trip.findMany({
       where: {

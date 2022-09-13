@@ -7,7 +7,7 @@ import {
   TripListType,
   resetStart,
   resetEnd,
-  listUpcomingTrips,
+  findUpcomingTrip,
 } from '@carpool/client/store';
 import { HomePageProps } from '../NavigationTypes/navigation-types';
 import {
@@ -31,8 +31,8 @@ import { styles } from './home-page.style';
 export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
 
-  const tripState = useSelector((state: RootStore) => state.upcomingTrips);
-  const { trips, status } = tripState;
+  const tripState = useSelector((state: RootStore) => state.upcomingTrip);
+  const { trip, status } = tripState;
 
   const userState = useSelector((state: RootStore) => state.user);
   const { user: userData } = userState;
@@ -57,7 +57,9 @@ export function HomePage({ navigation }: HomePageProps) {
   };
 
   useEffect(() => {
-    dispatch(listUpcomingTrips());
+    if (userData && userData.id) {
+      dispatch(findUpcomingTrip(userData.id));
+    }
 
     if (endTripStatus === 'success') {
       dispatch(resetEnd());
@@ -66,7 +68,7 @@ export function HomePage({ navigation }: HomePageProps) {
     if (tripStartStatus === 'success') {
       dispatch(resetStart());
     }
-  }, [dispatch, endTripStatus, tripStartStatus]);
+  }, [dispatch, endTripStatus, tripStartStatus, userData]);
 
   const viewTrip = (tripId: string, trip: TripListType) => {
     if (trip.status === 'active') {
@@ -131,7 +133,7 @@ export function HomePage({ navigation }: HomePageProps) {
           onPressCreate={() => createTrip()}
         />
         <View style={styles.cardContainer}>
-          {trips && trips.length !== 0 && trips[0].status === 'active' ? (
+          {trip ? (
             <Text style={styles.smallTextBlack}>
               Active trip
               <Icon
@@ -147,16 +149,16 @@ export function HomePage({ navigation }: HomePageProps) {
 
           {status === 'loading' ? (
             <ActivityIndicator size="large" />
-          ) : trips && trips.length !== 0 ? (
+          ) : trip ? (
             <TripCardSmall
-              key={trips[0].tripId}
-              startLocation={trips[0].coordinates[0].address}
-              destination={trips[0].coordinates[1].address}
-              endLat={trips[0].coordinates[1].latitude}
-              endLong={trips[0].coordinates[1].longitude}
-              date={trips[0].tripDate}
+              key={trip.tripId}
+              startLocation={trip.coordinates[0].address}
+              destination={trip.coordinates[1].address}
+              endLat={trip.coordinates[1].latitude}
+              endLong={trip.coordinates[1].longitude}
+              date={trip.tripDate}
               type="passenger"
-              onPress={() => viewTrip(trips[0].tripId, trips[0])}
+              onPress={() => viewTrip(trip.tripId, trip)}
             />
           ) : (
             <View style={styles.noTripContainer}>

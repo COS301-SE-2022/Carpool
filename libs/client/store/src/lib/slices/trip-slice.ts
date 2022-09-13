@@ -3,7 +3,6 @@ import {
   TripBooking,
   TripDetails,
   TripList,
-  UpcomingTrip,
   AcceptTripRequest,
   StartTrip,
   EndTrip,
@@ -12,12 +11,12 @@ import {
   DeclineTripRequest,
   CreateTripState,
   TripRequestState,
+  UpcomingTripState,
 } from '../types/trip-types';
 import {
   createTrip,
   listTrips,
   fetchTripDetails,
-  fetchUpcomingTrip,
   listDriverHistory,
   listPassengerHistory,
   listSearchResults,
@@ -30,8 +29,8 @@ import {
   updateBookingPaymentStatus,
   findBookingId,
   declineTripRequest,
-  listUpcomingTrips,
   listTripRequests,
+  findUpcomingTrip,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -100,22 +99,26 @@ export const tripListSlice = createSlice({
   },
 });
 
-export const tripUpcomingListSlice = createSlice({
-  name: 'trips',
-  initialState,
+export const tripUpcomingSlice = createSlice({
+  name: 'tripUpcoming',
+  initialState: {
+    trip: null,
+    status: 'idle',
+    error: null,
+  } as UpcomingTripState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(listUpcomingTrips.pending, (state, action) => {
+      .addCase(findUpcomingTrip.pending, (state, action) => {
         console.log('IDLE');
         state.status = 'loading';
       })
-      .addCase(listUpcomingTrips.fulfilled, (state, action) => {
+      .addCase(findUpcomingTrip.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
-        state.trips = action.payload;
+        state.trip = action.payload;
       })
-      .addCase(listUpcomingTrips.rejected, (state, action) => {
+      .addCase(findUpcomingTrip.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -248,39 +251,6 @@ export const tripDetailsSlice = createSlice({
         state.trip = action.payload;
       })
       .addCase(fetchTripDetails.rejected, (state, action) => {
-        console.log('FAIL');
-        state.status = 'idle';
-        if (action.payload) {
-          state.error = action.payload;
-        } else {
-          state.error = { message: 'Unknown error' };
-        }
-      });
-  },
-});
-
-export const tripUpcomingState = {
-  trip: null,
-  status: 'idle',
-  error: null,
-} as UpcomingTrip;
-
-export const upcomingTripSlice = createSlice({
-  name: 'upcoming',
-  initialState: tripUpcomingState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchUpcomingTrip.pending, (state, action) => {
-        console.log('IDLE');
-        state.status = 'loading';
-      })
-      .addCase(fetchUpcomingTrip.fulfilled, (state, action) => {
-        console.log('SUCCESS');
-        state.status = 'success';
-        state.trip = action.payload;
-      })
-      .addCase(fetchUpcomingTrip.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

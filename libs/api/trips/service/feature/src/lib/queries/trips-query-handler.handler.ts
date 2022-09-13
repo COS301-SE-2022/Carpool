@@ -13,6 +13,7 @@ import {
   findByRequestedTripsQuery,
   FindBookingByTripAndUserIdQuery,
   FindAllTripRequestsQuery,
+  FindUpcomingTripsQuery,
 } from './trips-query.query';
 
 @QueryHandler(FindAllQuery)
@@ -120,5 +121,16 @@ export class FindAllTripRequestsHandler
 
   async execute(query: FindAllTripRequestsQuery): Promise<Booking[] | null> {
     return await this.tripsRepository.findAllTripRequests(query.userId);
+  }
+}
+
+@QueryHandler(FindUpcomingTripsQuery)
+export class FindUpcomingTripsHandler
+  implements IQueryHandler<FindUpcomingTripsQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindUpcomingTripsQuery): Promise<Trip | null> {
+    return await this.tripsRepository.findUpcomingTrip(query.userId);
   }
 }

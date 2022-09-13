@@ -118,13 +118,23 @@ query ($id: String!) {
 `;
 
 export const UPCOMING_TRIP = `
-  query {
-    findUpcomingTrip {
+  query ($id: String!) {
+    findUpcomingTrip(id: $id) {
       tripId,
+      driver {
+        id,
+        name,
+        surname,
+        profilePic
+      },
       tripDate,
+      createdAt,
       coordinates {
         address,
-      }
+        latitude,
+        longitude
+      },
+      status
     }
   }
 `;

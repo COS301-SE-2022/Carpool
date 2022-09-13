@@ -51,6 +51,12 @@ export type TripUpcomingType = {
   coordinates: Location[];
 };
 
+export type UpcomingTripState = {
+  trip: TripListType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type TripList = {
   trips: TripListType[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';

@@ -92,7 +92,7 @@ model Booking {
   price          Float
   reviewed       Boolean @default(false)
 
-  pickUp         PickupLocation? @relation("pickup_location")
+  pickUp         PickupLocation[] @relation("pickup_location")
   user           User @relation(fields:[userId], references: [id])
   trip           Trip @relation(fields:[tripId], references: [tripId])
 }

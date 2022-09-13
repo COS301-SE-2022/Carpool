@@ -77,6 +77,16 @@ export class TripsResolver {
     return await this.tripsService.findByPassenger(id);
   }
 
+  /**
+   * Query to find upcoming trip for user
+   * @param {string} id The id of the passenger to find the trips by
+   * @returns {Promise<Trip[]>}
+   */
+  @Query(() => Trip)
+  async findUpcomingTrip(@Args('id') id: string): Promise<Trip> {
+    return await this.tripsService.findUpcomingTrip(id);
+  }
+
   @Query(() => Booking)
   async findBookingByTripAndUserId(
     @Args('tripId') tripId: string,

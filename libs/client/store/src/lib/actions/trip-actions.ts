@@ -22,7 +22,6 @@ import {
 import {
   TripListType,
   TripDetailsType,
-  TripUpcomingType,
   Passenger,
   TripRequestType,
 } from '../types/trip-types';
@@ -87,13 +86,16 @@ export const listTripRequests = createAsyncThunk<
   return res;
 });
 
-export const listUpcomingTrips = createAsyncThunk<
-  TripListType[],
-  undefined,
+export const findUpcomingTrip = createAsyncThunk<
+  TripListType,
+  string,
   { rejectValue: Error }
->('trips/listUpcoming', async (__, thunkApi) => {
+>('tripUpcoming/listUpcoming', async (id: string, thunkApi) => {
   const response = await axios.post(`${url}/graphql`, {
-    query: LIST_TRIPS,
+    query: UPCOMING_TRIP,
+    variables: {
+      id,
+    },
   });
   console.log('FETCHING');
 
@@ -105,20 +107,9 @@ export const listUpcomingTrips = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  const res = response.data.data.findAllTrips;
+  const res = response.data.data.findUpcomingTrip;
 
-  const tripsArr: TripListType[] = [];
-
-  res.map((trip: TripDetailsType) => {
-    if (trip.status !== 'completed') {
-      tripsArr.push(trip);
-    }
-  });
-
-  // SecureStore.deleteItemAsync('trips');
-  // SecureStore.setItemAsync('trips', JSON.stringify(res));
-
-  return tripsArr.reverse();
+  return res;
 });
 
 export const listDriverHistory = createAsyncThunk<
@@ -305,32 +296,32 @@ export const listPassengerHistory = createAsyncThunk<
   return res;
 });
 
-export const fetchUpcomingTrip = createAsyncThunk<
-  TripUpcomingType,
-  undefined,
-  { rejectValue: Error }
->('trips/upcoming', async (__, thunkApi) => {
-  const response = await axios.post(`${url}/graphql`, {
-    query: UPCOMING_TRIP,
-  });
+// export const fetchUpcomingTrip = createAsyncThunk<
+//   TripUpcomingType,
+//   undefined,
+//   { rejectValue: Error }
+// >('trips/upcoming', async (__, thunkApi) => {
+//   const response = await axios.post(`${url}/graphql`, {
+//     query: UPCOMING_TRIP,
+//   });
 
-  console.log('FETCHING');
+//   console.log('FETCHING');
 
-  if (response.data.errors) {
-    const error = {
-      message: response.data.errors[0].message,
-    } as Error;
+//   if (response.data.errors) {
+//     const error = {
+//       message: response.data.errors[0].message,
+//     } as Error;
 
-    return thunkApi.rejectWithValue(error);
-  }
+//     return thunkApi.rejectWithValue(error);
+//   }
 
-  const res = response.data.data.findUpcomingTrip;
+//   const res = response.data.data.findUpcomingTrip;
 
-  // SecureStore.deleteItemAsync('trips');
-  // SecureStore.setItemAsync('trips', JSON.stringify(res));
+//   // SecureStore.deleteItemAsync('trips');
+//   // SecureStore.setItemAsync('trips', JSON.stringify(res));
 
-  return res;
-});
+//   return res;
+// });
 
 export const fetchTripDetails = createAsyncThunk<
   TripDetailsType,

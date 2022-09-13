@@ -1,3 +1,4 @@
+export * from './lib/chat-list/chat-list';
 export * from './lib/register-driver/register-driver';
 export * from './lib/set-pickup-page/set-pickup-page';
 export * from './lib/driver-profile/driver-profile';
@@ -25,3 +26,6 @@ export * from './lib/credit-card-page/credit-card-page';
 export * from './lib/driver-active-trip/driver-active-trip';
 export * from './lib/passenger-active-trip/passenger-active-trip';
 export * from './lib/accept-request/accept-request';
+export * from './lib/review-page/review-page';
+export * from './lib/payfast-page/payfast-page';
+export * from './lib/trip-rating-page/trip-rating-page';

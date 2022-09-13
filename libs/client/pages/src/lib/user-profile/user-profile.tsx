@@ -20,6 +20,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
 
+
 export function UserProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
 
@@ -227,7 +228,7 @@ export function UserProfile({ navigation }: UserProfileProps) {
                   }}
                 >
                   <Icons
-                    name="bar-graph"
+                    name="heart"
                     size={20}
                     style={{
                       color: '#188aed',
@@ -316,6 +317,55 @@ export function UserProfile({ navigation }: UserProfileProps) {
                 <View style={{ flex: 12, paddingLeft: 15 }}>
                   <Text style={{ fontWeight: '500', fontSize: 15 }}>
                     Trip History
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    // backgroundColor: '#f5f5f5',
+                    padding: 3,
+                    borderRadius: 20,
+                    flex: 1,
+                  }}
+                >
+                  <Icon
+                    name="chevron-right"
+                    size={25}
+                    style={{
+                      color: '#000',
+                    }}
+                  />
+                </View>
+              </Pressable>
+              <Pressable
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  padding: 10,
+                  paddingHorizontal: 15,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+                onPress={() => navigation.push('TripRatingPage')}
+              >
+                <View
+                  style={{
+                    backgroundColor: '#f5f5f5',
+                    padding: 3,
+                    borderRadius: 5,
+                    flex: 1,
+                  }}
+                >
+                  <Icon
+                    name="star"
+                    size={22}
+                    style={{
+                      color: '#188aed',
+                    }}
+                  />
+                </View>
+                <View style={{ flex: 12, paddingLeft: 15 }}>
+                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
+                    Review
                   </Text>
                 </View>
                 <View

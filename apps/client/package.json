@@ -40,6 +40,9 @@
     "react-native-credit-card": "*",
     "react-native-flip-card": "*",
     "payment": "*",
-    "expo-image-picker": "*"
+    "react-native-ratings": "*",
+    "react-native-payfast": "*",
+    "react-native-webview": "*",
+    "@apollo/client": "*"
   }
 }

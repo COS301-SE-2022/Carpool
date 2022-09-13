@@ -16,3 +16,7 @@ export * from './lib/trip-details-icons/trip-details-icons';
 export * from './lib/trip-details-bottom-container/trip-details-bottom-container';
 export * from './lib/trip-card-checkout/trip-card-checkout';
 export * from './lib/request-card/request-card';
+export * from './lib/rating-card/rating-card';
+export * from './lib/review-card/review-card';
+export * from './lib/payfast-view/payfast-view';
+

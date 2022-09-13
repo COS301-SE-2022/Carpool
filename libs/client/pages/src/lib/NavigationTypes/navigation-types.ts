@@ -31,18 +31,27 @@ export type RootStackParamList = {
     destinationLongitude: string;
     destinationLatitude: string;
   };
-  ChatScreen: undefined;
+  ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
   CreditCard: { tripId: string };
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
+  ReviewPage: undefined;
+  PayfastPage: undefined;
+  ChatList: undefined;
+  TripRatingPage: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
   RootStackParamList,
   'HomePage'
+>;
+
+export type ChatListProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ChatList'
 >;
 
 export type RegisterDriverProps = NativeStackScreenProps<
@@ -162,4 +171,19 @@ export type PassengerActiveTripProps = NativeStackScreenProps<
 export type AcceptRequestProps = NativeStackScreenProps<
   RootStackParamList,
   'AcceptRequest'
+>;
+
+export type ReviewPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ReviewPage'
+>;
+
+export type PayfastPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'PayfastPage'
+>;
+
+export type TripRatingPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'TripRatingPage'
 >;

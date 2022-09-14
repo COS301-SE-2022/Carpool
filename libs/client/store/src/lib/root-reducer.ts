@@ -30,6 +30,7 @@ import {
   sendMessageSlice,
   getChatsSlice,
 } from './slices/message-slices';
+import { driverProfileSlice } from './slices/drivers-slice';
 
 const RootReducer = combineReducers({
   user: userLoginSlice.reducer,
@@ -57,6 +58,7 @@ const RootReducer = combineReducers({
   messages: getMessagesSlice.reducer,
   message: sendMessageSlice.reducer,
   chats: getChatsSlice.reducer,
+  driverProfile: driverProfileSlice.reducer,
 });
 
 export default RootReducer;

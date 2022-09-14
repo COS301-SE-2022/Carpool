@@ -47,8 +47,8 @@ export class TripsService {
     return await this.queryBus.execute(new FindTripByIdQuery(tripId));
   }
 
-  async findUpcomingTrip(userId: string): Promise<Trip | null> {
-    return await this.queryBus.execute(new FindUpcomingTripsQuery(userId));
+  async findUpcomingTrip(id: string): Promise<Trip | null> {
+    return await this.queryBus.execute(new FindUpcomingTripsQuery(id));
   }
 
   async findByDriver(driverId: string): Promise<Trip[] | null> {

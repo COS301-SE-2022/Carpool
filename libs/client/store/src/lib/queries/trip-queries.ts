@@ -149,6 +149,9 @@ export const TRIP_DETAILS = `
         surname,
         profilePic
       },
+      passengers {
+        userId
+      },
       tripDate,
       createdAt,
       seatsAvailable,

@@ -38,9 +38,12 @@ async function main() {
 
   //* TRIPS *//
   //: Trip 1
+  const tripDate = new Date();
+  tripDate.setDate(tripDate.getDate() + 1);
+
   const trip1 = await prisma.trip.create({
     data: {
-      tripDate: new Date(),
+      tripDate: tripDate,
       seatsAvailable: 3,
       price: 30,
       coordinates: {

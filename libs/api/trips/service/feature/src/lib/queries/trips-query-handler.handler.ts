@@ -1,6 +1,6 @@
 import { TripsRepository } from '@carpool/api/trips/repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Trip, Booking, Location } from '@prisma/client';
+import { Trip, Booking, Location, Driver } from '@prisma/client';
 import {
   FindAllQuery,
   FindByDriverQuery,

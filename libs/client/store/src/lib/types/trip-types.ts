@@ -99,6 +99,11 @@ export type TripDetails = {
 export type TripDetailsType = {
   tripId: string;
   driver: DriverTrip;
+  passengers: [
+    {
+      userId: string;
+    }
+  ];
   tripDate: string;
   createdAt: string;
   seatsAvailable?: string;

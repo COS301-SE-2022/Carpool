@@ -1,4 +1,4 @@
-import { User } from '@carpool/api/authentication/entities';
+import { User, Driver } from '@carpool/api/authentication/entities';
 import {
   Trip,
   Booking,
@@ -80,7 +80,7 @@ export class TripsResolver {
   /**
    * Query to find upcoming trip for user
    * @param {string} id The id of the passenger to find the trips by
-   * @returns {Promise<Trip[]>}
+   * @returns {Promise<Trip>}
    */
   @Query(() => Trip)
   async findUpcomingTrip(@Args('id') id: string): Promise<Trip> {

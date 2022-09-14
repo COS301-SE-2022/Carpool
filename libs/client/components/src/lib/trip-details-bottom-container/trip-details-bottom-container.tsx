@@ -28,6 +28,10 @@ type props = {
   onPressUser: () => void;
 };
 
+type Passenger = {
+  userId: string;
+};
+
 export function TripDetailsBottomContainer({
   trip,
   type,
@@ -36,6 +40,9 @@ export function TripDetailsBottomContainer({
   userId,
   chat,
 }: props) {
+  console.log(trip);
+  console.log(userId);
+
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
       <View style={[styles.flexRow, { flex: 1 }]}>
@@ -97,16 +104,21 @@ export function TripDetailsBottomContainer({
             </View>
           </View>
         </Pressable>
-        <Pressable
-          onPress={chat}
-          style={[styles.shadow, styles.chatButton, { flex: 1 }]}
-        >
-          <Icons name="chat-bubble" color="#188aed" size={25} />
-        </Pressable>
+        {trip.driver.id !== userId && (
+          <Pressable
+            onPress={chat}
+            style={[styles.shadow, styles.chatButton, { flex: 1 }]}
+          >
+            <Icons name="chat-bubble" color="#188aed" size={25} />
+          </Pressable>
+        )}
       </View>
-      {Number(trip.seatsAvailable) === 0 || type === 'booked' ? (
+      {Number(trip.seatsAvailable) === 0 ? (
         <></>
-      ) : (
+      ) : trip.driver.id !== userId &&
+        !trip.passengers.some(
+          (passenger: Passenger) => passenger.userId === userId
+        ) ? (
         <View
           style={[
             styles.flexCol,
@@ -118,6 +130,8 @@ export function TripDetailsBottomContainer({
         >
           <Button title="Book Ride" onPress={onPress} />
         </View>
+      ) : (
+        <></>
       )}
       {/* {trip.status !== 'active' &&
       trip.driver.id === userId &&

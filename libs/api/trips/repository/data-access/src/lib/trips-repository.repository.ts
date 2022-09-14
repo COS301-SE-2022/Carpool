@@ -60,15 +60,17 @@ export class TripsRepository {
             },
           },
         ],
-        tripDate: {
-          gte: formatDate(new Date().toISOString()),
-        },
+        // tripDate: {
+        //   gte: formatDate(new Date().toISOString()),
+        // },
         status: 'confirmed',
       },
       orderBy: {
         tripDate: 'desc',
       },
     });
+
+    console.log(trips);
 
     return trips[0];
   }

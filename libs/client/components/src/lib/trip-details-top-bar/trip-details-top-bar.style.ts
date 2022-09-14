@@ -39,9 +39,4 @@ export const styles = StyleSheet.create({
     maxWidth: '80%',
     lineHeight: 20,
   },
-  cancelButton: {
-    backgroundColor: '#ff0000',
-    borderRadius: 40,
-    padding: 10,
-  },
 });

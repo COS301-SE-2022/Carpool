@@ -17,6 +17,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Statistics: undefined;
   TripHistory: undefined;
+  MapboxTest: undefined;
   SetPickupPage: {
     tripId: string;
     passengerId: string;
@@ -186,4 +187,9 @@ export type PayfastPageProps = NativeStackScreenProps<
 export type TripRatingPageProps = NativeStackScreenProps<
   RootStackParamList,
   'TripRatingPage'
+>;
+
+export type MapboxTestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'MapboxTest'
 >;

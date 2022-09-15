@@ -28,6 +28,7 @@ import {
   PayfastPage,
   ChatList,
   TripRatingPage,
+  MapboxTest,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -78,12 +79,14 @@ export type RootStackParamList = {
   PayfastPage;
   ChatList;
   TripRatingPage;
+  MapboxTest;
 };
 
 export type TabBarParamList = {
   Home;
   Profile;
   ChatList;
+  MapboxTest;
 };
 
 export type AuthStackParamList = {
@@ -221,6 +224,11 @@ const TabBar = () => {
         name="ChatList"
         component={ChatList}
         options={{ title: 'Messages' }}
+      />
+      <Tab.Screen
+        name="MapboxTest"
+        component={MapboxTest}
+        options={{ title: 'Mapbox' }}
       />
       <Tab.Screen
         name="Profile"

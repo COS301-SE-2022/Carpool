@@ -45,74 +45,76 @@ export function TripDetailsBottomContainer({
 
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
-      <View style={[styles.flexRow, { flex: 1 }]}>
-        <Pressable
-          style={[
-            styles.flexRow,
-            {
-              flex: 12,
-            },
-          ]}
-          onPress={onPressUser}
-        >
-          <View
+      {trip.status !== 'active' && (
+        <View style={[styles.flexRow, { flex: 1 }]}>
+          <Pressable
             style={[
               styles.flexRow,
               {
-                flex: 1,
-                justifyContent: 'flex-start',
+                flex: 12,
               },
             ]}
+            onPress={onPressUser}
           >
-            <Image
-              source={require('./lighter_grey.png')}
-              resizeMode="contain"
-              style={styles.image}
-            />
-            <View>
-              <Text
-                style={[
-                  styles.textLargeBlack,
-                  {
-                    marginBottom: 5,
-                  },
-                ]}
-              >
-                {trip && trip.driver.name} {trip && trip.driver.surname}
-              </Text>
-              <Text style={styles.textMediumLight}>
-                Last trip: 1 April 2022
-              </Text>
-              <View style={styles.flexRow}>
-                <Icon size={15} name="star" color="#FACC15" />
-                <Icon size={15} name="star" color="#FACC15" />
-                <Icon size={15} name="star" color="#FACC15" />
-                <Icon size={15} name="star" color="#FACC15" />
-                <Icon size={15} name="star" color="#FACC15" />
+            <View
+              style={[
+                styles.flexRow,
+                {
+                  flex: 1,
+                  justifyContent: 'flex-start',
+                },
+              ]}
+            >
+              <Image
+                source={require('./lighter_grey.png')}
+                resizeMode="contain"
+                style={styles.image}
+              />
+              <View>
                 <Text
                   style={[
-                    styles.textMediumLight,
+                    styles.textLargeBlack,
                     {
-                      marginLeft: 5,
-                      marginBottom: 0,
+                      marginBottom: 5,
                     },
                   ]}
                 >
-                  5 ratings
+                  {trip && trip.driver.name} {trip && trip.driver.surname}
                 </Text>
+                <Text style={styles.textMediumLight}>
+                  Last trip: 1 April 2022
+                </Text>
+                <View style={styles.flexRow}>
+                  <Icon size={15} name="star" color="#FACC15" />
+                  <Icon size={15} name="star" color="#FACC15" />
+                  <Icon size={15} name="star" color="#FACC15" />
+                  <Icon size={15} name="star" color="#FACC15" />
+                  <Icon size={15} name="star" color="#FACC15" />
+                  <Text
+                    style={[
+                      styles.textMediumLight,
+                      {
+                        marginLeft: 5,
+                        marginBottom: 0,
+                      },
+                    ]}
+                  >
+                    5 ratings
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
-        </Pressable>
-        {trip.driver.id !== userId && (
-          <Pressable
-            onPress={chat}
-            style={[styles.shadow, styles.chatButton, { flex: 1 }]}
-          >
-            <Icons name="chat-bubble" color="#188aed" size={25} />
           </Pressable>
-        )}
-      </View>
+          {trip.driver.id !== userId && (
+            <Pressable
+              onPress={chat}
+              style={[styles.shadow, styles.chatButton, { flex: 1 }]}
+            >
+              <Icons name="chat-bubble" color="#188aed" size={25} />
+            </Pressable>
+          )}
+        </View>
+      )}
       {Number(trip.seatsAvailable) === 0 ? (
         <></>
       ) : trip.driver.id !== userId &&
@@ -133,9 +135,7 @@ export function TripDetailsBottomContainer({
       ) : (
         <></>
       )}
-      {/* {trip.status !== 'active' &&
-      trip.driver.id === userId &&
-      trip.status !== 'completed' ? (
+      {trip.driver.id === userId ? (
         <View
           style={[
             styles.flexCol,
@@ -149,7 +149,7 @@ export function TripDetailsBottomContainer({
         </View>
       ) : (
         <></>
-      )} */}
+      )}
     </View>
   );
 }

@@ -11,6 +11,10 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'Client' do
   config = use_native_modules! use_unimodules!
 
+  pre_install do |installer|
+    $RNMBGL.pre_install(installer)
+  end
+
   flags = get_default_flags()
 
   rn_maps_path = '../node_modules/react-native-maps'
@@ -32,6 +36,7 @@ target 'Client' do
   # pod 'react-native-webview'
 
   post_install do |installer|
+    $RNMBGL.post_install(installer)
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
     nx_post_install(installer)
@@ -46,4 +51,6 @@ target 'Client' do
       end
     end
   end
+
+  pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
 end

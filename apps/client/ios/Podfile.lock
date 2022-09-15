@@ -340,6 +340,8 @@ PODS:
     - React-Core
   - react-native-date-picker (4.2.2):
     - React-Core
+  - react-native-geolocation-service (5.3.0-beta.4):
+    - React
   - react-native-google-maps (0.31.1):
     - Google-Maps-iOS-Utils (= 4.1.0)
     - GoogleMaps (= 6.1.1)
@@ -508,8 +510,9 @@ DEPENDENCIES:
   - React-logger (from `../../../node_modules/react-native/ReactCommon/logger`)
   - react-native-config (from `../../../node_modules/react-native-config`)
   - react-native-date-picker (from `../../../node_modules/react-native-date-picker`)
+  - react-native-geolocation-service (from `../../../node_modules/react-native-geolocation-service`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
-  - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
+  - "react-native-mapbox-gl (from `../../../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../../../node_modules/react-native-webview`)
@@ -611,10 +614,12 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-config"
   react-native-date-picker:
     :path: "../../../node_modules/react-native-date-picker"
+  react-native-geolocation-service:
+    :path: "../../../node_modules/react-native-geolocation-service"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
   react-native-mapbox-gl:
-    :path: "../node_modules/@react-native-mapbox-gl/maps"
+    :path: "../../../node_modules/@react-native-mapbox-gl/maps"
   react-native-maps:
     :path: "../../../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -709,6 +714,7 @@ SPEC CHECKSUMS:
   React-logger: f79dd3cc0f9b44f5611c6c7862badd891a862cf8
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
   react-native-date-picker: 9088350e06918f7d842a34c171acadc66583cb94
+  react-native-geolocation-service: c0efb872258ed9240f1003a70fca9e9757e5c785
   react-native-google-maps: 8231ffa015bf8b222c2e2661fa9163cdb609a224
   react-native-mapbox-gl: b92795f61ff130323e6d25693bd68b081e105455
   react-native-maps: 8b8bfada2c86205a7f5a07dd1f92f29b33ea83aa
@@ -738,6 +744,6 @@ SPEC CHECKSUMS:
   Yoga: 17cd9a50243093b547c1e539c749928dd68152da
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 6b8987ffdc34d1b5799f0e0441a6bbca712496f9
+PODFILE CHECKSUM: 719a3ed50c3c807db0584dcc778773ed3dff4c1f
 
 COCOAPODS: 1.11.3

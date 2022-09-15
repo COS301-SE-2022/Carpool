@@ -3043,7 +3043,9 @@ let TripsRepository = class TripsRepository {
                     // tripDate: {
                     //   gte: formatDate(new Date().toISOString()),
                     // },
-                    status: 'confirmed',
+                    status: {
+                        in: ['active', 'confirmed', 'paid'],
+                    },
                 },
                 orderBy: {
                     tripDate: 'desc',
@@ -3058,6 +3060,9 @@ let TripsRepository = class TripsRepository {
             return yield this.prisma.trip.findMany({
                 where: {
                     driverId: driverId,
+                    tripDate: {
+                        lt: formatDate(new Date().toISOString()),
+                    },
                 },
             });
         });
@@ -3070,6 +3075,9 @@ let TripsRepository = class TripsRepository {
                         some: {
                             userId: passengerId,
                         },
+                    },
+                    tripDate: {
+                        lt: formatDate(new Date().toISOString()),
                     },
                 },
             });

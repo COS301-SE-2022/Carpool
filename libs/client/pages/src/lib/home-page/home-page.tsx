@@ -70,6 +70,12 @@ export function HomePage({ navigation }: HomePageProps) {
     }
   }, [dispatch, endTripStatus, tripStartStatus, userData]);
 
+  useEffect(() => {
+    if (trip) {
+      console.log(trip);
+    }
+  }, [trip]);
+
   const viewTrip = (tripId: string, trip: TripListType) => {
     if (trip.status === 'active') {
       if (trip.driver.id === userData?.id) {

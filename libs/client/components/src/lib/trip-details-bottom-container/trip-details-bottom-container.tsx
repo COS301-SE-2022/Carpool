@@ -115,7 +115,8 @@ export function TripDetailsBottomContainer({
           )}
         </View>
       )}
-      {Number(trip.seatsAvailable) === 0 ? (
+      {Number(trip.seatsAvailable) === 0 ||
+      new Date(trip.tripDate) < new Date() ? (
         <></>
       ) : trip.driver.id !== userId &&
         !trip.passengers.some(

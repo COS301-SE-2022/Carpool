@@ -43,6 +43,9 @@
     "react-native-ratings": "*",
     "react-native-payfast": "*",
     "react-native-webview": "*",
-    "@apollo/client": "*"
+    "@apollo/client": "*",
+    "@react-native-mapbox-gl/maps": "*",
+    "react-native-geolocation-service": "*",
+    "@mapbox/mapbox-gl-directions": "*"
   }
 }

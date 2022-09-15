@@ -29,6 +29,7 @@ import {
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
+  CancelTripCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -184,5 +185,11 @@ export class TripsService {
 
   async findAllTripRequests(userId: string): Promise<Booking[]> {
     return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
+  }
+
+  async cancelTrip(tripId: string, bookingId: string): Promise<Booking> {
+    return await this.commandBus.execute(
+      new CancelTripCommand(tripId, bookingId)
+    );
   }
 }

@@ -123,7 +123,6 @@ let AuthResolver = class AuthResolver {
     }
     findUserById(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            console.log('iuserId', id);
             return yield this.authService.findUserById(id);
         });
     }
@@ -148,9 +147,9 @@ let AuthResolver = class AuthResolver {
             }
         });
     }
-    register(name, surname, email, university, studentNumber, password) {
+    register(name, surname, email, university, studentNumber, password, cellNumber) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const userObj = yield this.authService.register(name, surname, email, university, studentNumber, password);
+            const userObj = yield this.authService.register(name, surname, email, university, studentNumber, password, cellNumber);
             if (userObj) {
                 const user = new entities_1.UserLogin();
                 user.id = userObj.id;
@@ -185,9 +184,9 @@ let AuthResolver = class AuthResolver {
             return yield this.authService.verifyEmail(id);
         });
     }
-    updateUser(id, name, surname, email, university, studentNumber) {
+    updateUser(id, name, surname, email, university, studentNumber, cellNumber) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield this.authService.updateUser(id, name, surname, email, university, studentNumber);
+            return yield this.authService.updateUser(id, name, surname, email, university, studentNumber, cellNumber);
         });
     }
 };
@@ -214,8 +213,9 @@ tslib_1.__decorate([
     tslib_1.__param(3, (0, graphql_1.Args)('university')),
     tslib_1.__param(4, (0, graphql_1.Args)('studentNumber')),
     tslib_1.__param(5, (0, graphql_1.Args)('password')),
+    tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String]),
+    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
     tslib_1.__metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
 ], AuthResolver.prototype, "register", null);
 tslib_1.__decorate([
@@ -243,8 +243,9 @@ tslib_1.__decorate([
     tslib_1.__param(3, (0, graphql_1.Args)('email')),
     tslib_1.__param(4, (0, graphql_1.Args)('university')),
     tslib_1.__param(5, (0, graphql_1.Args)('studentNumber')),
+    tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String]),
+    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
     tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], AuthResolver.prototype, "updateUser", null);
 AuthResolver = tslib_1.__decorate([
@@ -347,6 +348,10 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
 ], User.prototype, "updatedAt", void 0);
 tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], User.prototype, "cellNumber", void 0);
+tslib_1.__decorate([
     (0, graphql_1.Field)(() => Boolean),
     tslib_1.__metadata("design:type", Boolean)
 ], User.prototype, "isValidated", void 0);
@@ -410,6 +415,10 @@ tslib_1.__decorate([
     (0, graphql_1.Field)(),
     tslib_1.__metadata("design:type", String)
 ], UserInput.prototype, "password", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserInput.prototype, "cellNumber", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(),
     tslib_1.__metadata("design:type", String)
@@ -492,6 +501,10 @@ tslib_1.__decorate([
     (0, graphql_1.Field)(),
     tslib_1.__metadata("design:type", String)
 ], UserUpdate.prototype, "surname", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserUpdate.prototype, "cellNumber", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(),
     tslib_1.__metadata("design:type", String)
@@ -613,6 +626,7 @@ let AuthRepository = class AuthRepository {
                         university: user.university,
                         studentNumber: user.studentNumber,
                         password: hashedPassword,
+                        cellNumber: user.cellNumber,
                         profilePic: '',
                     },
                 });
@@ -682,6 +696,7 @@ let AuthRepository = class AuthRepository {
                     email: user.email,
                     university: user.university,
                     studentNumber: user.studentNumber,
+                    cellNumber: user.cellNumber,
                 },
             });
             if (updatedUser) {
@@ -764,9 +779,9 @@ let AuthService = class AuthService {
             return yield this.queryBus.execute(new auth_query_query_1.UserLoginQuery(email, password));
         });
     }
-    register(name, surname, email, university, studentNumber, password) {
+    register(name, surname, email, university, studentNumber, password, cellNumber) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield this.commandBus.execute(new auth_command_command_1.UserRegisterCommand(name, surname, email, university, studentNumber, password));
+            return yield this.commandBus.execute(new auth_command_command_1.UserRegisterCommand(name, surname, email, university, studentNumber, password, cellNumber));
         });
     }
     registerDriver(ID, licensePlate, carModel, userId) {
@@ -791,9 +806,9 @@ let AuthService = class AuthService {
             });
         });
     }
-    updateUser(id, name, surname, email, university, studentNumber) {
+    updateUser(id, name, surname, email, university, studentNumber, cellNumber) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield this.commandBus.execute(new auth_command_command_1.UserUpdateCommand(id, name, surname, email, university, studentNumber));
+            return yield this.commandBus.execute(new auth_command_command_1.UserUpdateCommand(id, name, surname, email, university, studentNumber, cellNumber));
         });
     }
 };
@@ -824,7 +839,7 @@ let UserRegisterHandler = class UserRegisterHandler {
     }
     execute(command) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const { name, surname, email, university, studentNumber, password } = command;
+            const { name, surname, email, university, studentNumber, password, cellNumber, } = command;
             const user = new entities_1.UserInput();
             user.name = name;
             user.surname = surname;
@@ -832,6 +847,7 @@ let UserRegisterHandler = class UserRegisterHandler {
             user.university = university;
             user.studentNumber = studentNumber;
             user.password = password;
+            user.cellNumber = cellNumber;
             return yield this.authRepository.register(user);
         });
     }
@@ -884,7 +900,7 @@ let UserUpdateHandler = class UserUpdateHandler {
     }
     execute(command) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            const { id, name, surname, email, university, studentNumber } = command;
+            const { id, name, surname, email, university, studentNumber, cellNumber } = command;
             const user = new entities_1.UserUpdate();
             user.id = id;
             user.name = name;
@@ -892,6 +908,7 @@ let UserUpdateHandler = class UserUpdateHandler {
             user.email = email;
             user.university = university;
             user.studentNumber = studentNumber;
+            user.cellNumber = cellNumber;
             return yield this.authRepository.updateUser(user);
         });
     }
@@ -912,13 +929,14 @@ exports.UserUpdateHandler = UserUpdateHandler;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.UserUpdateCommand = exports.UserVerifyCommand = exports.DriverRegisterCommand = exports.UserRegisterCommand = void 0;
 class UserRegisterCommand {
-    constructor(name, surname, email, university, studentNumber, password) {
+    constructor(name, surname, email, university, studentNumber, password, cellNumber) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.university = university;
         this.studentNumber = studentNumber;
         this.password = password;
+        this.cellNumber = cellNumber;
     }
 }
 exports.UserRegisterCommand = UserRegisterCommand;
@@ -938,13 +956,14 @@ class UserVerifyCommand {
 }
 exports.UserVerifyCommand = UserVerifyCommand;
 class UserUpdateCommand {
-    constructor(id, name, surname, email, university, studentNumber) {
+    constructor(id, name, surname, email, university, studentNumber, cellNumber) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.university = university;
         this.studentNumber = studentNumber;
+        this.cellNumber = cellNumber;
     }
 }
 exports.UserUpdateCommand = UserUpdateCommand;

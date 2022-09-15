@@ -256,7 +256,9 @@ export function DriverProfile({ route, navigation }: DriverProfileProps) {
                     flex: 6,
                   }}
                 >
-                  <Text style={{ fontWeight: '600' }}>+27 71 600 2219</Text>
+                  <Text style={{ fontWeight: '600' }}>
+                    {driver.user.cellNumber}
+                  </Text>
                   <Text style={{ color: '#808080', paddingLeft: 2 }}>
                     Phone number
                   </Text>

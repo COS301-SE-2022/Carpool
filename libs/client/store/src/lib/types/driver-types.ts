@@ -15,5 +15,6 @@ export type DriverProfile = {
   user: {
     name: string;
     surname: string;
+    cellNumber: string;
   };
 };

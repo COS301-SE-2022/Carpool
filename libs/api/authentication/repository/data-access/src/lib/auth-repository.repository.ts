@@ -65,6 +65,7 @@ export class AuthRepository {
           university: user.university,
           studentNumber: user.studentNumber,
           password: hashedPassword,
+          cellNumber: user.cellNumber,
           profilePic: '',
         },
       });
@@ -133,6 +134,7 @@ export class AuthRepository {
         email: user.email,
         university: user.university,
         studentNumber: user.studentNumber,
+        cellNumber: user.cellNumber,
       },
     });
 

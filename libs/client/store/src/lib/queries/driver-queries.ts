@@ -9,6 +9,7 @@ export const DRIVER_PROFILE = `
         user {
           name
           surname
+          cellNumber
         }
      }
   }

@@ -33,6 +33,7 @@ export type UserRegister = {
   university: string;
   studentNumber: string;
   password: string;
+  cellNumber: string;
 };
 
 export type DriverRegister = {
@@ -220,6 +221,7 @@ export type UserUpdate = {
   email: string;
   university: string;
   studentNumber: string;
+  cellNumber: string;
 };
 
 export const createUpdateUser = createAsyncThunk(
@@ -234,6 +236,7 @@ export const createUpdateUser = createAsyncThunk(
         email: user.email,
         university: user.university,
         studentNumber: user.studentNumber,
+        cellNumber: user.cellNumber,
       },
     });
 

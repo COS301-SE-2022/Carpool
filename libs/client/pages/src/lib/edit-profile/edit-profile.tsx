@@ -26,6 +26,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
   const [email, setEmail] = useState('');
   const [university, setUniversity] = useState('');
   const [studentNumber, setStudentNumber] = useState('');
+  const [cellNumber, setCellNumber] = useState('');
 
   const userProfile = useSelector((state: RootStore) => state.userProfile);
   const { userProfile: profile, status } = userProfile;
@@ -47,6 +48,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
       setEmail(profile.email);
       setUniversity(profile.university);
       setStudentNumber(profile.studentNumber);
+      setCellNumber(profile.cellNumber);
     }
   }, [dispatch, userData, updateStatus, profile]);
 
@@ -59,6 +61,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
         email,
         university,
         studentNumber,
+        cellNumber,
       })
     );
     if (userData && updateStatus === 'success') {
@@ -224,6 +227,34 @@ export function EditProfile({ navigation }: UserProfileProps) {
                 <TextInput
                   value={email}
                   onChangeText={setEmail}
+                  style={{
+                    height: 40,
+                    marginVertical: 8,
+                    padding: 8,
+                    paddingLeft: 10,
+                    borderColor: '#808080',
+                    borderWidth: 0.5,
+                    borderStyle: 'solid',
+                    borderRadius: 5,
+                    backgroundColor: '#f5f5f5',
+                    width: '100%',
+                  }}
+                  placeholderTextColor="#808080"
+                  autoCapitalize="none"
+                />
+              </View>
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  width: '100%',
+                }}
+              >
+                <Text style={{ paddingLeft: 5 }}>Cell Number</Text>
+                <TextInput
+                  value={cellNumber}
+                  onChangeText={setCellNumber}
                   style={{
                     height: 40,
                     marginVertical: 8,

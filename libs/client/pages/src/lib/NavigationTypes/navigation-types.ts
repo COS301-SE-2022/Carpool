@@ -38,16 +38,9 @@ export type RootStackParamList = {
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
-<<<<<<< Updated upstream
-  ReviewPage: undefined;
-  PayfastPage: undefined;
-  ChatList: undefined;
-  TripRatingPage: undefined;
-=======
   ReviewPage: { tripId: string, driverId: string, driver: string, date: string, destination: string };
   PayfastPage:  { tripId: string };
   TripRatingPage: { tripId: string };
->>>>>>> Stashed changes
 };
 
 export type HomePageProps = NativeStackScreenProps<

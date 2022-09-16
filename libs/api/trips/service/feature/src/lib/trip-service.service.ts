@@ -4,6 +4,7 @@ import {
   Booking,
   Trip,
   BookingStatusUpdate,
+  Reviews
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -17,6 +18,8 @@ import {
   findByRequestedTripsQuery,
   FindBookingByTripAndUserIdQuery,
   FindAllTripRequestsQuery,
+  findByPassengerReviewsQuery,
+
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -29,6 +32,8 @@ import {
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
+  UpdatePassengerReviewsCommand,
+  CreateReviewCommand
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -63,6 +68,12 @@ export class TripsService {
   async findByRequestedTrips(passengerId: string): Promise<Trip[] | null> {
     return await this.queryBus.execute(
       new findByRequestedTripsQuery(passengerId)
+    );
+  }
+
+  async findByPassengerReviews(passengerId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findByPassengerReviewsQuery(passengerId)
     );
   }
 
@@ -141,6 +152,26 @@ export class TripsService {
     );
   }
 
+  async postReview(
+    byId: string,
+    forId: string,
+    tripId: string,
+    role: Role,
+    comment: string,
+    rating: number
+  ): Promise<Reviews> {
+    return await this.commandBus.execute(
+      new CreateReviewCommand(
+        byId,
+        forId,
+        tripId,
+        role,
+        comment,
+        rating
+      )
+    );
+  }
+
   async update(
     tripId: string,
     seatsAvailable: number,
@@ -155,6 +186,12 @@ export class TripsService {
   async updatePaymentStatus(bookingId: string): Promise<BookingStatusUpdate> {
     return await this.commandBus.execute(
       new BookingUpdatePaymentStatusCommand(bookingId)
+    );
+  }
+
+  async updateReviewPassenger(bookingId: string): Promise<BookingStatusUpdate> {
+    return await this.commandBus.execute(
+      new UpdatePassengerReviewsCommand(bookingId)
     );
   }
 
@@ -185,4 +222,8 @@ export class TripsService {
   async findAllTripRequests(userId: string): Promise<Booking[]> {
     return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
   }
+}
+enum Role {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER'
 }

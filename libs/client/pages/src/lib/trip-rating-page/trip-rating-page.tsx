@@ -12,11 +12,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   AppDispatch,
   listDriverHistory,
-  listPassengerHistory,
+  listPassengerReviews,
   RootStore,
 } from '@carpool/client/store';
 import { TripCard } from '@carpool/client/components';
-import { formatDate } from '@carpool/client/shared/utilities';
+import { formatDate, getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function TripRatingPage({ navigation }: TripRatingPageProps) {
@@ -30,11 +30,8 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
   const driverHistory = useSelector((state: RootStore) => state.driverHistory);
   const { trips: driverTrips, status: driverHistoryStatus } = driverHistory;
 
-  const passengerHistory = useSelector(
-    (state: RootStore) => state.passengerHistory
-  );
-  const { trips: passengerTrips, status: passengerHistoryStatus } =
-    passengerHistory;
+  const passengerReviews = useSelector((state: RootStore) => state.passengerReviews);
+  const { trips: passengerTrips, status: passengerReviewsStatus } = passengerReviews;
 
   useEffect(() => {
     if (userData) {
@@ -51,11 +48,12 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
   const asPassenger = () => {
     setDriver(false);
     console.log('As Passenger');
-    userData && dispatch(listPassengerHistory(userData.id));
+    userData && dispatch(listPassengerReviews(userData.id));
+    console.log(passengerTrips);
   };
 
-  const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+  const viewTrip = (tripId: string, driverId: string, driver: string, date: string, destination: string) => {
+    navigation.push('ReviewPage', { tripId, driverId, driver, date, destination});
   };
 
   return (
@@ -144,7 +142,7 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
         </Pressable>
       </View>
       {driverHistoryStatus === 'loading' ||
-      passengerHistoryStatus === 'loading' ? (
+      passengerReviewsStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
@@ -163,7 +161,7 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                   image={trip.driver.profilePic}
                   date={formatDate(trip.createdAt)}
                   distance=""
-                  onPress={() => viewTrip(trip.tripId)}
+                  onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.createdAt, trip.coordinates[1].address)}
                 />
               ))
             )
@@ -181,7 +179,7 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                 image={trip.driver.profilePic}
                 date={formatDate(trip.createdAt)}
                 distance=""
-                onPress={() => viewTrip(trip.tripId)}
+                onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.createdAt, trip.coordinates[1].address )}
               />
             ))
           )}

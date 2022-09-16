@@ -117,6 +117,25 @@ query ($id: String!) {
 }
 `;
 
+export const PASSENGER_REVIEWS = `
+query ($id: String!) {
+  findByPassengerReviews(id: $id) {
+    tripId,
+    driver {
+      id,
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
 export const UPCOMING_TRIP = `
   query {
     findUpcomingTrip {
@@ -184,6 +203,14 @@ export const CREATE_TRIP = `
   }
 `;
 
+export const POST_REVIEW = `
+  mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: number!) {
+    postReview(byId: $byId, forId: $forId, tripId: $tripId role: $role, comment: $comment, rating: $rating){
+      id
+    }
+  }
+`;
+
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {
     bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, longitude: $longitude, latitude: $latitude) {
@@ -235,6 +262,13 @@ mutation ($id: String!) {
 export const PAYMENT_STATUS_UPDATE = `
 mutation ($bookingId: String!) {
   updatePaymentStatus(bookingId: $bookingId) {
+    bookingId
+  }
+}`;
+
+export const PASSENGER_REVIEW_UPDATE = `
+mutation ($bookingId: String!) {
+  updateReviewPassenger(bookingId: $bookingId) {
     bookingId
   }
 }`;

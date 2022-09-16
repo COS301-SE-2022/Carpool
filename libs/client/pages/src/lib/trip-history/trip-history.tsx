@@ -55,7 +55,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
   };
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId,  type: 'completed' });
   };
 
   return (

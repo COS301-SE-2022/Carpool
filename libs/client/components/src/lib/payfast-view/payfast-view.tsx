@@ -10,12 +10,7 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
   const [postBody, setPostBody] = useState("");
   const uri = props.sandbox ? "https://sandbox.payfast.co.za/eng/process" : "http://www.payfast.co.za/eng/process";
   const closeUriRegex = /https?:\/\/([a-z]|\.)+\/eng\/process\/finish\/([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+/gi;
-  const paymentData = {
-    merchant_id : 10026673,
-    merchant_key: '7zctrsta1c3ys',
-    amount: 30.00,
-    item_name: 'React Native Purchase'
-}
+
   const setContainerStyles = () => {
       if(!showWebView){
           styles.pfWrapper = {
@@ -88,7 +83,7 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
   return(
       <View style={styles.pfWrapper}>
           {showWebView && renderPayFastPage()}
-          <Button title={setButtonTitle()} onPress={()=>setWebViewHandler(paymentData)}/>
+          <Button title={setButtonTitle()} onPress={()=>setWebViewHandler(props.data)}/>
       </View>
   );
 }

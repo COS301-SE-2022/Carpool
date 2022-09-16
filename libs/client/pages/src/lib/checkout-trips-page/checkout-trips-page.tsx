@@ -15,7 +15,7 @@ import {
   listConfirmedTrips,
   listRequestedTrips,
 } from '@carpool/client/store';
-import { TripCardCheckout, Button } from '@carpool/client/components';
+import { TripCardCheckout } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function CheckoutTrips({ navigation }: CheckoutTripsProps) {

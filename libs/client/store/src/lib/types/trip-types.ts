@@ -140,3 +140,8 @@ export type EndTrip = {
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
+
+export type ReviewType = {
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

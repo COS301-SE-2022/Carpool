@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Image, Text, View, Pressable, ActivityIndicator } from 'react-native';
+import {
+  Image,
+  Text,
+  View,
+  Pressable,
+  ActivityIndicator,
+  TouchableOpacity,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { Button } from '@carpool/client/components';
@@ -16,6 +23,7 @@ type props = {
   trip: TripDetailsType;
   type: string;
   userId: string;
+  chat: () => void;
   onPress: () => void;
   onPressUser: () => void;
 };
@@ -26,68 +34,76 @@ export function TripDetailsBottomContainer({
   onPress,
   onPressUser,
   userId,
+  chat,
 }: props) {
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
-      <Pressable
-        style={[
-          styles.flexRow,
-          {
-            flex: 1,
-          },
-        ]}
-        onPress={onPressUser}
-      >
-        <View
+      <View style={[styles.flexRow, { flex: 1 }]}>
+        <Pressable
           style={[
             styles.flexRow,
             {
-              flex: 1,
-              justifyContent: 'flex-start',
+              flex: 12,
             },
           ]}
+          onPress={onPressUser}
         >
-          <Image
-            source={require('./lighter_grey.png')}
-            resizeMode="contain"
-            style={styles.image}
-          />
-          <View>
-            <Text
-              style={[
-                styles.textLargeBlack,
-                {
-                  marginBottom: 5,
-                },
-              ]}
-            >
-              {trip && trip.driver.name} {trip && trip.driver.surname}
-            </Text>
-            <Text style={styles.textMediumLight}>Last trip: 1 April 2022</Text>
-            <View style={styles.flexRow}>
-              <Icon size={15} name="star" color="#FACC15" />
-              <Icon size={15} name="star" color="#FACC15" />
-              <Icon size={15} name="star" color="#FACC15" />
-              <Icon size={15} name="star" color="#FACC15" />
-              <Icon size={15} name="star" color="#FACC15" />
+          <View
+            style={[
+              styles.flexRow,
+              {
+                flex: 1,
+                justifyContent: 'flex-start',
+              },
+            ]}
+          >
+            <Image
+              source={require('./lighter_grey.png')}
+              resizeMode="contain"
+              style={styles.image}
+            />
+            <View>
               <Text
                 style={[
-                  styles.textMediumLight,
+                  styles.textLargeBlack,
                   {
-                    marginLeft: 5,
-                    marginBottom: 0,
+                    marginBottom: 5,
                   },
                 ]}
               >
-                5 ratings
+                {trip && trip.driver.name} {trip && trip.driver.surname}
               </Text>
+              <Text style={styles.textMediumLight}>
+                Last trip: 1 April 2022
+              </Text>
+              <View style={styles.flexRow}>
+                <Icon size={15} name="star" color="#FACC15" />
+                <Icon size={15} name="star" color="#FACC15" />
+                <Icon size={15} name="star" color="#FACC15" />
+                <Icon size={15} name="star" color="#FACC15" />
+                <Icon size={15} name="star" color="#FACC15" />
+                <Text
+                  style={[
+                    styles.textMediumLight,
+                    {
+                      marginLeft: 5,
+                      marginBottom: 0,
+                    },
+                  ]}
+                >
+                  5 ratings
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={[styles.shadow, styles.chatButton]}>
+        </Pressable>
+        <Pressable
+          onPress={chat}
+          style={[styles.shadow, styles.chatButton, { flex: 1 }]}
+        >
           <Icons name="chat-bubble" color="#188aed" size={25} />
-        </View>
-      </Pressable>
+        </Pressable>
+      </View>
       {Number(trip.seatsAvailable) === 0 || type === 'booked' ? (
         <></>
       ) : (
@@ -103,7 +119,7 @@ export function TripDetailsBottomContainer({
           <Button title="Book Ride" onPress={onPress} />
         </View>
       )}
-      {trip.status !== 'active' &&
+      {/* {trip.status !== 'active' &&
       trip.driver.id === userId &&
       trip.status !== 'completed' ? (
         <View
@@ -119,7 +135,7 @@ export function TripDetailsBottomContainer({
         </View>
       ) : (
         <></>
-      )}
+      )} */}
     </View>
   );
 }

@@ -26,6 +26,7 @@ import {
   RegisterDriver,
   ReviewPage,
   PayfastPage,
+  ChatList,
   TripRatingPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
@@ -37,6 +38,17 @@ import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  HttpLink,
+  split,
+} from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { createClient } from 'graphql-ws';
+import * as SecureStore from 'expo-secure-store';
 
 export type RootStackParamList = {
   HomePage;
@@ -64,12 +76,14 @@ export type RootStackParamList = {
   RegisterDriver;
   ReviewPage;
   PayfastPage;
+  ChatList;
   TripRatingPage;
 };
 
 export type TabBarParamList = {
   Home;
   Profile;
+  ChatList;
 };
 
 export type AuthStackParamList = {
@@ -141,7 +155,10 @@ const ProfileStack = () => {
       <ProfileStackNav.Screen name="Statistics" component={Statistics} />
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
       <ProfileStackNav.Screen name="ReviewPage" component={ReviewPage} />
-      <ProfileStackNav.Screen name="TripRatingPage" component={TripRatingPage} />
+      <ProfileStackNav.Screen
+        name="TripRatingPage"
+        component={TripRatingPage}
+      />
     </ProfileStackNav.Navigator>
   );
 };
@@ -160,6 +177,9 @@ const TabBar = () => {
               break;
             case 'Profile':
               iconName = focused ? 'account' : 'account-outline';
+              break;
+            case 'ChatList':
+              iconName = focused ? 'chat' : 'chat-outline';
               break;
             default:
               break;
@@ -194,6 +214,11 @@ const TabBar = () => {
         name="Home"
         component={HomeStack}
         options={{ title: 'Home' }}
+      />
+      <Tab.Screen
+        name="ChatList"
+        component={ChatList}
+        options={{ title: 'Messages' }}
       />
       <Tab.Screen
         name="Profile"
@@ -292,16 +317,45 @@ const AppWrapper = () => {
   );
 };
 
+const httpLink = new HttpLink({
+  uri: 'https://carpoolcos301.herokuapp.com/graphql',
+});
+
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: 'ws://carpoolcos301.herokuapp.com/graphql',
+  })
+);
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
+
+const client = new ApolloClient({
+  link: splitLink,
+  cache: new InMemoryCache(),
+});
+
 export const App = () => {
-  // navigator.geolocation = Geolocation;
+  // SecureStore.deleteItemAsync('user');
 
   return (
-    <NativeBaseProvider>
-      <Provider store={store}>
-        <AppWrapper />
-        <Toast />
-      </Provider>
-    </NativeBaseProvider>
+    <ApolloProvider client={client}>
+      <NativeBaseProvider>
+        <Provider store={store}>
+          <AppWrapper />
+          <Toast />
+        </Provider>
+      </NativeBaseProvider>
+    </ApolloProvider>
   );
 };
 

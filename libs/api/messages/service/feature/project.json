@@ -1,0 +1,22 @@
+{
+  "root": "libs/api/messages/service/feature",
+  "sourceRoot": "libs/api/messages/service/feature/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/messages/service/feature/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/messages/service/feature"],
+      "options": {
+        "jestConfig": "libs/api/messages/service/feature/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

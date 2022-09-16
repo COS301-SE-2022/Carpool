@@ -13,6 +13,7 @@ export class AuthResolver {
 
   @Query(() => User)
   async findUserById(@Args('id') id: string): Promise<User | null> {
+    console.log('iuserId', id);
     return await this.authService.findUserById(id);
   }
 

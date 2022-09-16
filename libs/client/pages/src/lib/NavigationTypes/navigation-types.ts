@@ -31,7 +31,7 @@ export type RootStackParamList = {
     destinationLongitude: string;
     destinationLatitude: string;
   };
-  ChatScreen: undefined;
+  ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
   CreditCard: { tripId: string };
@@ -40,12 +40,18 @@ export type RootStackParamList = {
   PassengerActiveTrip: undefined;
   ReviewPage: undefined;
   PayfastPage: undefined;
+  ChatList: undefined;
   TripRatingPage: undefined;
 };
 
 export type HomePageProps = NativeStackScreenProps<
   RootStackParamList,
   'HomePage'
+>;
+
+export type ChatListProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ChatList'
 >;
 
 export type RegisterDriverProps = NativeStackScreenProps<

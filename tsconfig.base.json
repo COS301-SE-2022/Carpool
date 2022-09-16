@@ -30,6 +30,18 @@
       "@carpool/api/bookings/resolvers": [
         "libs/api/bookings/api/feature/src/index.ts"
       ],
+      "@carpool/api/messages/api/feature": [
+        "libs/api/messages/api/feature/src/index.ts"
+      ],
+      "@carpool/api/messages/entities": [
+        "libs/api/messages/api/shared/entities/data-access/src/index.ts"
+      ],
+      "@carpool/api/messages/repository/data-access": [
+        "libs/api/messages/repository/data-access/src/index.ts"
+      ],
+      "@carpool/api/messages/service/feature": [
+        "libs/api/messages/service/feature/src/index.ts"
+      ],
       "@carpool/api/prisma": [
         "libs/api/shared/services/prisma/data-access/src/index.ts"
       ],

@@ -7,3 +7,7 @@ export * from './lib/client-store';
 export * from './lib/slices/trip-slice';
 export * from './lib/types/weather-types';
 export * from './lib/actions/weather-actions';
+export * from './lib/slices/message-slices';
+export * from './lib/actions/message-actions';
+export * from './lib/types/message-types';
+export * from './lib/queries/message-queries';

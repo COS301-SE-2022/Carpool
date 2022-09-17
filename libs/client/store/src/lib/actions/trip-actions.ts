@@ -18,6 +18,8 @@ import {
   START_TRIP,
   END_TRIP,
   FIND_REQUESTS,
+  CANCEL_DRIVER_TRIP,
+  CANCEL_PASSENGER_TRIP,
 } from '../queries/trip-queries';
 import {
   TripListType,
@@ -662,8 +664,8 @@ export const cancelPassengerTrip = createAsyncThunk<
   const response = await axios.post(`${url}/graphql`, {
     query: CANCEL_PASSENGER_TRIP,
     variables: {
-      tripId: tripId,
       userId: userId,
+      tripId: tripId,
     },
   });
   console.log('CANCELING PASSENGER TRIP');

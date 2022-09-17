@@ -64,8 +64,5 @@ export class DeclineTripRequestCommand {
 }
 
 export class CancelTripCommand {
-  constructor(
-    public readonly tripId: string,
-    public readonly bookingId: string
-  ) {}
+  constructor(public readonly tripId: string) {}
 }

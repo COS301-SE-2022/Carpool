@@ -323,6 +323,17 @@ export class TripsRepository {
     });
   }
 
+  async cancelTrip(id: string): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
+      },
+      data: {
+        //status: 'cancelled',
+      },
+    });
+  }
+
   async findAllTripRequests(userId: string): Promise<Booking[]> {
     return this.prisma.booking.findMany({
       where: {

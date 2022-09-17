@@ -80,3 +80,9 @@ export class TripStatusUpdate {
   @Field()
   status: string;
 }
+
+@InputType()
+export class TripCancelUpdate {
+  @Field()
+  status: string;
+}

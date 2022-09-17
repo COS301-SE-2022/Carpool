@@ -206,4 +206,9 @@ export class TripsResolver {
   async endTrip(@Args('id') tripId: string): Promise<Trip> {
     return await this.tripsService.endTrip(tripId);
   }
+
+  @Mutation(() => Trip)
+  async cancelTrip(@Args('id') tripId: string): Promise<Trip> {
+    return await this.tripsService.cancelTrip(tripId);
+  }
 }

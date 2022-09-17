@@ -187,9 +187,7 @@ export class TripsService {
     return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
   }
 
-  async cancelTrip(tripId: string, bookingId: string): Promise<Booking> {
-    return await this.commandBus.execute(
-      new CancelTripCommand(tripId, bookingId)
-    );
+  async cancelTrip(tripId: string): Promise<Trip> {
+    return await this.commandBus.execute(new CancelTripCommand(tripId));
   }
 }

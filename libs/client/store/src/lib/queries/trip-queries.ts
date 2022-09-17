@@ -267,3 +267,10 @@ mutation ($tripId: String!) {
 }
 `;
 
+export const CANCEL_PASSENGER_TRIP = `
+mutation ($userId: String!, $tripId: String!) {
+  passengerCancelTrip(userId: $userId, tripId: $tripId) {
+    tripId
+  }
+}
+`;

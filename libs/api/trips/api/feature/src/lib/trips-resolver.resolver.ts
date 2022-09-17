@@ -213,7 +213,10 @@ export class TripsResolver {
   }
 
   @Mutation(() => Trip)
-  async passengerCancelTrip(@Args('id') bookingId: string): Promise<Trip> {
-    return await this.tripsService.cancelTrip(bookingId);
+  async passengerCancelTrip(
+    @Args('userId') userId,
+    @Args('id') tripId
+  ): Promise<Trip> {
+    return await this.tripsService.passengerCancel(userId, tripId);
   }
 }

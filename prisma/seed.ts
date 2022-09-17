@@ -36,6 +36,22 @@ async function main() {
     },
   });
 
+  //: User 2
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('1234', salt);
+  const user2 = await prisma.user.create({
+    data: {
+      name: 'Jason',
+      surname: 'Antalis',
+      email: 'u19141859@tuks.co.za',
+      university: 'University of Pretoria',
+      studentNumber: '19141859',
+      password: hashedPassword,
+      isValidated: true,
+      profilePic: '',
+    },
+  });
+
   //* TRIPS *//
   //: Trip 1
   const trip1 = await prisma.trip.create({

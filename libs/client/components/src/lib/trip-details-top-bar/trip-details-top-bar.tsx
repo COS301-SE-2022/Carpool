@@ -16,7 +16,26 @@ type props = {
 
 export function TripDetailsTopBar({ tripId, userId, trip, onPress }: props) {
 
-  
+  const dispatch: AppDispatch = useDispatch();
+
+  const cancelCategory = () => {
+    if (!(trip.status === 'active')) {
+      if (trip.driver.id === userId) {
+        //**Driver */
+        dispatch(cancelDriverTrip({ 
+          tripId: tripId,
+        }));
+      } else {
+        //** Passenger */
+        dispatch(cancelPassengerTrip({
+          tripId: tripId,
+          userId: userId,
+        }));
+      }
+    } else {
+      Alert.alert('You cannot cancel an active trip');
+    }
+  };
 
   const cancel = () => {
     Alert.alert(
@@ -30,7 +49,7 @@ export function TripDetailsTopBar({ tripId, userId, trip, onPress }: props) {
         {
           text: 'Yes',
           onPress: () => {
-            //cancelCategory();
+            cancelCategory();
           }
         },
       ]

@@ -86,3 +86,12 @@ export class TripCancelUpdate {
   @Field()
   status: string;
 }
+
+@InputType()
+export class PassengerCancelCommand {
+  @Field()
+  status: string;
+
+  @Field()
+  seatsAvailable: number;
+}

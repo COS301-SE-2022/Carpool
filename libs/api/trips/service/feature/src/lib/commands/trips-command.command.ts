@@ -66,3 +66,7 @@ export class DeclineTripRequestCommand {
 export class CancelTripCommand {
   constructor(public readonly tripId: string) {}
 }
+
+export class PassengerCancelCommand {
+  constructor(public readonly tripId: string, userId: string) {}
+}

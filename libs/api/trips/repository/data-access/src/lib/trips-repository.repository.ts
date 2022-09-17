@@ -329,7 +329,7 @@ export class TripsRepository {
         tripId: id,
       },
       data: {
-        //status: 'cancelled',
+        status: 'cancelled',
       },
     });
   }

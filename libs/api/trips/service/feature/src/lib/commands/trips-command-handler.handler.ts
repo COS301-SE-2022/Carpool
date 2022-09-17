@@ -12,6 +12,7 @@ import {
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
   CancelTripCommand,
+  PassengerCancelCommand,
 } from './trips-command.command';
 import { TripsUpdate } from '@carpool/api/trips/entities';
 
@@ -173,5 +174,17 @@ export class CancelTripHandler implements ICommandHandler<CancelTripCommand> {
   async execute(command: CancelTripCommand): Promise<Trip | null> {
     const { tripId } = command;
     return await this.tripsRepository.cancelTrip(tripId);
+  }
+}
+
+@CommandHandler(PassengerCancelCommand)
+export class PassengerCancelHandler
+  implements ICommandHandler<PassengerCancelCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: PassengerCancelCommand): Promise<Trip | null> {
+    const { tripId, userId } = command;
+    return await this.tripRepository.passengerCancel(tripId, userId);
   }
 }

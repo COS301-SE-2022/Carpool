@@ -106,6 +106,8 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
             <TripDetailsTopBar
               trip={trip}
               onPress={() => navigation.goBack()}
+              userId={userData.id}
+              tripId={tripId}
             />
           )}
           {trip && <TripDetailsMapView trip={trip} />}

@@ -1,19 +1,24 @@
 import React from 'react';
 import { Alert, Pressable, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TripDetailsType } from '@carpool/client/store';
+import { AppDispatch, cancelDriverTrip, cancelPassengerTrip, TripDetailsType } from '@carpool/client/store';
 import { formatDate } from '@carpool/client/shared/utilities';
 import { styles } from './trip-details-top-bar.style';
 import Icons from 'react-native-vector-icons/MaterialIcons';
+import { useDispatch } from 'react-redux';
 
 type props = {
+  tripId: string;
+  userId: string;
   trip: TripDetailsType;
   onPress: () => void;
 };
 
-export function TripDetailsTopBar({ trip, onPress }: props) {
+export function TripDetailsTopBar({ tripId, userId, trip, onPress }: props) {
 
-  const cancel = (tripId: string) => {
+  
+
+  const cancel = () => {
     Alert.alert(
       'You are about to cancel this trip.',
       'Are you sure you want to cancel?',
@@ -24,28 +29,12 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
         },
         {
           text: 'Yes',
-          onPress: //{
-            onPress
-            //navigation.navigate('RegisterDriver', {
-            //  userId: userData ? userData.id : '',
-            //});
-            // navigation.navigate('OnboardPage');
-          //},
-          ,
+          onPress: () => {
+            //cancelCategory();
+          }
         },
       ]
     );
-    // if (trip.status === 'active') {
-    //   if (trip.driver.id === userData?.id) {
-    //     //**Driver active screen */
-    //     navigation.navigate('DriverActiveTrip', { tripId });
-    //   } else {
-    //     //** Passenger active screen */
-    //     navigation.navigate('DriverActiveTrip', { tripId });
-    //   }
-    // } else {
-    //   navigation.push('TripDetails', { tripId, type: 'booked' });
-    // }
   };
 
   return (
@@ -66,7 +55,7 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
       </View>
       <Pressable>
         <View style={[styles.shadow, styles.cancelButton]}>
-          <Icons name="cancel" color="#000000" size={30} onPress={cancel}/>
+          <Icons name="cancel" color="#ff0000" size={30} onPress={cancel}/>
         </View>
       </Pressable>
     </View>

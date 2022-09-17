@@ -344,4 +344,8 @@ export class TripsRepository {
       },
     });
   }
+
+  async passengerCancel(bookingId: string): Promise<Trip> {
+    return;
+  }
 }

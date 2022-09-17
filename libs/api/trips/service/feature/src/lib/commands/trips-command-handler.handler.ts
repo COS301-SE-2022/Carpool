@@ -184,7 +184,7 @@ export class PassengerCancelHandler
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: PassengerCancelCommand): Promise<Trip | null> {
-    const { tripId, userId } = command;
-    return await this.tripRepository.passengerCancel(tripId, userId);
+    const { bookingId } = command;
+    return await this.tripsRepository.passengerCancel(bookingId);
   }
 }

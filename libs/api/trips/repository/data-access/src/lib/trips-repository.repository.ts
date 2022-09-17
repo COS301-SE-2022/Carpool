@@ -345,7 +345,14 @@ export class TripsRepository {
     });
   }
 
-  async passengerCancel(bookingId: string): Promise<Trip> {
-    return;
+  async passengerCancel(bookingId: string): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: {
+        bookingId: bookingId,
+      },
+      data: {
+        status: 'cancelled',
+      },
+    });
   }
 }

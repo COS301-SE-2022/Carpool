@@ -652,3 +652,31 @@ export const cancelDriverTrip = createAsyncThunk<
 
   return res;
 });
+
+export const cancelPassengerTrip = createAsyncThunk<
+  string,
+  cancelPassengerTripType,
+  { rejectValue: Error }
+>('trip/cancel', async ({ bookingId }, thunkApi) => {
+  const response = await axios.post(`${url}/graphql`, {
+    query: CANCEL_PASSENGER_TRIP,
+    variables: {
+      bookingId: bookingId,
+    },
+  });
+  console.log('CANCELING PASSENGER TRIP');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.cancelBooking;
+
+  console.log(res);
+
+  return res;
+});

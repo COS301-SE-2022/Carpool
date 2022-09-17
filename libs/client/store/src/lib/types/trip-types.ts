@@ -140,3 +140,15 @@ export type EndTrip = {
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
+
+export type DriverTripCancel = {
+  tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type PassengerTripCancel = {
+  tripId: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

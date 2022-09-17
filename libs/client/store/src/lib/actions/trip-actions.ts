@@ -622,7 +622,8 @@ export type cancelDriverTripType = {
 };
 
 export type cancelPassengerTripType = {
-  bookingId: string;
+  tripId: string;
+  userId: string;
 };
 
 export const cancelDriverTrip = createAsyncThunk<
@@ -657,11 +658,12 @@ export const cancelPassengerTrip = createAsyncThunk<
   string,
   cancelPassengerTripType,
   { rejectValue: Error }
->('trip/cancel', async ({ bookingId }, thunkApi) => {
+>('trip/cancel', async ({ tripId, userId }, thunkApi) => {
   const response = await axios.post(`${url}/graphql`, {
     query: CANCEL_PASSENGER_TRIP,
     variables: {
-      bookingId: bookingId,
+      tripId: tripId,
+      userId: userId,
     },
   });
   console.log('CANCELING PASSENGER TRIP');

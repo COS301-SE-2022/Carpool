@@ -68,5 +68,5 @@ export class CancelTripCommand {
 }
 
 export class PassengerCancelCommand {
-  constructor(public readonly bookingId: string) {}
+  constructor(public readonly userId: string, public readonly tripId: string) {}
 }

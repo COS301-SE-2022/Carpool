@@ -345,13 +345,16 @@ export class TripsRepository {
     });
   }
 
-  async passengerCancel(bookingId: string): Promise<Booking> {
-    return this.prisma.booking.update({
+  async passengerCancel(userId: string, tripId: string): Promise<Trip> {
+    return this.prisma.trip.update({
       where: {
-        bookingId: bookingId,
+        tripId: tripId,
       },
       data: {
         status: 'cancelled',
+        seatsAvailable: {
+          increment: 1,
+        },
       },
     });
   }

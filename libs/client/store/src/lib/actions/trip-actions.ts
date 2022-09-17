@@ -616,3 +616,13 @@ export const updateBookingPaymentStatus = createAsyncThunk<
 
   return res;
 });
+
+export type cancelDriverTripType = {
+  tripId: string;
+};
+
+export type cancelPassengerTripType = {
+  bookingId: string;
+};
+
+

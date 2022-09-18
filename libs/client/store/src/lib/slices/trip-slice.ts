@@ -12,6 +12,8 @@ import {
   DeclineTripRequest,
   CreateTripState,
   TripRequestState,
+  DriverTripCancel,
+  PassengerTripCancel,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -32,6 +34,8 @@ import {
   declineTripRequest,
   listUpcomingTrips,
   listTripRequests,
+  cancelDriverTrip,
+  cancelPassengerTrip,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -610,3 +614,4 @@ export const { resetStart } = startTripSlice.actions;
 export const { resetEnd } = endTripSlice.actions;
 export const { resetAccept } = acceptTripRequestSlice.actions;
 export const { resetDecline } = declineTripRequestSlice.actions;
+

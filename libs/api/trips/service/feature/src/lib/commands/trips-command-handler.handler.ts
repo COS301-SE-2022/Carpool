@@ -1,4 +1,4 @@
-import { Trip, Booking } from '@prisma/client';
+import { Trip, Booking, Review } from '@prisma/client';
 import { TripsRepository } from '@carpool/api/trips/repository';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import {
@@ -11,8 +11,10 @@ import {
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
+  UpdatePassengerReviewsCommand,
+  CreateReviewCommand,
 } from './trips-command.command';
-import { TripsUpdate } from '@carpool/api/trips/entities';
+import { ReviewInput, TripsUpdate } from '@carpool/api/trips/entities';
 
 @CommandHandler(TripsCreateCommand)
 export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
@@ -46,6 +48,24 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
       destinationLongitude,
       destinationLatitude
     );
+  }
+}
+@CommandHandler(CreateReviewCommand)
+export class CreateReviewHandler implements ICommandHandler<CreateReviewCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: CreateReviewCommand): Promise<Review | null> {
+    const {
+      byId,
+      forId,
+      tripId,
+      role,
+      comment,
+      rating,
+    } = command;
+
+
+    return await this.tripsRepository.postReview(byId, forId, tripId, role, comment, rating);
   }
 }
 
@@ -90,6 +110,17 @@ export class TripsUpdateHandler implements ICommandHandler<TripsUpdateCommand> {
     tripUpdate.price = price;
     tripUpdate.status = status;
     return await this.tripsRepository.update(tripId, tripUpdate);
+  }
+}
+
+@CommandHandler(UpdatePassengerReviewsCommand)
+export class UpdatePassengerReviewsHandler implements ICommandHandler<UpdatePassengerReviewsCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: UpdatePassengerReviewsCommand): Promise<Booking | null> {
+    const { bookingId } = command;
+
+    return await this.tripsRepository.updateReviewPassenger(bookingId);
   }
 }
 

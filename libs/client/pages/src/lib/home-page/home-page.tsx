@@ -43,19 +43,6 @@ export function HomePage({ navigation }: HomePageProps) {
   const endTripState = useSelector((state: RootStore) => state.endTrip);
   const { status: endTripStatus } = endTripState;
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalVisible2, setModalVisible2] = useState(false);
-
-  const changeToReview = () => {
-    console.log('Change from Rating to Review Modal');
-    setModalVisible(true);
-    setModalVisible2(false);
-  };
-  const reviewToNothing = () => {
-    console.log('Change from Review Modal to Nothing');
-    setModalVisible(false);
-  };
-
   useEffect(() => {
     dispatch(listUpcomingTrips());
 
@@ -166,33 +153,7 @@ export function HomePage({ navigation }: HomePageProps) {
         </View>
       </View>
       <View style={styles.centeredView}>
-        <Modal animationType="slide" transparent={true} visible={modalVisible}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <ReviewCard />
-              <TouchableOpacity
-                style={[styles.container2]}
-                onPress={reviewToNothing}
-              >
-                <Text style={styles.text}>Review</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-        <Modal animationType="slide" transparent={true} visible={modalVisible2}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <RatingCard />
-              <TouchableOpacity
-                onPress={changeToReview}
-                style={[styles.container2]}
-              >
-                <Text style={styles.text}>Rate</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-      </View>
+    </View>
     </View>
   );
 }

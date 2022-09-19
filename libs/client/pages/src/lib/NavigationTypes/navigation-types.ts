@@ -34,14 +34,13 @@ export type RootStackParamList = {
   ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
-  CreditCard: { tripId: string };
+  CreditCard:  {tripId: string, description: string, cost: number};
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
-  ReviewPage: undefined;
-  PayfastPage: undefined;
-  ChatList: undefined;
-  TripRatingPage: undefined;
+  ReviewPage: { tripId: string, driverId: string, driver: string, date: string, destination: string };
+  PayfastPage:  {description: string, cost: number};
+  TripRatingPage: { tripId: string };
 };
 
 export type HomePageProps = NativeStackScreenProps<

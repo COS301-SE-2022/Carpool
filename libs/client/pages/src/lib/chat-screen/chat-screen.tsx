@@ -23,10 +23,12 @@ const GET_MESSAGES = gql`
       sender {
         id
         name
+        surname
       }
       receiver {
         id
         name
+        surname
       }
       createdAt
     }
@@ -71,10 +73,12 @@ const MSG_SUB = gql`
       sender {
         id
         name
+        surname
       }
       receiver {
         id
         name
+        surname
       }
       createdAt
     }
@@ -86,10 +90,22 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);
 
+  const [name, setName] = useState('');
+
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: { senderId, receiverId },
     onCompleted(data) {
       setMessages(data.getMessages);
+
+      if (data.getMessages.length > 0) {
+        data.getMessages[0].receiverId === receiverId
+          ? setName(
+              `${data.getMessages[0].receiver.name} ${data.getMessages[0].receiver.surname}`
+            )
+          : setName(
+              `${data.getMessages[0].sender.name} ${data.getMessages[0].sender.surname}`
+            );
+      }
     },
   });
 
@@ -107,8 +123,14 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
 
   const { data: subData } = useSubscription(MSG_SUB, {
     onSubscriptionData({ subscriptionData: { data } }) {
-      console.log(data);
-      setMessages((prevMessages) => [...prevMessages, data.messageSent]);
+      if (
+        (data.messageSent.receiverId === receiverId &&
+          data.messageSent.senderId === senderId) ||
+        (data.messageSent.receiverId === senderId &&
+          data.messageSent.senderId === receiverId)
+      ) {
+        setMessages((prevMessages) => [...prevMessages, data.messageSent]);
+      }
     },
   });
 
@@ -139,7 +161,7 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
               />
               <View style={{ flex: 4 }}>
                 <Text style={styles.textSmallWhite} numberOfLines={2}>
-                  Benjamin Osmers
+                  {name}
                 </Text>
               </View>
             </View>

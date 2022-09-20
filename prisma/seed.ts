@@ -38,6 +38,23 @@ async function main() {
     },
   });
 
+  //: Passenger 2
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool998', salt);
+  const passenger2 = await prisma.user.create({
+    data: {
+      name: 'Jason',
+      surname: 'Antalis',
+      email: 'u19141859@tuks.co.za',
+      university: 'University of Pretoria',
+      studentNumber: '19141859',
+      password: hashedPassword,
+      cellNumber: '0747999714',
+      isValidated: true,
+      profilePic: '',
+    },
+  });
+
   //* TRIPS *//
   //: Trip 1
   const tripDate = new Date();
@@ -73,13 +90,31 @@ async function main() {
   });
 
   //* BOOKINGS *//
-
   //: Booking 1
   const booking1 = await prisma.booking.create({
     data: {
       user: {
         connect: {
           id: passenger1.id,
+        },
+      },
+      trip: {
+        connect: {
+          tripId: trip1.tripId,
+        },
+      },
+      seatsBooked: 1,
+      price: 30,
+      status: 'unpaid',
+    },
+  });
+
+  //: Booking 1
+  const booking2 = await prisma.booking.create({
+    data: {
+      user: {
+        connect: {
+          id: passenger2.id,
         },
       },
       trip: {

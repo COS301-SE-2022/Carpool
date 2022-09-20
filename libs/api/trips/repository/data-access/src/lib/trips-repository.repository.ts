@@ -60,9 +60,9 @@ export class TripsRepository {
             },
           },
         ],
-        // tripDate: {
-        //   gte: formatDate(new Date().toISOString()),
-        // },
+        tripDate: {
+          gte: new Date(),
+        },
         status: {
           in: ['active', 'confirmed', 'paid'],
         },
@@ -71,8 +71,6 @@ export class TripsRepository {
         tripDate: 'desc',
       },
     });
-
-    console.log(trips);
 
     return trips[0];
   }

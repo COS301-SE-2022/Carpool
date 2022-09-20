@@ -1816,7 +1816,6 @@ let MessageRepository = class MessageRepository {
                 }
                 uniqueChats.push(chatObj);
             });
-            console.log(uniqueChats);
             uniqueChats = uniqueChats.filter((value, index, self) => index ===
                 self.findIndex((t) => t.name === value.name && t.userId === value.userId));
             return uniqueChats;
@@ -3040,9 +3039,9 @@ let TripsRepository = class TripsRepository {
                             },
                         },
                     ],
-                    // tripDate: {
-                    //   gte: formatDate(new Date().toISOString()),
-                    // },
+                    tripDate: {
+                        gte: new Date(),
+                    },
                     status: {
                         in: ['active', 'confirmed', 'paid'],
                     },
@@ -3051,7 +3050,6 @@ let TripsRepository = class TripsRepository {
                     tripDate: 'desc',
                 },
             });
-            console.log(trips);
             return trips[0];
         });
     }

@@ -20,6 +20,14 @@ export class findByPassengerReviewsQuery {
   constructor(public readonly passengerId: string) {}
 }
 
+export class findAllPassengersQuery {
+  constructor(public readonly tripID: string) {}
+}
+
+export class findByDriverReviewsQuery {
+  constructor(public readonly DriverId: string) {}
+}
+
 export class FindBookingByTripQuery {
   constructor(public readonly tripId: string) {}
 }

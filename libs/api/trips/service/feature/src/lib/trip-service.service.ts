@@ -4,7 +4,8 @@ import {
   Booking,
   Trip,
   BookingStatusUpdate,
-  Reviews
+  Reviews,
+  ReviewsStatusUpdate
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -19,6 +20,8 @@ import {
   FindBookingByTripAndUserIdQuery,
   FindAllTripRequestsQuery,
   findByPassengerReviewsQuery,
+  findByDriverReviewsQuery,
+  findAllPassengersQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -32,6 +35,7 @@ import {
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
   UpdatePassengerReviewsCommand,
+  UpdateDriverReviewsCommand,
   CreateReviewCommand
 } from './commands/trips-command.command';
 
@@ -73,6 +77,18 @@ export class TripsService {
   async findByPassengerReviews(passengerId: string): Promise<Trip[] | null> {
     return await this.queryBus.execute(
       new findByPassengerReviewsQuery(passengerId)
+    );
+  }
+
+  async findAllPassengers(tripID: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findAllPassengersQuery(tripID)
+    );
+  }
+
+  async findByDriverReviews(DriverId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findByDriverReviewsQuery(DriverId)
     );
   }
 
@@ -191,6 +207,12 @@ export class TripsService {
   async updateReviewPassenger(bookingId: string): Promise<BookingStatusUpdate> {
     return await this.commandBus.execute(
       new UpdatePassengerReviewsCommand(bookingId)
+    );
+  }
+
+  async updateReviewDriver(tripId: string): Promise<Trip> {
+    return await this.commandBus.execute(
+      new UpdateDriverReviewsCommand(tripId)
     );
   }
 

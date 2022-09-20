@@ -41,6 +41,7 @@ export type RootStackParamList = {
   ReviewPage: { tripId: string, driverId: string, driver: string, date: string, destination: string };
   PayfastPage:  {description: string, cost: number};
   TripRatingPage: { tripId: string };
+  ReviewDriverPage: { tripId: string, date: string, destination: string };
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -176,6 +177,12 @@ export type ReviewPageProps = NativeStackScreenProps<
   RootStackParamList,
   'ReviewPage'
 >;
+
+export type ReviewDriverPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ReviewDriverPage'
+>;
+
 
 export type PayfastPageProps = NativeStackScreenProps<
   RootStackParamList,

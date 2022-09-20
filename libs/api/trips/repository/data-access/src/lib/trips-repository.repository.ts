@@ -107,6 +107,23 @@ export class TripsRepository {
     });
   }
 
+  async findAllPassengers(tripID: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        tripId: tripID,
+      },
+    });
+  }
+
+  async findByDriverReviews(DriverId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        driverId: DriverId,
+        reviewed: false,
+      },
+    });
+  }
+
   async findBookingByTrip(tripID: string): Promise<Booking[]> {
     return this.prisma.booking.findMany({
       where: {
@@ -251,6 +268,17 @@ export class TripsRepository {
     return this.prisma.booking.update({
       where: {
         bookingId: id,
+      },
+      data: {
+        reviewed: true,
+      },
+    });
+  }
+
+  async updateReviewDriver(id: string): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
       },
       data: {
         reviewed: true,

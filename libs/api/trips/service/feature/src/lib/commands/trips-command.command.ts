@@ -55,6 +55,10 @@ export class UpdatePassengerReviewsCommand {
   constructor(public readonly bookingId: string) {}
 }
 
+export class UpdateDriverReviewsCommand {
+  constructor(public readonly tripId: string) {}
+}
+
 export class TripsDeleteCommand {
   constructor(public readonly tripId: string) {}
 }

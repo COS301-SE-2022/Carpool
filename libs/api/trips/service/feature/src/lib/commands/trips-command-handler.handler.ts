@@ -12,6 +12,7 @@ import {
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
   UpdatePassengerReviewsCommand,
+  UpdateDriverReviewsCommand,
   CreateReviewCommand,
 } from './trips-command.command';
 import { ReviewInput, TripsUpdate } from '@carpool/api/trips/entities';
@@ -121,6 +122,17 @@ export class UpdatePassengerReviewsHandler implements ICommandHandler<UpdatePass
     const { bookingId } = command;
 
     return await this.tripsRepository.updateReviewPassenger(bookingId);
+  }
+}
+
+@CommandHandler(UpdateDriverReviewsCommand)
+export class UpdateDriverReviewsHandler implements ICommandHandler<UpdateDriverReviewsCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: UpdateDriverReviewsCommand): Promise<Trip | null> {
+    const { tripId } = command;
+
+    return await this.tripsRepository.updateReviewDriver(tripId);
   }
 }
 

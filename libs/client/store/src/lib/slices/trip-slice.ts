@@ -610,8 +610,40 @@ export const getAllTripRequestsSlice = createSlice({
   },
 });
 
+export const initialCancelDriverState = {
+  trip: '',
+  status: 'idle',
+  error: null,
+} as CreateTripState;
+
+export const cancelDriverTripSlice = createSlice({
+  name: 'trips',
+  initialState: initialCancelDriverState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(cancelDriverTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(cancelDriverTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trip = action.payload;
+      })
+      .addCase(cancelDriverTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
 export const { resetStart } = startTripSlice.actions;
 export const { resetEnd } = endTripSlice.actions;
 export const { resetAccept } = acceptTripRequestSlice.actions;
 export const { resetDecline } = declineTripRequestSlice.actions;
-

@@ -52,6 +52,20 @@ export const fetchStorage = createAsyncThunk('store/initialise', async () => {
   const user = await SecureStore.getItemAsync('user');
 
   if (user) {
+    const response = await axios.post(`${url}/graphql`, {
+      query: USER_PROFILE,
+      variables: {
+        id: JSON.parse(user).id,
+      },
+    });
+
+    console.log(response);
+
+    if (response.data.data === null) {
+      await SecureStore.deleteItemAsync('user');
+      return null;
+    }
+
     return JSON.parse(user);
   } else {
     return null;

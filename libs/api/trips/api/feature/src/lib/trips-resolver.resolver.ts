@@ -4,6 +4,7 @@ import {
   Booking,
   Location,
   BookingStatusUpdate,
+  ReviewsStatusUpdate,
   Reviews,
   ReviewInput,
 } from '@carpool/api/trips/entities';
@@ -103,6 +104,16 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
+  async findByDriverReviews(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByDriverReviews(id);
+  }
+
+  @Query(() => [Trip])
+  async findAllPassengers(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findAllPassengers(id);
+  }
+
+  @Query(() => [Trip])
   async searchTrips(
     @Args('date') date: string,
     @Args('startLongitude') startLongitude: string,
@@ -173,6 +184,13 @@ export class TripsResolver {
     @Args('bookingId') bookingId: string
   ): Promise<BookingStatusUpdate> {
     return await this.tripsService.updateReviewPassenger(bookingId);
+  }
+
+  @Mutation(() => Trip)
+  async updateReviewDriver(
+    @Args('tripId') tripId: string
+  ): Promise<ReviewsStatusUpdate> {
+    return await this.tripsService.updateReviewDriver(tripId);
   }
 
   @Mutation(() => Booking)

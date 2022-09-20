@@ -23,8 +23,11 @@ import {
   EndTripHandler,
   DeclineTripRequestHandler,
   FindByPassengerReviewsHandler,
+  FindByDriverReviewsHandler,
   UpdatePassengerReviewsHandler,
+  UpdateDriverReviewsHandler,
   CreateReviewHandler,
+  FindAllPassengersHandler
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -62,8 +65,11 @@ import { AuthService } from '@carpool/api/authentication/service';
     EndTripHandler,
     DeclineTripRequestHandler,
     FindByPassengerReviewsHandler,
+    FindByDriverReviewsHandler,
     UpdatePassengerReviewsHandler,
-    CreateReviewHandler
+    UpdateDriverReviewsHandler,
+    CreateReviewHandler,
+    FindAllPassengersHandler
   ],
 })
 export class TripsModule {}

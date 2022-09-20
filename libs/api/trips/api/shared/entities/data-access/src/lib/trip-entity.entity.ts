@@ -80,3 +80,9 @@ export class TripStatusUpdate {
   @Field()
   status: string;
 }
+
+@InputType()
+export class ReviewsStatusUpdate {
+  @Field(() => ID)
+  tripId: string;
+}

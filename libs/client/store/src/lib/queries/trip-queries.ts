@@ -136,6 +136,40 @@ query ($id: String!) {
 }
 `;
 
+export const LIST_ALL_PASSENGERS = `
+query ($id: String!) {
+  findAllPassengers(id: $id) {
+    passengers {
+      bookingId,
+      tripId,
+      userId
+      user{
+        name
+      }
+    }
+  }
+}
+`;
+
+export const DRIVER_REVIEWS = `
+query ($id: String!) {
+  findByDriverReviews(id: $id) {
+    tripId,
+    driver {
+      id,
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
 export const UPCOMING_TRIP = `
   query {
     findUpcomingTrip {
@@ -270,6 +304,13 @@ export const PASSENGER_REVIEW_UPDATE = `
 mutation ($bookingId: String!) {
   updateReviewPassenger(bookingId: $bookingId) {
     bookingId
+  }
+}`;
+
+export const DRIVER_REVIEW_UPDATE = `
+mutation ($tripId: String!) {
+  updateReviewDriver(tripId: $tripId) {
+    tripId
   }
 }`;
 

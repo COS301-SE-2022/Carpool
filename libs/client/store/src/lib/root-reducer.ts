@@ -25,8 +25,11 @@ import {
   declineTripRequestSlice,
   getAllTripRequestsSlice,
   passengerReviewSlice,
+  DriverReviewSlice,
   UpdatePassengerReviewsSlice,
-  postReviewSlice
+  UpdateDriverReviewsSlice,
+  postReviewSlice,
+  getAllPassengersSlice,
 } from './slices/trip-slice';
 import { getWeatherSlice } from './slices/weather-slices';
 import {
@@ -63,8 +66,11 @@ const RootReducer = combineReducers({
   message: sendMessageSlice.reducer,
   chats: getChatsSlice.reducer,
   passengerReviews: passengerReviewSlice.reducer,
+  driverReviews: DriverReviewSlice.reducer,
   updatePassengerReviews: UpdatePassengerReviewsSlice.reducer,
-  postReview: postReviewSlice.reducer
+  updateDriverReviews: UpdateDriverReviewsSlice.reducer,
+  postReview: postReviewSlice.reducer,
+  allPassengers: getAllPassengersSlice.reducer
 });
 
 export default RootReducer;

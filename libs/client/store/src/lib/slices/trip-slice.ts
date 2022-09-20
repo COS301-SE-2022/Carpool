@@ -12,7 +12,8 @@ import {
   DeclineTripRequest,
   CreateTripState,
   TripRequestState,
-  ReviewType,
+  ReviewTripState,
+  PassengerList,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -34,8 +35,11 @@ import {
   listUpcomingTrips,
   listTripRequests,
   listPassengerReviews,
+  listDriverReviews,
   updateReviewPassenger,
+  updateReviewDriver,
   postReview,
+  listAllPassengers
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -186,6 +190,71 @@ export const passengerReviewSlice = createSlice({
         state.trips = action.payload;
       })
       .addCase(listPassengerReviews.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialAllPassengersState = {
+  Passengers: null,
+  status: 'idle',
+  error: null,
+} as PassengerList;
+
+export const getAllPassengersSlice = createSlice({
+  name: 'trips',
+  initialState: initialAllPassengersState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listAllPassengers.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listAllPassengers.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+      })
+      .addCase(listAllPassengers.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialDriverReviewState = {
+  trips: null,
+  status: 'idle',
+  error: null,
+} as TripList;
+
+export const DriverReviewSlice = createSlice({
+  name: 'trips',
+  initialState: initialDriverReviewState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listDriverReviews.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listDriverReviews.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.trips = action.payload;
+      })
+      .addCase(listDriverReviews.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -363,9 +432,10 @@ export const tripBookingSlice = createSlice({
 });
 
 export const postReviewState = {
+  review: null,
   status: 'idle',
   error: null,
-} as ReviewType;
+} as ReviewTripState;
 
 export const postReviewSlice = createSlice({
   name: 'post-review',
@@ -380,10 +450,16 @@ export const postReviewSlice = createSlice({
       .addCase(postReview.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
+       // state.review = action.payload;
       })
       .addCase(postReview.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
       });
   },
 });
@@ -538,9 +614,10 @@ export const PaymentStatusUpdateSlice = createSlice({
 });
 
 export const initialUpdatePassengerReviewsState = {
+  review: null,
   status: 'idle',
   error: null,
-} as ReviewType;
+} as ReviewTripState;
 
 export const UpdatePassengerReviewsSlice = createSlice({
   name: 'update-passenger-reviews',
@@ -558,6 +635,34 @@ export const UpdatePassengerReviewsSlice = createSlice({
         // state.userProfile = action.payload;
       })
       .addCase(updateReviewPassenger.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+      });
+  },
+});
+
+export const initialUpdateDriverReviewsState = {
+  review: null,
+  status: 'idle',
+  error: null,
+} as ReviewTripState;
+
+export const UpdateDriverReviewsSlice = createSlice({
+  name: 'update-driver-reviews',
+  initialState: initialUpdateDriverReviewsState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateReviewDriver.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(updateReviewDriver.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        // state.userProfile = action.payload;
+      })
+      .addCase(updateReviewDriver.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
       });

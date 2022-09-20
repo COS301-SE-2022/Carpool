@@ -28,6 +28,7 @@ import {
   PayfastPage,
   ChatList,
   TripRatingPage,
+  ReviewDriverPage
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -110,6 +111,8 @@ export type ProfileStackParamList = {
   EditProfile;
   Statistics;
   TripHistory;
+  ReviewPage;
+  ReviewDriverPage;
 };
 
 const Tab = createBottomTabNavigator<TabBarParamList>();
@@ -155,10 +158,8 @@ const ProfileStack = () => {
       <ProfileStackNav.Screen name="Statistics" component={Statistics} />
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
       <ProfileStackNav.Screen name="ReviewPage" component={ReviewPage} />
-      <ProfileStackNav.Screen
-        name="TripRatingPage"
-        component={TripRatingPage}
-      />
+      <ProfileStackNav.Screen name="TripRatingPage" component={TripRatingPage}/>
+      <ProfileStackNav.Screen name="ReviewDriverPage" component={ReviewDriverPage} />
     </ProfileStackNav.Navigator>
   );
 };

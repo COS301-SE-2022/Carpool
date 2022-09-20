@@ -103,7 +103,7 @@ model PickupLocation {
   address   String
   latitude  String
   longitude String
-  bookingId    String @map("booking_id")
+  bookingId    String @map("booking_id") @unique
 
   booking     Booking? @relation(name: "pickup_location", fields:[bookingId], references: [bookingId])
 

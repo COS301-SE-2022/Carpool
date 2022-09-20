@@ -1910,8 +1910,11 @@ TripsModule = tslib_1.__decorate([
             service_2.EndTripHandler,
             service_2.DeclineTripRequestHandler,
             service_2.FindByPassengerReviewsHandler,
+            service_2.FindByDriverReviewsHandler,
             service_2.UpdatePassengerReviewsHandler,
-            service_2.CreateReviewHandler
+            service_2.UpdateDriverReviewsHandler,
+            service_2.CreateReviewHandler,
+            service_2.FindAllPassengersHandler
         ],
     })
 ], TripsModule);
@@ -1924,7 +1927,7 @@ exports.TripsModule = TripsModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TripsResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -2012,6 +2015,16 @@ let TripsResolver = class TripsResolver {
             return yield this.tripsService.findByPassengerReviews(id);
         });
     }
+    findByDriverReviews(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.findByDriverReviews(id);
+        });
+    }
+    findAllPassengers(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.findAllPassengers(id);
+        });
+    }
     searchTrips(date, startLongitude, startLatitude, destinationLongitude, destinationLatitude) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const trips = yield this.tripsService.searchTrips(date);
@@ -2042,6 +2055,11 @@ let TripsResolver = class TripsResolver {
     updateReviewPassenger(bookingId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.tripsService.updateReviewPassenger(bookingId);
+        });
+    }
+    updateReviewDriver(tripId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.updateReviewDriver(tripId);
         });
     }
     bookTrip(tripId, passengerId, seatsBooked, status, price, address, longitude, latitude) {
@@ -2154,6 +2172,20 @@ tslib_1.__decorate([
 ], TripsResolver.prototype, "findByPassengerReviews", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_s = typeof Promise !== "undefined" && Promise) === "function" ? _s : Object)
+], TripsResolver.prototype, "findByDriverReviews", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_2.Trip]),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
+], TripsResolver.prototype, "findAllPassengers", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('date')),
     tslib_1.__param(1, (0, graphql_1.Args)('startLongitude')),
     tslib_1.__param(2, (0, graphql_1.Args)('startLatitude')),
@@ -2161,7 +2193,7 @@ tslib_1.__decorate([
     tslib_1.__param(4, (0, graphql_1.Args)('destinationLatitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_s = typeof Promise !== "undefined" && Promise) === "function" ? _s : Object)
+    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
 ], TripsResolver.prototype, "searchTrips", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -2178,22 +2210,29 @@ tslib_1.__decorate([
     tslib_1.__param(10, (0, graphql_1.Args)('destinationLatitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
+    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
 ], TripsResolver.prototype, "create", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
+    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
 ], TripsResolver.prototype, "updatePaymentStatus", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
+    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
 ], TripsResolver.prototype, "updateReviewPassenger", null);
+tslib_1.__decorate([
+    (0, graphql_1.Mutation)(() => entities_2.Trip),
+    tslib_1.__param(0, (0, graphql_1.Args)('tripId')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_y = typeof Promise !== "undefined" && Promise) === "function" ? _y : Object)
+], TripsResolver.prototype, "updateReviewDriver", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('tripId')),
@@ -2206,7 +2245,7 @@ tslib_1.__decorate([
     tslib_1.__param(7, (0, graphql_1.Args)('latitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
+    tslib_1.__metadata("design:returntype", typeof (_z = typeof Promise !== "undefined" && Promise) === "function" ? _z : Object)
 ], TripsResolver.prototype, "bookTrip", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Reviews),
@@ -2218,7 +2257,7 @@ tslib_1.__decorate([
     tslib_1.__param(5, (0, graphql_1.Args)('rating')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, Number]),
-    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
+    tslib_1.__metadata("design:returntype", typeof (_0 = typeof Promise !== "undefined" && Promise) === "function" ? _0 : Object)
 ], TripsResolver.prototype, "postReview", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -2226,28 +2265,28 @@ tslib_1.__decorate([
     tslib_1.__param(1, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_y = typeof Promise !== "undefined" && Promise) === "function" ? _y : Object)
+    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
 ], TripsResolver.prototype, "acceptTripRequest", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_z = typeof Promise !== "undefined" && Promise) === "function" ? _z : Object)
+    tslib_1.__metadata("design:returntype", typeof (_2 = typeof Promise !== "undefined" && Promise) === "function" ? _2 : Object)
 ], TripsResolver.prototype, "declineTripRequest", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_0 = typeof Promise !== "undefined" && Promise) === "function" ? _0 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_3 = typeof Promise !== "undefined" && Promise) === "function" ? _3 : Object)
 ], TripsResolver.prototype, "startTrip", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_4 = typeof Promise !== "undefined" && Promise) === "function" ? _4 : Object)
 ], TripsResolver.prototype, "endTrip", null);
 TripsResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(() => entities_2.Trip),
@@ -2622,7 +2661,7 @@ var Role;
 
 var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TripStatusUpdate = exports.AcceptTripRequestUpdate = exports.TripsUpdate = exports.TripsInput = exports.Trip = void 0;
+exports.ReviewsStatusUpdate = exports.TripStatusUpdate = exports.AcceptTripRequestUpdate = exports.TripsUpdate = exports.TripsInput = exports.Trip = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 const entities_1 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
@@ -2742,6 +2781,16 @@ TripStatusUpdate = tslib_1.__decorate([
     (0, graphql_1.InputType)()
 ], TripStatusUpdate);
 exports.TripStatusUpdate = TripStatusUpdate;
+let ReviewsStatusUpdate = class ReviewsStatusUpdate {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    tslib_1.__metadata("design:type", String)
+], ReviewsStatusUpdate.prototype, "tripId", void 0);
+ReviewsStatusUpdate = tslib_1.__decorate([
+    (0, graphql_1.InputType)()
+], ReviewsStatusUpdate);
+exports.ReviewsStatusUpdate = ReviewsStatusUpdate;
 
 
 /***/ }),
@@ -2900,6 +2949,25 @@ let TripsRepository = class TripsRepository {
             });
         });
     }
+    findAllPassengers(tripID) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.trip.findMany({
+                where: {
+                    tripId: tripID,
+                },
+            });
+        });
+    }
+    findByDriverReviews(DriverId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.trip.findMany({
+                where: {
+                    driverId: DriverId,
+                    reviewed: false,
+                },
+            });
+        });
+    }
     findBookingByTrip(tripID) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return this.prisma.booking.findMany({
@@ -3028,6 +3096,18 @@ let TripsRepository = class TripsRepository {
             return this.prisma.booking.update({
                 where: {
                     bookingId: id,
+                },
+                data: {
+                    reviewed: true,
+                },
+            });
+        });
+    }
+    updateReviewDriver(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.trip.update({
+                where: {
+                    tripId: id,
                 },
                 data: {
                     reviewed: true,
@@ -3205,9 +3285,9 @@ exports.ApiTripsServiceFeatureModule = ApiTripsServiceFeatureModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.EndTripHandler = exports.StartTripHandler = exports.DeclineTripRequestHandler = exports.AcceptTripRequestHandler = exports.TripsDeleteHandler = exports.BookingUpdatePaymentStatusHandler = exports.UpdatePassengerReviewsHandler = exports.TripsUpdateHandler = exports.BookTripHandler = exports.CreateReviewHandler = exports.TripsCreateHandler = void 0;
+exports.EndTripHandler = exports.StartTripHandler = exports.DeclineTripRequestHandler = exports.AcceptTripRequestHandler = exports.TripsDeleteHandler = exports.BookingUpdatePaymentStatusHandler = exports.UpdateDriverReviewsHandler = exports.UpdatePassengerReviewsHandler = exports.TripsUpdateHandler = exports.BookTripHandler = exports.CreateReviewHandler = exports.TripsCreateHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/trips/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -3297,6 +3377,22 @@ UpdatePassengerReviewsHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_e = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _e : Object])
 ], UpdatePassengerReviewsHandler);
 exports.UpdatePassengerReviewsHandler = UpdatePassengerReviewsHandler;
+let UpdateDriverReviewsHandler = class UpdateDriverReviewsHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(command) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const { tripId } = command;
+            return yield this.tripsRepository.updateReviewDriver(tripId);
+        });
+    }
+};
+UpdateDriverReviewsHandler = tslib_1.__decorate([
+    (0, cqrs_1.CommandHandler)(trips_command_command_1.UpdateDriverReviewsCommand),
+    tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _f : Object])
+], UpdateDriverReviewsHandler);
+exports.UpdateDriverReviewsHandler = UpdateDriverReviewsHandler;
 let BookingUpdatePaymentStatusHandler = class BookingUpdatePaymentStatusHandler {
     constructor(tripsRepository) {
         this.tripsRepository = tripsRepository;
@@ -3310,7 +3406,7 @@ let BookingUpdatePaymentStatusHandler = class BookingUpdatePaymentStatusHandler 
 };
 BookingUpdatePaymentStatusHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.BookingUpdatePaymentStatusCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _f : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _g : Object])
 ], BookingUpdatePaymentStatusHandler);
 exports.BookingUpdatePaymentStatusHandler = BookingUpdatePaymentStatusHandler;
 let TripsDeleteHandler = class TripsDeleteHandler {
@@ -3326,7 +3422,7 @@ let TripsDeleteHandler = class TripsDeleteHandler {
 };
 TripsDeleteHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.TripsDeleteCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _g : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _h : Object])
 ], TripsDeleteHandler);
 exports.TripsDeleteHandler = TripsDeleteHandler;
 let AcceptTripRequestHandler = class AcceptTripRequestHandler {
@@ -3342,7 +3438,7 @@ let AcceptTripRequestHandler = class AcceptTripRequestHandler {
 };
 AcceptTripRequestHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.AcceptTripRequestCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _h : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _j : Object])
 ], AcceptTripRequestHandler);
 exports.AcceptTripRequestHandler = AcceptTripRequestHandler;
 let DeclineTripRequestHandler = class DeclineTripRequestHandler {
@@ -3358,7 +3454,7 @@ let DeclineTripRequestHandler = class DeclineTripRequestHandler {
 };
 DeclineTripRequestHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.DeclineTripRequestCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _j : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_k = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _k : Object])
 ], DeclineTripRequestHandler);
 exports.DeclineTripRequestHandler = DeclineTripRequestHandler;
 let StartTripHandler = class StartTripHandler {
@@ -3374,7 +3470,7 @@ let StartTripHandler = class StartTripHandler {
 };
 StartTripHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.StartTripCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_k = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _k : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_l = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _l : Object])
 ], StartTripHandler);
 exports.StartTripHandler = StartTripHandler;
 let EndTripHandler = class EndTripHandler {
@@ -3390,7 +3486,7 @@ let EndTripHandler = class EndTripHandler {
 };
 EndTripHandler = tslib_1.__decorate([
     (0, cqrs_1.CommandHandler)(trips_command_command_1.EndTripCommand),
-    tslib_1.__metadata("design:paramtypes", [typeof (_l = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _l : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_m = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _m : Object])
 ], EndTripHandler);
 exports.EndTripHandler = EndTripHandler;
 
@@ -3402,7 +3498,7 @@ exports.EndTripHandler = EndTripHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DeclineTripRequestCommand = exports.EndTripCommand = exports.StartTripCommand = exports.AcceptTripRequestCommand = exports.TripsDeleteCommand = exports.UpdatePassengerReviewsCommand = exports.BookingUpdatePaymentStatusCommand = exports.TripsUpdateCommand = exports.BookTripCommand = exports.CreateReviewCommand = exports.TripsCreateCommand = void 0;
+exports.DeclineTripRequestCommand = exports.EndTripCommand = exports.StartTripCommand = exports.AcceptTripRequestCommand = exports.TripsDeleteCommand = exports.UpdateDriverReviewsCommand = exports.UpdatePassengerReviewsCommand = exports.BookingUpdatePaymentStatusCommand = exports.TripsUpdateCommand = exports.BookTripCommand = exports.CreateReviewCommand = exports.TripsCreateCommand = void 0;
 class TripsCreateCommand {
     constructor(driver, tripDate, seatsAvailable, price, status, startLocationAddress, startLocationLongitude, startLocationLatitude, destinationAddress, destinationLongitude, destinationLatitude) {
         this.driver = driver;
@@ -3464,6 +3560,12 @@ class UpdatePassengerReviewsCommand {
     }
 }
 exports.UpdatePassengerReviewsCommand = UpdatePassengerReviewsCommand;
+class UpdateDriverReviewsCommand {
+    constructor(tripId) {
+        this.tripId = tripId;
+    }
+}
+exports.UpdateDriverReviewsCommand = UpdateDriverReviewsCommand;
 class TripsDeleteCommand {
     constructor(tripId) {
         this.tripId = tripId;
@@ -3508,9 +3610,9 @@ var Role;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindAllTripRequestsHandler = exports.SearchTripsHandler = exports.FindTripByIdHandler = exports.FindCoordinatesByTripHandler = exports.FindBookingByTripAndUserIdHandler = exports.FindBookingByTripHandler = exports.FindByPassengerReviewsHandler = exports.FindByRequestedTripHandler = exports.FindByConfirmedTripHandler = exports.FindByPassengerHandler = exports.FindByDriverHandler = exports.FindAllHandler = void 0;
+exports.FindAllTripRequestsHandler = exports.SearchTripsHandler = exports.FindTripByIdHandler = exports.FindCoordinatesByTripHandler = exports.FindBookingByTripAndUserIdHandler = exports.FindBookingByTripHandler = exports.FindByDriverReviewsHandler = exports.FindAllPassengersHandler = exports.FindByPassengerReviewsHandler = exports.FindByRequestedTripHandler = exports.FindByConfirmedTripHandler = exports.FindByPassengerHandler = exports.FindByDriverHandler = exports.FindAllHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/trips/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -3605,6 +3707,36 @@ FindByPassengerReviewsHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _f : Object])
 ], FindByPassengerReviewsHandler);
 exports.FindByPassengerReviewsHandler = FindByPassengerReviewsHandler;
+let FindAllPassengersHandler = class FindAllPassengersHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsRepository.findByPassengerReviews(query.passengerId);
+        });
+    }
+};
+FindAllPassengersHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(trips_query_query_1.findAllPassengersQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _g : Object])
+], FindAllPassengersHandler);
+exports.FindAllPassengersHandler = FindAllPassengersHandler;
+let FindByDriverReviewsHandler = class FindByDriverReviewsHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsRepository.findByDriverReviews(query.DriverId);
+        });
+    }
+};
+FindByDriverReviewsHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(trips_query_query_1.findByDriverReviewsQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _h : Object])
+], FindByDriverReviewsHandler);
+exports.FindByDriverReviewsHandler = FindByDriverReviewsHandler;
 let FindBookingByTripHandler = class FindBookingByTripHandler {
     constructor(tripsRepository) {
         this.tripsRepository = tripsRepository;
@@ -3617,7 +3749,7 @@ let FindBookingByTripHandler = class FindBookingByTripHandler {
 };
 FindBookingByTripHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.FindBookingByTripQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _g : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _j : Object])
 ], FindBookingByTripHandler);
 exports.FindBookingByTripHandler = FindBookingByTripHandler;
 let FindBookingByTripAndUserIdHandler = class FindBookingByTripAndUserIdHandler {
@@ -3632,7 +3764,7 @@ let FindBookingByTripAndUserIdHandler = class FindBookingByTripAndUserIdHandler 
 };
 FindBookingByTripAndUserIdHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.FindBookingByTripAndUserIdQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _h : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_k = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _k : Object])
 ], FindBookingByTripAndUserIdHandler);
 exports.FindBookingByTripAndUserIdHandler = FindBookingByTripAndUserIdHandler;
 let FindCoordinatesByTripHandler = class FindCoordinatesByTripHandler {
@@ -3647,7 +3779,7 @@ let FindCoordinatesByTripHandler = class FindCoordinatesByTripHandler {
 };
 FindCoordinatesByTripHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.FindCoordinatesByTripQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _j : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_l = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _l : Object])
 ], FindCoordinatesByTripHandler);
 exports.FindCoordinatesByTripHandler = FindCoordinatesByTripHandler;
 let FindTripByIdHandler = class FindTripByIdHandler {
@@ -3662,7 +3794,7 @@ let FindTripByIdHandler = class FindTripByIdHandler {
 };
 FindTripByIdHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.FindTripByIdQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_k = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _k : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_m = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _m : Object])
 ], FindTripByIdHandler);
 exports.FindTripByIdHandler = FindTripByIdHandler;
 let SearchTripsHandler = class SearchTripsHandler {
@@ -3677,7 +3809,7 @@ let SearchTripsHandler = class SearchTripsHandler {
 };
 SearchTripsHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.SearchTripsQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_l = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _l : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_o = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _o : Object])
 ], SearchTripsHandler);
 exports.SearchTripsHandler = SearchTripsHandler;
 let FindAllTripRequestsHandler = class FindAllTripRequestsHandler {
@@ -3692,7 +3824,7 @@ let FindAllTripRequestsHandler = class FindAllTripRequestsHandler {
 };
 FindAllTripRequestsHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(trips_query_query_1.FindAllTripRequestsQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_m = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _m : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_p = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _p : Object])
 ], FindAllTripRequestsHandler);
 exports.FindAllTripRequestsHandler = FindAllTripRequestsHandler;
 
@@ -3704,7 +3836,7 @@ exports.FindAllTripRequestsHandler = FindAllTripRequestsHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindAllTripRequestsQuery = exports.SearchTripsQuery = exports.FindTripByIdQuery = exports.FindCoordinatesByTripQuery = exports.FindBookingByTripAndUserIdQuery = exports.FindBookingByTripQuery = exports.findByPassengerReviewsQuery = exports.findByRequestedTripsQuery = exports.findByConfirmedTripsQuery = exports.FindByPassengerQuery = exports.FindByDriverQuery = exports.FindAllQuery = void 0;
+exports.FindAllTripRequestsQuery = exports.SearchTripsQuery = exports.FindTripByIdQuery = exports.FindCoordinatesByTripQuery = exports.FindBookingByTripAndUserIdQuery = exports.FindBookingByTripQuery = exports.findByDriverReviewsQuery = exports.findAllPassengersQuery = exports.findByPassengerReviewsQuery = exports.findByRequestedTripsQuery = exports.findByConfirmedTripsQuery = exports.FindByPassengerQuery = exports.FindByDriverQuery = exports.FindAllQuery = void 0;
 class FindAllQuery {
 }
 exports.FindAllQuery = FindAllQuery;
@@ -3738,6 +3870,18 @@ class findByPassengerReviewsQuery {
     }
 }
 exports.findByPassengerReviewsQuery = findByPassengerReviewsQuery;
+class findAllPassengersQuery {
+    constructor(tripID) {
+        this.tripID = tripID;
+    }
+}
+exports.findAllPassengersQuery = findAllPassengersQuery;
+class findByDriverReviewsQuery {
+    constructor(DriverId) {
+        this.DriverId = DriverId;
+    }
+}
+exports.findByDriverReviewsQuery = findByDriverReviewsQuery;
 class FindBookingByTripQuery {
     constructor(tripId) {
         this.tripId = tripId;
@@ -3831,6 +3975,16 @@ let TripsService = class TripsService {
             return yield this.queryBus.execute(new trips_query_query_1.findByPassengerReviewsQuery(passengerId));
         });
     }
+    findAllPassengers(tripID) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new trips_query_query_1.findAllPassengersQuery(tripID));
+        });
+    }
+    findByDriverReviews(DriverId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new trips_query_query_1.findByDriverReviewsQuery(DriverId));
+        });
+    }
     findBookingByTrip(tripID) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.queryBus.execute(new trips_query_query_1.FindBookingByTripQuery(tripID));
@@ -3879,6 +4033,11 @@ let TripsService = class TripsService {
     updateReviewPassenger(bookingId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.commandBus.execute(new trips_command_command_1.UpdatePassengerReviewsCommand(bookingId));
+        });
+    }
+    updateReviewDriver(tripId) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.commandBus.execute(new trips_command_command_1.UpdateDriverReviewsCommand(tripId));
         });
     }
     delete(tripId) {

@@ -611,10 +611,10 @@ export const getAllTripRequestsSlice = createSlice({
 });
 
 export const initialCancelDriverState = {
-  trip: '',
+  tripId: '',
   status: 'idle',
   error: null,
-} as CreateTripState;
+} as DriverTripCancel;
 
 export const cancelDriverTripSlice = createSlice({
   name: 'trips',
@@ -629,9 +629,42 @@ export const cancelDriverTripSlice = createSlice({
       .addCase(cancelDriverTrip.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
-        state.trip = action.payload;
+        state.tripId = action.payload;
       })
       .addCase(cancelDriverTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialCancelPassengerState = {
+  tripId: '',
+  status: 'idle',
+  error: null,
+} as PassengerTripCancel;
+
+export const cancelPassenegerTripSlice = createSlice({
+  name: 'trips',
+  initialState: initialCancelDriverState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(cancelPassengerTrip.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(cancelPassengerTrip.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.tripId = action.payload;
+      })
+      .addCase(cancelPassengerTrip.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

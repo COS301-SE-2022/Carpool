@@ -651,7 +651,7 @@ export const initialCancelPassengerState = {
 
 export const cancelPassenegerTripSlice = createSlice({
   name: 'trips',
-  initialState: initialCancelDriverState,
+  initialState: initialCancelPassengerState,
   reducers: {},
   extraReducers: (builder) => {
     builder

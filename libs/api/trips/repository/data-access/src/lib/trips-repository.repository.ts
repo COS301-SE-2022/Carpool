@@ -232,7 +232,14 @@ export class TripsRepository {
     });
   }
 
-  async postReview(byId: string, forId: string, tripId: string, role: Role, comment: string, rating: number): Promise<Review | null> {
+  async postReview(
+    byId: string,
+    forId: string,
+    tripId: string,
+    role: Role,
+    comment: string,
+    rating: number
+  ): Promise<Review | null> {
     return this.prisma.review.create({
       data: {
         byId: byId,
@@ -241,7 +248,7 @@ export class TripsRepository {
         role: role,
         comment: comment,
         rating: rating,
-      }
+      },
     });
   }
 
@@ -437,5 +444,5 @@ export class TripsRepository {
 }
 enum Role {
   PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
+  DRIVER = 'DRIVER',
 }

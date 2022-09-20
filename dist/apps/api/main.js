@@ -3395,7 +3395,7 @@ let TripsRepository = class TripsRepository {
                     role: role,
                     comment: comment,
                     rating: rating,
-                }
+                },
             });
         });
     }

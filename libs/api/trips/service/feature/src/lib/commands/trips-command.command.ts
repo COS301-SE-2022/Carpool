@@ -84,5 +84,5 @@ export class DeclineTripRequestCommand {
 
 enum Role {
   PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
+  DRIVER = 'DRIVER',
 }

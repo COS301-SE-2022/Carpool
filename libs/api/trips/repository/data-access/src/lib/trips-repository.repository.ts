@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip, Booking, Location } from '@prisma/client';
-import { TripsUpdate } from '@carpool/api/trips/entities';
+import { Trip, Booking, Location, Review } from '@prisma/client';
+import { TripsUpdate, ReviewInput, Reviews } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -130,6 +130,36 @@ export class TripsRepository {
     return trips;
   }
 
+  async findByPassengerReviews(passengerId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        passengers: {
+          some: {
+            userId: passengerId,
+            reviewed: false,
+          },
+        },
+      },
+    });
+  }
+
+  async findAllPassengers(tripID: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        tripId: tripID,
+      },
+    });
+  }
+
+  async findByDriverReviews(DriverId: string): Promise<Trip[]> {
+    return this.prisma.trip.findMany({
+      where: {
+        driverId: DriverId,
+        reviewed: false,
+      },
+    });
+  }
+
   async findBookingByTrip(tripID: string): Promise<Booking[]> {
     return this.prisma.booking.findMany({
       where: {
@@ -202,6 +232,30 @@ export class TripsRepository {
     });
   }
 
+  async postReview(byId: string, forId: string, tripId: string, role: Role, comment: string, rating: number): Promise<Review | null> {
+    return this.prisma.review.create({
+      data: {
+        byId: byId,
+        forId: forId,
+        tripId: tripId,
+        role: role,
+        comment: comment,
+        rating: rating,
+      }
+    });
+  }
+
+  async updatePaymentStatus(id: string): Promise<Booking> {
+    return this.prisma.booking.update({
+      where: {
+        bookingId: id,
+      },
+      data: {
+        status: 'paid',
+      },
+    });
+  }
+
   async bookTrip(
     tripId: string,
     passengerId: string,
@@ -246,13 +300,24 @@ export class TripsRepository {
     });
   }
 
-  async updatePaymentStatus(id: string): Promise<Booking> {
+  async updateReviewPassenger(id: string): Promise<Booking> {
     return this.prisma.booking.update({
       where: {
         bookingId: id,
       },
       data: {
-        status: 'paid',
+        reviewed: true,
+      },
+    });
+  }
+
+  async updateReviewDriver(id: string): Promise<Trip> {
+    return this.prisma.trip.update({
+      where: {
+        tripId: id,
+      },
+      data: {
+        reviewed: true,
       },
     });
   }
@@ -369,4 +434,8 @@ export class TripsRepository {
       },
     });
   }
+}
+enum Role {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER'
 }

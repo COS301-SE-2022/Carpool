@@ -7,20 +7,16 @@ import { WebView } from "react-native-webview";
 export const PayfastView = (props: { sandbox: boolean; signature: boolean; passphrase: string; title: string; data: { [x: string]: string | number | boolean; }; }) => {
   // State constants
   const [showWebView, setShowWebView] = useState(false);
+  const [showButton, setShowButton] = useState(true);
   const [postBody, setPostBody] = useState("");
   const uri = props.sandbox ? "https://sandbox.payfast.co.za/eng/process" : "http://www.payfast.co.za/eng/process";
   const closeUriRegex = /https?:\/\/([a-z]|\.)+\/eng\/process\/finish\/([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+-([0-9]|[a-z])+/gi;
-  const paymentData = {
-    merchant_id : 10026673,
-    merchant_key: '7zctrsta1c3ys',
-    amount: 30.00,
-    item_name: 'React Native Purchase'
-}
+
   const setContainerStyles = () => {
       if(!showWebView){
           styles.pfWrapper = {
-              width: "100%",
-              flex: 1,
+            width: "100%",
+             flex: 1,
           };
       } else {
           styles.pfWrapper = {
@@ -48,12 +44,14 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
           const signatureString = getString + "passphrase=" + props.passphrase;
           const signature = MD5(signatureString);
           getString += "signature=" + signature;
+
       }
 
       // Set the payload body and show the webView
       setPostBody(getString);
       setShowWebView(!showWebView);
       setContainerStyles();
+      setShowButton(false);
   };
 
   const renderPayFastPage = () => {
@@ -80,15 +78,18 @@ export const PayfastView = (props: { sandbox: boolean; signature: boolean; passp
       );
   };
 
-  const setButtonTitle = () => {
-      return showWebView ? "Close" : props.title;
-  }
+  // const setButtonTitle = () => {
+  //     return showWebView ? "Close" : props.title;
+  // }
 
   // Render the component
   return(
       <View style={styles.pfWrapper}>
           {showWebView && renderPayFastPage()}
-          <Button title={setButtonTitle()} onPress={()=>setWebViewHandler(paymentData)}/>
+          {showButton?(
+             <Button title="Pay Now" onPress={()=>setWebViewHandler(props.data)}/>
+          ): null}
+
       </View>
   );
 }

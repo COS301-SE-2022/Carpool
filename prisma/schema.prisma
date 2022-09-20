@@ -78,6 +78,7 @@ model Trip {
     // start         Location @relation("start_location")
     // destination   Location @relation("destination")
     coordinates     Location[]
+    reviews        Review[]
     reviewed        Boolean @default(false)
 
     @@map("trip")
@@ -103,7 +104,7 @@ model PickupLocation {
   address   String
   latitude  String
   longitude String
-  bookingId    String @map("booking_id")
+  bookingId    String @map("booking_id") @unique
 
   booking     Booking? @relation(name: "pickup_location", fields:[bookingId], references: [bookingId])
 
@@ -128,17 +129,17 @@ model Location {
 ////////////////////////////////
 
 model Review {
+    id          String @id @default(cuid())
     byId        String
     forId       String
+    tripId      String @map("trip_id")
     role        Role
     comment     String
     rating      Int
 
     byUser      User @relation(name:"by_review", fields:[byId], references: [id])
     forUser     User @relation(name:"for_review", fields:[forId], references: [id])
-
-    @@id([byId,forId])
-    @@map("reviews")
+    trip        Trip @relation(fields:[tripId], references: [tripId])
 }
 
 ////////////////////////////////

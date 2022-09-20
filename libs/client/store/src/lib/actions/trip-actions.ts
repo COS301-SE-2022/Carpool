@@ -18,6 +18,12 @@ import {
   START_TRIP,
   END_TRIP,
   FIND_REQUESTS,
+  PASSENGER_REVIEWS,
+  DRIVER_REVIEWS,
+  PASSENGER_REVIEW_UPDATE,
+  POST_REVIEW,
+  LIST_ALL_PASSENGERS,
+  DRIVER_REVIEW_UPDATE
 } from '../queries/trip-queries';
 import {
   TripListType,
@@ -138,6 +144,84 @@ export const listDriverHistory = createAsyncThunk<
   return res;
 });
 
+export const listPassengerReviews = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/PassengerReviews', async (tripId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: PASSENGER_REVIEWS,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByPassengerReviews;
+
+  return res;
+});
+
+export const listAllPassengers = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/AllPassengers', async (tripId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: LIST_ALL_PASSENGERS,
+    variables: {
+      id: tripId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findAllPassengers;
+
+  return res;
+});
+
+export const listDriverReviews = createAsyncThunk<
+  TripListType[],
+  string,
+  { rejectValue: Error }
+>('trips/DriverReviews', async (DriverId: string, thunkApi) => {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: DRIVER_REVIEWS,
+    variables: {
+      id: DriverId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findByDriverReviews;
+
+  return res;
+});
+
 export const listConfirmedTrips = createAsyncThunk<
   TripListType[],
   string,
@@ -197,11 +281,11 @@ export const findBookingId = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  console.log(response);
+ // console.log(response);
 
   const res = response.data.data.findBookingByTripAndUserId.bookingId;
 
-  console.log(res);
+ // console.log(res);
 
   return res;
 });
@@ -493,6 +577,8 @@ export const acceptTripRequest = createAsyncThunk<
   return res;
 });
 
+
+
 export type DeclineTripReqType = {
   bookingId: string;
 };
@@ -604,6 +690,98 @@ export const updateBookingPaymentStatus = createAsyncThunk<
   console.log(response);
 
   const res = response.data.data.updateBookingPaymentStatus;
+
+  return res;
+});
+
+export const updateReviewPassenger = createAsyncThunk<
+  Passenger[],
+  string,
+  { rejectValue: Error }
+>('trips/updateReviewPassenger', async (bookingId: string, thunkApi) => {
+  console.log('updating Review Passenger');
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: PASSENGER_REVIEW_UPDATE,
+    variables: {
+      bookingId: bookingId,
+    },
+  });
+
+  console.log('UPDATING');
+
+  //console.log(response);
+
+  const res = response.data.data.updateReviewPassenger;
+
+  return res;
+});
+
+export const updateReviewDriver = createAsyncThunk<
+  Passenger[],
+  string,
+  { rejectValue: Error }
+>('trips/updateReviewDriver', async (tripId: string, thunkApi) => {
+  console.log('updating Review Driver');
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: DRIVER_REVIEW_UPDATE,
+    variables: {
+      tripId: tripId,
+    },
+  });
+
+  console.log('UPDATING');
+
+  //console.log(response);
+
+  const res = response.data.data.updateReviewDriver;
+
+  return res;
+});
+
+export type postReviewType = {
+  byId: string;
+  forId: string;
+  tripId: string
+  role: string;
+  comment: string;
+  rating: number;
+};
+
+export const postReview = createAsyncThunk<
+  string,
+  postReviewType,
+  { rejectValue: Error }
+>('review/post', async (review: postReviewType, { rejectWithValue, dispatch }) => {
+  console.log(review);
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: POST_REVIEW,
+    variables: {
+      byId: review.byId,
+      forId: review.forId,
+      tripId: review.tripId,
+      role: review.role,
+      comment: review.comment,
+      rating: review.rating,
+    },
+  });
+
+  console.log('ADDING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return rejectWithValue(error);
+
+  }
+
+  console.log(response.data.data);
+
+  const res = response.data.data.postReview;
 
   return res;
 });

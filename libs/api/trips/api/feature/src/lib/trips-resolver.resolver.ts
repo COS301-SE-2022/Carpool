@@ -4,6 +4,9 @@ import {
   Booking,
   Location,
   BookingStatusUpdate,
+  ReviewsStatusUpdate,
+  Reviews,
+  ReviewInput,
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -106,6 +109,21 @@ export class TripsResolver {
   }
 
   @Query(() => [Trip])
+  async findByPassengerReviews(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByPassengerReviews(id);
+  }
+
+  @Query(() => [Trip])
+  async findByDriverReviews(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByDriverReviews(id);
+  }
+
+  @Query(() => [Trip])
+  async findAllPassengers(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findAllPassengers(id);
+  }
+
+  @Query(() => [Trip])
   async searchTrips(
     @Args('date') date: string,
     @Args('startLongitude') startLongitude: string,
@@ -162,11 +180,27 @@ export class TripsResolver {
     );
   }
 
+
+
   @Mutation(() => Booking)
   async updatePaymentStatus(
     @Args('bookingId') bookingId: string
   ): Promise<BookingStatusUpdate> {
     return await this.tripsService.updatePaymentStatus(bookingId);
+  }
+
+  @Mutation(() => Booking)
+  async updateReviewPassenger(
+    @Args('bookingId') bookingId: string
+  ): Promise<BookingStatusUpdate> {
+    return await this.tripsService.updateReviewPassenger(bookingId);
+  }
+
+  @Mutation(() => Trip)
+  async updateReviewDriver(
+    @Args('tripId') tripId: string
+  ): Promise<ReviewsStatusUpdate> {
+    return await this.tripsService.updateReviewDriver(tripId);
   }
 
   @Mutation(() => Booking)
@@ -189,6 +223,26 @@ export class TripsResolver {
       address,
       longitude,
       latitude
+    );
+  }
+
+  @Mutation(() => Reviews)
+  async postReview(
+    @Args('byId') byId: string,
+    @Args('forId') forId: string,
+    @Args('tripId') tripId: string,
+    @Args('role') role: Role,
+    @Args('comment') comment: string,
+    @Args('rating') rating: number,
+
+  ): Promise<Reviews | null> {
+    return await this.tripsService.postReview(
+      byId,
+      forId,
+      tripId,
+      role,
+      comment,
+      rating
     );
   }
 
@@ -216,4 +270,8 @@ export class TripsResolver {
   async endTrip(@Args('id') tripId: string): Promise<Trip> {
     return await this.tripsService.endTrip(tripId);
   }
+}
+enum Role {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER'
 }

@@ -151,3 +151,36 @@ export type EndTrip = {
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
+
+export type ReviewType = {
+  byId: string;
+  forId: string;
+  tripId: string;
+  role: Role;
+  comment: string;
+  rating: number;
+};
+
+export type ReviewTripState = {
+  review: ReviewType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type PassengerList = {
+  Passengers: PassengerListType[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type PassengerListType = {
+  bookingId: string;
+  tripId: Driver;
+  userId: string;
+  name: string;
+};
+
+enum Role {
+  DRIVER = 'DRIVER',
+  PASSENGER = 'PASSENGER'
+}

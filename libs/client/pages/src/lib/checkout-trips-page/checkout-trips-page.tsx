@@ -15,7 +15,7 @@ import {
   listConfirmedTrips,
   listRequestedTrips,
 } from '@carpool/client/store';
-import { TripCardCheckout, Button } from '@carpool/client/components';
+import { TripCardCheckout } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
@@ -50,8 +50,8 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
     userData && dispatch(listRequestedTrips(userData.id));
   };
 
-  const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId, type: 'completed' });
+  const viewTrip = (tripId: string, description: string, cost: number) => {
+    navigation.push('CreditCard', { tripId, description, cost })
   };
 
   return (
@@ -157,8 +157,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
                     date={trip.tripDate}
                     type="passenger"
                     price={trip.price}
-                    onPress={() =>
-                      navigation.push('CreditCard', { tripId: trip.tripId })
+                    onPress={() => viewTrip(trip.tripId, trip.coordinates[1].address, parseInt(trip.price))
                     }
                   />
                   {/* <Button
@@ -181,7 +180,7 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
                 date={trip.tripDate}
                 type="passenger"
                 price={trip.price}
-                onPress={() => viewTrip(trip.tripId)}
+                onPress={() =>  viewTrip(trip.tripId, trip.coordinates[1].address, parseInt(trip.price))}
               />
             ))
           )}

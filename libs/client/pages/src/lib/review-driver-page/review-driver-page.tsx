@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { ReviewPageProps } from '../NavigationTypes/navigation-types';
+import { ReviewDriverPageProps } from '../NavigationTypes/navigation-types';
 import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput } from 'react-native';
-import { AppDispatch, RootStore, postReview, updateReviewPassenger, findBookingId } from '@carpool/client/store';
+import { AppDispatch, RootStore, postReview, findBookingId, listAllPassengers, updateReviewDriver } from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
 import {getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
-export function ReviewPage({ route, navigation }: ReviewPageProps) {
+
+export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -14,7 +15,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user: userData } = userState;
 
-  const {tripId,driverId, driver, date, destination} = route.params;
+  const {tripId, date, destination} = route.params;
 
   const [rate, setRate] = useState(0);
   const [comment, setComment] = useState('');
@@ -24,11 +25,18 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const bookindIdState = useSelector((state: RootStore) => state.bookingId);
   const { bookingId, status, error } = bookindIdState;
 
+  const allPassengers = useSelector((state: RootStore) => state.allPassengers);
+  const { Passengers : passengersList, status: allPassengersStatus } = allPassengers;
+
+
   useEffect(() => {
     if (userData) {
       dispatch(findBookingId({ tripId, userId: userData.id }));
+      dispatch(listAllPassengers(tripId));
+      console.log("Passenger List " + passengersList)
     }
-  }, [dispatch, userData, tripId, navigation]);
+
+  }, [dispatch, userData, tripId, navigation, passengersList ]);
 
 
   const ratingCompleted = (rating:number) => {
@@ -38,22 +46,21 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
 
   }
 
-
   const submitHandler = () => {
     console.log("The review has been posted")
     if(userData){
     dispatch(
       postReview({
         byId: userData?.id,
-        forId: driverId,
+        forId: "INSERT PassengerId",
         tripId: tripId,
-        role: "PASSENGER",
+        role: "DRIVER",
         comment: comment,
         rating: rate,
       })
     );
-    if (bookingId) {
-      dispatch(updateReviewPassenger(bookingId));
+    if (tripId) {
+      dispatch(updateReviewDriver(tripId));
     }
     }
     setModalVisible2(false)
@@ -74,7 +81,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
             style={styles.image}
           />
         <Text style={styles.textLargeBlack}>
-          How was your trip with {driver} ?
+          How was your trip with Ashleigh ?
         </Text>
         <Text style={styles.textMediumLight}>
         {getDay(date)} {getTimeOfDay(date)} to {destination}
@@ -244,4 +251,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default ReviewPage;
+export default ReviewDriverPage;

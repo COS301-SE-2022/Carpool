@@ -4,6 +4,8 @@ import {
   Booking,
   Trip,
   BookingStatusUpdate,
+  Reviews,
+  ReviewsStatusUpdate,
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -18,6 +20,9 @@ import {
   FindBookingByTripAndUserIdQuery,
   FindAllTripRequestsQuery,
   FindUpcomingTripsQuery,
+  findByPassengerReviewsQuery,
+  findByDriverReviewsQuery,
+  findAllPassengersQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -30,6 +35,9 @@ import {
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
+  UpdatePassengerReviewsCommand,
+  UpdateDriverReviewsCommand,
+  CreateReviewCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -69,6 +77,20 @@ export class TripsService {
     return await this.queryBus.execute(
       new findByRequestedTripsQuery(passengerId)
     );
+  }
+
+  async findByPassengerReviews(passengerId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(
+      new findByPassengerReviewsQuery(passengerId)
+    );
+  }
+
+  async findAllPassengers(tripID: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(new findAllPassengersQuery(tripID));
+  }
+
+  async findByDriverReviews(DriverId: string): Promise<Trip[] | null> {
+    return await this.queryBus.execute(new findByDriverReviewsQuery(DriverId));
   }
 
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
@@ -146,6 +168,19 @@ export class TripsService {
     );
   }
 
+  async postReview(
+    byId: string,
+    forId: string,
+    tripId: string,
+    role: Role,
+    comment: string,
+    rating: number
+  ): Promise<Reviews> {
+    return await this.commandBus.execute(
+      new CreateReviewCommand(byId, forId, tripId, role, comment, rating)
+    );
+  }
+
   async update(
     tripId: string,
     seatsAvailable: number,
@@ -160,6 +195,18 @@ export class TripsService {
   async updatePaymentStatus(bookingId: string): Promise<BookingStatusUpdate> {
     return await this.commandBus.execute(
       new BookingUpdatePaymentStatusCommand(bookingId)
+    );
+  }
+
+  async updateReviewPassenger(bookingId: string): Promise<BookingStatusUpdate> {
+    return await this.commandBus.execute(
+      new UpdatePassengerReviewsCommand(bookingId)
+    );
+  }
+
+  async updateReviewDriver(tripId: string): Promise<Trip> {
+    return await this.commandBus.execute(
+      new UpdateDriverReviewsCommand(tripId)
     );
   }
 
@@ -190,4 +237,8 @@ export class TripsService {
   async findAllTripRequests(userId: string): Promise<Booking[]> {
     return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
   }
+}
+enum Role {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER',
 }

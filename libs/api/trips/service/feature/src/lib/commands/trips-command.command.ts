@@ -14,6 +14,17 @@ export class TripsCreateCommand {
   ) {}
 }
 
+export class CreateReviewCommand {
+  constructor(
+    public readonly byId: string,
+    public readonly forId: string,
+    public readonly tripId: string,
+    public readonly role: Role,
+    public readonly comment: string,
+    public readonly rating: number
+  ) {}
+}
+
 export class BookTripCommand {
   constructor(
     public readonly tripId: string,
@@ -40,6 +51,14 @@ export class BookingUpdatePaymentStatusCommand {
   constructor(public readonly bookingId: string) {}
 }
 
+export class UpdatePassengerReviewsCommand {
+  constructor(public readonly bookingId: string) {}
+}
+
+export class UpdateDriverReviewsCommand {
+  constructor(public readonly tripId: string) {}
+}
+
 export class TripsDeleteCommand {
   constructor(public readonly tripId: string) {}
 }
@@ -61,4 +80,9 @@ export class EndTripCommand {
 
 export class DeclineTripRequestCommand {
   constructor(public readonly bookingId: string) {}
+}
+
+enum Role {
+  PASSENGER = 'PASSENGER',
+  DRIVER = 'DRIVER'
 }

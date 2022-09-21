@@ -208,15 +208,15 @@ export class TripsResolver {
   }
 
   @Mutation(() => Trip)
-  async cancelTrip(@Args('id') tripId: string): Promise<Trip> {
-    return await this.tripsService.cancelTrip(tripId);
+  async driverCancelTrip(@Args('id') tripId: string): Promise<Trip> {
+    return await this.tripsService.driverCancelTrip(tripId);
   }
 
   @Mutation(() => Trip)
   async passengerCancelTrip(
-    @Args('userId') userId,
-    @Args('tripId') tripId
+    @Args('userId') userId: string,
+    @Args('id') tripId: string
   ): Promise<Trip> {
-    return await this.tripsService.passengerCancel(userId, tripId);
+    return await this.tripsService.passengerCancelTrip(userId, tripId);
   }
 }

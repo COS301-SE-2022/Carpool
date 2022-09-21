@@ -63,10 +63,10 @@ export class DeclineTripRequestCommand {
   constructor(public readonly bookingId: string) {}
 }
 
-export class CancelTripCommand {
+export class DriverCancelTripCommand {
   constructor(public readonly tripId: string) {}
 }
 
-export class PassengerCancelCommand {
+export class PassengerCancelTripCommand {
   constructor(public readonly userId: string, public readonly tripId: string) {}
 }

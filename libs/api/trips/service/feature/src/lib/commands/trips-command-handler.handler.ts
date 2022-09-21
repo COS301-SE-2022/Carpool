@@ -11,8 +11,8 @@ import {
   EndTripCommand,
   BookingUpdatePaymentStatusCommand,
   DeclineTripRequestCommand,
-  CancelTripCommand,
-  PassengerCancelCommand,
+  DriverCancelTripCommand,
+  PassengerCancelTripCommand,
 } from './trips-command.command';
 import { TripsUpdate } from '@carpool/api/trips/entities';
 
@@ -167,24 +167,26 @@ export class EndTripHandler implements ICommandHandler<EndTripCommand> {
   }
 }
 
-@CommandHandler(CancelTripCommand)
-export class CancelTripHandler implements ICommandHandler<CancelTripCommand> {
-  constructor(private readonly tripsRepository: TripsRepository) {}
-
-  async execute(command: CancelTripCommand): Promise<Trip | null> {
-    const { tripId } = command;
-    return await this.tripsRepository.cancelTrip(tripId);
-  }
-}
-
-@CommandHandler(PassengerCancelCommand)
-export class PassengerCancelHandler
-  implements ICommandHandler<PassengerCancelCommand>
+@CommandHandler(DriverCancelTripCommand)
+export class CancelTripHandler
+  implements ICommandHandler<DriverCancelTripCommand>
 {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
-  async execute(command: PassengerCancelCommand): Promise<Trip | null> {
+  async execute(command: DriverCancelTripCommand): Promise<Trip | null> {
+    const { tripId } = command;
+    return await this.tripsRepository.driverCancelTrip(tripId);
+  }
+}
+
+@CommandHandler(PassengerCancelTripCommand)
+export class PassengerCancelHandler
+  implements ICommandHandler<PassengerCancelTripCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: PassengerCancelTripCommand): Promise<Trip | null> {
     const { userId, tripId } = command;
-    return await this.tripsRepository.passengerCancel(userId, tripId);
+    return await this.tripsRepository.passengerCancelTrip(userId, tripId);
   }
 }

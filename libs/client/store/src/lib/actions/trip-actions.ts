@@ -649,7 +649,7 @@ export const cancelDriverTrip = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  const res = response.data.data.cancelTrip;
+  const res = response.data.data.cancelDriverTrip;
 
   console.log(res);
 
@@ -678,7 +678,7 @@ export const cancelPassengerTrip = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  const res = response.data.data.cancelBooking;
+  const res = response.data.data.cancelPassengerTrip;
 
   console.log(res);
 

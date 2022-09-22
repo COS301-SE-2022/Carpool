@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
 import { ReviewPageProps } from '../NavigationTypes/navigation-types';
-import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput } from 'react-native';
-import { AppDispatch, RootStore, postReview, updateReviewPassenger, findBookingId } from '@carpool/client/store';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  Image,
+  TextInput,
+} from 'react-native';
+import {
+  AppDispatch,
+  RootStore,
+  postReview,
+  updateReviewPassenger,
+  findBookingId,
+} from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
-import {getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
+import { getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
 export function ReviewPage({ route, navigation }: ReviewPageProps) {
-
   const dispatch: AppDispatch = useDispatch();
 
   const [modalVisible2, setModalVisible2] = useState(true);
@@ -14,7 +26,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user: userData } = userState;
 
-  const {tripId,driverId, driver, date, destination} = route.params;
+  const { tripId, driverId, driver, date, destination } = route.params;
 
   const [rate, setRate] = useState('');
   const [comment, setComment] = useState('');
@@ -24,94 +36,87 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const bookindIdState = useSelector((state: RootStore) => state.bookingId);
   const { bookingId, status, error } = bookindIdState;
 
+  const reviewState = useSelector((state: RootStore) => state.postReview);
+  const { review, status: reviewStatus, error: reviewError } = reviewState;
+
   useEffect(() => {
     if (userData) {
       dispatch(findBookingId({ tripId, userId: userData.id }));
     }
-  }, [dispatch, userData, tripId, navigation]);
-
+  }, [dispatch, userData, tripId]);
 
   const ratingCompleted = (rating:string) => {
     setRate(rating);
     console.log("Rating is: " + rating)
     setModalVisible(true)
+  };
 
-  }
-
-
+  // useEffect(() => {
+  //   if (bookingId) {
+  //     dispatch(updateReviewPassenger(bookingId));
+  //   }
+  // }, [dispatch, bookingId]);
   const submitHandler = () => {
-    console.log("The review has been posted")
-    if(userData){
-    dispatch(
-      postReview({
-        byId: userData?.id,
-        forId: driverId,
-        tripId: tripId,
-        role: "PASSENGER",
-        comment: comment,
-        rating: rate,
-      })
-    );
-    if (bookingId) {
-      dispatch(updateReviewPassenger(bookingId));
+    console.log('The review has been posted');
+    if (userData) {
+      dispatch(
+        postReview({
+          byId: userData.id,
+          forId: driverId,
+          tripId: tripId,
+          role: 'PASSENGER',
+          comment: comment,
+          rating: rate,
+        })
+      );
     }
-    }
-    setModalVisible2(false)
-    setTimeout(() => {
-        navigation.push('HomePage');
-      }, 3000);
-
+    // setModalVisible2(false);
   };
   return (
     <View style={styles.centeredView}>
-      {modalVisible2?
-         <View style={styles.modalView}>
-              <View>
-      <View style={styles.row}>
-        <Image
-            source={require('./lighter_grey.png')}
-            resizeMode="contain"
-            style={styles.image}
-          />
-        <Text style={styles.textLargeBlack}>
-          How was your trip with {driver} ?
-        </Text>
-        <Text style={styles.textMediumLight}>
-        {getDay(date)} {getTimeOfDay(date)} to {destination}
-        </Text>
-      </View>
-
-      <AirbnbRating
-        count={5}
-        defaultRating={3}
-        size={20}
-        showRating={false}
-        onFinishRating={ratingCompleted}
-      />
-        {
-          modalVisible?
+      {modalVisible2 ? (
+        <View style={styles.modalView}>
           <View>
-          <TextInput
-            value={comment}
-            onChangeText={setComment}
-            multiline
-            numberOfLines={3}
-            style={styles.input}
-            placeholder="(Optional) Tell us about your experience"
-            underlineColorAndroid="transparent"
-          />
-        </View>
-         : null
-        }
+            <View style={styles.row}>
+              <Image
+                source={require('./lighter_grey.png')}
+                resizeMode="contain"
+                style={styles.image}
+              />
+              <Text style={styles.textLargeBlack}>
+                How was your trip with {driver} ?
+              </Text>
+              <Text style={styles.textMediumLight}>
+                {getDay(date)} {getTimeOfDay(date)} to {destination}
+              </Text>
+            </View>
 
-    </View>
-            <TouchableOpacity
-              onPress={submitHandler}
-              style={[styles.container,]}>
-              <Text style={styles.text}>Rate</Text>
-            </TouchableOpacity>
-    </View>
-       : (
+            <AirbnbRating
+              count={5}
+              defaultRating={3}
+              size={20}
+              showRating={false}
+              onFinishRating={ratingCompleted}
+            />
+            {modalVisible ? (
+              <View>
+                <TextInput
+                  value={comment}
+                  onChangeText={setComment}
+                  multiline
+                  numberOfLines={3}
+                  style={styles.input}
+                  placeholder="(Optional) Tell us about your experience"
+                  underlineColorAndroid="transparent"
+                />
+              </View>
+            ) : null}
+          </View>
+          <TouchableOpacity onPress={submitHandler} style={[styles.container]}>
+            <Text style={styles.text}>Rate</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
         <View style={styles.Thankyou}>
           <Text style={{ color: '#4BB543', textAlign: 'center', fontSize: 20 }}>
             Thank you for Reviewing!
@@ -146,14 +151,14 @@ const styles = StyleSheet.create({
   },
   textMediumLight: {
     marginLeft: '20%',
-    marginTop:'-8%',
+    marginTop: '-8%',
     fontSize: 11,
     fontWeight: '400',
     color: '#808080',
     marginBottom: 5,
   },
-  row:{
-    flexDirection: "row",
+  row: {
+    flexDirection: 'row',
     justifyContent: 'flex-start',
     flexWrap: 'wrap',
   },
@@ -237,11 +242,11 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     marginRight: 15,
     borderWidth: 3,
-    borderColor: '#188aed'
+    borderColor: '#188aed',
   },
-  hide:{
+  hide: {
     display: 'none',
-  }
+  },
 });
 
 export default ReviewPage;

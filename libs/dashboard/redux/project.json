@@ -1,0 +1,23 @@
+{
+  "root": "libs/dashboard/redux",
+  "sourceRoot": "libs/dashboard/redux/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/dashboard/redux/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/dashboard/redux"],
+      "options": {
+        "jestConfig": "libs/dashboard/redux/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

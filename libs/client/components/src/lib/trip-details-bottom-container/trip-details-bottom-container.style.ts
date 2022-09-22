@@ -23,9 +23,11 @@ export const styles = StyleSheet.create({
     elevation: 5,
   },
   userContainer: {
-    flex: 1,
+    flex: 1.1,
     backgroundColor: '#f8f8f8',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    paddingTop: 10,
   },
   image: {
     width: 50,

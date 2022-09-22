@@ -51,3 +51,7 @@ export class SearchTripsQuery {
 export class FindAllTripRequestsQuery {
   constructor(public readonly userId: string) {}
 }
+
+export class FindUpcomingTripsQuery {
+  constructor(public readonly userId: string) {}
+}

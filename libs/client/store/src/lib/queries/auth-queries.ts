@@ -18,6 +18,7 @@ export const USER_PROFILE = `
       email
       university
       studentNumber
+      cellNumber
    }
   }
 `;

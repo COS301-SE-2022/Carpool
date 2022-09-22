@@ -5,7 +5,7 @@ import {
   Trip,
   BookingStatusUpdate,
   Reviews,
-  ReviewsStatusUpdate
+  ReviewsStatusUpdate,
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -19,6 +19,7 @@ import {
   findByRequestedTripsQuery,
   FindBookingByTripAndUserIdQuery,
   FindAllTripRequestsQuery,
+  FindUpcomingTripsQuery,
   findByPassengerReviewsQuery,
   findByDriverReviewsQuery,
   findAllPassengersQuery,
@@ -36,7 +37,7 @@ import {
   DeclineTripRequestCommand,
   UpdatePassengerReviewsCommand,
   UpdateDriverReviewsCommand,
-  CreateReviewCommand
+  CreateReviewCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -52,6 +53,10 @@ export class TripsService {
 
   async findTripById(tripId: string): Promise<Trip | null> {
     return await this.queryBus.execute(new FindTripByIdQuery(tripId));
+  }
+
+  async findUpcomingTrip(id: string): Promise<Trip | null> {
+    return await this.queryBus.execute(new FindUpcomingTripsQuery(id));
   }
 
   async findByDriver(driverId: string): Promise<Trip[] | null> {
@@ -81,15 +86,11 @@ export class TripsService {
   }
 
   async findAllPassengers(tripID: string): Promise<Trip[] | null> {
-    return await this.queryBus.execute(
-      new findAllPassengersQuery(tripID)
-    );
+    return await this.queryBus.execute(new findAllPassengersQuery(tripID));
   }
 
   async findByDriverReviews(DriverId: string): Promise<Trip[] | null> {
-    return await this.queryBus.execute(
-      new findByDriverReviewsQuery(DriverId)
-    );
+    return await this.queryBus.execute(new findByDriverReviewsQuery(DriverId));
   }
 
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
@@ -176,14 +177,7 @@ export class TripsService {
     rating: string
   ): Promise<Reviews> {
     return await this.commandBus.execute(
-      new CreateReviewCommand(
-        byId,
-        forId,
-        tripId,
-        role,
-        comment,
-        rating
-      )
+      new CreateReviewCommand(byId, forId, tripId, role, comment, rating)
     );
   }
 
@@ -246,5 +240,5 @@ export class TripsService {
 }
 enum Role {
   PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
+  DRIVER = 'DRIVER',
 }

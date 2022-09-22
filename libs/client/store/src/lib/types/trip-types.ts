@@ -8,7 +8,7 @@ export type CreateTripState = {
 
 export type TripCreateType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   price: number;
@@ -17,7 +17,7 @@ export type TripCreateType = {
 
 export type TripRequestType = {
   bookingId: string;
-  user: User;
+  user: UserTrip;
   trip: TripRequest;
 };
 
@@ -33,7 +33,7 @@ export type TripRequest = {
   coordinates: Location[];
 };
 
-export type User = {
+export type UserTrip = {
   id: string;
   name: string;
   surname: string;
@@ -51,6 +51,12 @@ export type TripUpcomingType = {
   coordinates: Location[];
 };
 
+export type UpcomingTripState = {
+  trip: TripListType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type TripList = {
   trips: TripListType[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -59,7 +65,7 @@ export type TripList = {
 
 export type TripListType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   coordinates: Location[];
@@ -77,7 +83,7 @@ export type Passenger = {
   bookingId: string;
 };
 
-export type Driver = {
+export type DriverTrip = {
   id: string;
   name: string;
   surname: string;
@@ -92,7 +98,13 @@ export type TripDetails = {
 
 export type TripDetailsType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
+  passengers: [
+    {
+      userId: string;
+      status: string;
+    }
+  ];
   tripDate: string;
   createdAt: string;
   seatsAvailable?: string;
@@ -150,8 +162,12 @@ export type ReviewType = {
   rating: string;
 };
 
+export type ReviewReturnType = {
+  id: string;
+};
+
 export type ReviewTripState = {
-  review: ReviewType | null;
+  review: string | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
@@ -164,7 +180,7 @@ export type PassengerList = {
 
 export type PassengerListType = {
  passengers: Passengers;
- user : User;
+ user : UserTrip;
 };
 
 export type Passengers = {

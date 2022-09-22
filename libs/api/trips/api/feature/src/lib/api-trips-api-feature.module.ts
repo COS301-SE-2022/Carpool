@@ -13,6 +13,7 @@ import {
   FindTripByIdHandler,
   FindCoordinatesByTripHandler,
   FindBookingByTripHandler,
+  FindUpcomingTripsHandler,
   SearchTripsHandler,
   FindByConfirmedTripHandler,
   FindByRequestedTripHandler,
@@ -45,6 +46,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     PrismaService,
     //** COMMAND HANDLERS */
     FindAllHandler,
+    FindUpcomingTripsHandler,
     FindByDriverHandler,
     FindByPassengerHandler,
     TripsCreateHandler,

@@ -142,7 +142,7 @@ query ($id: String!) {
     passengers {
       bookingId,
       tripId,
-      userId
+      userId,
       user{
         id,
         name,
@@ -173,13 +173,23 @@ query ($id: String!) {
 `;
 
 export const UPCOMING_TRIP = `
-  query {
-    findUpcomingTrip {
+  query ($id: String!) {
+    findUpcomingTrip(id: $id) {
       tripId,
+      driver {
+        id,
+        name,
+        surname,
+        profilePic
+      },
       tripDate,
+      createdAt,
       coordinates {
         address,
-      }
+        latitude,
+        longitude
+      },
+      status
     }
   }
 `;
@@ -193,6 +203,10 @@ export const TRIP_DETAILS = `
         name,
         surname,
         profilePic
+      },
+      passengers {
+        userId,
+        status
       },
       tripDate,
       createdAt,
@@ -244,8 +258,7 @@ export const POST_REVIEW = `
     postReview(byId: $byId, forId: $forId, tripId: $tripId role: $role, comment: $comment, rating: $rating){
       id
     }
-  }
-`;
+  }`;
 
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {

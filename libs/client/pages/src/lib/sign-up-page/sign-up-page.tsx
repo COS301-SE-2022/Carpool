@@ -33,6 +33,7 @@ export function SignUpPage({ navigation }: SignUpPageProps) {
   const [studentNumber, setStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [cellNumber, setCellNumber] = useState('');
 
   const checkPassword = () => {
     if (password === passwordConfirm) {
@@ -81,7 +82,15 @@ export function SignUpPage({ navigation }: SignUpPageProps) {
       alert('Invalid email format');
     } else {
       dispatch(
-        register({ name, surname, email, university, studentNumber, password })
+        register({
+          name,
+          surname,
+          email,
+          university,
+          studentNumber,
+          password,
+          cellNumber,
+        })
       );
 
       navigation.navigate('ConfirmEmailPage');
@@ -112,7 +121,7 @@ export function SignUpPage({ navigation }: SignUpPageProps) {
             />
           </View>
         </View>
-        <View style={{ display: 'flex', flex: 5 }}>
+        <View style={{ display: 'flex', flex: 7 }}>
           <Text style={{ textAlign: 'left', fontSize: 24, fontWeight: '700' }}>
             Sign Up
           </Text>
@@ -147,6 +156,12 @@ export function SignUpPage({ navigation }: SignUpPageProps) {
                 inputValue={email}
                 inputPlaceholder="Email Address"
                 iconName="email"
+              />
+              <Input
+                onChangeText={setCellNumber}
+                inputValue={cellNumber}
+                inputPlaceholder="Cell Number"
+                iconName="phone"
               />
               <Input
                 onChangeText={setUniversity}

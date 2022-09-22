@@ -32,7 +32,8 @@ export class AuthService {
     email: string,
     university: string,
     studentNumber: string,
-    password: string
+    password: string,
+    cellNumber: string
   ): Promise<User | null> {
     return await this.commandBus.execute(
       new UserRegisterCommand(
@@ -41,7 +42,8 @@ export class AuthService {
         email,
         university,
         studentNumber,
-        password
+        password,
+        cellNumber
       )
     );
   }
@@ -78,10 +80,19 @@ export class AuthService {
     surname: string,
     email: string,
     university: string,
-    studentNumber: string
+    studentNumber: string,
+    cellNumber: string
   ): Promise<UserUpdate | null> {
     return await this.commandBus.execute(
-      new UserUpdateCommand(id, name, surname, email, university, studentNumber)
+      new UserUpdateCommand(
+        id,
+        name,
+        surname,
+        email,
+        university,
+        studentNumber,
+        cellNumber
+      )
     );
   }
 }

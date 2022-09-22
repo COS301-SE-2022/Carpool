@@ -45,10 +45,43 @@ export class TripsRepository {
     });
   }
 
+  async findUpcomingTrip(id: string): Promise<Trip> {
+    const trips = await this.prisma.trip.findMany({
+      where: {
+        OR: [
+          {
+            driverId: id,
+          },
+          {
+            passengers: {
+              some: {
+                userId: id,
+              },
+            },
+          },
+        ],
+        tripDate: {
+          gte: new Date(),
+        },
+        status: {
+          in: ['active', 'confirmed', 'paid'],
+        },
+      },
+      orderBy: {
+        tripDate: 'desc',
+      },
+    });
+
+    return trips[0];
+  }
+
   async findByDriver(driverId: string): Promise<Trip[]> {
     return await this.prisma.trip.findMany({
       where: {
         driverId: driverId,
+        tripDate: {
+          lt: new Date(),
+        },
       },
     });
   }
@@ -60,6 +93,9 @@ export class TripsRepository {
           some: {
             userId: passengerId,
           },
+        },
+        tripDate: {
+          lt: new Date(),
         },
       },
     });
@@ -95,6 +131,8 @@ export class TripsRepository {
   }
 
   async findByPassengerReviews(passengerId: string): Promise<Trip[]> {
+    console.log(passengerId);
+
     return this.prisma.trip.findMany({
       where: {
         passengers: {
@@ -196,7 +234,14 @@ export class TripsRepository {
     });
   }
 
-  async postReview(byId: string, forId: string, tripId: string, role: string, comment: string, rating: string): Promise<Review | null> {
+  async postReview(
+    byId: string,
+    forId: string,
+    tripId: string,
+    role: string,
+    comment: string,
+    rating: string): Promise<Review | null> {
+
     return this.prisma.review.create({
       data: {
         byId: byId,
@@ -205,7 +250,7 @@ export class TripsRepository {
         role: role,
         comment: comment,
         rating: rating,
-      }
+      },
     });
   }
 
@@ -399,3 +444,4 @@ export class TripsRepository {
     });
   }
 }
+

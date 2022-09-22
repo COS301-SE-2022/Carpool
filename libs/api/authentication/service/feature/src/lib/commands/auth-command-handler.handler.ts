@@ -20,8 +20,15 @@ export class UserRegisterHandler
   constructor(private readonly authRepository: AuthRepository) {}
 
   async execute(command: UserRegisterCommand): Promise<User | null> {
-    const { name, surname, email, university, studentNumber, password } =
-      command;
+    const {
+      name,
+      surname,
+      email,
+      university,
+      studentNumber,
+      password,
+      cellNumber,
+    } = command;
 
     const user = new UserInput();
     user.name = name;
@@ -30,6 +37,7 @@ export class UserRegisterHandler
     user.university = university;
     user.studentNumber = studentNumber;
     user.password = password;
+    user.cellNumber = cellNumber;
 
     return await this.authRepository.register(user);
   }
@@ -69,7 +77,8 @@ export class UserUpdateHandler implements ICommandHandler<UserUpdateCommand> {
   constructor(private readonly authRepository: AuthRepository) {}
 
   async execute(command: UserUpdateCommand): Promise<UserUpdate | null> {
-    const { id, name, surname, email, university, studentNumber } = command;
+    const { id, name, surname, email, university, studentNumber, cellNumber } =
+      command;
 
     const user = new UserUpdate();
     user.id = id;
@@ -78,6 +87,7 @@ export class UserUpdateHandler implements ICommandHandler<UserUpdateCommand> {
     user.email = email;
     user.university = university;
     user.studentNumber = studentNumber;
+    user.cellNumber = cellNumber;
 
     return await this.authRepository.updateUser(user);
   }

@@ -1,3 +1,4 @@
+# require File.join(File.dirname(`node --print "require.resolve('expo/package.json')"`), "scripts/autolinking")
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 require_relative '../node_modules/@nrwl/react-native/nx_post_install'
@@ -9,7 +10,20 @@ source 'https://github.com/CocoaPods/Specs.git'
 install! 'cocoapods', :deterministic_uuids => false
 
 target 'Client' do
+  # use_expo_modules!
+  # post_integrate do |installer|
+  #   begin
+  #     expo_patch_react_imports!(installer)
+  #   rescue => e
+  #     Pod::UI.warn e
+  #   end
+  # end
+
   config = use_native_modules! use_unimodules!
+
+  pre_install do |installer|
+    $RNMBGL.pre_install(installer)
+  end
 
   flags = get_default_flags()
 
@@ -32,6 +46,7 @@ target 'Client' do
   # pod 'react-native-webview'
 
   post_install do |installer|
+    $RNMBGL.post_install(installer)
     react_native_post_install(installer)
     __apply_Xcode_12_5_M1_post_install_workaround(installer)
     nx_post_install(installer)
@@ -46,4 +61,5 @@ target 'Client' do
       end
     end
   end
+  # pod 'react-native-mapbox-gl', :path => '../node_modules/@react-native-mapbox-gl/maps'
 end

@@ -43,6 +43,7 @@ export type UserProfile = {
   email: string;
   university: string;
   studentNumber: string;
+  cellNumber: string;
 };
 
 export type UpdateUserType = {

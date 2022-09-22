@@ -1,4 +1,4 @@
-import { User } from '@carpool/api/authentication/entities';
+import { User, Driver } from '@carpool/api/authentication/entities';
 import {
   Trip,
   Booking,
@@ -77,6 +77,16 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findByPassenger(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByPassenger(id);
+  }
+
+  /**
+   * Query to find upcoming trip for user
+   * @param {string} id The id of the passenger to find the trips by
+   * @returns {Promise<Trip>}
+   */
+  @Query(() => Trip)
+  async findUpcomingTrip(@Args('id') id: string): Promise<Trip> {
+    return await this.tripsService.findUpcomingTrip(id);
   }
 
   @Query(() => Booking)
@@ -169,8 +179,6 @@ export class TripsResolver {
     );
   }
 
-
-
   @Mutation(() => Booking)
   async updatePaymentStatus(
     @Args('bookingId') bookingId: string
@@ -225,6 +233,7 @@ export class TripsResolver {
     @Args('rating') rating: string,
 
   ): Promise<Reviews | null> {
+    console.log('POSTREVIEW');
     return await this.tripsService.postReview(
       byId,
       forId,

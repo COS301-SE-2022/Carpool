@@ -28,7 +28,8 @@ import {
   PayfastPage,
   ChatList,
   TripRatingPage,
-  ReviewDriverPage
+  MapboxTest,
+  ReviewDriverPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -79,12 +80,14 @@ export type RootStackParamList = {
   PayfastPage;
   ChatList;
   TripRatingPage;
+  MapboxTest;
 };
 
 export type TabBarParamList = {
   Home;
   Profile;
   ChatList;
+  MapboxTest;
 };
 
 export type AuthStackParamList = {
@@ -158,8 +161,14 @@ const ProfileStack = () => {
       <ProfileStackNav.Screen name="Statistics" component={Statistics} />
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
       <ProfileStackNav.Screen name="ReviewPage" component={ReviewPage} />
-      <ProfileStackNav.Screen name="TripRatingPage" component={TripRatingPage}/>
-      <ProfileStackNav.Screen name="ReviewDriverPage" component={ReviewDriverPage} />
+      <ProfileStackNav.Screen
+        name="TripRatingPage"
+        component={TripRatingPage}
+      />
+      <ProfileStackNav.Screen
+        name="ReviewDriverPage"
+        component={ReviewDriverPage}
+      />
     </ProfileStackNav.Navigator>
   );
 };
@@ -221,6 +230,11 @@ const TabBar = () => {
         component={ChatList}
         options={{ title: 'Messages' }}
       />
+      {/* <Tab.Screen
+        name="MapboxTest"
+        component={MapboxTest}
+        options={{ title: 'Mapbox' }}
+      /> */}
       <Tab.Screen
         name="Profile"
         component={ProfileStack}
@@ -267,6 +281,7 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="MapboxTest" component={MapboxTest} />
           <Stack.Screen name="HomePage" component={TabBar} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />
@@ -319,12 +334,12 @@ const AppWrapper = () => {
 };
 
 const httpLink = new HttpLink({
-  uri: 'https://carpoolcos301.herokuapp.com/graphql',
+  uri: 'http://localhost:3333/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'ws://carpoolcos301.herokuapp.com/graphql',
+    url: 'ws://localhost:3333/graphql',
   })
 );
 

@@ -1,3 +1,4 @@
+export * from './lib/mapbox-test/mapbox-test';
 export * from './lib/chat-list/chat-list';
 export * from './lib/register-driver/register-driver';
 export * from './lib/set-pickup-page/set-pickup-page';

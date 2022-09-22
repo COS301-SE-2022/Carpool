@@ -8,9 +8,8 @@ import {
 import {
   tripListSlice,
   tripDetailsSlice,
-  upcomingTripSlice,
   driverHistorySlice,
-  tripUpcomingListSlice,
+  tripUpcomingSlice,
   passengerHistorySlice,
   createTripSlice,
   searchResultsSlice,
@@ -37,6 +36,7 @@ import {
   sendMessageSlice,
   getChatsSlice,
 } from './slices/message-slices';
+import { driverProfileSlice } from './slices/drivers-slice';
 
 const RootReducer = combineReducers({
   user: userLoginSlice.reducer,
@@ -47,7 +47,6 @@ const RootReducer = combineReducers({
   passengerHistory: passengerHistorySlice.reducer,
   searchResults: searchResultsSlice.reducer,
   trip: tripDetailsSlice.reducer,
-  upcoming: upcomingTripSlice.reducer,
   createdTrip: createTripSlice.reducer,
   booking: tripBookingSlice.reducer,
   acceptTrip: acceptTripRequestSlice.reducer,
@@ -58,19 +57,20 @@ const RootReducer = combineReducers({
   requestedTrip: requestedTripSlice.reducer,
   updatePaymentStatus: PaymentStatusUpdateSlice.reducer,
   bookingId: getBookingIdSlice.reducer,
-  upcomingTrips: tripUpcomingListSlice.reducer,
+  upcomingTrip: tripUpcomingSlice.reducer,
   tripRequests: getAllTripRequestsSlice.reducer,
   weather: getWeatherSlice.reducer,
   driver: driverRegisterSlice.reducer,
   messages: getMessagesSlice.reducer,
   message: sendMessageSlice.reducer,
   chats: getChatsSlice.reducer,
+  driverProfile: driverProfileSlice.reducer,
   passengerReviews: passengerReviewSlice.reducer,
   driverReviews: DriverReviewSlice.reducer,
   updatePassengerReviews: UpdatePassengerReviewsSlice.reducer,
   updateDriverReviews: UpdateDriverReviewsSlice.reducer,
   postReview: postReviewSlice.reducer,
-  allPassengers: getAllPassengersSlice.reducer
+  allPassengers: getAllPassengersSlice.reducer,
 });
 
 export default RootReducer;

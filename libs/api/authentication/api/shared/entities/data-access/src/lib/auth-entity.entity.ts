@@ -36,6 +36,9 @@ export class User {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Field()
+  cellNumber: string;
+
   @Field(() => Boolean)
   isValidated: boolean;
 
@@ -80,6 +83,9 @@ export class UserInput {
 
   @Field()
   password: string;
+
+  @Field()
+  cellNumber: string;
 
   @Field()
   university: string;
@@ -137,6 +143,9 @@ export class UserUpdate {
 
   @Field()
   surname: string;
+
+  @Field()
+  cellNumber: string;
 
   @Field()
   email: string;

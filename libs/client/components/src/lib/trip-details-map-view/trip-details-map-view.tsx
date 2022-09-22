@@ -11,7 +11,7 @@ type props = {
 };
 
 export function TripDetailsMapView({ trip }: props) {
-  const GOOGLE_MAPS_APIKEY = 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng';
+  const GOOGLE_MAPS_APIKEY = 'AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg';
 
   const { width, height } = Dimensions.get('window');
 
@@ -75,6 +75,7 @@ export function TripDetailsMapView({ trip }: props) {
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={3}
             strokeColor="#188aed"
+            resetOnChange={true}
             optimizeWaypoints={true}
             onStart={(params) => {
               console.log(

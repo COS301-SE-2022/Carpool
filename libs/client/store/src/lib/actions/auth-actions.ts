@@ -33,6 +33,7 @@ export type UserRegister = {
   university: string;
   studentNumber: string;
   password: string;
+  cellNumber: string;
 };
 
 export type DriverRegister = {
@@ -51,6 +52,20 @@ export const fetchStorage = createAsyncThunk('store/initialise', async () => {
   const user = await SecureStore.getItemAsync('user');
 
   if (user) {
+    const response = await axios.post(`${url}/graphql`, {
+      query: USER_PROFILE,
+      variables: {
+        id: JSON.parse(user).id,
+      },
+    });
+
+    console.log(response);
+
+    if (response.data.data === null) {
+      await SecureStore.deleteItemAsync('user');
+      return null;
+    }
+
     return JSON.parse(user);
   } else {
     return null;
@@ -220,6 +235,7 @@ export type UserUpdate = {
   email: string;
   university: string;
   studentNumber: string;
+  cellNumber: string;
 };
 
 export const createUpdateUser = createAsyncThunk(
@@ -234,6 +250,7 @@ export const createUpdateUser = createAsyncThunk(
         email: user.email,
         university: user.university,
         studentNumber: user.studentNumber,
+        cellNumber: user.cellNumber,
       },
     });
 

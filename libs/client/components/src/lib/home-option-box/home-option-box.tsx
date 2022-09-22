@@ -1,6 +1,13 @@
 /* eslint-disable-next-line */
 import React from 'react';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import Icons from 'react-native-vector-icons/MaterialIcons';
 import { colors } from '@carpool/client/shared/utilities';
 
@@ -20,6 +27,30 @@ export function HomeOptionBox({ onPress, onPressCreate }: props) {
         }}
       >
         <Text style={styles.smallText}>What do you want to do?</Text>
+        {/* <View>
+          <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              borderColor: 'rgba(0,0,0,0.2)',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 35,
+              height: 35,
+              backgroundColor: black,
+              borderRadius: 50,
+              marginTop: -20,
+            }}
+            onPress={()=>{Linking.openURL('tel:10111');}}
+          >
+            <Icons
+              name="phone"
+              size={20}
+              style={{
+                color: '#FF0000',
+              }}
+            />
+          </TouchableOpacity>
+        </View> */}
       </View>
       <Pressable style={styles.optionButton} onPress={onPress}>
         <Icons name="directions-run" size={20} style={styles.iconStyle} />

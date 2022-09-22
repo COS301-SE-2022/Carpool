@@ -13,7 +13,6 @@ export class AuthResolver {
 
   @Query(() => User)
   async findUserById(@Args('id') id: string): Promise<User | null> {
-    console.log('iuserId', id);
     return await this.authService.findUserById(id);
   }
 
@@ -49,7 +48,8 @@ export class AuthResolver {
     @Args('email') email: string,
     @Args('university') university: string,
     @Args('studentNumber') studentNumber: string,
-    @Args('password') password: string
+    @Args('password') password: string,
+    @Args('cellNumber') cellNumber: string
   ): Promise<UserLogin | null> {
     const userObj = await this.authService.register(
       name,
@@ -57,7 +57,8 @@ export class AuthResolver {
       email,
       university,
       studentNumber,
-      password
+      password,
+      cellNumber
     );
 
     if (userObj) {
@@ -118,7 +119,8 @@ export class AuthResolver {
     @Args('surname') surname: string,
     @Args('email') email: string,
     @Args('university') university: string,
-    @Args('studentNumber') studentNumber: string
+    @Args('studentNumber') studentNumber: string,
+    @Args('cellNumber') cellNumber: string
   ): Promise<UserUpdate | null> {
     return await this.authService.updateUser(
       id,
@@ -126,7 +128,8 @@ export class AuthResolver {
       surname,
       email,
       university,
-      studentNumber
+      studentNumber,
+      cellNumber
     );
   }
 }

@@ -38,11 +38,13 @@ export const userLoginSlice = createSlice({
       .addCase(login.pending, (state, action) => {
         console.log('IDLE');
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
         state.user = action.payload;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         console.log('FAIL');

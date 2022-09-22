@@ -169,7 +169,7 @@ export type PassengerListType = {
 
 export type Passengers = {
   bookingId: string;
-  tripId: Driver;
+  tripId: string;
   userId: string;
 };
 

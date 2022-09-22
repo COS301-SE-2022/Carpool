@@ -132,9 +132,9 @@ model Review {
     byId        String
     forId       String
     tripId      String @map("trip_id")
-    role        Role
+    role        String
     comment     String
-    rating      Int
+    rating      String
 
     byUser      User @relation(name:"by_review", fields:[byId], references: [id])
     forUser     User @relation(name:"for_review", fields:[forId], references: [id])
@@ -155,12 +155,6 @@ model Driver {
     user      User @relation(name: "driver_id", fields: [userId], references: [id])
 
     @@map("driver")
-}
-
-//Roles for Reviews
-enum Role {
-    DRIVER
-    PASSENGER
 }
 
 model Message {

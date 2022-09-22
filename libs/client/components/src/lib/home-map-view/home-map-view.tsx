@@ -35,6 +35,7 @@ export function HomeMapView() {
       <MapboxGL.MapView
         style={styles.map}
         styleURL="mapbox://styles/benjamin007/cl82we535001a14p7xvj0d49j"
+        logoEnabled={false}
       >
         <MapboxGL.Camera zoomLevel={10} centerCoordinate={coordinates} />
         <MapboxGL.UserLocation visible={true} />

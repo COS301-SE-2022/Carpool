@@ -102,6 +102,7 @@ export type TripDetailsType = {
   passengers: [
     {
       userId: string;
+      status: string;
     }
   ];
   tripDate: string;

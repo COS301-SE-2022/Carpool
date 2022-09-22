@@ -33,11 +33,11 @@ export function UserProfile({ navigation }: UserProfileProps) {
   const { user: userData } = user;
 
   useEffect(() => {
-    if (userData && !profile) {
+    if (userData) {
       dispatch(fetchUserProfile(userData.id));
-      dispatch(listTripRequests(userData.id));
+      // dispatch(listTripRequests(userData.id));
     }
-  }, [dispatch, userData, profile]);
+  }, [dispatch, userData]);
 
   const signOut = () => {
     Alert.alert('Are you sure?', '', [
@@ -49,7 +49,6 @@ export function UserProfile({ navigation }: UserProfileProps) {
         text: 'Yes',
         onPress: () => {
           dispatch(logout());
-          // navigation.navigate('OnboardPage');
         },
       },
     ]);

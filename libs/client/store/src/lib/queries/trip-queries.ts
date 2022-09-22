@@ -203,7 +203,8 @@ export const TRIP_DETAILS = `
         profilePic
       },
       passengers {
-        userId
+        userId,
+        status
       },
       tripDate,
       createdAt,

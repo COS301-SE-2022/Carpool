@@ -64,19 +64,19 @@ export function HomePage({ navigation }: HomePageProps) {
   }, [trip]);
 
   const viewTrip = (tripId: string, trip: TripListType) => {
-    // if (trip.status === 'active') {
-    //   if (trip.driver.id === userData?.id) {
-    //     //**Driver active screen */
-    //     navigation.navigate('DriverActiveTrip', { tripId });
-    //   } else {
-    //     //** Passenger active screen */
-    //     navigation.navigate('DriverActiveTrip', { tripId });
-    //   }
-    // } else {
-    //   navigation.push('TripDetails', { tripId, type: '__' });
-    // }
+    if (trip.status === 'active') {
+      if (trip.driver.id === userData?.id) {
+        //**Driver active screen */
+        navigation.navigate('DriverActiveTrip', { tripId });
+      } else {
+        //** Passenger active screen */
+        navigation.navigate('DriverActiveTrip', { tripId });
+      }
+    } else {
+      navigation.push('TripDetails', { tripId, type: '__' });
+    }
 
-    navigation.push('MapboxTest', { tripId, type: '__' });
+    // navigation.push('MapboxTest', { tripId, type: '__' });
 
     //* FIX THIS */
   };
@@ -128,15 +128,15 @@ export function HomePage({ navigation }: HomePageProps) {
           onPressCreate={() => createTrip()}
         />
         <View style={styles.cardContainer}>
-          {trip ? (
+          {trip && trip.status === 'active' ? (
             <Text style={styles.smallTextBlack}>
               Active trip
-              <Icon
+              {/* <Icon
                 name="shopping-cart"
                 size={30}
                 style={{ color: '#188aed', alignSelf: 'flex-end' }}
                 onPress={() => navigation.push('CheckoutTrips')}
-              />
+              /> */}
             </Text>
           ) : (
             <Text style={styles.smallTextBlack}>Upcoming trip</Text>

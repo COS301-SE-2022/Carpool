@@ -27,7 +27,7 @@ export function HomeOptionBox({ onPress, onPressCreate }: props) {
         }}
       >
         <Text style={styles.smallText}>What do you want to do?</Text>
-        <View>
+        {/* <View>
           <TouchableOpacity
             style={{
               borderWidth: 1,
@@ -50,7 +50,7 @@ export function HomeOptionBox({ onPress, onPressCreate }: props) {
               }}
             />
           </TouchableOpacity>
-        </View>
+        </View> */}
       </View>
       <Pressable style={styles.optionButton} onPress={onPress}>
         <Icons name="directions-run" size={20} style={styles.iconStyle} />

@@ -80,7 +80,7 @@ export class TripsRepository {
       where: {
         driverId: driverId,
         tripDate: {
-          lt: formatDate(new Date().toISOString()),
+          lt: new Date(),
         },
       },
     });
@@ -95,7 +95,7 @@ export class TripsRepository {
           },
         },
         tripDate: {
-          lt: formatDate(new Date().toISOString()),
+          lt: new Date(),
         },
       },
     });

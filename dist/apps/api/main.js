@@ -3240,7 +3240,7 @@ let TripsRepository = class TripsRepository {
                 where: {
                     driverId: driverId,
                     tripDate: {
-                        lt: formatDate(new Date().toISOString()),
+                        lt: new Date(),
                     },
                 },
             });
@@ -3256,7 +3256,7 @@ let TripsRepository = class TripsRepository {
                         },
                     },
                     tripDate: {
-                        lt: formatDate(new Date().toISOString()),
+                        lt: new Date(),
                     },
                 },
             });

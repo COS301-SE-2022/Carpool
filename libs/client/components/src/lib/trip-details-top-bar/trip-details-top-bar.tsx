@@ -12,7 +12,6 @@ type props = {
 };
 
 export function TripDetailsTopBar({ trip, onPress }: props) {
-
   const cancel = (tripId: string) => {
     Alert.alert(
       'You are about to cancel this trip.',
@@ -24,14 +23,13 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
         },
         {
           text: 'Yes',
-          onPress: //{
-            onPress
-            //navigation.navigate('RegisterDriver', {
-            //  userId: userData ? userData.id : '',
-            //});
-            // navigation.navigate('OnboardPage');
+          //{
+          onPress: onPress,
+          //navigation.navigate('RegisterDriver', {
+          //  userId: userData ? userData.id : '',
+          //});
+          // navigation.navigate('OnboardPage');
           //},
-          ,
         },
       ]
     );
@@ -64,11 +62,11 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
           Trip to {trip && trip.coordinates[0].address}
         </Text>
       </View>
-      <Pressable>
+      {/* <Pressable>
         <View style={[styles.shadow, styles.cancelButton]}>
           <Icons name="cancel" color="#000000" size={30} onPress={cancel}/>
         </View>
-      </Pressable>
+      </Pressable> */}
     </View>
   );
 }

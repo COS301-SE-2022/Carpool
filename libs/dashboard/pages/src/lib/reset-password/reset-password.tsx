@@ -13,12 +13,12 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/dashboard/redux';
 import { useNavigate } from 'react-router-dom';
 
-export function LoginPage() {
+export function ResetPassword() {
   const theme = createTheme();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
 
   const userState = useSelector((state: RootStore) => state.user);
 
@@ -32,8 +32,8 @@ export function LoginPage() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
       password: data.get('password'),
+      passwordConfirm: data.get('passwordConfirm'),
     });
   };
 
@@ -47,7 +47,6 @@ export function LoginPage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          overflow: 'hidden',
         }}
       >
         <CssBaseline />
@@ -70,23 +69,33 @@ export function LoginPage() {
               justifyContent: 'center',
             }}
           >
+            <img
+              src={require('./logo_text.png')}
+              alt="Carpool logo"
+              style={{ width: '70%' }}
+            />
             <Typography
               component="h1"
               variant="h5"
-              style={{ textAlign: 'left', width: '100%', fontWeight: '700' }}
+              style={{
+                textAlign: 'center',
+                width: '100%',
+                fontWeight: '700',
+                paddingTop: 40,
+              }}
             >
-              Welcome Back
+              Reset Password
             </Typography>
             <Typography
               component="p"
               style={{
-                textAlign: 'left',
+                textAlign: 'center',
                 width: '100%',
                 paddingTop: '0.5rem',
                 color: '#999',
               }}
             >
-              Please sign in to your account to continue
+              Please create your new password
             </Typography>
             <Box
               component="form"
@@ -94,18 +103,6 @@ export function LoginPage() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
               <TextField
                 margin="normal"
                 required
@@ -118,42 +115,32 @@ export function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="passwordConfirm"
+                label="Confirm Password"
+                type="password"
+                id="passwordConfirm"
+                autoComplete="current-password"
+                value={passwordConfirm}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 3, mb: 2, borderRadius: 50, p: 1 }}
               >
-                Sign In
+                Reset
               </Button>
             </Box>
           </Box>
-        </Grid>
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={6}
-          sx={{
-            backgroundImage: 'url(./splash_screen.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light'
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <img
-            src={require('./splash_screen.png')}
-            alt="Splash screen"
-            style={{ height: '100vh' }}
-          ></img>
         </Grid>
       </Grid>
     </ThemeProvider>
   );
 }
 
-export default LoginPage;
+export default ResetPassword;

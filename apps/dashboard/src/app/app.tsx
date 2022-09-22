@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { DashboardPage } from '@carpool/dashboard/pages';
 import { LoginPage } from '@carpool/dashboard/pages';
+import { ResetPassword } from '@carpool/dashboard/pages';
 import { Sidebar } from '@carpool/dashboard/components';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,14 +16,17 @@ const darkTheme = createTheme({
 });
 
 export function App() {
+  const path = useLocation().pathname;
+
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <Box sx={{ display: 'flex' }}>
-        {useLocation().pathname !== '/login' && <Sidebar />}
+        {path !== '/login' && path !== '/reset' && <Sidebar />}
         <Routes>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/reset" element={<ResetPassword />} />
         </Routes>
       </Box>
     </ThemeProvider>

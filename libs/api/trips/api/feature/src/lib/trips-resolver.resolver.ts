@@ -6,7 +6,6 @@ import {
   BookingStatusUpdate,
   ReviewsStatusUpdate,
   Reviews,
-  ReviewInput,
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -221,9 +220,9 @@ export class TripsResolver {
     @Args('byId') byId: string,
     @Args('forId') forId: string,
     @Args('tripId') tripId: string,
-    @Args('role') role: Role,
+    @Args('role') role: string,
     @Args('comment') comment: string,
-    @Args('rating') rating: number,
+    @Args('rating') rating: string,
 
   ): Promise<Reviews | null> {
     return await this.tripsService.postReview(
@@ -260,8 +259,4 @@ export class TripsResolver {
   async endTrip(@Args('id') tripId: string): Promise<Trip> {
     return await this.tripsService.endTrip(tripId);
   }
-}
-enum Role {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
 }

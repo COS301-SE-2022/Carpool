@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location, Review } from '@prisma/client';
-import { TripsUpdate, ReviewInput, Reviews } from '@carpool/api/trips/entities';
+import { TripsUpdate } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -196,7 +196,7 @@ export class TripsRepository {
     });
   }
 
-  async postReview(byId: string, forId: string, tripId: string, role: Role, comment: string, rating: number): Promise<Review | null> {
+  async postReview(byId: string, forId: string, tripId: string, role: string, comment: string, rating: string): Promise<Review | null> {
     return this.prisma.review.create({
       data: {
         byId: byId,
@@ -398,8 +398,4 @@ export class TripsRepository {
       },
     });
   }
-}
-enum Role {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
 }

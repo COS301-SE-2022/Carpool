@@ -17,7 +17,20 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0716002219',
       isValidated: true,
+      isDriver: true,
       profilePic: '',
+    },
+  });
+
+  //: Driver 1
+  const driver1 = await prisma.driver.create({
+    data: {
+      userId: user.id,
+      idNumber: '9705205007086',
+      license: '',
+      licensePlate: 'FSG917L',
+      model: 'Toyota Fortuner',
+      carPicture: '',
     },
   });
 

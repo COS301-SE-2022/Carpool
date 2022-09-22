@@ -16,29 +16,29 @@ datasource db {
 ////////////////////////////////
 
 model User {
-    id          String @id @default(cuid())
-    name        String
-    surname     String
-    email       String @unique
-    password    String
-    university  String
+    id            String @id @default(cuid())
+    name          String
+    surname       String
+    email         String @unique
+    password      String
+    university    String
     studentNumber String @unique @map("student_number")
-    profilePic  String @map("profile_pic") @default("placeholder.png")
-    isDriver    Boolean @default(false)
-    createdAt   DateTime @default(now()) @map("created_at")
-    updatedAt   DateTime @default(now()) @map("updated_at")
-    isValidated Boolean @default(false)
-    cellNumber String @map("cell_number")
+    profilePic    String @map("profile_pic") @default("placeholder.png")
+    isDriver      Boolean @default(false)
+    createdAt     DateTime @default(now()) @map("created_at")
+    updatedAt     DateTime @default(now()) @map("updated_at")
+    isValidated   Boolean @default(false)
+    cellNumber    String @map("cell_number")
 
-    byReviews   Review[] @relation("by_review")
-    forReviews  Review[] @relation("for_review")
-    bankDetails BankingDetails? @relation("bank_details")
-    tripsCreated       Trip[]
-    driver      Driver? @relation("driver_id")
-    bookings    Booking[]
+    byReviews     Review[] @relation("by_review")
+    forReviews    Review[] @relation("for_review")
+    bankDetails   BankingDetails? @relation("bank_details")
+    tripsCreated  Trip[]
+    driver        Driver? @relation("driver_id")
+    bookings      Booking[]
 
-    sender Message[] @relation("sender")
-    receiver Message[] @relation("receiver")
+    sender        Message[] @relation("sender")
+    receiver      Message[] @relation("receiver")
     @@map("user")
 }
 
@@ -62,23 +62,23 @@ model BankingDetails {
 ////////////////////////////////
 
 model Trip {
-    tripId      String @id @default(cuid()) @map("trip_id")
-    driverId      String @map("driver_id")
-    tripDate    DateTime @map("trip_date")
-    createdAt   DateTime @default(now()) @map("created_at")
-    seatsAvailable Int @map("seats_available")
-    price       Float
+    tripId          String @id @default(cuid()) @map("trip_id")
+    driverId        String @map("driver_id")
+    tripDate        DateTime @map("trip_date")
+    createdAt       DateTime @default(now()) @map("created_at")
+    seatsAvailable  Int @map("seats_available")
+    price           Float
     // startLocation String @map("start_location")
     // destination String
     // category    String
-    status      String @default("confirmed")
+    status          String @default("confirmed")
 
-    driver        User @relation(fields:[driverId], references: [id])
-    passengers    Booking[]
+    driver          User @relation(fields:[driverId], references: [id])
+    passengers      Booking[]
     // start         Location @relation("start_location")
     // destination   Location @relation("destination")
     coordinates     Location[]
-    reviews        Review[]
+    reviews         Review[]
     reviewed        Boolean @default(false)
 
     @@map("trip")

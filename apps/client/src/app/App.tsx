@@ -230,11 +230,11 @@ const TabBar = () => {
         component={ChatList}
         options={{ title: 'Messages' }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="MapboxTest"
         component={MapboxTest}
         options={{ title: 'Mapbox' }}
-      />
+      /> */}
       <Tab.Screen
         name="Profile"
         component={ProfileStack}
@@ -281,6 +281,7 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="MapboxTest" component={MapboxTest} />
           <Stack.Screen name="HomePage" component={TabBar} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />

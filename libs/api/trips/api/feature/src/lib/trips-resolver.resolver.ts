@@ -180,8 +180,6 @@ export class TripsResolver {
     );
   }
 
-
-
   @Mutation(() => Booking)
   async updatePaymentStatus(
     @Args('bookingId') bookingId: string
@@ -233,9 +231,9 @@ export class TripsResolver {
     @Args('tripId') tripId: string,
     @Args('role') role: Role,
     @Args('comment') comment: string,
-    @Args('rating') rating: number,
-
+    @Args('rating') rating: number
   ): Promise<Reviews | null> {
+    console.log('POSTREVIEW');
     return await this.tripsService.postReview(
       byId,
       forId,
@@ -273,5 +271,5 @@ export class TripsResolver {
 }
 enum Role {
   PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
+  DRIVER = 'DRIVER',
 }

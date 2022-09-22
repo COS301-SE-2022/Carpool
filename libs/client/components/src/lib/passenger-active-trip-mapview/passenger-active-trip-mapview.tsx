@@ -3,14 +3,51 @@ import { View, Dimensions, StyleSheet } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { TripDetailsType } from '@carpool/client/store';
-import { styles } from './trip-details-map-view.style';
+import { styles } from './passenger-active-trip-mapview-styles.style';
 import Toast from 'react-native-toast-message';
 
 type props = {
   trip: TripDetailsType;
 };
 
-export function TripDetailsMapView({ trip }: props) {
+export function PassengerActiveTripMapview() {
+  const trip = {
+    coordinates: [
+      {
+        address:
+          'Eco Lake, Tamarillo Street, Eco-Park Estate, Centurion, South Africa',
+        latitude: '-25.8858077',
+        longitude: '28.1760277',
+      },
+      {
+        address:
+          'University of Pretoria, Lynnwood Rd, Hatfield, Pretoria, South Africa',
+        latitude: '-25.7545492',
+        longitude: ' 28.2314476',
+      },
+    ],
+    createdAt: '2022-09-21T12:45:14.385Z',
+    driver: {
+      id: 'cl8bmb8wg00003kt0oii647ar',
+      name: 'Benjamin',
+      profilePic: '',
+      surname: 'Osmers',
+    },
+    passengers: [
+      {
+        userId: 'cl8bmbbdj00073kt0jz6pnomc',
+      },
+      {
+        userId: 'cl8bmbcaq00143kt0wkrf9de5',
+      },
+    ],
+    price: 30,
+    seatsAvailable: 3,
+    status: 'confirmed',
+    tripDate: '2022-09-22T12:45:14.380Z',
+    tripId: 'cl8bmbd3l00213kt0oiopygqv',
+  };
+
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg';
 
   const { width, height } = Dimensions.get('window');
@@ -114,4 +151,5 @@ const newStyles = StyleSheet.create({
     flex: 9,
   },
 });
-export default TripDetailsMapView;
+
+export default PassengerActiveTripMapview;

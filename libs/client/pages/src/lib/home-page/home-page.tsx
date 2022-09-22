@@ -64,17 +64,19 @@ export function HomePage({ navigation }: HomePageProps) {
   }, [trip]);
 
   const viewTrip = (tripId: string, trip: TripListType) => {
-    if (trip.status === 'active') {
-      if (trip.driver.id === userData?.id) {
-        //**Driver active screen */
-        navigation.navigate('DriverActiveTrip', { tripId });
-      } else {
-        //** Passenger active screen */
-        navigation.navigate('DriverActiveTrip', { tripId });
-      }
-    } else {
-      navigation.push('TripDetails', { tripId, type: '__' });
-    }
+    // if (trip.status === 'active') {
+    //   if (trip.driver.id === userData?.id) {
+    //     //**Driver active screen */
+    //     navigation.navigate('DriverActiveTrip', { tripId });
+    //   } else {
+    //     //** Passenger active screen */
+    //     navigation.navigate('DriverActiveTrip', { tripId });
+    //   }
+    // } else {
+    //   navigation.push('TripDetails', { tripId, type: '__' });
+    // }
+
+    navigation.push('MapboxTest', { tripId, type: '__' });
 
     //* FIX THIS */
   };
@@ -160,8 +162,7 @@ export function HomePage({ navigation }: HomePageProps) {
           )}
         </View>
       </View>
-      <View style={styles.centeredView}>
-    </View>
+      <View style={styles.centeredView}></View>
     </View>
   );
 }

@@ -54,6 +54,9 @@
       "@carpool/api/prisma": [
         "libs/api/shared/services/prisma/data-access/src/index.ts"
       ],
+      "@carpool/api/shared/services/aws/data-access": [
+        "libs/api/shared/services/aws/data-access/src/index.ts"
+      ],
       "@carpool/api/shell": ["libs/api/shell/feature/src/index.ts"],
       "@carpool/api/trips/entities": [
         "libs/api/trips/api/shared/entities/data-access/src/index.ts"

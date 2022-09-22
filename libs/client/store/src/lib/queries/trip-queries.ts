@@ -142,7 +142,7 @@ query ($id: String!) {
     passengers {
       bookingId,
       tripId,
-      userId
+      userId,
       user{
         name
       }
@@ -250,13 +250,19 @@ export const CREATE_TRIP = `
   }
 `;
 
-export const POST_REVIEW = `
-  mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: number!) {
-    postReview(byId: $byId, forId: $forId, tripId: $tripId role: $role, comment: $comment, rating: $rating){
+// export const POST_REVIEW = `
+//   mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: Int!) {
+//     postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
+//       id
+//     }
+//   }
+// `;
+
+export const POST_REVIEW = `mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: Int!) {
+    postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
       id
     }
-  }
-`;
+  }`;
 
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {

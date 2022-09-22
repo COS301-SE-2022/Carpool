@@ -156,13 +156,17 @@ export type ReviewType = {
   byId: string;
   forId: string;
   tripId: string;
-  role: Role;
+  role: string;
   comment: string;
   rating: number;
 };
 
+export type ReviewReturnType = {
+  id: string;
+};
+
 export type ReviewTripState = {
-  review: ReviewType | null;
+  review: string | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
@@ -182,5 +186,5 @@ export type PassengerListType = {
 
 enum Role {
   DRIVER = 'DRIVER',
-  PASSENGER = 'PASSENGER'
+  PASSENGER = 'PASSENGER',
 }

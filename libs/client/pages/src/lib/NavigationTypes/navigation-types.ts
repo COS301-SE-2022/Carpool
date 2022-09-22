@@ -6,6 +6,7 @@ export type RootStackParamList = {
   LoginPage: undefined;
   OnboardPage: undefined;
   SignUpPage: undefined;
+  ChatList: undefined;
   SignOut: undefined;
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
@@ -17,7 +18,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Statistics: undefined;
   TripHistory: undefined;
-  MapboxTest: undefined;
+  MapboxTest: { tripId: string; type: string };
   SetPickupPage: {
     tripId: string;
     passengerId: string;
@@ -35,14 +36,20 @@ export type RootStackParamList = {
   ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
-  CreditCard:  {tripId: string, description: string, cost: number};
+  CreditCard: { tripId: string; description: string; cost: number };
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
-  ReviewPage: { tripId: string, driverId: string, driver: string, date: string, destination: string };
-  PayfastPage:  {description: string, cost: number};
-  TripRatingPage: { tripId: string };
-  ReviewDriverPage: { tripId: string, date: string, destination: string };
+  ReviewPage: {
+    tripId: string;
+    driverId: string;
+    driver: string;
+    date: string;
+    destination: string;
+  };
+  PayfastPage: { description: string; cost: number };
+  TripRatingPage: undefined;
+  ReviewDriverPage: { tripId: string; date: string; destination: string };
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -183,7 +190,6 @@ export type ReviewDriverPageProps = NativeStackScreenProps<
   RootStackParamList,
   'ReviewDriverPage'
 >;
-
 
 export type PayfastPageProps = NativeStackScreenProps<
   RootStackParamList,

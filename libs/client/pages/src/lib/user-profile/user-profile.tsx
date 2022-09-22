@@ -20,7 +20,6 @@ import {
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
 
-
 export function UserProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
 

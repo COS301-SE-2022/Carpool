@@ -2383,6 +2383,7 @@ let TripsResolver = class TripsResolver {
     }
     postReview(byId, forId, tripId, role, comment, rating) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            console.log('POSTREVIEW');
             return yield this.tripsService.postReview(byId, forId, tripId, role, comment, rating);
         });
     }
@@ -3294,6 +3295,7 @@ let TripsRepository = class TripsRepository {
     }
     findByPassengerReviews(passengerId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            console.log(passengerId);
             return this.prisma.trip.findMany({
                 where: {
                     passengers: {

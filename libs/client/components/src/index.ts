@@ -1,3 +1,4 @@
+export * from './lib/passenger-active-trip-mapview/passenger-active-trip-mapview';
 export * from './lib/trip-details-top-bar/trip-details-top-bar';
 export * from './lib/home-map-view/home-map-view';
 export * from './lib/home-search-bar/home-search-bar';
@@ -19,4 +20,3 @@ export * from './lib/request-card/request-card';
 export * from './lib/rating-card/rating-card';
 export * from './lib/review-card/review-card';
 export * from './lib/payfast-view/payfast-view';
-

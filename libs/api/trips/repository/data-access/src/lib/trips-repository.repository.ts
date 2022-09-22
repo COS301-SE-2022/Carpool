@@ -131,6 +131,8 @@ export class TripsRepository {
   }
 
   async findByPassengerReviews(passengerId: string): Promise<Trip[]> {
+    console.log(passengerId);
+
     return this.prisma.trip.findMany({
       where: {
         passengers: {

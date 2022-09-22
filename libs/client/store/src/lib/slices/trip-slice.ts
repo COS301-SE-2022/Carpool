@@ -408,7 +408,7 @@ export const postReviewState = {
 } as ReviewTripState;
 
 export const postReviewSlice = createSlice({
-  name: 'post-review',
+  name: 'postReview',
   initialState: postReviewState,
   reducers: {},
   extraReducers: (builder) => {
@@ -420,7 +420,7 @@ export const postReviewSlice = createSlice({
       .addCase(postReview.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
-        // state.review = action.payload;
+        state.review = action.payload;
       })
       .addCase(postReview.rejected, (state, action) => {
         console.log('FAIL');

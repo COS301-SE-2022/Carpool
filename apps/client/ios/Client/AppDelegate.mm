@@ -41,7 +41,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  [GMSServices provideAPIKey:@"AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng"];
+  [GMSServices provideAPIKey:@"AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg"];
 
   RCTAppSetupPrepareApp(application);
 

@@ -31,6 +31,7 @@ import {
   TripUpcomingType,
   Passenger,
   TripRequestType,
+  PassengerListType
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
@@ -180,7 +181,7 @@ export const listPassengerReviews = createAsyncThunk<
 });
 
 export const listAllPassengers = createAsyncThunk<
-  TripListType[],
+  PassengerListType[],
   string,
   { rejectValue: Error }
 >('trips/AllPassengers', async (tripId: string, thunkApi) => {
@@ -755,7 +756,7 @@ export type postReviewType = {
   tripId: string
   role: string;
   comment: string;
-  rating: number;
+  rating: string;
 };
 
 export const postReview = createAsyncThunk<

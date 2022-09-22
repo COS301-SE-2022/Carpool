@@ -17,7 +17,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
 
   const {tripId, date, destination} = route.params;
 
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState('');
   const [comment, setComment] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -26,7 +26,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
   const { bookingId, status, error } = bookindIdState;
 
   const allPassengers = useSelector((state: RootStore) => state.allPassengers);
-  const { Passengers : passengersList, status: allPassengersStatus } = allPassengers;
+  const { passengers : passengersList, status: allPassengersStatus } = allPassengers;
 
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
   }, [dispatch, userData, tripId, navigation, passengersList ]);
 
 
-  const ratingCompleted = (rating:number) => {
+  const ratingCompleted = (rating:string) => {
     setRate(rating);
     console.log("Rating is: " + rating)
     setModalVisible(true)
@@ -73,7 +73,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
     <View style={styles.centeredView}>
       {modalVisible2?
          <View style={styles.modalView}>
-              <View>
+      <View>
       <View style={styles.row}>
         <Image
             source={require('./lighter_grey.png')}
@@ -95,9 +95,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
         showRating={false}
         onFinishRating={ratingCompleted}
       />
-        {
-          modalVisible?
-          <View>
+      <View>
           <TextInput
             value={comment}
             onChangeText={setComment}
@@ -107,11 +105,10 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
             placeholder="(Optional) Tell us about your experience"
             underlineColorAndroid="transparent"
           />
-        </View>
-         : null
-        }
+      </View>
 
     </View>
+
             <TouchableOpacity
               onPress={submitHandler}
               style={[styles.container,]}>

@@ -145,9 +145,9 @@ export type ReviewType = {
   byId: string;
   forId: string;
   tripId: string;
-  role: Role;
+  role: string;
   comment: string;
-  rating: number;
+  rating: string;
 };
 
 export type ReviewTripState = {
@@ -157,19 +157,21 @@ export type ReviewTripState = {
 };
 
 export type PassengerList = {
-  Passengers: PassengerListType[] | null;
+  passengers: PassengerListType[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };
 
 export type PassengerListType = {
+ passengers: Passengers;
+ user : User;
+};
+
+export type Passengers = {
   bookingId: string;
   tripId: Driver;
   userId: string;
-  name: string;
 };
 
-enum Role {
-  DRIVER = 'DRIVER',
-  PASSENGER = 'PASSENGER'
-}
+
+

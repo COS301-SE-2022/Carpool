@@ -16,7 +16,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
 
   const {tripId,driverId, driver, date, destination} = route.params;
 
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState('');
   const [comment, setComment] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -31,7 +31,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
   }, [dispatch, userData, tripId, navigation]);
 
 
-  const ratingCompleted = (rating:number) => {
+  const ratingCompleted = (rating:string) => {
     setRate(rating);
     console.log("Rating is: " + rating)
     setModalVisible(true)

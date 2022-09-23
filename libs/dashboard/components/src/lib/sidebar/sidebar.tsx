@@ -7,25 +7,17 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  ListSubheader,
-  IconButton,
   CssBaseline,
-  AppBar,
   Box,
   Drawer,
   Button,
   Stack,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
 
 const sidebarWidth = 240;
 
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 
@@ -47,7 +39,7 @@ export function Sidebar(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   const drawer = (
-    <div>
+    <div style={{ height: '90%' }}>
       <Toolbar
         style={{
           backgroundColor: '#fff',
@@ -59,16 +51,20 @@ export function Sidebar(props: Props) {
         <Box
           component="img"
           sx={{
-            width: 90,
+            width: 150,
             maxHeight: { xs: 233, md: 167 },
             maxWidth: { xs: 350, md: 250 },
           }}
           alt="Carpool Logo"
-          src="./AppIcon.png"
+          src={require('./logo_text.png')}
         />
       </Toolbar>
       <Divider />
-      <Stack direction="column" justifyContent="space-between">
+      <Stack
+        direction="column"
+        sx={{ height: '100%' }}
+        justifyContent="space-between"
+      >
         <List>
           {['Dashboard', 'Trips', 'Drivers', 'Users'].map((text, index) => (
             <ListItem key={text} disablePadding>
@@ -80,6 +76,13 @@ export function Sidebar(props: Props) {
             </ListItem>
           ))}
         </List>
+        <Button
+          onClick={handleLogout}
+          sx={{ mx: 2, backgroundColor: '#188aed' }}
+          variant="contained"
+        >
+          Logout
+        </Button>
       </Stack>
     </div>
   );
@@ -87,7 +90,7 @@ export function Sidebar(props: Props) {
   return (
     <Fragment>
       <CssBaseline />
-      <AppBar
+      {/* <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${sidebarWidth}px)` },
@@ -116,10 +119,13 @@ export function Sidebar(props: Props) {
             Logout
           </Button>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <Box
         component="nav"
-        sx={{ width: { sm: sidebarWidth }, flexShrink: { sm: 0 } }}
+        sx={{
+          width: { sm: sidebarWidth },
+          flexShrink: { sm: 0 },
+        }}
         aria-label="mailbox folders"
       >
         <Drawer

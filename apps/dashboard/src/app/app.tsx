@@ -25,6 +25,7 @@ export function App() {
         {path !== '/login' && path !== '/reset' && <Sidebar />}
         <Routes>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/reset" element={<ResetPassword />} />
         </Routes>

@@ -11,6 +11,8 @@ import {
   UserRegisterHandler,
   UserUpdateHandler,
   DriverRegisterHandler,
+  ForgotPasswordHandler,
+  ResetPasswordHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -21,6 +23,8 @@ import { PrismaService } from '@carpool/api/prisma';
     AuthResolver,
     AuthService,
     DriverRegisterHandler,
+    ResetPasswordHandler,
+    ForgotPasswordHandler,
     PrismaService,
     UserLoginHandler,
     UserUpdateHandler,

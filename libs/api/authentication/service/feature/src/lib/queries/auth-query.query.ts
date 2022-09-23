@@ -8,3 +8,7 @@ export class UserLoginQuery {
 export class FindUserByIdQuery {
   constructor(public readonly id: string) {}
 }
+
+export class ForgotPasswordQuery {
+  constructor(public readonly email: string) {}
+}

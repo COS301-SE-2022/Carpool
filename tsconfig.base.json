@@ -30,6 +30,15 @@
       "@carpool/api/bookings/resolvers": [
         "libs/api/bookings/api/feature/src/index.ts"
       ],
+      "@carpool/api/dashboard/api/feature": [
+        "libs/api/dashboard/api/feature/src/index.ts"
+      ],
+      "@carpool/api/dashboard/repository/data-access": [
+        "libs/api/dashboard/repository/data-access/src/index.ts"
+      ],
+      "@carpool/api/dashboard/service/feature": [
+        "libs/api/dashboard/service/feature/src/index.ts"
+      ],
       "@carpool/api/drivers/api/feature": [
         "libs/api/drivers/api/feature/src/index.ts"
       ],

@@ -30,6 +30,8 @@ import {
   TripRatingPage,
   MapboxTest,
   ReviewDriverPage,
+  ForgotPasswordCodePage,
+  NewPasswordPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -57,6 +59,8 @@ export type RootStackParamList = {
   LoginPage;
   OnboardPage;
   SignUpPage;
+  ForgotPasswordCodePage;
+  NewPasswordPage;
   SignOut;
   ForgotPasswordPage;
   ConfirmEmailPage;
@@ -93,6 +97,8 @@ export type TabBarParamList = {
 export type AuthStackParamList = {
   LoginPage;
   OnboardPage;
+  ForgotPasswordCodePage;
+  NewPasswordPage;
   SignUpPage;
   ForgotPasswordPage;
   ConfirmEmailPage;
@@ -116,6 +122,8 @@ export type ProfileStackParamList = {
   TripHistory;
   ReviewPage;
   ReviewDriverPage;
+  NewPasswordPage;
+  TripRatingPage;
 };
 
 const Tab = createBottomTabNavigator<TabBarParamList>();
@@ -157,6 +165,10 @@ const ProfileStack = () => {
       }}
     >
       <ProfileStackNav.Screen name="UserProfile" component={UserProfile} />
+      <ProfileStackNav.Screen
+        name="NewPasswordPage"
+        component={NewPasswordPage}
+      />
       <ProfileStackNav.Screen name="EditProfile" component={EditProfile} />
       <ProfileStackNav.Screen name="Statistics" component={Statistics} />
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
@@ -255,6 +267,11 @@ const AuthNav = () => {
       <AuthStack.Screen name="LoginPage" component={LoginPage} />
       <AuthStack.Screen name="OnboardPage" component={OnboardPage} />
       <AuthStack.Screen name="SignUpPage" component={SignUpPage} />
+      <AuthStack.Screen
+        name="ForgotPasswordCodePage"
+        component={ForgotPasswordCodePage}
+      />
+      <AuthStack.Screen name="NewPasswordPage" component={NewPasswordPage} />
       <AuthStack.Screen
         name="ForgotPasswordPage"
         component={ForgotPasswordPage}

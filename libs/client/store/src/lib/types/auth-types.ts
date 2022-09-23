@@ -11,6 +11,22 @@ export type User = {
   isDriver: boolean;
 };
 
+export type CheckCodeState = {
+  result: boolean | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type ForgotPasswordState = {
+  user: ForgotPasswordType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type ForgotPasswordType = {
+  email: string;
+};
+
 export type DriverState = {
   driver: Driver | null;
   status: 'success' | 'loading' | 'error' | 'idle';

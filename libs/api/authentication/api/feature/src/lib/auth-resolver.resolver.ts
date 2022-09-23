@@ -5,6 +5,7 @@ import {
   User,
   UserUpdate,
   Driver,
+  ForgotPassword,
 } from '@carpool/api/authentication/entities';
 
 @Resolver()
@@ -84,6 +85,42 @@ export class AuthResolver {
     } else {
       throw new Error('Something went wrong!');
     }
+  }
+
+  @Query(() => ForgotPassword)
+  async forgotPassword(@Args('email') email: string): Promise<ForgotPassword> {
+    const userObj = await this.authService.forgotPassword(email);
+
+    if (userObj) {
+      const user = new ForgotPassword();
+      user.email = userObj.email;
+      user.verificationCode = `${Math.floor(100000 + Math.random() * 900000)}`;
+
+      const date = new Date();
+      date.setDate(date.getDate() + 1);
+      user.expires = date;
+
+      console.log('before email');
+
+      await this.authService.sendVerificationEmail(
+        user.email,
+        user.verificationCode
+      );
+
+      console.log('after email');
+
+      return user;
+    } else {
+      throw new Error('Something went wrong!');
+    }
+  }
+
+  @Mutation(() => User)
+  async resetPassword(
+    @Args('email') email: string,
+    @Args('password') password: string
+  ) {
+    return await this.authService.resetPassword(email, password);
   }
 
   @Mutation(() => Driver)

@@ -4,6 +4,9 @@ import {
   userProfileSlice,
   userUpdateSlice,
   driverRegisterSlice,
+  forgotPasswordSlice,
+  checkCodeSlice,
+  resetPasswordSlice,
 } from './slices/auth-slice';
 import {
   tripListSlice,
@@ -71,6 +74,9 @@ const RootReducer = combineReducers({
   updateDriverReviews: UpdateDriverReviewsSlice.reducer,
   postReview: postReviewSlice.reducer,
   allPassengers: getAllPassengersSlice.reducer,
+  forgotPassword: forgotPasswordSlice.reducer,
+  checkCode: checkCodeSlice.reducer,
+  resetPassword: resetPasswordSlice.reducer,
 });
 
 export default RootReducer;

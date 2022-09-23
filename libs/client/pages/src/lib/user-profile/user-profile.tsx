@@ -54,6 +54,15 @@ export function UserProfile({ navigation }: UserProfileProps) {
     ]);
   };
 
+  const resetPassword = () => {
+    if (userData) {
+      navigation.push('NewPasswordPage', {
+        email: userData.email,
+        previousScreen: 'UserProfile',
+      });
+    }
+  };
+
   return (
     <SafeAreaView style={{ height: '100%' }}>
       {status === 'loading' || requestsStatus === 'loading' ? (
@@ -383,7 +392,7 @@ export function UserProfile({ navigation }: UserProfileProps) {
                   />
                 </View>
               </Pressable>
-              <View
+              <Pressable
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -392,45 +401,55 @@ export function UserProfile({ navigation }: UserProfileProps) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}
+                onPress={resetPassword}
               >
                 <View
                   style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
                   }}
                 >
-                  <Icon
-                    name="lock"
-                    size={20}
+                  <View
                     style={{
-                      color: '#188aed',
+                      backgroundColor: '#f5f5f5',
+                      padding: 3,
+                      borderRadius: 5,
+                      flex: 1,
                     }}
-                  />
-                </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Change Password
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
-                  <Icon
-                    name="chevron-right"
-                    size={25}
+                  >
+                    <Icon
+                      name="lock"
+                      size={20}
+                      style={{
+                        color: '#188aed',
+                      }}
+                    />
+                  </View>
+                  <View style={{ flex: 12, paddingLeft: 15 }}>
+                    <Text style={{ fontWeight: '500', fontSize: 15 }}>
+                      Change Password
+                    </Text>
+                  </View>
+                  <View
                     style={{
-                      color: '#000',
+                      // backgroundColor: '#f5f5f5',
+                      padding: 3,
+                      borderRadius: 20,
+                      flex: 1,
                     }}
-                  />
+                  >
+                    <Icon
+                      name="chevron-right"
+                      size={25}
+                      style={{
+                        color: '#000',
+                      }}
+                    />
+                  </View>
                 </View>
-              </View>
+              </Pressable>
               <Pressable
                 style={{
                   display: 'flex',

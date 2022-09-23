@@ -91,6 +91,8 @@ AuthenticationModule = tslib_1.__decorate([
             auth_resolver_resolver_1.AuthResolver,
             service_1.AuthService,
             service_2.DriverRegisterHandler,
+            service_2.ResetPasswordHandler,
+            service_2.ForgotPasswordHandler,
             prisma_1.PrismaService,
             service_2.UserLoginHandler,
             service_2.UserUpdateHandler,
@@ -110,7 +112,7 @@ exports.AuthenticationModule = AuthenticationModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g;
+var _a, _b, _c, _d, _e, _f, _g, _h;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -168,6 +170,31 @@ let AuthResolver = class AuthResolver {
             }
         });
     }
+    forgotPassword(email) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const userObj = yield this.authService.forgotPassword(email);
+            if (userObj) {
+                const user = new entities_1.ForgotPassword();
+                user.email = userObj.email;
+                user.verificationCode = `${Math.floor(100000 + Math.random() * 900000)}`;
+                const date = new Date();
+                date.setDate(date.getDate() + 1);
+                user.expires = date;
+                console.log('before email');
+                yield this.authService.sendVerificationEmail(user.email, user.verificationCode);
+                console.log('after email');
+                return user;
+            }
+            else {
+                throw new Error('Something went wrong!');
+            }
+        });
+    }
+    resetPassword(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authService.resetPassword(email, password);
+        });
+    }
     registerDriver(ID, licensePlate, carModel, userId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const driverObj = yield this.authService.registerDriver(userId, licensePlate, carModel, ID);
@@ -219,6 +246,21 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
 ], AuthResolver.prototype, "register", null);
 tslib_1.__decorate([
+    (0, graphql_1.Query)(() => entities_1.ForgotPassword),
+    tslib_1.__param(0, (0, graphql_1.Args)('email')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+], AuthResolver.prototype, "forgotPassword", null);
+tslib_1.__decorate([
+    (0, graphql_1.Mutation)(() => entities_1.User),
+    tslib_1.__param(0, (0, graphql_1.Args)('email')),
+    tslib_1.__param(1, (0, graphql_1.Args)('password')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String, String]),
+    tslib_1.__metadata("design:returntype", Promise)
+], AuthResolver.prototype, "resetPassword", null);
+tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.Driver),
     tslib_1.__param(0, (0, graphql_1.Args)('ID')),
     tslib_1.__param(1, (0, graphql_1.Args)('licensePlate')),
@@ -226,14 +268,14 @@ tslib_1.__decorate([
     tslib_1.__param(3, (0, graphql_1.Args)('userId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    tslib_1.__metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
 ], AuthResolver.prototype, "registerDriver", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => Boolean),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
+    tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], AuthResolver.prototype, "verifyEmail", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.User),
@@ -246,7 +288,7 @@ tslib_1.__decorate([
     tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
+    tslib_1.__metadata("design:returntype", typeof (_h = typeof Promise !== "undefined" && Promise) === "function" ? _h : Object)
 ], AuthResolver.prototype, "updateUser", null);
 AuthResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(),
@@ -295,9 +337,9 @@ exports.ApiAuthenticationApiSharedEntitiesDataAccessModule = ApiAuthenticationAp
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c;
+var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdate = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.User = void 0;
+exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.User = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const entities_1 = __webpack_require__("./libs/api/trips/api/shared/entities/data-access/src/index.ts");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
@@ -487,6 +529,24 @@ Driver = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
 ], Driver);
 exports.Driver = Driver;
+let ForgotPassword = class ForgotPassword {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], ForgotPassword.prototype, "email", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], ForgotPassword.prototype, "verificationCode", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Date),
+    tslib_1.__metadata("design:type", typeof (_d = typeof Date !== "undefined" && Date) === "function" ? _d : Object)
+], ForgotPassword.prototype, "expires", void 0);
+ForgotPassword = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], ForgotPassword);
+exports.ForgotPassword = ForgotPassword;
 let UserUpdate = class UserUpdate {
 };
 tslib_1.__decorate([
@@ -583,6 +643,20 @@ let AuthRepository = class AuthRepository {
             });
         });
     }
+    findAllUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.user.findMany();
+        });
+    }
+    findAllDrivers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.user.findMany({
+                where: {
+                    isDriver: true,
+                },
+            });
+        });
+    }
     login(email, password) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             const user = yield this.prisma.user.findUnique({
@@ -630,6 +704,41 @@ let AuthRepository = class AuthRepository {
                         profilePic: '',
                     },
                 });
+            }
+        });
+    }
+    forgotPassword(email) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const user = yield this.prisma.user.findUnique({
+                where: {
+                    email: email,
+                },
+            });
+            if (user) {
+                return user;
+            }
+            else {
+                throw new Error(`User with email ${email} does not exist`);
+            }
+        });
+    }
+    resetPassword(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const salt = yield bcrypt.genSalt();
+            const hashedPassword = yield bcrypt.hash(password, salt);
+            const user = yield this.prisma.user.update({
+                where: {
+                    email: email,
+                },
+                data: {
+                    password: hashedPassword,
+                },
+            });
+            if (user) {
+                return user;
+            }
+            else {
+                throw new Error(`User with email ${email} does not exist`);
             }
         });
     }
@@ -784,6 +893,11 @@ let AuthService = class AuthService {
             return yield this.commandBus.execute(new auth_command_command_1.UserRegisterCommand(name, surname, email, university, studentNumber, password, cellNumber));
         });
     }
+    forgotPassword(email) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new auth_query_query_1.ForgotPasswordQuery(email));
+        });
+    }
     registerDriver(ID, licensePlate, carModel, userId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.commandBus.execute(new auth_command_command_1.DriverRegisterCommand(userId, licensePlate, carModel, ID));
@@ -811,6 +925,11 @@ let AuthService = class AuthService {
             return yield this.commandBus.execute(new auth_command_command_1.UserUpdateCommand(id, name, surname, email, university, studentNumber, cellNumber));
         });
     }
+    resetPassword(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.commandBus.execute(new auth_command_command_1.ResetPasswordCommand(email, password));
+        });
+    }
 };
 AuthService = tslib_1.__decorate([
     (0, common_1.Injectable)(),
@@ -825,9 +944,9 @@ exports.AuthService = AuthService;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdateHandler = exports.UserVerifyHandler = exports.DriverRegisterHandler = exports.UserRegisterHandler = void 0;
+exports.ResetPasswordHandler = exports.UserUpdateHandler = exports.UserVerifyHandler = exports.DriverRegisterHandler = exports.UserRegisterHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/authentication/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -918,6 +1037,22 @@ UserUpdateHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_d = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _d : Object])
 ], UserUpdateHandler);
 exports.UserUpdateHandler = UserUpdateHandler;
+let ResetPasswordHandler = class ResetPasswordHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(command) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const { email, password } = command;
+            return yield this.authRepository.resetPassword(email, password);
+        });
+    }
+};
+ResetPasswordHandler = tslib_1.__decorate([
+    (0, cqrs_1.CommandHandler)(auth_command_command_1.ResetPasswordCommand),
+    tslib_1.__metadata("design:paramtypes", [typeof (_e = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _e : Object])
+], ResetPasswordHandler);
+exports.ResetPasswordHandler = ResetPasswordHandler;
 
 
 /***/ }),
@@ -927,7 +1062,7 @@ exports.UserUpdateHandler = UserUpdateHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdateCommand = exports.UserVerifyCommand = exports.DriverRegisterCommand = exports.UserRegisterCommand = void 0;
+exports.ResetPasswordCommand = exports.UserUpdateCommand = exports.UserVerifyCommand = exports.DriverRegisterCommand = exports.UserRegisterCommand = void 0;
 class UserRegisterCommand {
     constructor(name, surname, email, university, studentNumber, password, cellNumber) {
         this.name = name;
@@ -967,6 +1102,13 @@ class UserUpdateCommand {
     }
 }
 exports.UserUpdateCommand = UserUpdateCommand;
+class ResetPasswordCommand {
+    constructor(email, password) {
+        this.email = email;
+        this.password = password;
+    }
+}
+exports.ResetPasswordCommand = ResetPasswordCommand;
 
 
 /***/ }),
@@ -975,9 +1117,9 @@ exports.UserUpdateCommand = UserUpdateCommand;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b;
+var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindUserByIdHandler = exports.UserLoginHandler = void 0;
+exports.ForgotPasswordHandler = exports.FindUserByIdHandler = exports.UserLoginHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/authentication/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -1012,6 +1154,21 @@ FindUserByIdHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _b : Object])
 ], FindUserByIdHandler);
 exports.FindUserByIdHandler = FindUserByIdHandler;
+let ForgotPasswordHandler = class ForgotPasswordHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.forgotPassword(query.email);
+        });
+    }
+};
+ForgotPasswordHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.ForgotPasswordQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_c = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _c : Object])
+], ForgotPasswordHandler);
+exports.ForgotPasswordHandler = ForgotPasswordHandler;
 
 
 /***/ }),
@@ -1021,7 +1178,7 @@ exports.FindUserByIdHandler = FindUserByIdHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindUserByIdQuery = exports.UserLoginQuery = void 0;
+exports.ForgotPasswordQuery = exports.FindUserByIdQuery = exports.UserLoginQuery = void 0;
 class UserLoginQuery {
     constructor(email, password) {
         this.email = email;
@@ -1035,6 +1192,12 @@ class FindUserByIdQuery {
     }
 }
 exports.FindUserByIdQuery = FindUserByIdQuery;
+class ForgotPasswordQuery {
+    constructor(email) {
+        this.email = email;
+    }
+}
+exports.ForgotPasswordQuery = ForgotPasswordQuery;
 
 
 /***/ }),

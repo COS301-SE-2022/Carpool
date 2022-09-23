@@ -6,6 +6,7 @@ import {
   UserUpdateCommand,
   UserVerifyCommand,
   DriverRegisterCommand,
+  ResetPasswordCommand,
 } from './auth-command.command';
 import {
   UserInput,
@@ -90,5 +91,18 @@ export class UserUpdateHandler implements ICommandHandler<UserUpdateCommand> {
     user.cellNumber = cellNumber;
 
     return await this.authRepository.updateUser(user);
+  }
+}
+
+@CommandHandler(ResetPasswordCommand)
+export class ResetPasswordHandler
+  implements ICommandHandler<ResetPasswordCommand>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(command: ResetPasswordCommand): Promise<User | null> {
+    const { email, password } = command;
+
+    return await this.authRepository.resetPassword(email, password);
   }
 }

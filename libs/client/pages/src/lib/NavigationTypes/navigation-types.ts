@@ -2,12 +2,14 @@ import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 
 export type RootStackParamList = {
   HomePage: undefined;
+  ForgotPasswordCodePage: { email: string };
   RegisterDriver: { userId: string };
   LoginPage: undefined;
   OnboardPage: undefined;
   SignUpPage: undefined;
   ChatList: undefined;
   SignOut: undefined;
+  NewPasswordPage: { email: string; previousScreen?: string };
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
   ResetPasswordPage: undefined;
@@ -82,6 +84,11 @@ export type SignUpPageProps = NativeStackScreenProps<
   'SignUpPage'
 >;
 
+export type NewPasswordPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'NewPasswordPage'
+>;
+
 export type SignOutProps = NativeStackScreenProps<
   RootStackParamList,
   'SignOut'
@@ -145,6 +152,11 @@ export type SearchResultsProps = NativeStackScreenProps<
 export type ChatScreenProps = NativeStackScreenProps<
   RootStackParamList,
   'ChatScreen'
+>;
+
+export type ForgotPasswordCodePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ForgotPasswordCodePage'
 >;
 
 export type SetPickupPageProps = NativeStackScreenProps<

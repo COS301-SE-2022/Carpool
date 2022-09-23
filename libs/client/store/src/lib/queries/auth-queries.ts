@@ -23,6 +23,23 @@ export const USER_PROFILE = `
   }
 `;
 
+export const FORGOT_PASSWORD = `
+query($email: String!) {
+  forgotPassword(email: $email) {
+    email
+    verificationCode
+  }
+}
+`;
+
+export const RESET_PASSWORD = `
+  mutation($email: String!, $password: String!) {
+    resetPassword(email: $email, password: $password) {
+      email
+    }
+  }
+`;
+
 export const USER_REGISTER = `
   mutation ($name: String!, $surname: String!, $email: String!, $university: String!, $studentNumber: String!, $password: String!) {
       register(name: $name, surname: $surname, email: $email, university: $university, studentNumber: $studentNumber, password: $password) {

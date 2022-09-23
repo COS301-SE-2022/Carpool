@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
 import { User, UserUpdate, Driver } from '@carpool/api/authentication/entities';
-import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
+import {
+  FindUserByIdQuery,
+  UserLoginQuery,
+  ForgotPasswordQuery,
+} from './queries/auth-query.query';
 import {
   UserRegisterCommand,
   UserVerifyCommand,
   UserUpdateCommand,
   DriverRegisterCommand,
+  ResetPasswordCommand,
 } from './commands/auth-command.command';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -46,6 +51,10 @@ export class AuthService {
         cellNumber
       )
     );
+  }
+
+  async forgotPassword(email: string): Promise<User | null> {
+    return await this.queryBus.execute(new ForgotPasswordQuery(email));
   }
 
   async registerDriver(
@@ -93,6 +102,12 @@ export class AuthService {
         studentNumber,
         cellNumber
       )
+    );
+  }
+
+  async resetPassword(email: string, password: string): Promise<User | null> {
+    return await this.commandBus.execute(
+      new ResetPasswordCommand(email, password)
     );
   }
 }

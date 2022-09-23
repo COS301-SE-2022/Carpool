@@ -133,6 +133,18 @@ export class Driver {
   user: User;
 }
 
+@ObjectType()
+export class ForgotPassword {
+  @Field()
+  email: string;
+
+  @Field()
+  verificationCode: string;
+
+  @Field(() => Date)
+  expires: Date;
+}
+
 @InputType()
 export class UserUpdate {
   @Field()

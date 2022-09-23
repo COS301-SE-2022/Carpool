@@ -1,0 +1,22 @@
+{
+  "root": "libs/api/dashboard/api/feature",
+  "sourceRoot": "libs/api/dashboard/api/feature/src",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/api/dashboard/api/feature/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/libs/api/dashboard/api/feature"],
+      "options": {
+        "jestConfig": "libs/api/dashboard/api/feature/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

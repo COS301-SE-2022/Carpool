@@ -23,6 +23,18 @@ export class AuthRepository {
     });
   }
 
+  async findAllUsers(): Promise<User[]> {
+    return this.prisma.user.findMany();
+  }
+
+  async findAllDrivers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: {
+        isDriver: true,
+      },
+    });
+  }
+
   async login(email: string, password: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
       where: {
@@ -69,6 +81,40 @@ export class AuthRepository {
           profilePic: '',
         },
       });
+    }
+  }
+
+  async forgotPassword(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with email ${email} does not exist`);
+    }
+  }
+
+  async resetPassword(email: string, password: string): Promise<User | null> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await this.prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with email ${email} does not exist`);
     }
   }
 

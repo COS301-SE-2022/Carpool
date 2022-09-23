@@ -7,12 +7,15 @@ import {
   VERIFY_EMAIL,
   USER_UPDATE,
   DRIVER_REGISTER,
+  FORGOT_PASSWORD,
+  RESET_PASSWORD,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
 import { User, UserProfile, Driver } from '../types/auth-types';
 import { Platform } from 'react-native';
 import { updateDriverState } from '../slices/auth-slice';
 import { url } from '../config';
+import { ForgotPasswordType } from '../types/auth-types';
 
 const host =
   Platform.OS === 'ios' ? 'https://a5a7-102-33-32-76.eu.ngrok.io' : '10.0.2.2';
@@ -147,6 +150,88 @@ export const register = createAsyncThunk(
     const res = response.data.data.register;
 
     SecureStore.setItemAsync('user', JSON.stringify(res));
+
+    return res;
+  }
+);
+
+export const forgotPassword = createAsyncThunk<
+  ForgotPasswordType,
+  string,
+  { rejectValue: Error }
+>('userPassword/forgot', async (email: string, thunkApi) => {
+  const response = await axios.post(`${url}/graphql`, {
+    query: FORGOT_PASSWORD,
+    variables: {
+      email: email,
+    },
+  });
+
+  console.log('FORGOT PASSWORD');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  console.log(response.data);
+
+  const res = response.data.data.forgotPassword;
+
+  SecureStore.setItemAsync('userForgot', JSON.stringify(res));
+
+  return { email: res.email };
+});
+
+export const resetPasswordCode = createAsyncThunk(
+  'userCode/verify',
+  async (code: string) => {
+    const storedCode = await SecureStore.getItemAsync('userForgot');
+
+    if (storedCode && JSON.parse(storedCode).verificationCode === code) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+);
+
+export type ResetPasswordInput = {
+  password: string;
+  email: string;
+};
+
+export const resetPassword = createAsyncThunk<
+  ForgotPasswordType,
+  ResetPasswordInput,
+  { rejectValue: Error }
+>(
+  'userPasswordReset/reset',
+  async (resetInput: ResetPasswordInput, thunkApi) => {
+    const response = await axios.post(`${url}/graphql`, {
+      query: RESET_PASSWORD,
+      variables: {
+        email: resetInput.email,
+        password: resetInput.password,
+      },
+    });
+
+    if (response.data.errors) {
+      const error = {
+        message: response.data.errors[0].message,
+      } as Error;
+
+      return thunkApi.rejectWithValue(error);
+    }
+
+    console.log('FORGOT PASSWORD');
+
+    const res = response.data.data.resetPassword;
+
+    SecureStore.deleteItemAsync('userForgot');
 
     return res;
   }

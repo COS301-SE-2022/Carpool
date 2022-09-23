@@ -34,3 +34,10 @@ export class UserUpdateCommand {
     public readonly cellNumber: string
   ) {}
 }
+
+export class ResetPasswordCommand {
+  constructor(
+    public readonly email: string,
+    public readonly password: string
+  ) {}
+}

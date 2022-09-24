@@ -76,7 +76,7 @@ async function main() {
   const trip1 = await prisma.trip.create({
     data: {
       tripDate: tripDate,
-      seatsAvailable: 3,
+      seatsAvailable: 1,
       price: 30,
       coordinates: {
         create: [

@@ -346,7 +346,7 @@ export class TripsRepository {
   }
 
   async passengerCancelTrip(userId: string, tripId: string): Promise<Trip> {
-    return this.prisma.trip.update({
+    const trip = this.prisma.trip.update({
       where: {
         tripId: tripId,
       },
@@ -356,5 +356,23 @@ export class TripsRepository {
         },
       },
     });
+
+    const booking = await this.prisma.booking.findMany({
+      where: {
+        tripId: tripId,
+        userId: userId,
+      },
+    });
+
+    await this.prisma.booking.update({
+      where: {
+        bookingId: booking[0].bookingId,
+      },
+      data: {
+        status: 'cancelled',
+      },
+    });
+
+    return trip;
   }
 }

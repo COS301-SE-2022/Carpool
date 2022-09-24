@@ -66,6 +66,7 @@ export class AuthRepository {
           studentNumber: user.studentNumber,
           password: hashedPassword,
           profilePic: '',
+          cellNumber: '',
         },
       });
     }

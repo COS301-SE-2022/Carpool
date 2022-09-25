@@ -261,7 +261,7 @@ query ($userId: String!) {
 
 export const CANCEL_DRIVER_TRIP = `
 mutation ($tripId: String!) {
-  driverCancelTrip(tripId: $tripId) {
+  driverCancelTrip(id: $tripId) {
     tripId
   }
 }
@@ -269,7 +269,7 @@ mutation ($tripId: String!) {
 
 export const CANCEL_PASSENGER_TRIP = `
 mutation ($userId: String!, $tripId: String!) {
-  passengerCancelTrip(userId: $userId, tripId: $tripId) {
+  passengerCancelTrip(userId: $userId, id: $tripId) {
     tripId
   }
 }

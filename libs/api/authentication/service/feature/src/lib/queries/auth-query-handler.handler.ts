@@ -9,6 +9,7 @@ import {
   FindTotalUsersQuery,
   FindRecentUsersQuery,
   FindTopUniversitiesQuery,
+  FindAllUsersQuery,
 } from './auth-query.query';
 import { TopUniversities } from '@carpool/api/authentication/entities';
 
@@ -82,5 +83,14 @@ export class FindTopUniversitiesHandler
 
   async execute(query: FindTopUniversitiesQuery): Promise<TopUniversities[]> {
     return await this.authRepository.findTopUniversities();
+  }
+}
+
+@QueryHandler(FindAllUsersQuery)
+export class FindAllUsersHandler implements IQueryHandler<FindAllUsersQuery> {
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: FindAllUsersQuery): Promise<User[]> {
+    return await this.authRepository.findAllUsers();
   }
 }

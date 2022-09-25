@@ -11,10 +11,11 @@ export function DashboardTitle({ title }: DashboardTitleProps) {
       sx={{
         flex: 1,
         px: 4,
-        pt: 3,
+        pt: 2,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
       }}
     >
       <Stack sx={{ flex: 1 }}>

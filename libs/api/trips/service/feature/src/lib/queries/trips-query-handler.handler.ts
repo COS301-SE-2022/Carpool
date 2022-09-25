@@ -20,6 +20,7 @@ import {
   FindBookingsForMonthQuery,
   FindTripsForMonthQuery,
   FindTripsByMonthQuery,
+  FindBookingsByUserQuery,
 } from './trips-query.query';
 import { TripByMonth } from '@carpool/api/trips/entities';
 
@@ -200,5 +201,16 @@ export class FindTripsByMonthHandler
 
   async execute(query: FindTripsByMonthQuery): Promise<TripByMonth[]> {
     return await this.tripsRepository.findTripsByMonth();
+  }
+}
+
+@QueryHandler(FindBookingsByUserQuery)
+export class FindBookingsByUserHandler
+  implements IQueryHandler<FindBookingsByUserQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindBookingsByUserQuery): Promise<Booking[]> {
+    return await this.tripsRepository.findBookingsByUser(query.userId);
   }
 }

@@ -90,7 +90,7 @@ async function main() {
             address:
               'University of Pretoria, Lynnwood Rd, Hatfield, Pretoria, South Africa',
             latitude: '-25.7545492',
-            longitude: ' 28.2314476',
+            longitude: '28.2314476',
           },
         ],
       },

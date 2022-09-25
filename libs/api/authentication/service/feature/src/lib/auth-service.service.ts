@@ -14,6 +14,7 @@ import {
   FindTotalUsersQuery,
   FindRecentUsersQuery,
   FindTopUniversitiesQuery,
+  FindAllUsersQuery,
 } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
@@ -42,6 +43,10 @@ export class AuthService {
 
   async findTotalUsers(): Promise<number> {
     return this.queryBus.execute(new FindTotalUsersQuery());
+  }
+
+  async findAllUsers(): Promise<User[]> {
+    return this.queryBus.execute(new FindAllUsersQuery());
   }
 
   async findTotalDrivers(): Promise<number> {

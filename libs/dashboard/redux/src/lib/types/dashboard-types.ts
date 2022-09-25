@@ -42,3 +42,115 @@ export type TopUniversities = {
     university: number;
   };
 };
+
+export type UserListState = {
+  users: User[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type User = {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  university: string;
+  studentNumber: string;
+  cellNumber: string;
+  isDriver: boolean;
+  createdAt: string;
+};
+
+export type UserProfileState = {
+  userProfile: UserProfile | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type UserProfile = {
+  id: string;
+  name: string;
+  surname: string;
+  email: string;
+  university: string;
+  studentNumber: string;
+  cellNumber: string;
+  isDriver: boolean;
+  createdAt: string;
+  driver?: Driver;
+  tripsCreated: TripCreated[];
+  bookings: Booking[];
+};
+
+export type Driver = {
+  licensePlate: string;
+  model: string;
+  idNumber: string;
+};
+
+export type TripCreated = {
+  tripId: string;
+};
+
+export type Booking = {
+  bookingId: string;
+};
+
+export type UserTripsState = {
+  trips: Trip[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type Trip = {
+  tripId: string;
+  tripDate: string;
+  createdAt: string;
+  price: string;
+  status: string;
+  passengers: Passenger[];
+};
+
+export type Passenger = {
+  bookingId: string;
+};
+
+export type TripDetailState = {
+  trip: TripDetails | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type TripDetails = {
+  tripId: string;
+  tripDate: string;
+  createdAt: string;
+  price: string;
+  status: string;
+  driver: DriverTripDetails;
+  passengers: PassengerDetails[];
+  coordinates: Coordinates[];
+};
+
+export type DriverTripDetails = {
+  name: string;
+  surname: string;
+  profilePic: string;
+};
+
+export type PassengerDetails = {
+  bookingId: string;
+  user: DriverTripDetails;
+};
+
+export type Coordinates = {
+  address: string;
+  longitude: string;
+  latitude: string;
+};
+
+export type AllTripsState = {
+  trips: TripDetails[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};

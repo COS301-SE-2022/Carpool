@@ -53,3 +53,125 @@ query {
   }
 }
 `;
+
+export const LIST_USERS = `
+query {
+  findAllUsers {
+    id
+    name
+    surname
+    cellNumber
+    university
+    studentNumber
+    isDriver
+    createdAt
+  }
+}
+`;
+
+export const GET_USER_PROFILE = `
+query($id: String!) {
+  findUserById(id: $id) {
+    id
+    name
+    surname
+    email
+    university
+    studentNumber
+    cellNumber
+    isDriver
+    createdAt
+    tripsCreated {
+      tripId
+    }
+    bookings {
+      bookingId
+    }
+  }
+}
+`;
+
+export const GET_DRIVER_PROFILE = `
+query($id: String!) {
+  findDriverProfile(userId: $id) {
+    licensePlate
+    model
+    idNumber
+  }
+}
+`;
+
+export const USER_TRIPS = `
+query ($id: String!) {
+  findByDriver (id: $id) {
+    tripId
+    tripDate
+    createdAt
+    price
+    passengers {
+      bookingId
+    }
+    status
+  }
+}
+`;
+
+export const TRIP_DETAILS = `
+query($id: String!) {
+  findTripById(id: $id) {
+    tripId
+    tripDate
+    createdAt
+    price
+    status
+    driver {
+      profilePic
+      name
+      surname
+    }
+    passengers {
+      bookingId
+      user {
+        profilePic
+        name
+        surname
+      }
+    }
+    coordinates {
+      address
+      latitude
+      longitude
+    }
+  }
+}
+`;
+
+export const GET_ALL_TRIPS = `
+query {
+  findAllTrips {
+    tripId
+    tripDate
+    createdAt
+    price
+    status
+    driver {
+      profilePic
+      name
+      surname
+    }
+    passengers {
+      bookingId
+      user {
+        profilePic
+        name
+        surname
+      }
+    }
+    coordinates {
+      address
+      latitude
+      longitude
+    }
+  }
+}
+`;

@@ -1,8 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { DashboardPage } from '@carpool/dashboard/pages';
-import { LoginPage } from '@carpool/dashboard/pages';
-import { ResetPassword } from '@carpool/dashboard/pages';
+import { Routes, Route } from 'react-router-dom';
+import {
+  DashboardPage,
+  LoginPage,
+  ResetPassword,
+  UsersPage,
+  UserProfile,
+  TripsPage,
+} from '@carpool/dashboard/pages';
 import { Sidebar } from '@carpool/dashboard/components';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -28,6 +33,9 @@ export function App() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/reset" element={<ResetPassword />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/users/:id" element={<UserProfile />} />
+          <Route path="/trips" element={<TripsPage />} />
         </Routes>
       </Box>
     </ThemeProvider>

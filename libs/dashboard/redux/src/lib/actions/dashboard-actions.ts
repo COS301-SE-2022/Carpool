@@ -1,6 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { DashboardAnalytics } from '../types/dashboard-types';
+import {
+  DashboardAnalytics,
+  UserProfile,
+  Trip,
+  User,
+  TripDetails,
+} from '../types/dashboard-types';
 import {
   TRIPS_FOR_MONTH,
   BOOKINGS_FOR_MONTH,
@@ -9,6 +15,12 @@ import {
   RECENT_USERS,
   TRIPS_BY_MONTH,
   TOP_UNIVERSITIES,
+  GET_USER_PROFILE,
+  GET_DRIVER_PROFILE,
+  LIST_USERS,
+  USER_TRIPS,
+  TRIP_DETAILS,
+  GET_ALL_TRIPS,
 } from '../queries/dashboard-queries';
 
 export const dashboardAnalytics = createAsyncThunk<
@@ -101,4 +113,133 @@ export const dashboardAnalytics = createAsyncThunk<
   return analytics;
 
   //* TOP USERS
+});
+
+export const listUsers = createAsyncThunk<User[], void, { rejectValue: Error }>(
+  'users/list',
+  async (__, thunkApi) => {
+    //* USER PROFILE
+    const userList = await axios.post(`http://localhost:3333/graphql`, {
+      query: LIST_USERS,
+    });
+
+    if (userList.data.errors) {
+      const error = {
+        message: userList.data.errors[0].message,
+      } as Error;
+
+      return thunkApi.rejectWithValue(error);
+    }
+
+    return userList.data.data.findAllUsers;
+  }
+);
+
+export const fetchUserProfile = createAsyncThunk<
+  UserProfile,
+  string,
+  { rejectValue: Error }
+>('user/profile', async (id: string, thunkApi) => {
+  //* USER PROFILE
+  const userProfile = await axios.post(`http://localhost:3333/graphql`, {
+    query: GET_USER_PROFILE,
+    variables: {
+      id,
+    },
+  });
+
+  if (userProfile.data.errors) {
+    const error = {
+      message: userProfile.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  if (userProfile.data.data.findUserById.isDriver) {
+    const driverProfile = await axios.post(`http://localhost:3333/graphql`, {
+      query: GET_DRIVER_PROFILE,
+      variables: {
+        id,
+      },
+    });
+
+    return {
+      ...userProfile.data.data.findUserById,
+      driver: {
+        ...driverProfile.data.data.findDriverProfile,
+      },
+    };
+  } else {
+    return userProfile.data.data.findUserById;
+  }
+});
+
+export const fetchUserTrips = createAsyncThunk<
+  Trip[],
+  string,
+  { rejectValue: Error }
+>('userTrips/list', async (id: string, thunkApi) => {
+  //* USER TRIPS
+  const userTrips = await axios.post(`http://localhost:3333/graphql`, {
+    query: USER_TRIPS,
+    variables: {
+      id,
+    },
+  });
+
+  if (userTrips.data.errors) {
+    const error = {
+      message: userTrips.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  return userTrips.data.data.findByDriver;
+});
+
+export const fetchTripDetails = createAsyncThunk<
+  TripDetails,
+  string,
+  { rejectValue: Error }
+>('tripDetails/details', async (id: string, thunkApi) => {
+  //* USER TRIPS
+  const tripDetails = await axios.post(`http://localhost:3333/graphql`, {
+    query: TRIP_DETAILS,
+    variables: {
+      id,
+    },
+  });
+
+  if (tripDetails.data.errors) {
+    const error = {
+      message: tripDetails.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  return tripDetails.data.data.findTripById;
+});
+
+export const fetchAllTrips = createAsyncThunk<
+  TripDetails[],
+  void,
+  { rejectValue: Error }
+>('trips/all', async (__, thunkApi) => {
+  //* USER TRIPS
+  const allTrips = await axios.post(`http://localhost:3333/graphql`, {
+    query: GET_ALL_TRIPS,
+  });
+
+  if (allTrips.data.errors) {
+    const error = {
+      message: allTrips.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  return allTrips.data.data.findAllTrips;
 });

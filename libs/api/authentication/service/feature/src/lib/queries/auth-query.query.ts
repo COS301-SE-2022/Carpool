@@ -20,3 +20,5 @@ export class FindTotalDriversQuery {}
 export class FindRecentUsersQuery {}
 
 export class FindTopUniversitiesQuery {}
+
+export class FindAllUsersQuery {}

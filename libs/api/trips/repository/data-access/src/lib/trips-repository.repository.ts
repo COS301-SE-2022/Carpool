@@ -80,6 +80,14 @@ export class TripsRepository {
     return bookings._count;
   }
 
+  async findBookingsByUser(id: string): Promise<Booking[]> {
+    return this.prisma.booking.findMany({
+      where: {
+        userId: id,
+      },
+    });
+  }
+
   async findTripsByMonth(): Promise<TripByMonth[]> {
     const trips = await this.prisma.$queryRaw<TripByMonth[]>`
     SELECT count(trip_id) AS trips, TO_CHAR(trip_date, 'Mon')
@@ -131,9 +139,6 @@ export class TripsRepository {
     return await this.prisma.trip.findMany({
       where: {
         driverId: driverId,
-        tripDate: {
-          lt: new Date(),
-        },
       },
     });
   }
@@ -420,7 +425,7 @@ export class TripsRepository {
         }
       });
 
-      console.log(tripsByDate);
+      // console.log(tripsByDate);
 
       return tripsByDate;
     } else {

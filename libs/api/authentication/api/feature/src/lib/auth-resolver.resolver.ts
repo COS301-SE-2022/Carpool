@@ -1,5 +1,12 @@
 import { AuthService } from '@carpool/api/authentication/service';
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Args,
+  Mutation,
+  ResolveField,
+  Root,
+} from '@nestjs/graphql';
 import {
   UserLogin,
   User,
@@ -8,14 +15,40 @@ import {
   ForgotPassword,
   TopUniversities,
 } from '@carpool/api/authentication/entities';
-
-@Resolver()
+import { DriversService } from '@carpool/api/drivers/service';
+import { TripsService } from '@carpool/api/trips/service';
+import { Trip, Booking } from '@carpool/api/trips/entities';
+@Resolver(() => User)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(
+    private readonly authService: AuthService,
+    private readonly driversService: DriversService,
+    private readonly tripsService: TripsService
+  ) {}
+
+  @ResolveField(() => [Trip])
+  async tripsCreated(@Root() user: User): Promise<Trip[]> {
+    return await this.tripsService.findByDriver(user.id);
+  }
+
+  @ResolveField(() => [Booking])
+  async bookings(@Root() user: User): Promise<Booking[]> {
+    return await this.tripsService.findBookingsByUser(user.id);
+  }
+
+  @ResolveField(() => Driver)
+  async driver(@Root() user: User): Promise<Driver> {
+    return await this.driversService.findDriverProfile(user.id);
+  }
 
   @Query(() => User)
   async findUserById(@Args('id') id: string): Promise<User | null> {
     return await this.authService.findUserById(id);
+  }
+
+  @Query(() => [User])
+  async findAllUsers(): Promise<User[]> {
+    return await this.authService.findAllUsers();
   }
 
   @Query(() => Number)

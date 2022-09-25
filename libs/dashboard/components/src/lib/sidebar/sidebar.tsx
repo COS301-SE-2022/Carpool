@@ -68,9 +68,12 @@ export function Sidebar(props: Props) {
         justifyContent="space-between"
       >
         <List>
-          {['Dashboard', 'Trips', 'Drivers', 'Users'].map((text, index) => (
+          {['Dashboard', 'Trips', 'Users'].map((text, index) => (
             <ListItem key={text} disablePadding>
-              <Link to={`/${text}`} style={{ textDecoration: 'none' }}>
+              <Link
+                to={`/${text[0].toLowerCase() + text.slice(1)}`}
+                style={{ textDecoration: 'none' }}
+              >
                 <ListItemButton>
                   <ListItemText style={{ color: '#212121' }} primary={text} />
                 </ListItemButton>
@@ -92,36 +95,6 @@ export function Sidebar(props: Props) {
   return (
     <Fragment>
       <CssBaseline />
-      {/* <AppBar
-        position="fixed"
-        sx={{
-          width: { sm: `calc(100% - ${sidebarWidth}px)` },
-          ml: { sm: `${sidebarWidth}px` },
-        }}
-      >
-        <Toolbar
-          style={{
-            backgroundColor: '#fff',
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <Stack>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Stack>
-          <Button variant="contained" sx={{ mx: 3 }} onClick={handleLogout}>
-            Logout
-          </Button>
-        </Toolbar>
-      </AppBar> */}
       <Box
         component="nav"
         sx={{

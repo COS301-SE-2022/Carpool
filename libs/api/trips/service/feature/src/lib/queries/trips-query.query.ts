@@ -61,3 +61,7 @@ export class FindTripsForMonthQuery {}
 export class FindBookingsForMonthQuery {}
 
 export class FindTripsByMonthQuery {}
+
+export class FindBookingsByUserQuery {
+  constructor(public readonly userId: string) {}
+}

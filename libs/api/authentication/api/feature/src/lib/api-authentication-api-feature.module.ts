@@ -17,16 +17,21 @@ import {
   FindTotalUsersHandler,
   FindRecentUsersHandler,
   FindTopUniversitiesHandler,
+  FindAllUsersHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
-
+import { DriversService } from '@carpool/api/drivers/service';
+import { TripsService } from '@carpool/api/trips/service';
 @Module({
   imports: [CqrsModule],
   providers: [
     AuthResolver,
     AuthService,
+    DriversService,
     DriverRegisterHandler,
+    TripsService,
+    FindAllUsersHandler,
     FindTotalDriversHandler,
     FindTotalUsersHandler,
     FindTopUniversitiesHandler,

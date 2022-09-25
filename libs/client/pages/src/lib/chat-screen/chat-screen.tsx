@@ -95,6 +95,8 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: { senderId, receiverId },
     onCompleted(data) {
+      console.log(data);
+
       setMessages(data.getMessages);
 
       if (data.getMessages.length > 0) {

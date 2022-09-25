@@ -46,20 +46,31 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
     }
   }, [dispatch, userData, tripId, error]);
 
-  const ratingCompleted = (rating:string) => {
+  const ratingCompleted = (rating: string) => {
     setRate(rating);
-    console.log("Rating is: " + rating)
-    setModalVisible(true)
+    console.log('Rating is: ' + rating);
+    setModalVisible(true);
   };
 
   const showToast = () => {
     Toast.show({
       type: 'success',
       position: 'top',
-      text1: "You have successfully completed your review",
+      text1: 'You have successfully completed your review',
     });
   };
 
+  useEffect(() => {
+    if (reviewStatus === 'success' && bookingId) {
+      dispatch(updateReviewPassenger(bookingId));
+
+      showToast();
+      navigation.push('TripRatingPage');
+      // setTimeout(() => {
+      //   navigation.push('TripRatingPage');
+      // }, 3000);
+    }
+  }, [dispatch, reviewStatus, bookingId, navigation]);
 
   const submitHandler = () => {
     console.log('The review has been posted');
@@ -71,62 +82,58 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
           tripId: tripId,
           role: 'PASSENGER',
           comment: comment,
-          rating: rate,
+          rating: `${rate}`,
         })
       );
     }
-    if (bookingId) {
-      dispatch(updateReviewPassenger(bookingId));
-    }
-    showToast();
-    setTimeout(() => {
-        navigation.push('TripRatingPage');
-      }, 3000);
-
+    // if (bookingId) {
+    //   dispatch(updateReviewPassenger(bookingId));
+    // }
   };
+
   return (
     <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <View>
-            <View style={styles.row}>
-              <Image
-                source={require('./lighter_grey.png')}
-                resizeMode="contain"
-                style={styles.image}
-              />
-              <Text style={styles.textLargeBlack}>
-                How was your trip with {driver} ?
-              </Text>
-              <Text style={styles.textMediumLight}>
-                {getDay(date)} {getTimeOfDay(date)} to {destination}
-              </Text>
-            </View>
-
-            <AirbnbRating
-              count={5}
-              defaultRating={3}
-              size={20}
-              showRating={false}
-              onFinishRating={ratingCompleted}
+      <View style={styles.modalView}>
+        <View>
+          <View style={styles.row}>
+            <Image
+              source={require('./lighter_grey.png')}
+              resizeMode="contain"
+              style={styles.image}
             />
-            {modalVisible ? (
-              <View>
-                <TextInput
-                  value={comment}
-                  onChangeText={setComment}
-                  multiline
-                  numberOfLines={3}
-                  style={styles.input}
-                  placeholder="(Optional) Tell us about your experience"
-                  underlineColorAndroid="transparent"
-                />
-              </View>
-            ) : null}
+            <Text style={styles.textLargeBlack}>
+              How was your trip with {driver} ?
+            </Text>
+            <Text style={styles.textMediumLight}>
+              {getDay(date)} {getTimeOfDay(date)} to {destination}
+            </Text>
           </View>
-          <TouchableOpacity onPress={submitHandler} style={[styles.container]}>
-            <Text style={styles.text}>Rate</Text>
-          </TouchableOpacity>
+
+          <AirbnbRating
+            count={5}
+            defaultRating={3}
+            size={20}
+            showRating={false}
+            onFinishRating={ratingCompleted}
+          />
+          {modalVisible ? (
+            <View>
+              <TextInput
+                value={comment}
+                onChangeText={setComment}
+                multiline
+                numberOfLines={3}
+                style={styles.input}
+                placeholder="(Optional) Tell us about your experience"
+                underlineColorAndroid="transparent"
+              />
+            </View>
+          ) : null}
         </View>
+        <TouchableOpacity onPress={submitHandler} style={[styles.container]}>
+          <Text style={styles.text}>Rate</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

@@ -80,47 +80,46 @@ async function main() {
     },
   });
 
-    //: Driver 3
-    const driver3 = await prisma.driver.create({
-      data: {
-        userId: user3.id,
-        idNumber: '0205172674181',
-        license: '',
-        licensePlate: '542CLJ',
-        model: 'Suzuki RM65',
-        carPicture: '',
-      },
-    });
+  //: Driver 3
+  const driver3 = await prisma.driver.create({
+    data: {
+      userId: user3.id,
+      idNumber: '0205172674181',
+      license: '',
+      licensePlate: '542CLJ',
+      model: 'Suzuki RM65',
+      carPicture: '',
+    },
+  });
 
-    salt = await bcrypt.genSalt();
-    hashedPassword = await bcrypt.hash('Carpool997', salt);
-    const user4 = await prisma.user.create({
-      data: {
-        name: 'Ray',
-        surname: 'Ellison',
-        email: 'u06659840@stu.ukzn.ac.za',
-        university: 'University of KwaZulu-Natal',
-        studentNumber: '06659840',
-        password: hashedPassword,
-        cellNumber: '0544950849',
-        isValidated: true,
-        isDriver: true,
-        profilePic: '',
-      },
-    });
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool997', salt);
+  const user4 = await prisma.user.create({
+    data: {
+      name: 'Ray',
+      surname: 'Ellison',
+      email: 'u06659840@stu.ukzn.ac.za',
+      university: 'University of KwaZulu-Natal',
+      studentNumber: '06659840',
+      password: hashedPassword,
+      cellNumber: '0544950849',
+      isValidated: true,
+      isDriver: true,
+      profilePic: '',
+    },
+  });
 
-      //: Driver 3
-      const driver4 = await prisma.driver.create({
-        data: {
-          userId: user4.id,
-          idNumber: '0007069085087',
-          license: '',
-          licensePlate: 'GMXC33',
-          model: 'Bmw X5',
-          carPicture: '',
-        },
-      });
-
+  //: Driver 3
+  const driver4 = await prisma.driver.create({
+    data: {
+      userId: user4.id,
+      idNumber: '0007069085087',
+      license: '',
+      licensePlate: 'GMXC33',
+      model: 'Bmw X5',
+      carPicture: '',
+    },
+  });
 
   //: Passenger 1
   salt = await bcrypt.genSalt();
@@ -156,56 +155,56 @@ async function main() {
     },
   });
 
-    //: Passenger 3
-    salt = await bcrypt.genSalt();
-    hashedPassword = await bcrypt.hash('Carpool998', salt);
-    const passenger3 = await prisma.user.create({
-      data: {
-        name: 'Tony',
-        surname: 'Selby',
-        email: 'u91036170@student.uj.ac',
-        university: 'University of Johannesburg',
-        studentNumber: '91036170',
-        password: hashedPassword,
-        cellNumber: '0834944000',
-        isValidated: true,
-        profilePic: '',
-      },
-    });
+  //: Passenger 3
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool998', salt);
+  const passenger3 = await prisma.user.create({
+    data: {
+      name: 'Tony',
+      surname: 'Selby',
+      email: 'u91036170@student.uj.ac',
+      university: 'University of Johannesburg',
+      studentNumber: '91036170',
+      password: hashedPassword,
+      cellNumber: '0834944000',
+      isValidated: true,
+      profilePic: '',
+    },
+  });
 
-      //: Passenger 4
-      salt = await bcrypt.genSalt();
-      hashedPassword = await bcrypt.hash('Carpool998', salt);
-      const passenger4 = await prisma.user.create({
-        data: {
-          name: 'Sanjay',
-          surname: 'Mckinney',
-          email: 'u68943616@student.uj.ac',
-          university: 'University of Johannesburg',
-          studentNumber: '68943616',
-          password: hashedPassword,
-          cellNumber: '0855310258',
-          isValidated: true,
-          profilePic: '',
-        },
-      });
+  //: Passenger 4
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool998', salt);
+  const passenger4 = await prisma.user.create({
+    data: {
+      name: 'Sanjay',
+      surname: 'Mckinney',
+      email: 'u68943616@student.uj.ac',
+      university: 'University of Johannesburg',
+      studentNumber: '68943616',
+      password: hashedPassword,
+      cellNumber: '0855310258',
+      isValidated: true,
+      profilePic: '',
+    },
+  });
 
-      //: Passenger 5
-      salt = await bcrypt.genSalt();
-      hashedPassword = await bcrypt.hash('Carpool998', salt);
-      const passenger5 = await prisma.user.create({
-        data: {
-          name: 'Sanjay',
-          surname: 'Mckinney',
-          email: 'u87975564@mandela.ac.za',
-          university: 'Nelson Mandela University',
-          studentNumber: '87975564',
-          password: hashedPassword,
-          cellNumber: '0855310258',
-          isValidated: true,
-          profilePic: '',
-        },
-      });
+  //: Passenger 5
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool998', salt);
+  const passenger5 = await prisma.user.create({
+    data: {
+      name: 'Sanjay',
+      surname: 'Mckinney',
+      email: 'u87975564@mandela.ac.za',
+      university: 'Nelson Mandela University',
+      studentNumber: '87975564',
+      password: hashedPassword,
+      cellNumber: '0855310258',
+      isValidated: true,
+      profilePic: '',
+    },
+  });
 
   //: Passenger 6
   salt = await bcrypt.genSalt();
@@ -222,7 +221,8 @@ async function main() {
       isValidated: true,
       profilePic: '',
     },
-  });let tripDate = new Date();
+  });
+  let tripDate = new Date();
   tripDate.setDate(tripDate.getDate() + 1);
 
   const trip1 = await prisma.trip.create({
@@ -233,7 +233,8 @@ async function main() {
       coordinates: {
         create: [
           {
-            address: 'Eco Lake, Tamarillo Street, Eco-Park Estate, Centurion, South Africa',
+            address:
+              'Eco Lake, Tamarillo Street, Eco-Park Estate, Centurion, South Africa',
             latitude: '-25.8858077',
             longitude: '28.1760277',
           },
@@ -354,7 +355,7 @@ async function main() {
     },
   });
 
-    //: Booking 3
+  //: Booking 3
   const booking3 = await prisma.booking.create({
     data: {
       user: {
@@ -411,24 +412,24 @@ async function main() {
     },
   });
 
-    //: Booking 6
-    const booking6 = await prisma.booking.create({
-      data: {
-        user: {
-          connect: {
-            id: user2.id,
-          },
+  //: Booking 6
+  const booking6 = await prisma.booking.create({
+    data: {
+      user: {
+        connect: {
+          id: user2.id,
         },
-        trip: {
-          connect: {
-            tripId: trip2.tripId,
-          },
-        },
-        seatsBooked: 1,
-        price: 60,
-        status: 'unpaid',
       },
-    });
+      trip: {
+        connect: {
+          tripId: trip2.tripId,
+        },
+      },
+      seatsBooked: 1,
+      price: 60,
+      status: 'unpaid',
+    },
+  });
 
   //: Booking 7
   const booking7 = await prisma.booking.create({
@@ -449,26 +450,24 @@ async function main() {
     },
   });
 
-    //: Booking 8
-    const booking8 = await prisma.booking.create({
-      data: {
-        user: {
-          connect: {
-            id: passenger4.id,
-          },
+  //: Booking 8
+  const booking8 = await prisma.booking.create({
+    data: {
+      user: {
+        connect: {
+          id: passenger4.id,
         },
-        trip: {
-          connect: {
-            tripId: trip3.tripId,
-          },
-        },
-        seatsBooked: 1,
-        price: 100,
-        status: 'unpaid',
       },
-    });
-
-
+      trip: {
+        connect: {
+          tripId: trip3.tripId,
+        },
+      },
+      seatsBooked: 1,
+      price: 100,
+      status: 'unpaid',
+    },
+  });
 
   //: Pickup Location
   const pickUp1 = await prisma.pickupLocation.create({
@@ -551,12 +550,13 @@ async function main() {
 
   const pickUp7 = await prisma.pickupLocation.create({
     data: {
-      address: 'Blue Glacier Diamonds, North Avenue, Riviera, Johannesburg, South Africa',
+      address:
+        'Blue Glacier Diamonds, North Avenue, Riviera, Johannesburg, South Africa',
       latitude: '-26.16202999999999',
       longitude: '28.0478',
       booking: {
         connect: {
-          bookingId: booking5.bookingId,
+          bookingId: booking7.bookingId,
         },
       },
     },
@@ -569,7 +569,7 @@ async function main() {
       longitude: '27.929454',
       booking: {
         connect: {
-          bookingId: booking6.bookingId,
+          bookingId: booking8.bookingId,
         },
       },
     },

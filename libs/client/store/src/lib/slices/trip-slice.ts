@@ -178,7 +178,7 @@ export const initialPassengerReviewState = {
 } as TripList;
 
 export const passengerReviewSlice = createSlice({
-  name: 'trips',
+  name: 'passengerReviews',
   initialState: initialPassengerReviewState,
   reducers: {},
   extraReducers: (builder) => {

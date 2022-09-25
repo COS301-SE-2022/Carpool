@@ -31,13 +31,12 @@ import {
   Passenger,
   TripRequestType,
   PassengerListType,
-  PassengerList
+  PassengerList,
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
 
-const host =
-  Platform.OS === 'ios' ? 'https://a5a7-102-33-32-76.eu.ngrok.io' : '10.0.2.2';
+const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const listTrips = createAsyncThunk<
   TripListType[],
@@ -150,7 +149,7 @@ export const listPassengerReviews = createAsyncThunk<
   TripListType[],
   string,
   { rejectValue: Error }
->('trips/PassengerReviews', async (tripId: string, thunkApi) => {
+>('passengerReviews/PassengerReviews', async (tripId: string, thunkApi) => {
   const response = await axios.post(`http://${host}:3333/graphql`, {
     query: PASSENGER_REVIEWS,
     variables: {
@@ -173,7 +172,7 @@ export const listPassengerReviews = createAsyncThunk<
 });
 
 export const listAllPassengers = createAsyncThunk<
-PassengerListType[],
+  PassengerListType[],
   string,
   { rejectValue: Error }
 >('trips/AllPassengers', async (tripId: string, thunkApi) => {
@@ -184,7 +183,6 @@ PassengerListType[],
     },
   });
   console.log('FETCHING');
-
 
   if (response.data.errors) {
     const error = {

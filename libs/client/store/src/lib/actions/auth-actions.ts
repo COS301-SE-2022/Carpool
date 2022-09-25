@@ -17,8 +17,7 @@ import { updateDriverState } from '../slices/auth-slice';
 import { url } from '../config';
 import { ForgotPasswordType } from '../types/auth-types';
 
-const host =
-  Platform.OS === 'ios' ? 'https://a5a7-102-33-32-76.eu.ngrok.io' : '10.0.2.2';
+const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export type UserLogin = {
   email: string;

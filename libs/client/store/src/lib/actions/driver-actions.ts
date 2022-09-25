@@ -3,6 +3,9 @@ import axios from 'axios';
 import { DRIVER_PROFILE } from '../queries/driver-queries';
 import { url } from '../config';
 import { DriverProfile } from '../types/driver-types';
+import { Platform } from 'react-native';
+
+const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const fetchDriverProfile = createAsyncThunk<
   DriverProfile,
@@ -11,7 +14,7 @@ export const fetchDriverProfile = createAsyncThunk<
 >('drivers/profile', async (userId: string, thunkApi) => {
   console.log('userId', userId);
 
-  const response = await axios.post(`${url}/graphql`, {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
     query: DRIVER_PROFILE,
     variables: {
       userId,

@@ -2579,7 +2579,7 @@ tslib_1.__decorate([
     tslib_1.__param(5, (0, graphql_1.Args)('rating')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_0 = typeof Promise !== "undefined" && Promise) === "function" ? _0 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
 ], TripsResolver.prototype, "postReview", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -3294,6 +3294,7 @@ let TripsRepository = class TripsRepository {
                             reviewed: false,
                         },
                     },
+                    status: 'completed'
                 },
             });
         });
@@ -3313,6 +3314,7 @@ let TripsRepository = class TripsRepository {
                 where: {
                     driverId: DriverId,
                     reviewed: false,
+                    status: 'completed'
                 },
             });
         });
@@ -3491,6 +3493,11 @@ let TripsRepository = class TripsRepository {
                         },
                     },
                     createdAt: true,
+                },
+                orderBy: {
+                    driver: {
+                        avgRating: 'desc',
+                    }
                 },
             });
             const tripsByDate = [];
@@ -4712,7 +4719,7 @@ module.exports = require("path");
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -4726,14 +4733,14 @@ module.exports = require("path");
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.

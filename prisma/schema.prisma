@@ -29,6 +29,7 @@ model User {
     updatedAt     DateTime @default(now()) @map("updated_at")
     isValidated   Boolean @default(false)
     cellNumber    String @map("cell_number")
+    avgRating     Int @default(0)
 
     byReviews     Review[] @relation("by_review")
     forReviews    Review[] @relation("for_review")

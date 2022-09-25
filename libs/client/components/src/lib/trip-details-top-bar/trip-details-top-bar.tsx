@@ -14,7 +14,7 @@ type props = {
   onPress: () => void;
 };
 
-export function TripDetailsTopBar({ tripId, userId, trip, onPress }: props) {
+export function TripDetailsTopBar({ tripId, userId, trip, onPress}: props) {
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -25,12 +25,14 @@ export function TripDetailsTopBar({ tripId, userId, trip, onPress }: props) {
         dispatch(cancelDriverTrip({ 
           tripId: tripId,
         }));
+        onPress();
       } else {
         //** Passenger */
         dispatch(cancelPassengerTrip({
           tripId: tripId,
           userId: userId,
         }));
+        onPress();
       }
     } else {
       Alert.alert('You cannot cancel an active trip');

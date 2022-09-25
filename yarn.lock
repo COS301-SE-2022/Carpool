@@ -16169,6 +16169,19 @@ react-native-card-flip@^1.0.7:
     prop-types "15.5.10"
     react-lifecycles-compat "^3.0.4"
 
+react-native-card-stack-swiper@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/react-native-card-stack-swiper/-/react-native-card-stack-swiper-1.2.5.tgz#c5497b4025e7963d50249a440aaf693e8e4c12e6"
+  integrity sha512-Z9hWblgHTU4K3YAjbIpjC2bBAc6QpEzC4FKqY2RsX0Zd9qD4UYadKXYoUjfbYGhvbDdYuTWkGE8i8lra3bKmBw==
+  dependencies:
+    prop-types "15.5.10"
+    react-lifecycles-compat "^3.0.4"
+
+react-native-cards-swipe@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-cards-swipe/-/react-native-cards-swipe-1.2.1.tgz#9b5df9a28749cc74d54058b165f2b5b50a5cc774"
+  integrity sha512-II2qcI18TnAzuQvNG3theG+DwmEsCEETeNAMkPRDgSFjj3QN2PznjG0tD18MX9OuMkVTNAqRQoASHLTcjeAYCw==
+
 react-native-codegen@^0.0.13:
   version "0.0.13"
   resolved "https://registry.yarnpkg.com/react-native-codegen/-/react-native-codegen-0.0.13.tgz#4cc94546fc75a5dbe9350d59c10108f2efe6bc17"
@@ -16314,6 +16327,13 @@ react-native-svg@^12.3.0:
   dependencies:
     css-select "^4.2.1"
     css-tree "^1.0.0-alpha.39"
+
+react-native-swiper@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-swiper/-/react-native-swiper-1.6.0.tgz#59fdbdf95addee49630312f27077622c27776819"
+  integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
+  dependencies:
+    prop-types "^15.5.10"
 
 react-native-toast-message@^2.1.5:
   version "2.1.5"

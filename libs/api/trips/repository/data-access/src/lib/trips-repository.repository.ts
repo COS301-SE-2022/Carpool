@@ -141,6 +141,7 @@ export class TripsRepository {
             reviewed: false,
           },
         },
+        status: 'completed'
       },
     });
   }
@@ -158,6 +159,7 @@ export class TripsRepository {
       where: {
         driverId: DriverId,
         reviewed: false,
+        status: 'completed'
       },
     });
   }
@@ -356,6 +358,11 @@ export class TripsRepository {
           },
         },
         createdAt: true,
+      },
+      orderBy: {
+        driver:{
+          avgRating: 'desc',
+        }
       },
     });
 

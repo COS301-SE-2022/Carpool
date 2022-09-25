@@ -144,9 +144,7 @@ query ($id: String!) {
       tripId,
       userId,
       user{
-        id,
         name,
-        surname
       }
     }
   }

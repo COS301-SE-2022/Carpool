@@ -223,6 +223,7 @@ export const getAllPassengersSlice = createSlice({
       .addCase(listAllPassengers.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
+        state.passengers = action.payload;
       })
       .addCase(listAllPassengers.rejected, (state, action) => {
         console.log('FAIL');

@@ -47,6 +47,7 @@
     "@react-native-mapbox-gl/maps": "*",
     "react-native-geolocation-service": "*",
     "@mapbox/mapbox-gl-directions": "*",
-    "react-native-bottom-drawer-view": "*"
+    "react-native-bottom-drawer-view": "*",
+    "react-native-swiper": "*"
   }
 }

@@ -179,9 +179,15 @@ export type PassengerList = {
 };
 
 export type PassengerListType = {
- passengers: Passengers;
- user : UserTrip;
+  bookingId: string;
+  tripId: string;
+  userId: string;
+  user: User
 };
+
+export type User ={
+  name : string;
+}
 
 export type Passengers = {
   bookingId: string;

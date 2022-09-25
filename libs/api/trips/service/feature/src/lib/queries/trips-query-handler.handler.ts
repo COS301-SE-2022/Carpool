@@ -84,8 +84,8 @@ export class FindByPassengerReviewsHandler
 export class FindAllPassengersHandler implements IQueryHandler<FindAllQuery> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
-  async execute(query: findByPassengerReviewsQuery): Promise<Trip[] | null> {
-    return await this.tripsRepository.findByPassengerReviews(query.passengerId);
+  async execute(query: findAllPassengersQuery): Promise<Trip[] | null> {
+    return await this.tripsRepository.findAllPassengers(query.tripID);
   }
 }
 

@@ -16,13 +16,13 @@ export class Reviews {
   tripId: string;
 
   @Field()
-  role: Role;
+  role: string;
 
   @Field()
   comment: string;
 
-  @Field(() => Int)
-  rating: number;
+  @Field()
+  rating: string;
 
 
 }
@@ -39,17 +39,12 @@ export class ReviewInput {
   tripId: string;
 
   @Field()
-  role: Role;
+  role: string;
 
   @Field()
   comment: string;
 
-  @Field(() => Int)
-  rating: number;
+  @Field()
+  rating: string;
 
-}
-
-enum Role {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER'
 }

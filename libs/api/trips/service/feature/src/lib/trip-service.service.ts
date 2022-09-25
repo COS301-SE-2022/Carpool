@@ -193,9 +193,9 @@ export class TripsService {
     byId: string,
     forId: string,
     tripId: string,
-    role: Role,
+    role: string,
     comment: string,
-    rating: number
+    rating: string
   ): Promise<Reviews> {
     return await this.commandBus.execute(
       new CreateReviewCommand(byId, forId, tripId, role, comment, rating)

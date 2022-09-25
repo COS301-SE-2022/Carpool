@@ -174,12 +174,12 @@ const ProfileStack = () => {
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
       <ProfileStackNav.Screen name="ReviewPage" component={ReviewPage} />
       <ProfileStackNav.Screen
-        name="TripRatingPage"
-        component={TripRatingPage}
-      />
-      <ProfileStackNav.Screen
         name="ReviewDriverPage"
         component={ReviewDriverPage}
+      />
+      <ProfileStackNav.Screen
+        name="TripRatingPage"
+        component={TripRatingPage}
       />
     </ProfileStackNav.Navigator>
   );

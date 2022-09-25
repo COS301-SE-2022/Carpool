@@ -3077,8 +3077,8 @@ tslib_1.__decorate([
     tslib_1.__param(4, (0, graphql_1.Args)('comment')),
     tslib_1.__param(5, (0, graphql_1.Args)('rating')),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, Number]),
-    tslib_1.__metadata("design:returntype", typeof (_5 = typeof Promise !== "undefined" && Promise) === "function" ? _5 : Object)
+    tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String]),
+    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
 ], TripsResolver.prototype, "postReview", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -3114,11 +3114,6 @@ TripsResolver = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof service_1.TripsService !== "undefined" && service_1.TripsService) === "function" ? _a : Object, typeof (_b = typeof service_2.AuthService !== "undefined" && service_2.AuthService) === "function" ? _b : Object])
 ], TripsResolver);
 exports.TripsResolver = TripsResolver;
-var Role;
-(function (Role) {
-    Role["PASSENGER"] = "PASSENGER";
-    Role["DRIVER"] = "DRIVER";
-})(Role || (Role = {}));
 
 
 /***/ }),
@@ -3430,8 +3425,8 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], Reviews.prototype, "comment", void 0);
 tslib_1.__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    tslib_1.__metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
 ], Reviews.prototype, "rating", void 0);
 Reviews = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
@@ -3460,18 +3455,13 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], ReviewInput.prototype, "comment", void 0);
 tslib_1.__decorate([
-    (0, graphql_1.Field)(() => graphql_1.Int),
-    tslib_1.__metadata("design:type", Number)
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
 ], ReviewInput.prototype, "rating", void 0);
 ReviewInput = tslib_1.__decorate([
     (0, graphql_1.InputType)()
 ], ReviewInput);
 exports.ReviewInput = ReviewInput;
-var Role;
-(function (Role) {
-    Role["PASSENGER"] = "PASSENGER";
-    Role["DRIVER"] = "DRIVER";
-})(Role || (Role = {}));
 
 
 /***/ }),
@@ -3868,6 +3858,7 @@ let TripsRepository = class TripsRepository {
                             reviewed: false,
                         },
                     },
+                    status: 'completed'
                 },
             });
         });
@@ -3887,6 +3878,7 @@ let TripsRepository = class TripsRepository {
                 where: {
                     driverId: DriverId,
                     reviewed: false,
+                    status: 'completed'
                 },
             });
         });
@@ -4066,6 +4058,11 @@ let TripsRepository = class TripsRepository {
                     },
                     createdAt: true,
                 },
+                orderBy: {
+                    driver: {
+                        avgRating: 'desc',
+                    }
+                },
             });
             const tripsByDate = [];
             if (allTrips.length !== 0) {
@@ -4159,11 +4156,6 @@ TripsRepository = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof prisma_1.PrismaService !== "undefined" && prisma_1.PrismaService) === "function" ? _a : Object])
 ], TripsRepository);
 exports.TripsRepository = TripsRepository;
-var Role;
-(function (Role) {
-    Role["PASSENGER"] = "PASSENGER";
-    Role["DRIVER"] = "DRIVER";
-})(Role || (Role = {}));
 
 
 /***/ }),
@@ -4520,11 +4512,6 @@ class DeclineTripRequestCommand {
     }
 }
 exports.DeclineTripRequestCommand = DeclineTripRequestCommand;
-var Role;
-(function (Role) {
-    Role["PASSENGER"] = "PASSENGER";
-    Role["DRIVER"] = "DRIVER";
-})(Role || (Role = {}));
 
 
 /***/ }),
@@ -4636,7 +4623,7 @@ let FindAllPassengersHandler = class FindAllPassengersHandler {
     }
     execute(query) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
-            return yield this.tripsRepository.findByPassengerReviews(query.passengerId);
+            return yield this.tripsRepository.findAllPassengers(query.tripID);
         });
     }
 };
@@ -5391,7 +5378,7 @@ module.exports = require("path");
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -5405,14 +5392,14 @@ module.exports = require("path");
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.

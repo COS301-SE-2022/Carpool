@@ -144,7 +144,7 @@ query ($id: String!) {
       tripId,
       userId,
       user{
-        name
+        name,
       }
     }
   }
@@ -251,16 +251,9 @@ export const CREATE_TRIP = `
   }
 `;
 
-// export const POST_REVIEW = `
-//   mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: Int!) {
-//     postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
-//       id
-//     }
-//   }
-// `;
-
-export const POST_REVIEW = `mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: Int!) {
-    postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
+export const POST_REVIEW = `
+  mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: String!) {
+    postReview(byId: $byId, forId: $forId, tripId: $tripId role: $role, comment: $comment, rating: $rating){
       id
     }
   }`;

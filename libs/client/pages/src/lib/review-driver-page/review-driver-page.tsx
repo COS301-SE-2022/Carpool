@@ -5,6 +5,8 @@ import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput } from 'reac
 import { AppDispatch, RootStore, postReview, findBookingId, listAllPassengers, updateReviewDriver } from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
 import {getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
+import Swiper from 'react-native-swiper'
+import Toast from 'react-native-toast-message';
 
 export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
 
@@ -17,87 +19,110 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
 
   const {tripId, date, destination} = route.params;
 
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState('3');
   const [comment, setComment] = useState('');
+  const [countReview, setCountReview] = useState(1);
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  const bookindIdState = useSelector((state: RootStore) => state.bookingId);
-  const { bookingId, status, error } = bookindIdState;
-
   const allPassengers = useSelector((state: RootStore) => state.allPassengers);
-  const { Passengers : passengersList, status: allPassengersStatus } = allPassengers;
+  const { passengers : passengersList, status: allPassengersStatus, error: allPassengersError } = allPassengers;
 
 
   useEffect(() => {
     if (userData) {
-      dispatch(findBookingId({ tripId, userId: userData.id }));
       dispatch(listAllPassengers(tripId));
-      console.log("Passenger List " + passengersList)
     }
 
-  }, [dispatch, userData, tripId, navigation, passengersList ]);
+  }, [dispatch, tripId, userData]);
 
+  const checkReviewsTotal = () => {
+    if (passengersList?.length === countReview){
+      return true
+    }
+    return false
+  }
 
-  const ratingCompleted = (rating:number) => {
+  const ratingCompleted = (rating:string) => {
     setRate(rating);
     console.log("Rating is: " + rating)
     setModalVisible(true)
-
   }
 
-  const submitHandler = () => {
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: "You have successfully completed your review",
+    });
+  };
+
+
+
+  const submitHandler = (userforId: string) => {
+
+    setCountReview(countReview + 1)
+
     console.log("The review has been posted")
-    if(userData){
-    dispatch(
-      postReview({
-        byId: userData?.id,
-        forId: "INSERT PassengerId",
-        tripId: tripId,
-        role: "DRIVER",
-        comment: comment,
-        rating: rate,
-      })
-    );
-    if (tripId) {
-      dispatch(updateReviewDriver(tripId));
+    console.log("byId: " + userData?.id )
+    console.log("forId: " + userforId)
+    console.log("tripId: " + tripId)
+    console.log("rating: " + rate)
+    console.log("comment: " + comment)
+    console.log(countReview)
+
+    // if(userData){
+    // dispatch(
+    //   postReview({
+    //     byId: userData?.id,
+    //     forId: userforId,
+    //     tripId: tripId,
+    //     role: "DRIVER",
+    //     comment: comment,
+    //     rating: rate,
+    //   })
+    // );
+
+    if (passengersList?.length === countReview){
+      if (tripId) {
+        dispatch(updateReviewDriver(tripId));
+      }
+      showToast();
+      setTimeout(() => {
+          navigation.push('TripRatingPage');
+        }, 3000);
     }
-    }
-    setModalVisible2(false)
-    setTimeout(() => {
-        navigation.push('HomePage');
-      }, 3000);
+
 
   };
   return (
-    <View style={styles.centeredView}>
-      {modalVisible2?
-         <View style={styles.modalView}>
-              <View>
-      <View style={styles.row}>
-        <Image
+<Swiper style={styles.wrapper} showsButtons={true}>
+  {
+    passengersList?.map((passenger, index) => (
+      <View key ={index} style={styles.centeredView}>
+      <View style={styles.modalView}>
+        <View>
+          <View style={styles.row}>
+          <Image
             source={require('./lighter_grey.png')}
             resizeMode="contain"
             style={styles.image}
           />
-        <Text style={styles.textLargeBlack}>
-          How was your trip with Ashleigh ?
-        </Text>
-        <Text style={styles.textMediumLight}>
-        {getDay(date)} {getTimeOfDay(date)} to {destination}
-        </Text>
-      </View>
-
-      <AirbnbRating
-        count={5}
-        defaultRating={3}
-        size={20}
-        showRating={false}
-        onFinishRating={ratingCompleted}
-      />
-        {
-          modalVisible?
-          <View>
+          <Text style={styles.textLargeBlack}>
+            How was your trip with {passenger.user.name}?
+          </Text>
+          <Text style={styles.textMediumLight}>
+            {getDay(date)} {getTimeOfDay(date)} to {destination}
+          </Text>
+        </View>
+        <AirbnbRating
+          count={5}
+          defaultRating={3}
+          size={20}
+          showRating={false}
+          onFinishRating={ratingCompleted}
+        />
+        <View>
           <TextInput
             value={comment}
             onChangeText={setComment}
@@ -108,25 +133,16 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
             underlineColorAndroid="transparent"
           />
         </View>
-         : null
-        }
-
+      </View>
+      <TouchableOpacity onPress={(event)=> submitHandler(passenger.userId)} style={[styles.container]}>
+      <Text style={styles.text}>Rate</Text>
+    </TouchableOpacity>
     </View>
-            <TouchableOpacity
-              onPress={submitHandler}
-              style={[styles.container,]}>
-              <Text style={styles.text}>Rate</Text>
-            </TouchableOpacity>
-    </View>
-       : (
-        <View style={styles.Thankyou}>
-          <Text style={{ color: '#4BB543', textAlign: 'center', fontSize: 20 }}>
-            Thank you for Reviewing!
-          </Text>
-          <Image source={require('./thankYou.png')} resizeMode="contain" />
-        </View>
-      )}
-    </View>
+  </View>
+    )
+  )
+  }
+</Swiper>
   );
 }
 
@@ -196,6 +212,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  centeredViewButton: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: -62,
+  },
   modalView: {
     position: 'absolute',
     backgroundColor: 'white',
@@ -248,6 +270,13 @@ const styles = StyleSheet.create({
   },
   hide:{
     display: 'none',
+  },
+  wrapper: {},
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB'
   }
 });
 

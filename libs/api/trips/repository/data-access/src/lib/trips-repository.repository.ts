@@ -1,12 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location, Review } from '@prisma/client';
-import {
-  TripsUpdate,
-  ReviewInput,
-  Reviews,
-  TripByMonth,
-} from '@carpool/api/trips/entities';
+import { TripsUpdate, TripByMonth } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -198,6 +193,7 @@ export class TripsRepository {
             reviewed: false,
           },
         },
+        status: 'completed',
       },
     });
   }
@@ -215,6 +211,7 @@ export class TripsRepository {
       where: {
         driverId: DriverId,
         reviewed: false,
+        status: 'completed',
       },
     });
   }
@@ -295,9 +292,9 @@ export class TripsRepository {
     byId: string,
     forId: string,
     tripId: string,
-    role: Role,
+    role: string,
     comment: string,
-    rating: number
+    rating: string
   ): Promise<Review | null> {
     return this.prisma.review.create({
       data: {
@@ -414,6 +411,11 @@ export class TripsRepository {
         },
         createdAt: true,
       },
+      orderBy: {
+        driver: {
+          avgRating: 'desc',
+        },
+      },
     });
 
     const tripsByDate = [];
@@ -500,8 +502,4 @@ export class TripsRepository {
       },
     });
   }
-}
-enum Role {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER',
 }

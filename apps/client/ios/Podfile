@@ -41,7 +41,7 @@ target 'Client' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
   use_flipper!()
-
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
 
   # pod 'react-native-webview'
 

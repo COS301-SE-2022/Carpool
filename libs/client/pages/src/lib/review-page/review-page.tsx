@@ -18,6 +18,7 @@ import {
 } from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
 import { getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
+import Toast from 'react-native-toast-message';
 export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const dispatch: AppDispatch = useDispatch();
 
@@ -28,7 +29,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
 
   const { tripId, driverId, driver, date, destination } = route.params;
 
-  const [rate, setRate] = useState(0);
+  const [rate, setRate] = useState('');
   const [comment, setComment] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,27 +44,22 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
     if (userData) {
       dispatch(findBookingId({ tripId, userId: userData.id }));
     }
-  }, [dispatch, userData, tripId]);
+  }, [dispatch, userData, tripId, error]);
 
-  useEffect(() => {
-    if (reviewStatus === 'success') {
-      setTimeout(() => {
-        navigation.push('HomePage');
-      }, 3000);
-    }
-  }, [navigation, reviewStatus]);
-
-  // useEffect(() => {
-  //   if (bookingId) {
-  //     dispatch(updateReviewPassenger(bookingId));
-  //   }
-  // }, [dispatch, bookingId]);
-
-  const ratingCompleted = (rating: number) => {
+  const ratingCompleted = (rating:string) => {
     setRate(rating);
-    console.log('Rating is: ' + rating);
-    setModalVisible(true);
+    console.log("Rating is: " + rating)
+    setModalVisible(true)
   };
+
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: "You have successfully completed your review",
+    });
+  };
+
 
   const submitHandler = () => {
     console.log('The review has been posted');
@@ -79,11 +75,17 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
         })
       );
     }
-    // setModalVisible2(false);
+    if (bookingId) {
+      dispatch(updateReviewPassenger(bookingId));
+    }
+    showToast();
+    setTimeout(() => {
+        navigation.push('TripRatingPage');
+      }, 3000);
+
   };
   return (
     <View style={styles.centeredView}>
-      {modalVisible2 ? (
         <View style={styles.modalView}>
           <View>
             <View style={styles.row}>
@@ -125,14 +127,6 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
             <Text style={styles.text}>Rate</Text>
           </TouchableOpacity>
         </View>
-      ) : (
-        <View style={styles.Thankyou}>
-          <Text style={{ color: '#4BB543', textAlign: 'center', fontSize: 20 }}>
-            Thank you for Reviewing!
-          </Text>
-          <Image source={require('./thankYou.png')} resizeMode="contain" />
-        </View>
-      )}
     </View>
   );
 }

@@ -31,7 +31,7 @@ export function OnboardPage({ navigation }: OnboardPageProps) {
           }}
         >
           <Image
-            source={require('../assets/onboard.png')}
+            source={{uri: 'https://reactnative.dev/img/tiny_logo.png' }}
             style={{ resizeMode: 'cover' }}
           />
         </View>

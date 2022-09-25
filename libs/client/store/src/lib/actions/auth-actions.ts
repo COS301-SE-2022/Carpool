@@ -55,7 +55,7 @@ export const fetchStorage = createAsyncThunk('store/initialise', async () => {
   const user = await SecureStore.getItemAsync('user');
 
   if (user) {
-    const response = await axios.post(`${url}/graphql`, {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
       query: USER_PROFILE,
       variables: {
         id: JSON.parse(user).id,
@@ -78,7 +78,7 @@ export const fetchStorage = createAsyncThunk('store/initialise', async () => {
 export const login = createAsyncThunk<User, UserLogin, { rejectValue: Error }>(
   'users/login',
   async (user: UserLogin, thunkApi) => {
-    const response = await axios.post(`${url}/graphql`, {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
       query: USER_LOGIN,
       variables: {
         email: user.email,
@@ -109,7 +109,7 @@ export const fetchUserProfile = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('users/profile', async (userId: string, thunkApi) => {
-  const response = await axios.post(`${url}/graphql`, {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
     query: USER_PROFILE,
     variables: {
       id: userId,
@@ -133,7 +133,7 @@ export const fetchUserProfile = createAsyncThunk<
 export const register = createAsyncThunk(
   'users/register',
   async (user: UserRegister) => {
-    const response = await axios.post(`${url}/graphql`, {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
       query: USER_REGISTER,
       variables: {
         name: user.name,
@@ -246,7 +246,7 @@ export const registerDriver = createAsyncThunk<
   async (driver: DriverRegister, { rejectWithValue, dispatch }) => {
     console.log('driver', driver);
 
-    const response = await axios.post(`${url}/graphql`, {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
       query: DRIVER_REGISTER,
       variables: {
         ID: driver.ID,
@@ -284,7 +284,7 @@ export const verifyEmail = createAsyncThunk(
 
     if (storedCode && JSON.parse(storedCode).verificationCode === verify.code) {
       console.log('before query');
-      const response = await axios.post(`${url}/graphql`, {
+      const response = await axios.post(`http://${host}:3333/graphql`, {
         query: VERIFY_EMAIL,
         variables: {
           id: verify.id,
@@ -326,7 +326,7 @@ export type UserUpdate = {
 export const createUpdateUser = createAsyncThunk(
   'users/update',
   async (user: UserUpdate) => {
-    const response = await axios.post(`${url}/graphql`, {
+    const response = await axios.post(`http://${host}:3333/graphql`, {
       query: USER_UPDATE,
       variables: {
         id: user.id,

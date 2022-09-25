@@ -205,13 +205,13 @@ export const passengerReviewSlice = createSlice({
 });
 
 export const initialAllPassengersState = {
-  Passengers: null,
+  passengers: null,
   status: 'idle',
   error: null,
 } as PassengerList;
 
 export const getAllPassengersSlice = createSlice({
-  name: 'trips',
+  name: 'list-passengers',
   initialState: initialAllPassengersState,
   reducers: {},
   extraReducers: (builder) => {
@@ -223,6 +223,7 @@ export const getAllPassengersSlice = createSlice({
       .addCase(listAllPassengers.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
+        state.passengers = action.payload;
       })
       .addCase(listAllPassengers.rejected, (state, action) => {
         console.log('FAIL');

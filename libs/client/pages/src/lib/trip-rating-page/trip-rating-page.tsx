@@ -164,9 +164,9 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                   destination={trip.coordinates[1].address}
                   created={formatDate(trip.createdAt)}
                   image={trip.driver.profilePic}
-                  date={formatDate(trip.createdAt)}
+                  date={formatDate(trip.tripDate)}
                   distance=""
-                  onPress={() => viewTripDriver(trip.tripId, trip.createdAt, trip.coordinates[1].address)}
+                  onPress={() => viewTripDriver(trip.tripId, trip.tripDate, trip.coordinates[1].address)}
                 />
               ))
             )
@@ -182,9 +182,9 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                 destination={trip.coordinates[1].address}
                 created={formatDate(trip.createdAt)}
                 image={trip.driver.profilePic}
-                date={formatDate(trip.createdAt)}
+                date={formatDate(trip.tripDate)}
                 distance=""
-                onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.createdAt, trip.coordinates[1].address )}
+                onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.tripDate, trip.coordinates[1].address )}
               />
             ))
           )}

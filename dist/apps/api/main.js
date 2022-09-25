@@ -3358,6 +3358,16 @@ let TripsRepository = class TripsRepository {
             });
         });
     }
+    // async findTripsForMonth(month: string): Promise<Number> {
+    //   const trips = await this.prisma.trip.findMany({
+    //     where: {
+    //       tripDate: {
+    //         equals:
+    //       },
+    //     },
+    //   });
+    //   return trips.length;
+    // }
     findTripById(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return this.prisma.trip.findUnique({

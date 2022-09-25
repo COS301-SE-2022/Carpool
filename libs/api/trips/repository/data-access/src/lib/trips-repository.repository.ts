@@ -37,6 +37,18 @@ export class TripsRepository {
     });
   }
 
+  // async findTripsForMonth(month: string): Promise<Number> {
+  //   const trips = await this.prisma.trip.findMany({
+  //     where: {
+  //       tripDate: {
+  //         month: month,
+  //       },
+  //     },
+  //   });
+
+  //   return trips.length;
+  // }
+
   async findTripById(id: string): Promise<Trip> {
     return this.prisma.trip.findUnique({
       where: {

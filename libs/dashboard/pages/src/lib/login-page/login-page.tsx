@@ -35,6 +35,8 @@ export function LoginPage() {
       email: data.get('email'),
       password: data.get('password'),
     });
+
+    navigate('/');
   };
 
   return (

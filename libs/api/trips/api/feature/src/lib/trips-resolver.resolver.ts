@@ -7,6 +7,7 @@ import {
   ReviewsStatusUpdate,
   Reviews,
   ReviewInput,
+  TripByMonth
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -48,6 +49,29 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findAllTrips(): Promise<Trip[]> {
     return await this.tripsService.findAll();
+  }
+
+  /**
+   * Query to find number of trips for month
+   * @returns {Promise<number>}
+   */
+  @Query(() => Number)
+  async findTripsForMonth(): Promise<number> {
+    return await this.tripsService.findTripsForMonth();
+  }
+
+  @Query(() => [TripByMonth])
+  async findTripsByMonth(): Promise<TripByMonth[]> {
+    return await this.tripsService.findTripsByMonth();
+  }
+
+  /**
+   * Query to find number of bookings for month
+   * @returns {Promise<number>}
+   */
+  @Query(() => Number)
+  async findBookingsForMonth(): Promise<number> {
+    return await this.tripsService.findBookingsForMonth();
   }
 
   /**

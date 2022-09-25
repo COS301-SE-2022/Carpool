@@ -5,7 +5,12 @@ import {
   FindUserByIdQuery,
   UserLoginQuery,
   ForgotPasswordQuery,
+  FindTotalDriversQuery,
+  FindTotalUsersQuery,
+  FindRecentUsersQuery,
+  FindTopUniversitiesQuery,
 } from './auth-query.query';
+import { TopUniversities } from '@carpool/api/authentication/entities';
 
 @QueryHandler(UserLoginQuery)
 export class UserLoginHandler implements IQueryHandler<UserLoginQuery> {
@@ -33,5 +38,49 @@ export class ForgotPasswordHandler
 
   async execute(query: ForgotPasswordQuery): Promise<User | null> {
     return await this.authRepository.forgotPassword(query.email);
+  }
+}
+
+@QueryHandler(FindTotalUsersQuery)
+export class FindTotalUsersHandler
+  implements IQueryHandler<FindTotalUsersQuery>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: FindTotalUsersQuery): Promise<number> {
+    return await this.authRepository.findTotalUsers();
+  }
+}
+
+@QueryHandler(FindTotalDriversQuery)
+export class FindTotalDriversHandler
+  implements IQueryHandler<FindTotalDriversQuery>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: FindTotalDriversQuery): Promise<number> {
+    return await this.authRepository.findTotalDrivers();
+  }
+}
+
+@QueryHandler(FindRecentUsersQuery)
+export class FindRecentUsersHandler
+  implements IQueryHandler<FindRecentUsersQuery>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: FindRecentUsersQuery): Promise<User[]> {
+    return await this.authRepository.findRecentUsers();
+  }
+}
+
+@QueryHandler(FindTopUniversitiesQuery)
+export class FindTopUniversitiesHandler
+  implements IQueryHandler<FindTopUniversitiesQuery>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: FindTopUniversitiesQuery): Promise<TopUniversities[]> {
+    return await this.authRepository.findTopUniversities();
   }
 }

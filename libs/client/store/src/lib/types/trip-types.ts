@@ -180,7 +180,7 @@ export type PassengerList = {
 
 export type PassengerListType = {
   bookingId: string;
-  tripId: Driver;
+  tripId: string;
   userId: string;
   name: string;
 };

@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User, UserUpdate, Driver } from '@carpool/api/authentication/entities';
+import {
+  User,
+  UserUpdate,
+  Driver,
+  TopUniversities,
+} from '@carpool/api/authentication/entities';
 import {
   FindUserByIdQuery,
   UserLoginQuery,
   ForgotPasswordQuery,
+  FindTotalDriversQuery,
+  FindTotalUsersQuery,
+  FindRecentUsersQuery,
+  FindTopUniversitiesQuery,
 } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
@@ -29,6 +38,22 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<User | null> {
     return await this.queryBus.execute(new UserLoginQuery(email, password));
+  }
+
+  async findTotalUsers(): Promise<number> {
+    return this.queryBus.execute(new FindTotalUsersQuery());
+  }
+
+  async findTotalDrivers(): Promise<number> {
+    return this.queryBus.execute(new FindTotalDriversQuery());
+  }
+
+  async findRecentUsers(): Promise<User[]> {
+    return this.queryBus.execute(new FindRecentUsersQuery());
+  }
+
+  async findTopUniversities(): Promise<TopUniversities[]> {
+    return this.queryBus.execute(new FindTopUniversitiesQuery());
   }
 
   async register(

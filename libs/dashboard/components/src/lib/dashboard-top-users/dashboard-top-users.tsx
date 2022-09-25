@@ -20,23 +20,19 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: 10,
 }));
 
-function createData(name: string, calories: number) {
-  return { name, calories };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159),
-  createData('Ice cream sandwich', 237),
-  createData('Eclair', 262),
-  createData('Cupcake', 305),
-  createData('Gingerbread', 356),
-];
+type TopUser = {
+  university: string;
+  _count: {
+    university: number;
+  };
+};
 
 type DashboardTopUsersType = {
   title: string;
+  data: TopUser[];
 };
 
-export function DashboardTopUsers({ title }: DashboardTopUsersType) {
+export function DashboardTopUsers({ data, title }: DashboardTopUsersType) {
   return (
     <Grid item xs={12} md={4} lg={4}>
       <Item
@@ -46,7 +42,7 @@ export function DashboardTopUsers({ title }: DashboardTopUsersType) {
           px: 2,
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
+          justifyContent: 'flex-start',
         }}
       >
         <Typography variant="h6" sx={{ textAlign: 'left', pl: 2, pt: 1 }}>
@@ -55,17 +51,17 @@ export function DashboardTopUsers({ title }: DashboardTopUsersType) {
         <TableContainer>
           <Table sx={{ minWidth: '100%' }} aria-label="simple table">
             <TableBody>
-              {rows.map((row) => (
+              {data.map((university, index) => (
                 <TableRow
-                  key={row.name}
+                  key={index}
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.name}
+                    {university.university}
                   </TableCell>
-                  <TableCell>{row.calories}</TableCell>
+                  <TableCell>{university._count.university}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

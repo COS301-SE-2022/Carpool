@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TripsRepository } from '@carpool/api/trips/repository';
-import { TripsService } from '@carpool/api/trips/service';
 import { TripsResolver } from './trips-resolver.resolver';
 import {
   FindAllHandler,
@@ -28,7 +27,11 @@ import {
   UpdatePassengerReviewsHandler,
   UpdateDriverReviewsHandler,
   CreateReviewHandler,
-  FindAllPassengersHandler
+  FindAllPassengersHandler,
+  FindTripsForMonthHandler,
+  TripsService,
+  FindBookingsForMonthHandler,
+  FindTripsByMonthHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -46,7 +49,10 @@ import { AuthService } from '@carpool/api/authentication/service';
     PrismaService,
     //** COMMAND HANDLERS */
     FindAllHandler,
+    FindBookingsForMonthHandler,
+    FindTripsForMonthHandler,
     FindUpcomingTripsHandler,
+    FindTripsByMonthHandler,
     FindByDriverHandler,
     FindByPassengerHandler,
     TripsCreateHandler,
@@ -71,7 +77,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     UpdatePassengerReviewsHandler,
     UpdateDriverReviewsHandler,
     CreateReviewHandler,
-    FindAllPassengersHandler
+    FindAllPassengersHandler,
   ],
 })
 export class TripsModule {}

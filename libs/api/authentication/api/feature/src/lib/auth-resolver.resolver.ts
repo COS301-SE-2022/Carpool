@@ -6,6 +6,7 @@ import {
   UserUpdate,
   Driver,
   ForgotPassword,
+  TopUniversities,
 } from '@carpool/api/authentication/entities';
 
 @Resolver()
@@ -15,6 +16,26 @@ export class AuthResolver {
   @Query(() => User)
   async findUserById(@Args('id') id: string): Promise<User | null> {
     return await this.authService.findUserById(id);
+  }
+
+  @Query(() => Number)
+  async findTotalUsers(): Promise<number> {
+    return await this.authService.findTotalUsers();
+  }
+
+  @Query(() => Number)
+  async findTotalDrivers(): Promise<number> {
+    return await this.authService.findTotalDrivers();
+  }
+
+  @Query(() => [User])
+  async findRecentUsers(): Promise<User[]> {
+    return await this.authService.findRecentUsers();
+  }
+
+  @Query(() => [TopUniversities])
+  async findTopUniversities(): Promise<TopUniversities[]> {
+    return await this.authService.findTopUniversities();
   }
 
   @Query(() => UserLogin)

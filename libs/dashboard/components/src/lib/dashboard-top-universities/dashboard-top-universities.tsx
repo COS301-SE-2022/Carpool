@@ -1,16 +1,15 @@
 import React from 'react';
 import {
   Grid,
-  Typography,
   TableContainer,
   Table,
-  TableCell,
   TableBody,
   TableRow,
+  TableCell,
+  Typography,
   Paper,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { formatDate } from '@carpool/client/shared/utilities';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -21,21 +20,24 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: 10,
 }));
 
-type RecentUsersProps = {
-  data: RecentUser[];
-};
-
-type RecentUser = {
-  profilePic: string;
-  name: string;
-  surname: string;
+type TopUser = {
   university: string;
-  createdAt: string;
+  _count: {
+    university: number;
+  };
 };
 
-export function DashboardRecentUsers({ data }: RecentUsersProps) {
+type DashboardTopUsersType = {
+  title: string;
+  data: TopUser[];
+};
+
+export function DashboardTopUniversities({
+  data,
+  title,
+}: DashboardTopUsersType) {
   return (
-    <Grid item xs={12} md={8} lg={8}>
+    <Grid item xs={12} md={4} lg={4}>
       <Item
         sx={{
           height: '100%',
@@ -47,39 +49,22 @@ export function DashboardRecentUsers({ data }: RecentUsersProps) {
         }}
       >
         <Typography variant="h6" sx={{ textAlign: 'left', pl: 2, pt: 1 }}>
-          Recent Users
+          {title}
         </Typography>
         <TableContainer>
           <Table sx={{ minWidth: '100%' }} aria-label="simple table">
             <TableBody>
-              {data.map((user, index) => (
+              {data.map((university, index) => (
                 <TableRow
                   key={index}
                   sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
                   }}
                 >
-                  {/* <TableCell component="th" scope="row" align="left">
-
-                  </TableCell> */}
-                  <TableCell
-                    scope="row"
-                    align="left"
-                    sx={{ display: 'flex', alignItems: 'center' }}
-                  >
-                    <img
-                      src={require('./ben.png')}
-                      alt="user profile pic"
-                      style={{
-                        width: 30,
-                        borderRadius: '50%',
-                        marginRight: 10,
-                      }}
-                    />
-                    {user.name} {user.surname}
+                  <TableCell component="th" scope="row">
+                    {university.university}
                   </TableCell>
-                  <TableCell>{user.university}</TableCell>
-                  <TableCell>{formatDate(user.createdAt)}</TableCell>
+                  <TableCell>{university._count.university}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -90,4 +75,4 @@ export function DashboardRecentUsers({ data }: RecentUsersProps) {
   );
 }
 
-export default DashboardRecentUsers;
+export default DashboardTopUniversities;

@@ -50,6 +50,21 @@ export class User {
 }
 
 @ObjectType()
+export class Count {
+  @Field()
+  university: number;
+}
+
+@ObjectType()
+export class TopUniversities {
+  @Field()
+  university: string;
+
+  @Field(() => Count)
+  _count: Count;
+}
+
+@ObjectType()
 export class UserLogin {
   @Field(() => ID)
   id: string;

@@ -36,6 +36,15 @@ export class Trip {
   coordinates: Location[];
 }
 
+@ObjectType()
+export class TripByMonth {
+  @Field(() => String)
+  month: string;
+
+  @Field(() => Int)
+  trips: number;
+}
+
 @InputType()
 export class TripsInput {
   @Field()

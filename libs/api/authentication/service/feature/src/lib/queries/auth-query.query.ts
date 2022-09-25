@@ -12,3 +12,11 @@ export class FindUserByIdQuery {
 export class ForgotPasswordQuery {
   constructor(public readonly email: string) {}
 }
+
+export class FindTotalUsersQuery {}
+
+export class FindTotalDriversQuery {}
+
+export class FindRecentUsersQuery {}
+
+export class FindTopUniversitiesQuery {}

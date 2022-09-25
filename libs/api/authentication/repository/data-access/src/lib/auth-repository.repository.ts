@@ -10,6 +10,7 @@ import {
   UserInput,
   UserUpdate,
   DriverInput,
+  TopUniversities,
 } from '@carpool/api/authentication/entities';
 @Injectable()
 export class AuthRepository {
@@ -23,8 +24,41 @@ export class AuthRepository {
     });
   }
 
+  async findTotalUsers(): Promise<number> {
+    return this.prisma.user.count();
+  }
+
+  async findTopUniversities(): Promise<TopUniversities[]> {
+    const universities = await this.prisma.user.groupBy({
+      by: ['university'],
+      _count: {
+        university: true,
+      },
+      orderBy: {
+        _count: {
+          university: 'desc',
+        },
+      },
+    });
+
+    return universities;
+  }
+
+  async findTotalDrivers(): Promise<number> {
+    return this.prisma.driver.count();
+  }
+
   async findAllUsers(): Promise<User[]> {
     return this.prisma.user.findMany();
+  }
+
+  async findRecentUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 5,
+    });
   }
 
   async findAllDrivers(): Promise<User[]> {

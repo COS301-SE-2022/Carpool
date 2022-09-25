@@ -17,7 +17,11 @@ import {
   findByPassengerReviewsQuery,
   findByDriverReviewsQuery,
   findAllPassengersQuery,
+  FindBookingsForMonthQuery,
+  FindTripsForMonthQuery,
+  FindTripsByMonthQuery,
 } from './trips-query.query';
+import { TripByMonth } from '@carpool/api/trips/entities';
 
 @QueryHandler(FindAllQuery)
 export class FindAllHandler implements IQueryHandler<FindAllQuery> {
@@ -164,5 +168,37 @@ export class FindUpcomingTripsHandler
 
   async execute(query: FindUpcomingTripsQuery): Promise<Trip | null> {
     return await this.tripsRepository.findUpcomingTrip(query.userId);
+  }
+}
+
+@QueryHandler(FindTripsForMonthQuery)
+export class FindTripsForMonthHandler
+  implements IQueryHandler<FindTripsForMonthQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindTripsForMonthQuery): Promise<number> {
+    return await this.tripsRepository.findTripsForMonth();
+  }
+}
+@QueryHandler(FindBookingsForMonthQuery)
+export class FindBookingsForMonthHandler
+  implements IQueryHandler<FindBookingsForMonthQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindBookingsForMonthQuery): Promise<number> {
+    return await this.tripsRepository.findBookingsForMonth();
+  }
+}
+
+@QueryHandler(FindTripsByMonthQuery)
+export class FindTripsByMonthHandler
+  implements IQueryHandler<FindTripsByMonthQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindTripsByMonthQuery): Promise<TripByMonth[]> {
+    return await this.tripsRepository.findTripsByMonth();
   }
 }

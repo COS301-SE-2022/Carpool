@@ -20,27 +20,19 @@ const Item = styled(Paper)(({ theme }) => ({
   borderRadius: 10,
 }));
 
-function createGraphData(month: string, amount?: number) {
-  return { month, amount };
-}
+type TripsForYear = {
+  month: string;
+  trips: number;
+};
 
-const data = [
-  createGraphData('Jan', 0),
-  createGraphData('Feb', 300),
-  createGraphData('Mar', 600),
-  createGraphData('Apr', 800),
-  createGraphData('May', 1500),
-  createGraphData('Jun', 2000),
-  createGraphData('Jul', 2400),
-  createGraphData('Aug', 2400),
-  createGraphData('Sep', 0),
-  createGraphData('Oct', 0),
-  createGraphData('Nov', 0),
-  createGraphData('Dec', 0),
-];
+type GraphProps = {
+  data: TripsForYear[];
+};
 
-export function DashboardGraph() {
+export function DashboardGraph({ data: tripsData }: GraphProps) {
   const theme = useTheme();
+
+  console.log(tripsData);
 
   return (
     <Grid item xs={12} md={8} lg={8}>
@@ -56,11 +48,11 @@ export function DashboardGraph() {
       >
         <React.Fragment>
           <Typography component="h2" variant="h6" color="#777" gutterBottom>
-            2022 Trips
+            {new Date().getFullYear()} Trips
           </Typography>
           <ResponsiveContainer>
             <LineChart
-              data={data}
+              data={tripsData}
               margin={{
                 top: 16,
                 right: 16,
@@ -77,7 +69,7 @@ export function DashboardGraph() {
               <Line
                 isAnimationActive={false}
                 type="monotone"
-                dataKey="amount"
+                dataKey="trips"
                 stroke={theme.palette.primary.main}
                 dot={false}
               />

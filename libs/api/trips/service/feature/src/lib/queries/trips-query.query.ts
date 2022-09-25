@@ -55,3 +55,9 @@ export class FindAllTripRequestsQuery {
 export class FindUpcomingTripsQuery {
   constructor(public readonly userId: string) {}
 }
+
+export class FindTripsForMonthQuery {}
+
+export class FindBookingsForMonthQuery {}
+
+export class FindTripsByMonthQuery {}

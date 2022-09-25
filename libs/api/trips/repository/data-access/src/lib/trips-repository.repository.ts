@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location, Review } from '@prisma/client';
-import { TripsUpdate, ReviewInput, Reviews } from '@carpool/api/trips/entities';
+import {
+  TripsUpdate,
+  ReviewInput,
+  Reviews,
+  TripByMonth,
+} from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -37,17 +42,52 @@ export class TripsRepository {
     });
   }
 
-  // async findTripsForMonth(month: string): Promise<Number> {
-  //   const trips = await this.prisma.trip.findMany({
-  //     where: {
-  //       tripDate: {
-  //         month: month,
-  //       },
-  //     },
-  //   });
+  async findTripsForMonth(): Promise<number> {
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-  //   return trips.length;
-  // }
+    const trips = await this.prisma.trip.aggregate({
+      where: {
+        tripDate: {
+          gte: firstDay,
+          lte: lastDay,
+        },
+      },
+      _count: true,
+    });
+
+    return trips._count;
+  }
+
+  async findBookingsForMonth(): Promise<number> {
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+    const bookings = await this.prisma.booking.aggregate({
+      where: {
+        trip: {
+          tripDate: {
+            gte: firstDay,
+            lte: lastDay,
+          },
+        },
+      },
+      _count: true,
+    });
+
+    return bookings._count;
+  }
+
+  async findTripsByMonth(): Promise<TripByMonth[]> {
+    const trips = await this.prisma.$queryRaw<TripByMonth[]>`
+    SELECT count(trip_id) AS trips, TO_CHAR(trip_date, 'Mon')
+    AS month FROM trip GROUP BY TO_CHAR(trip_date, 'Mon');
+    `;
+
+    return trips;
+  }
 
   async findTripById(id: string): Promise<Trip> {
     return this.prisma.trip.findUnique({

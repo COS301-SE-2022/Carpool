@@ -91,6 +91,10 @@ AuthenticationModule = tslib_1.__decorate([
             auth_resolver_resolver_1.AuthResolver,
             service_1.AuthService,
             service_2.DriverRegisterHandler,
+            service_2.FindTotalDriversHandler,
+            service_2.FindTotalUsersHandler,
+            service_2.FindTopUniversitiesHandler,
+            service_2.FindRecentUsersHandler,
             service_2.ResetPasswordHandler,
             service_2.ForgotPasswordHandler,
             prisma_1.PrismaService,
@@ -112,7 +116,7 @@ exports.AuthenticationModule = AuthenticationModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -126,6 +130,26 @@ let AuthResolver = class AuthResolver {
     findUserById(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.authService.findUserById(id);
+        });
+    }
+    findTotalUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authService.findTotalUsers();
+        });
+    }
+    findTotalDrivers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authService.findTotalDrivers();
+        });
+    }
+    findRecentUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authService.findRecentUsers();
+        });
+    }
+    findTopUniversities() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authService.findTopUniversities();
         });
     }
     login(email, password) {
@@ -225,12 +249,36 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
 ], AuthResolver.prototype, "findUserById", null);
 tslib_1.__decorate([
+    (0, graphql_1.Query)(() => Number),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+], AuthResolver.prototype, "findTotalUsers", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => Number),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
+], AuthResolver.prototype, "findTotalDrivers", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_1.User]),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+], AuthResolver.prototype, "findRecentUsers", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_1.TopUniversities]),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", []),
+    tslib_1.__metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
+], AuthResolver.prototype, "findTopUniversities", null);
+tslib_1.__decorate([
     (0, graphql_1.Query)(() => entities_1.UserLogin),
     tslib_1.__param(0, (0, graphql_1.Args)('email')),
     tslib_1.__param(1, (0, graphql_1.Args)('password')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_c = typeof Promise !== "undefined" && Promise) === "function" ? _c : Object)
+    tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
 ], AuthResolver.prototype, "login", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.UserLogin),
@@ -243,14 +291,14 @@ tslib_1.__decorate([
     tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_d = typeof Promise !== "undefined" && Promise) === "function" ? _d : Object)
+    tslib_1.__metadata("design:returntype", typeof (_h = typeof Promise !== "undefined" && Promise) === "function" ? _h : Object)
 ], AuthResolver.prototype, "register", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => entities_1.ForgotPassword),
     tslib_1.__param(0, (0, graphql_1.Args)('email')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_e = typeof Promise !== "undefined" && Promise) === "function" ? _e : Object)
+    tslib_1.__metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
 ], AuthResolver.prototype, "forgotPassword", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.User),
@@ -268,14 +316,14 @@ tslib_1.__decorate([
     tslib_1.__param(3, (0, graphql_1.Args)('userId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_f = typeof Promise !== "undefined" && Promise) === "function" ? _f : Object)
+    tslib_1.__metadata("design:returntype", typeof (_k = typeof Promise !== "undefined" && Promise) === "function" ? _k : Object)
 ], AuthResolver.prototype, "registerDriver", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => Boolean),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_g = typeof Promise !== "undefined" && Promise) === "function" ? _g : Object)
+    tslib_1.__metadata("design:returntype", typeof (_l = typeof Promise !== "undefined" && Promise) === "function" ? _l : Object)
 ], AuthResolver.prototype, "verifyEmail", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.User),
@@ -288,7 +336,7 @@ tslib_1.__decorate([
     tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_h = typeof Promise !== "undefined" && Promise) === "function" ? _h : Object)
+    tslib_1.__metadata("design:returntype", typeof (_m = typeof Promise !== "undefined" && Promise) === "function" ? _m : Object)
 ], AuthResolver.prototype, "updateUser", null);
 AuthResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(),
@@ -339,7 +387,7 @@ exports.ApiAuthenticationApiSharedEntitiesDataAccessModule = ApiAuthenticationAp
 
 var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.User = void 0;
+exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.TopUniversities = exports.Count = exports.User = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const entities_1 = __webpack_require__("./libs/api/trips/api/shared/entities/data-access/src/index.ts");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
@@ -409,6 +457,30 @@ User = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
 ], User);
 exports.User = User;
+let Count = class Count {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", Number)
+], Count.prototype, "university", void 0);
+Count = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], Count);
+exports.Count = Count;
+let TopUniversities = class TopUniversities {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], TopUniversities.prototype, "university", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Count),
+    tslib_1.__metadata("design:type", Count)
+], TopUniversities.prototype, "_count", void 0);
+TopUniversities = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], TopUniversities);
+exports.TopUniversities = TopUniversities;
 let UserLogin = class UserLogin {
 };
 tslib_1.__decorate([
@@ -643,9 +715,45 @@ let AuthRepository = class AuthRepository {
             });
         });
     }
+    findTotalUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.user.count();
+        });
+    }
+    findTopUniversities() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const universities = yield this.prisma.user.groupBy({
+                by: ['university'],
+                _count: {
+                    university: true,
+                },
+                orderBy: {
+                    _count: {
+                        university: 'desc',
+                    },
+                },
+            });
+            return universities;
+        });
+    }
+    findTotalDrivers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.driver.count();
+        });
+    }
     findAllUsers() {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return this.prisma.user.findMany();
+        });
+    }
+    findRecentUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.prisma.user.findMany({
+                orderBy: {
+                    createdAt: 'desc',
+                },
+                take: 5,
+            });
         });
     }
     findAllDrivers() {
@@ -888,6 +996,26 @@ let AuthService = class AuthService {
             return yield this.queryBus.execute(new auth_query_query_1.UserLoginQuery(email, password));
         });
     }
+    findTotalUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.queryBus.execute(new auth_query_query_1.FindTotalUsersQuery());
+        });
+    }
+    findTotalDrivers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.queryBus.execute(new auth_query_query_1.FindTotalDriversQuery());
+        });
+    }
+    findRecentUsers() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.queryBus.execute(new auth_query_query_1.FindRecentUsersQuery());
+        });
+    }
+    findTopUniversities() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return this.queryBus.execute(new auth_query_query_1.FindTopUniversitiesQuery());
+        });
+    }
     register(name, surname, email, university, studentNumber, password, cellNumber) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.commandBus.execute(new auth_command_command_1.UserRegisterCommand(name, surname, email, university, studentNumber, password, cellNumber));
@@ -1117,9 +1245,9 @@ exports.ResetPasswordCommand = ResetPasswordCommand;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c;
+var _a, _b, _c, _d, _e, _f, _g;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ForgotPasswordHandler = exports.FindUserByIdHandler = exports.UserLoginHandler = void 0;
+exports.FindTopUniversitiesHandler = exports.FindRecentUsersHandler = exports.FindTotalDriversHandler = exports.FindTotalUsersHandler = exports.ForgotPasswordHandler = exports.FindUserByIdHandler = exports.UserLoginHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/authentication/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -1169,6 +1297,66 @@ ForgotPasswordHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_c = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _c : Object])
 ], ForgotPasswordHandler);
 exports.ForgotPasswordHandler = ForgotPasswordHandler;
+let FindTotalUsersHandler = class FindTotalUsersHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.findTotalUsers();
+        });
+    }
+};
+FindTotalUsersHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTotalUsersQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_d = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _d : Object])
+], FindTotalUsersHandler);
+exports.FindTotalUsersHandler = FindTotalUsersHandler;
+let FindTotalDriversHandler = class FindTotalDriversHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.findTotalDrivers();
+        });
+    }
+};
+FindTotalDriversHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTotalDriversQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_e = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _e : Object])
+], FindTotalDriversHandler);
+exports.FindTotalDriversHandler = FindTotalDriversHandler;
+let FindRecentUsersHandler = class FindRecentUsersHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.findRecentUsers();
+        });
+    }
+};
+FindRecentUsersHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.FindRecentUsersQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _f : Object])
+], FindRecentUsersHandler);
+exports.FindRecentUsersHandler = FindRecentUsersHandler;
+let FindTopUniversitiesHandler = class FindTopUniversitiesHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.findTopUniversities();
+        });
+    }
+};
+FindTopUniversitiesHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTopUniversitiesQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _g : Object])
+], FindTopUniversitiesHandler);
+exports.FindTopUniversitiesHandler = FindTopUniversitiesHandler;
 
 
 /***/ }),
@@ -1178,7 +1366,7 @@ exports.ForgotPasswordHandler = ForgotPasswordHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ForgotPasswordQuery = exports.FindUserByIdQuery = exports.UserLoginQuery = void 0;
+exports.FindTopUniversitiesQuery = exports.FindRecentUsersQuery = exports.FindTotalDriversQuery = exports.FindTotalUsersQuery = exports.ForgotPasswordQuery = exports.FindUserByIdQuery = exports.UserLoginQuery = void 0;
 class UserLoginQuery {
     constructor(email, password) {
         this.email = email;
@@ -1198,6 +1386,18 @@ class ForgotPasswordQuery {
     }
 }
 exports.ForgotPasswordQuery = ForgotPasswordQuery;
+class FindTotalUsersQuery {
+}
+exports.FindTotalUsersQuery = FindTotalUsersQuery;
+class FindTotalDriversQuery {
+}
+exports.FindTotalDriversQuery = FindTotalDriversQuery;
+class FindRecentUsersQuery {
+}
+exports.FindRecentUsersQuery = FindRecentUsersQuery;
+class FindTopUniversitiesQuery {
+}
+exports.FindTopUniversitiesQuery = FindTopUniversitiesQuery;
 
 
 /***/ }),
@@ -2335,12 +2535,11 @@ exports.TripsModule = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const common_1 = __webpack_require__("@nestjs/common");
 const repository_1 = __webpack_require__("./libs/api/trips/repository/data-access/src/index.ts");
-const service_1 = __webpack_require__("./libs/api/trips/service/feature/src/index.ts");
 const trips_resolver_resolver_1 = __webpack_require__("./libs/api/trips/api/feature/src/lib/trips-resolver.resolver.ts");
-const service_2 = __webpack_require__("./libs/api/trips/service/feature/src/index.ts");
+const service_1 = __webpack_require__("./libs/api/trips/service/feature/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
 const prisma_1 = __webpack_require__("./libs/api/shared/services/prisma/data-access/src/index.ts");
-const service_3 = __webpack_require__("./libs/api/authentication/service/feature/src/index.ts");
+const service_2 = __webpack_require__("./libs/api/authentication/service/feature/src/index.ts");
 let TripsModule = class TripsModule {
 };
 TripsModule = tslib_1.__decorate([
@@ -2355,33 +2554,36 @@ TripsModule = tslib_1.__decorate([
             service_1.TripsService,
             prisma_1.PrismaService,
             //** COMMAND HANDLERS */
-            service_2.FindAllHandler,
-            service_2.FindUpcomingTripsHandler,
-            service_2.FindByDriverHandler,
-            service_2.FindByPassengerHandler,
-            service_2.TripsCreateHandler,
-            service_2.SearchTripsHandler,
-            service_2.BookTripHandler,
-            service_2.FindBookingByTripHandler,
-            service_2.TripsDeleteHandler,
-            service_2.TripsUpdateHandler,
-            service_2.FindCoordinatesByTripHandler,
-            service_2.FindTripByIdHandler,
-            service_3.AuthService,
-            service_2.FindByConfirmedTripHandler,
-            service_2.FindByRequestedTripHandler,
-            service_2.BookingUpdatePaymentStatusHandler,
-            service_2.FindBookingByTripAndUserIdHandler,
-            service_2.AcceptTripRequestHandler,
-            service_2.StartTripHandler,
-            service_2.EndTripHandler,
-            service_2.DeclineTripRequestHandler,
-            service_2.FindByPassengerReviewsHandler,
-            service_2.FindByDriverReviewsHandler,
-            service_2.UpdatePassengerReviewsHandler,
-            service_2.UpdateDriverReviewsHandler,
-            service_2.CreateReviewHandler,
-            service_2.FindAllPassengersHandler
+            service_1.FindAllHandler,
+            service_1.FindBookingsForMonthHandler,
+            service_1.FindTripsForMonthHandler,
+            service_1.FindUpcomingTripsHandler,
+            service_1.FindTripsByMonthHandler,
+            service_1.FindByDriverHandler,
+            service_1.FindByPassengerHandler,
+            service_1.TripsCreateHandler,
+            service_1.SearchTripsHandler,
+            service_1.BookTripHandler,
+            service_1.FindBookingByTripHandler,
+            service_1.TripsDeleteHandler,
+            service_1.TripsUpdateHandler,
+            service_1.FindCoordinatesByTripHandler,
+            service_1.FindTripByIdHandler,
+            service_2.AuthService,
+            service_1.FindByConfirmedTripHandler,
+            service_1.FindByRequestedTripHandler,
+            service_1.BookingUpdatePaymentStatusHandler,
+            service_1.FindBookingByTripAndUserIdHandler,
+            service_1.AcceptTripRequestHandler,
+            service_1.StartTripHandler,
+            service_1.EndTripHandler,
+            service_1.DeclineTripRequestHandler,
+            service_1.FindByPassengerReviewsHandler,
+            service_1.FindByDriverReviewsHandler,
+            service_1.UpdatePassengerReviewsHandler,
+            service_1.UpdateDriverReviewsHandler,
+            service_1.CreateReviewHandler,
+            service_1.FindAllPassengersHandler,
         ],
     })
 ], TripsModule);
@@ -2394,7 +2596,7 @@ exports.TripsModule = TripsModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TripsResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -2430,6 +2632,29 @@ let TripsResolver = class TripsResolver {
     findAllTrips() {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.tripsService.findAll();
+        });
+    }
+    /**
+     * Query to find number of trips for month
+     * @returns {Promise<number>}
+     */
+    findTripsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.findTripsForMonth();
+        });
+    }
+    findTripsByMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.findTripsByMonth();
+        });
+    }
+    /**
+     * Query to find number of bookings for month
+     * @returns {Promise<number>}
+     */
+    findBookingsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.findBookingsForMonth();
         });
     }
     /**
@@ -2599,32 +2824,50 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", typeof (_j = typeof Promise !== "undefined" && Promise) === "function" ? _j : Object)
 ], TripsResolver.prototype, "findAllTrips", null);
 tslib_1.__decorate([
-    (0, graphql_1.Query)(() => entities_2.Trip),
-    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Query)(() => Number),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", typeof (_k = typeof Promise !== "undefined" && Promise) === "function" ? _k : Object)
-], TripsResolver.prototype, "findTripById", null);
+], TripsResolver.prototype, "findTripsForMonth", null);
 tslib_1.__decorate([
-    (0, graphql_1.Query)(() => [entities_2.Trip]),
-    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Query)(() => [entities_2.TripByMonth]),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", typeof (_l = typeof Promise !== "undefined" && Promise) === "function" ? _l : Object)
-], TripsResolver.prototype, "findByDriver", null);
+], TripsResolver.prototype, "findTripsByMonth", null);
 tslib_1.__decorate([
-    (0, graphql_1.Query)(() => [entities_2.Trip]),
-    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    (0, graphql_1.Query)(() => Number),
     tslib_1.__metadata("design:type", Function),
-    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", typeof (_m = typeof Promise !== "undefined" && Promise) === "function" ? _m : Object)
-], TripsResolver.prototype, "findByPassenger", null);
+], TripsResolver.prototype, "findBookingsForMonth", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
     tslib_1.__metadata("design:returntype", typeof (_o = typeof Promise !== "undefined" && Promise) === "function" ? _o : Object)
+], TripsResolver.prototype, "findTripById", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_2.Trip]),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_p = typeof Promise !== "undefined" && Promise) === "function" ? _p : Object)
+], TripsResolver.prototype, "findByDriver", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => [entities_2.Trip]),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_q = typeof Promise !== "undefined" && Promise) === "function" ? _q : Object)
+], TripsResolver.prototype, "findByPassenger", null);
+tslib_1.__decorate([
+    (0, graphql_1.Query)(() => entities_2.Trip),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_r = typeof Promise !== "undefined" && Promise) === "function" ? _r : Object)
 ], TripsResolver.prototype, "findUpcomingTrip", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => entities_2.Booking),
@@ -2632,42 +2875,42 @@ tslib_1.__decorate([
     tslib_1.__param(1, (0, graphql_1.Args)('userId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_p = typeof Promise !== "undefined" && Promise) === "function" ? _p : Object)
+    tslib_1.__metadata("design:returntype", typeof (_s = typeof Promise !== "undefined" && Promise) === "function" ? _s : Object)
 ], TripsResolver.prototype, "findBookingByTripAndUserId", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_q = typeof Promise !== "undefined" && Promise) === "function" ? _q : Object)
+    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
 ], TripsResolver.prototype, "findByConfirmedTrips", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_r = typeof Promise !== "undefined" && Promise) === "function" ? _r : Object)
+    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
 ], TripsResolver.prototype, "findByRequestedTrips", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_s = typeof Promise !== "undefined" && Promise) === "function" ? _s : Object)
+    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
 ], TripsResolver.prototype, "findByPassengerReviews", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
+    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
 ], TripsResolver.prototype, "findByDriverReviews", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
+    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
 ], TripsResolver.prototype, "findAllPassengers", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => [entities_2.Trip]),
@@ -2678,7 +2921,7 @@ tslib_1.__decorate([
     tslib_1.__param(4, (0, graphql_1.Args)('destinationLatitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
+    tslib_1.__metadata("design:returntype", typeof (_y = typeof Promise !== "undefined" && Promise) === "function" ? _y : Object)
 ], TripsResolver.prototype, "searchTrips", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -2695,28 +2938,28 @@ tslib_1.__decorate([
     tslib_1.__param(10, (0, graphql_1.Args)('destinationLatitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
+    tslib_1.__metadata("design:returntype", typeof (_z = typeof Promise !== "undefined" && Promise) === "function" ? _z : Object)
 ], TripsResolver.prototype, "create", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
+    tslib_1.__metadata("design:returntype", typeof (_0 = typeof Promise !== "undefined" && Promise) === "function" ? _0 : Object)
 ], TripsResolver.prototype, "updatePaymentStatus", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_y = typeof Promise !== "undefined" && Promise) === "function" ? _y : Object)
+    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
 ], TripsResolver.prototype, "updateReviewPassenger", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('tripId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_z = typeof Promise !== "undefined" && Promise) === "function" ? _z : Object)
+    tslib_1.__metadata("design:returntype", typeof (_2 = typeof Promise !== "undefined" && Promise) === "function" ? _2 : Object)
 ], TripsResolver.prototype, "updateReviewDriver", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
@@ -2730,7 +2973,7 @@ tslib_1.__decorate([
     tslib_1.__param(7, (0, graphql_1.Args)('latitude')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_0 = typeof Promise !== "undefined" && Promise) === "function" ? _0 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_3 = typeof Promise !== "undefined" && Promise) === "function" ? _3 : Object)
 ], TripsResolver.prototype, "bookTrip", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Reviews),
@@ -2742,7 +2985,7 @@ tslib_1.__decorate([
     tslib_1.__param(5, (0, graphql_1.Args)('rating')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, Number]),
-    tslib_1.__metadata("design:returntype", typeof (_1 = typeof Promise !== "undefined" && Promise) === "function" ? _1 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_4 = typeof Promise !== "undefined" && Promise) === "function" ? _4 : Object)
 ], TripsResolver.prototype, "postReview", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
@@ -2750,28 +2993,28 @@ tslib_1.__decorate([
     tslib_1.__param(1, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_2 = typeof Promise !== "undefined" && Promise) === "function" ? _2 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_5 = typeof Promise !== "undefined" && Promise) === "function" ? _5 : Object)
 ], TripsResolver.prototype, "acceptTripRequest", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Booking),
     tslib_1.__param(0, (0, graphql_1.Args)('bookingId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_3 = typeof Promise !== "undefined" && Promise) === "function" ? _3 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_6 = typeof Promise !== "undefined" && Promise) === "function" ? _6 : Object)
 ], TripsResolver.prototype, "declineTripRequest", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_4 = typeof Promise !== "undefined" && Promise) === "function" ? _4 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_7 = typeof Promise !== "undefined" && Promise) === "function" ? _7 : Object)
 ], TripsResolver.prototype, "startTrip", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_2.Trip),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_5 = typeof Promise !== "undefined" && Promise) === "function" ? _5 : Object)
+    tslib_1.__metadata("design:returntype", typeof (_8 = typeof Promise !== "undefined" && Promise) === "function" ? _8 : Object)
 ], TripsResolver.prototype, "endTrip", null);
 TripsResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(() => entities_2.Trip),
@@ -3146,7 +3389,7 @@ var Role;
 
 var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ReviewsStatusUpdate = exports.TripStatusUpdate = exports.AcceptTripRequestUpdate = exports.TripsUpdate = exports.TripsInput = exports.Trip = void 0;
+exports.ReviewsStatusUpdate = exports.TripStatusUpdate = exports.AcceptTripRequestUpdate = exports.TripsUpdate = exports.TripsInput = exports.TripByMonth = exports.Trip = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 const entities_1 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
@@ -3198,6 +3441,20 @@ Trip = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
 ], Trip);
 exports.Trip = Trip;
+let TripByMonth = class TripByMonth {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => String),
+    tslib_1.__metadata("design:type", String)
+], TripByMonth.prototype, "month", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    tslib_1.__metadata("design:type", Number)
+], TripByMonth.prototype, "trips", void 0);
+TripByMonth = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], TripByMonth);
+exports.TripByMonth = TripByMonth;
 let TripsInput = class TripsInput {
 };
 tslib_1.__decorate([
@@ -3358,16 +3615,51 @@ let TripsRepository = class TripsRepository {
             });
         });
     }
-    // async findTripsForMonth(month: string): Promise<Number> {
-    //   const trips = await this.prisma.trip.findMany({
-    //     where: {
-    //       tripDate: {
-    //         equals:
-    //       },
-    //     },
-    //   });
-    //   return trips.length;
-    // }
+    findTripsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const now = new Date();
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+            const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            const trips = yield this.prisma.trip.aggregate({
+                where: {
+                    tripDate: {
+                        gte: firstDay,
+                        lte: lastDay,
+                    },
+                },
+                _count: true,
+            });
+            return trips._count;
+        });
+    }
+    findBookingsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const now = new Date();
+            const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+            const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+            const bookings = yield this.prisma.booking.aggregate({
+                where: {
+                    trip: {
+                        tripDate: {
+                            gte: firstDay,
+                            lte: lastDay,
+                        },
+                    },
+                },
+                _count: true,
+            });
+            return bookings._count;
+        });
+    }
+    findTripsByMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const trips = yield this.prisma.$queryRaw `
+    SELECT count(trip_id) AS trips, TO_CHAR(trip_date, 'Mon')
+    AS month FROM trip GROUP BY TO_CHAR(trip_date, 'Mon');
+    `;
+            return trips;
+        });
+    }
     findTripById(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return this.prisma.trip.findUnique({
@@ -4142,9 +4434,9 @@ var Role;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindUpcomingTripsHandler = exports.FindAllTripRequestsHandler = exports.SearchTripsHandler = exports.FindTripByIdHandler = exports.FindCoordinatesByTripHandler = exports.FindBookingByTripAndUserIdHandler = exports.FindBookingByTripHandler = exports.FindByDriverReviewsHandler = exports.FindAllPassengersHandler = exports.FindByPassengerReviewsHandler = exports.FindByRequestedTripHandler = exports.FindByConfirmedTripHandler = exports.FindByPassengerHandler = exports.FindByDriverHandler = exports.FindAllHandler = void 0;
+exports.FindTripsByMonthHandler = exports.FindBookingsForMonthHandler = exports.FindTripsForMonthHandler = exports.FindUpcomingTripsHandler = exports.FindAllTripRequestsHandler = exports.SearchTripsHandler = exports.FindTripByIdHandler = exports.FindCoordinatesByTripHandler = exports.FindBookingByTripAndUserIdHandler = exports.FindBookingByTripHandler = exports.FindByDriverReviewsHandler = exports.FindAllPassengersHandler = exports.FindByPassengerReviewsHandler = exports.FindByRequestedTripHandler = exports.FindByConfirmedTripHandler = exports.FindByPassengerHandler = exports.FindByDriverHandler = exports.FindAllHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/trips/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -4374,6 +4666,51 @@ FindUpcomingTripsHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_q = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _q : Object])
 ], FindUpcomingTripsHandler);
 exports.FindUpcomingTripsHandler = FindUpcomingTripsHandler;
+let FindTripsForMonthHandler = class FindTripsForMonthHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsRepository.findTripsForMonth();
+        });
+    }
+};
+FindTripsForMonthHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(trips_query_query_1.FindTripsForMonthQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_r = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _r : Object])
+], FindTripsForMonthHandler);
+exports.FindTripsForMonthHandler = FindTripsForMonthHandler;
+let FindBookingsForMonthHandler = class FindBookingsForMonthHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsRepository.findBookingsForMonth();
+        });
+    }
+};
+FindBookingsForMonthHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(trips_query_query_1.FindBookingsForMonthQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_s = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _s : Object])
+], FindBookingsForMonthHandler);
+exports.FindBookingsForMonthHandler = FindBookingsForMonthHandler;
+let FindTripsByMonthHandler = class FindTripsByMonthHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsRepository.findTripsByMonth();
+        });
+    }
+};
+FindTripsByMonthHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(trips_query_query_1.FindTripsByMonthQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_t = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _t : Object])
+], FindTripsByMonthHandler);
+exports.FindTripsByMonthHandler = FindTripsByMonthHandler;
 
 
 /***/ }),
@@ -4383,7 +4720,7 @@ exports.FindUpcomingTripsHandler = FindUpcomingTripsHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindUpcomingTripsQuery = exports.FindAllTripRequestsQuery = exports.SearchTripsQuery = exports.FindTripByIdQuery = exports.FindCoordinatesByTripQuery = exports.FindBookingByTripAndUserIdQuery = exports.FindBookingByTripQuery = exports.findByDriverReviewsQuery = exports.findAllPassengersQuery = exports.findByPassengerReviewsQuery = exports.findByRequestedTripsQuery = exports.findByConfirmedTripsQuery = exports.FindByPassengerQuery = exports.FindByDriverQuery = exports.FindAllQuery = void 0;
+exports.FindTripsByMonthQuery = exports.FindBookingsForMonthQuery = exports.FindTripsForMonthQuery = exports.FindUpcomingTripsQuery = exports.FindAllTripRequestsQuery = exports.SearchTripsQuery = exports.FindTripByIdQuery = exports.FindCoordinatesByTripQuery = exports.FindBookingByTripAndUserIdQuery = exports.FindBookingByTripQuery = exports.findByDriverReviewsQuery = exports.findAllPassengersQuery = exports.findByPassengerReviewsQuery = exports.findByRequestedTripsQuery = exports.findByConfirmedTripsQuery = exports.FindByPassengerQuery = exports.FindByDriverQuery = exports.FindAllQuery = void 0;
 class FindAllQuery {
 }
 exports.FindAllQuery = FindAllQuery;
@@ -4472,6 +4809,15 @@ class FindUpcomingTripsQuery {
     }
 }
 exports.FindUpcomingTripsQuery = FindUpcomingTripsQuery;
+class FindTripsForMonthQuery {
+}
+exports.FindTripsForMonthQuery = FindTripsForMonthQuery;
+class FindBookingsForMonthQuery {
+}
+exports.FindBookingsForMonthQuery = FindBookingsForMonthQuery;
+class FindTripsByMonthQuery {
+}
+exports.FindTripsByMonthQuery = FindTripsByMonthQuery;
 
 
 /***/ }),
@@ -4518,9 +4864,24 @@ let TripsService = class TripsService {
             return yield this.queryBus.execute(new trips_query_query_1.FindByPassengerQuery(passengerId));
         });
     }
+    findTripsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new trips_query_query_1.FindTripsForMonthQuery());
+        });
+    }
+    findBookingsForMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new trips_query_query_1.FindBookingsForMonthQuery());
+        });
+    }
     findByConfirmedTrips(passengerId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.queryBus.execute(new trips_query_query_1.findByConfirmedTripsQuery(passengerId));
+        });
+    }
+    findTripsByMonth() {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new trips_query_query_1.FindTripsByMonthQuery());
         });
     }
     findByRequestedTrips(passengerId) {

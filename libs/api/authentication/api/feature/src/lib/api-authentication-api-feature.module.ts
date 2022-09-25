@@ -13,6 +13,10 @@ import {
   DriverRegisterHandler,
   ForgotPasswordHandler,
   ResetPasswordHandler,
+  FindTotalDriversHandler,
+  FindTotalUsersHandler,
+  FindRecentUsersHandler,
+  FindTopUniversitiesHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -23,6 +27,10 @@ import { PrismaService } from '@carpool/api/prisma';
     AuthResolver,
     AuthService,
     DriverRegisterHandler,
+    FindTotalDriversHandler,
+    FindTotalUsersHandler,
+    FindTopUniversitiesHandler,
+    FindRecentUsersHandler,
     ResetPasswordHandler,
     ForgotPasswordHandler,
     PrismaService,

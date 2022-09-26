@@ -21,10 +21,9 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 type TopUser = {
-  university: string;
-  _count: {
-    university: number;
-  };
+  name: string;
+  surname: string;
+  avgRating: number;
 };
 
 type DashboardTopUsersType = {
@@ -51,7 +50,7 @@ export function DashboardTopUsers({ data, title }: DashboardTopUsersType) {
         <TableContainer>
           <Table sx={{ minWidth: '100%' }} aria-label="simple table">
             <TableBody>
-              {data.map((university, index) => (
+              {data.map((user, index) => (
                 <TableRow
                   key={index}
                   sx={{
@@ -59,9 +58,9 @@ export function DashboardTopUsers({ data, title }: DashboardTopUsersType) {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {university.university}
+                    {user.name} {user.surname}
                   </TableCell>
-                  <TableCell>{university._count.university}</TableCell>
+                  <TableCell>{user.avgRating}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

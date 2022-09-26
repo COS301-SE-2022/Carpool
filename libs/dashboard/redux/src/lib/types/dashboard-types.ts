@@ -11,7 +11,7 @@ export type DashboardAnalytics = {
   bookingsForMonth: number;
   totalUsers: number;
   totalDrivers: number;
-  // topUsers: TopUser[];
+  topUsers: TopUser[];
   recentUsers: RecentUser[];
   tripsForYear: TripsForYear[];
   topUniversities: TopUniversities[];
@@ -20,7 +20,7 @@ export type DashboardAnalytics = {
 export type TopUser = {
   name: string;
   surname: string;
-  rating: number;
+  avgRating: number;
 };
 
 export type RecentUser = {
@@ -136,6 +136,7 @@ export type DriverTripDetails = {
   name: string;
   surname: string;
   profilePic: string;
+  avgRating: number;
 };
 
 export type PassengerDetails = {

@@ -21,6 +21,7 @@ import {
   USER_TRIPS,
   TRIP_DETAILS,
   GET_ALL_TRIPS,
+  TOP_USERS,
 } from '../queries/dashboard-queries';
 
 export const dashboardAnalytics = createAsyncThunk<
@@ -100,6 +101,11 @@ export const dashboardAnalytics = createAsyncThunk<
     query: TOP_UNIVERSITIES,
   });
 
+  //* TOP USERS
+  const topUsers = await axios.post(`http://localhost:3333/graphql`, {
+    query: TOP_USERS,
+  });
+
   const analytics = {
     tripsForMonth: tripsForMonth.data.data.findTripsForMonth,
     bookingsForMonth: bookingsForMonth.data.data.findBookingsForMonth,
@@ -107,12 +113,11 @@ export const dashboardAnalytics = createAsyncThunk<
     totalDrivers: totalDrivers.data.data.findTotalDrivers,
     recentUsers: recentUsers.data.data.findRecentUsers,
     tripsForYear: res,
+    topUsers: topUsers.data.data.findTopUsers,
     topUniversities: topUniversities.data.data.findTopUniversities,
   };
 
   return analytics;
-
-  //* TOP USERS
 });
 
 export const listUsers = createAsyncThunk<User[], void, { rejectValue: Error }>(

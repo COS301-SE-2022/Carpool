@@ -36,6 +36,9 @@ export class User {
   @Field(() => Date)
   updatedAt: Date;
 
+  @Field(() => Number)
+  avgRating: number;
+
   @Field()
   cellNumber: string;
 

@@ -28,6 +28,15 @@ export class AuthRepository {
     return this.prisma.user.count();
   }
 
+  async findTopUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      orderBy: {
+        avgRating: 'desc',
+      },
+      take: 5,
+    });
+  }
+
   async findTopUniversities(): Promise<TopUniversities[]> {
     const universities = await this.prisma.user.groupBy({
       by: ['university'],

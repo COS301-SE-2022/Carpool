@@ -16,6 +16,16 @@ query {
 }
 `;
 
+export const TOP_USERS = `
+query {
+  findTopUsers {
+    name
+    surname
+    avgRating
+  }
+}
+`;
+
 export const TOTAL_DRIVERS = `
 query {
   findTotalDrivers
@@ -128,6 +138,7 @@ query($id: String!) {
       profilePic
       name
       surname
+      avgRating
     }
     passengers {
       bookingId

@@ -22,3 +22,5 @@ export class FindRecentUsersQuery {}
 export class FindTopUniversitiesQuery {}
 
 export class FindAllUsersQuery {}
+
+export class FindTopUsersQuery {}

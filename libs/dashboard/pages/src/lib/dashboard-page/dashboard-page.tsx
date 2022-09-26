@@ -101,7 +101,10 @@ export function DashboardPage() {
             <Stack sx={{ flex: 8 }}>
               <Grid container sx={{ height: '100%', my: 2 }}>
                 <DashboardGraph data={analytics.tripsForYear} />
-                {/* <DashboardTopUsers title="Top Users"  /> */}
+                <DashboardTopUsers
+                  title="Top Users"
+                  data={analytics.topUsers}
+                />
               </Grid>
             </Stack>
             <Stack sx={{ flex: 8 }}>

@@ -182,18 +182,15 @@ export type PassengerListType = {
   bookingId: string;
   tripId: string;
   userId: string;
-  user: User
+  user: UserPassengerList;
 };
 
-export type User ={
-  name : string;
-}
+export type UserPassengerList = {
+  name: string;
+};
 
 export type Passengers = {
   bookingId: string;
   tripId: string;
   userId: string;
 };
-
-
-

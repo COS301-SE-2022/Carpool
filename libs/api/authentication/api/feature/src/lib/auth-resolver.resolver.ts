@@ -47,6 +47,11 @@ export class AuthResolver {
   }
 
   @Query(() => [User])
+  async findTopUsers(): Promise<User[]> {
+    return await this.authService.findTopUsers();
+  }
+
+  @Query(() => [User])
   async findAllUsers(): Promise<User[]> {
     return await this.authService.findAllUsers();
   }

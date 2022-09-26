@@ -19,6 +19,7 @@ import {
   dashboardAnalytics,
 } from '@carpool/dashboard/redux';
 import { getMonthName } from '@carpool/client/shared/utilities';
+import Helmet from 'react-helmet';
 
 export function DashboardPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -34,6 +35,9 @@ export function DashboardPage() {
 
   return (
     <Stack sx={{ width: '100%' }}>
+      <Helmet>
+        <title>Carpool | Dashboard</title>
+      </Helmet>
       {status === 'loading' ? (
         <Stack
           sx={{
@@ -52,7 +56,7 @@ export function DashboardPage() {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              height: '100vh',
+              minHeight: '100vh',
               width: '100%',
               backgroundColor: '#f2f2f2',
               px: 2,
@@ -60,7 +64,7 @@ export function DashboardPage() {
           >
             <DashboardTitle title="Dashboard" />
             <Stack sx={{ flex: 3 }}>
-              <Grid container sx={{ height: '100%', mt: 2, mb: 2 }}>
+              <Grid container sx={{ height: '100%', mb: 2 }}>
                 <DashboardSmallCard
                   value={`${analytics.tripsForMonth}`}
                   title={`${getMonthName(new Date().toISOString())}'s Trips`}

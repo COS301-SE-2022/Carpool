@@ -11,7 +11,7 @@ export function DashboardTitle({ title }: DashboardTitleProps) {
       sx={{
         flex: 1,
         px: 4,
-        pt: 2,
+        py: 2,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',

@@ -4,8 +4,12 @@ import { UserState } from '../types/dashboard-types';
 
 const userInfoFromStorage = localStorage.getItem('userInfo');
 
+console.log('userInfo', userInfoFromStorage);
+
+const userInfo = userInfoFromStorage ? JSON.parse(userInfoFromStorage) : null;
+
 export const initialState = {
-  user: userInfoFromStorage ? JSON.parse(userInfoFromStorage) : null,
+  user: userInfo,
   status: 'idle',
   error: null,
 } as UserState;

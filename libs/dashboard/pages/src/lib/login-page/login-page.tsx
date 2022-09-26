@@ -12,6 +12,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootStore, AppDispatch, login } from '@carpool/dashboard/redux';
 import { useNavigate } from 'react-router-dom';
+import Helmet from 'react-helmet';
 
 export function LoginPage() {
   const theme = createTheme();
@@ -45,6 +46,9 @@ export function LoginPage() {
 
   return (
     <ThemeProvider theme={theme}>
+      <Helmet>
+        <title>Carpool | Login</title>
+      </Helmet>
       <Grid
         container
         component="main"

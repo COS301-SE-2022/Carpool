@@ -26,6 +26,7 @@ import {
   DashboardTitle,
 } from '@carpool/dashboard/components';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Helmet from 'react-helmet';
 
 export function TripsPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -51,6 +52,9 @@ export function TripsPage() {
   return (
     <Fragment>
       <Stack sx={{ width: '100%' }}>
+        <Helmet>
+          <title>Carpool | Trips</title>
+        </Helmet>
         {status === 'loading' ? (
           <Stack
             sx={{
@@ -69,7 +73,7 @@ export function TripsPage() {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '100vh',
+                minHeight: '100vh',
                 width: '100%',
                 backgroundColor: '#f2f2f2',
                 px: 2,

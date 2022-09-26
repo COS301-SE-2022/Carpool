@@ -19,6 +19,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useNavigate } from 'react-router-dom';
 import { RootStore, AppDispatch, listUsers } from '@carpool/dashboard/redux';
 import { useDispatch, useSelector } from 'react-redux';
+import Helmet from 'react-helmet';
 
 export function UsersPage() {
   const dispatch = useDispatch<AppDispatch>();
@@ -35,13 +36,16 @@ export function UsersPage() {
 
   return (
     <Stack sx={{ width: '100%' }}>
+      <Helmet>
+        <title>Carpool | Users</title>
+      </Helmet>
       {status === 'loading' ? (
         <Stack
           sx={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
+            minHeight: '100vh',
             width: '80vw',
           }}
         >

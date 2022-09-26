@@ -36,6 +36,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { useNavigate, useParams } from 'react-router-dom';
 import { formatDate } from '@carpool/client/shared/utilities';
+import Helmet from 'react-helmet';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -107,6 +108,11 @@ export function UserProfile() {
                 px: 2,
               }}
             >
+              <Helmet>
+                <title>
+                  {userProfile.name} {userProfile.surname}
+                </title>
+              </Helmet>
               <UserProfileHeader
                 name={`${userProfile.name} ${userProfile.surname}`}
                 email={userProfile.email}

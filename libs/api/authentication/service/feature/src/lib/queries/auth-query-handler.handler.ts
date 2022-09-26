@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { User, AdminUser } from '@prisma/client';
 import { AuthRepository } from '@carpool/api/authentication/repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import {
@@ -11,6 +11,7 @@ import {
   FindTopUniversitiesQuery,
   FindAllUsersQuery,
   FindTopUsersQuery,
+  AdminLoginQuery,
 } from './auth-query.query';
 import { TopUniversities } from '@carpool/api/authentication/entities';
 
@@ -20,6 +21,15 @@ export class UserLoginHandler implements IQueryHandler<UserLoginQuery> {
 
   async execute(query: UserLoginQuery): Promise<User | null> {
     return await this.authRepository.login(query.email, query.password);
+  }
+}
+
+@QueryHandler(AdminLoginQuery)
+export class AdminLoginHandler implements IQueryHandler<AdminLoginQuery> {
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(query: AdminLoginQuery): Promise<AdminUser | null> {
+    return await this.authRepository.adminLogin(query.email, query.password);
   }
 }
 

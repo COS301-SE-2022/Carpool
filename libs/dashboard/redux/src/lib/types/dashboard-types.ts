@@ -1,5 +1,18 @@
 import { Error } from '@carpool/client/store';
 
+export type UserState = {
+  user: AdminUser | null;
+  status: 'idle' | 'loading' | 'failed' | 'success';
+  error: Error | null;
+};
+
+export type AdminUser = {
+  id: string;
+  email: string;
+  name: string;
+  surname: string;
+};
+
 export type DashboardState = {
   analytics: DashboardAnalytics | null;
   status: 'idle' | 'loading' | 'failed' | 'success';

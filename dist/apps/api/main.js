@@ -94,6 +94,7 @@ AuthenticationModule = tslib_1.__decorate([
             service_1.AuthService,
             service_3.DriversService,
             service_2.DriverRegisterHandler,
+            service_2.AdminLoginHandler,
             service_4.TripsService,
             service_2.FindTopUsersHandler,
             service_2.FindAllUsersHandler,
@@ -122,7 +123,7 @@ exports.AuthenticationModule = AuthenticationModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.AuthResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -202,6 +203,22 @@ let AuthResolver = class AuthResolver {
                 else {
                     user.token = '';
                 }
+                return user;
+            }
+            else {
+                throw new Error('Invalid credentials');
+            }
+        });
+    }
+    adminLogin(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const userObj = yield this.authService.adminLogin(email, password);
+            if (userObj) {
+                const user = new entities_1.AdminUserReturn();
+                user.id = userObj.id;
+                user.email = userObj.email;
+                user.name = userObj.name;
+                user.surname = userObj.surname;
                 return user;
             }
             else {
@@ -350,6 +367,14 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:returntype", typeof (_s = typeof Promise !== "undefined" && Promise) === "function" ? _s : Object)
 ], AuthResolver.prototype, "login", null);
 tslib_1.__decorate([
+    (0, graphql_1.Query)(() => entities_1.AdminUserReturn),
+    tslib_1.__param(0, (0, graphql_1.Args)('email')),
+    tslib_1.__param(1, (0, graphql_1.Args)('password')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String, String]),
+    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
+], AuthResolver.prototype, "adminLogin", null);
+tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.UserLogin),
     tslib_1.__param(0, (0, graphql_1.Args)('name')),
     tslib_1.__param(1, (0, graphql_1.Args)('surname')),
@@ -360,14 +385,14 @@ tslib_1.__decorate([
     tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_t = typeof Promise !== "undefined" && Promise) === "function" ? _t : Object)
+    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
 ], AuthResolver.prototype, "register", null);
 tslib_1.__decorate([
     (0, graphql_1.Query)(() => entities_1.ForgotPassword),
     tslib_1.__param(0, (0, graphql_1.Args)('email')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_u = typeof Promise !== "undefined" && Promise) === "function" ? _u : Object)
+    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
 ], AuthResolver.prototype, "forgotPassword", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.User),
@@ -385,14 +410,14 @@ tslib_1.__decorate([
     tslib_1.__param(3, (0, graphql_1.Args)('userId')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_v = typeof Promise !== "undefined" && Promise) === "function" ? _v : Object)
+    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
 ], AuthResolver.prototype, "registerDriver", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => Boolean),
     tslib_1.__param(0, (0, graphql_1.Args)('id')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String]),
-    tslib_1.__metadata("design:returntype", typeof (_w = typeof Promise !== "undefined" && Promise) === "function" ? _w : Object)
+    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
 ], AuthResolver.prototype, "verifyEmail", null);
 tslib_1.__decorate([
     (0, graphql_1.Mutation)(() => entities_1.User),
@@ -405,7 +430,7 @@ tslib_1.__decorate([
     tslib_1.__param(6, (0, graphql_1.Args)('cellNumber')),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", [String, String, String, String, String, String, String]),
-    tslib_1.__metadata("design:returntype", typeof (_x = typeof Promise !== "undefined" && Promise) === "function" ? _x : Object)
+    tslib_1.__metadata("design:returntype", typeof (_y = typeof Promise !== "undefined" && Promise) === "function" ? _y : Object)
 ], AuthResolver.prototype, "updateUser", null);
 AuthResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(() => entities_1.User),
@@ -454,12 +479,68 @@ exports.ApiAuthenticationApiSharedEntitiesDataAccessModule = ApiAuthenticationAp
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d;
+var _a, _b, _c, _d, _e, _f;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.TopUniversities = exports.Count = exports.User = void 0;
+exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.TopUniversities = exports.Count = exports.User = exports.AdminUserReturn = exports.AdminUser = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const entities_1 = __webpack_require__("./libs/api/trips/api/shared/entities/data-access/src/index.ts");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
+let AdminUser = class AdminUser {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    tslib_1.__metadata("design:type", String)
+], AdminUser.prototype, "id", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUser.prototype, "email", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUser.prototype, "name", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUser.prototype, "surname", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUser.prototype, "password", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Date),
+    tslib_1.__metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+], AdminUser.prototype, "createdAt", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Date),
+    tslib_1.__metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+], AdminUser.prototype, "updatedAt", void 0);
+AdminUser = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], AdminUser);
+exports.AdminUser = AdminUser;
+let AdminUserReturn = class AdminUserReturn {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    tslib_1.__metadata("design:type", String)
+], AdminUserReturn.prototype, "id", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUserReturn.prototype, "email", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUserReturn.prototype, "name", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AdminUserReturn.prototype, "surname", void 0);
+AdminUserReturn = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], AdminUserReturn);
+exports.AdminUserReturn = AdminUserReturn;
 let User = class User {
 };
 tslib_1.__decorate([
@@ -500,11 +581,11 @@ tslib_1.__decorate([
 ], User.prototype, "isDriver", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_a = typeof Date !== "undefined" && Date) === "function" ? _a : Object)
+    tslib_1.__metadata("design:type", typeof (_c = typeof Date !== "undefined" && Date) === "function" ? _c : Object)
 ], User.prototype, "createdAt", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_b = typeof Date !== "undefined" && Date) === "function" ? _b : Object)
+    tslib_1.__metadata("design:type", typeof (_d = typeof Date !== "undefined" && Date) === "function" ? _d : Object)
 ], User.prototype, "updatedAt", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Number),
@@ -578,7 +659,7 @@ tslib_1.__decorate([
 ], UserLogin.prototype, "verificationCode", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_c = typeof Date !== "undefined" && Date) === "function" ? _c : Object)
+    tslib_1.__metadata("design:type", typeof (_e = typeof Date !== "undefined" && Date) === "function" ? _e : Object)
 ], UserLogin.prototype, "expires", void 0);
 UserLogin = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
@@ -686,7 +767,7 @@ tslib_1.__decorate([
 ], ForgotPassword.prototype, "verificationCode", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_d = typeof Date !== "undefined" && Date) === "function" ? _d : Object)
+    tslib_1.__metadata("design:type", typeof (_f = typeof Date !== "undefined" && Date) === "function" ? _f : Object)
 ], ForgotPassword.prototype, "expires", void 0);
 ForgotPassword = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
@@ -867,6 +948,24 @@ let AuthRepository = class AuthRepository {
             }
             else if (!user.isValidated) {
                 throw new common_1.UnauthorizedException(`Email address has not been validated`);
+            }
+        });
+    }
+    adminLogin(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const user = yield this.prisma.adminUser.findUnique({
+                where: {
+                    email,
+                },
+            });
+            if (user) {
+                const isValidPassword = yield bcrypt.compare(password, user.password);
+                if (isValidPassword) {
+                    return user;
+                }
+            }
+            else if (!user) {
+                throw new common_1.NotFoundException(`User with email ${email} does not exist`);
             }
         });
     }
@@ -1077,6 +1176,11 @@ let AuthService = class AuthService {
     login(email, password) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.queryBus.execute(new auth_query_query_1.UserLoginQuery(email, password));
+        });
+    }
+    adminLogin(email, password) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.queryBus.execute(new auth_query_query_1.AdminLoginQuery(email, password));
         });
     }
     findTopUsers() {
@@ -1338,9 +1442,9 @@ exports.ResetPasswordCommand = ResetPasswordCommand;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindTopUsersHandler = exports.FindAllUsersHandler = exports.FindTopUniversitiesHandler = exports.FindRecentUsersHandler = exports.FindTotalDriversHandler = exports.FindTotalUsersHandler = exports.ForgotPasswordHandler = exports.FindUserByIdHandler = exports.UserLoginHandler = void 0;
+exports.FindTopUsersHandler = exports.FindAllUsersHandler = exports.FindTopUniversitiesHandler = exports.FindRecentUsersHandler = exports.FindTotalDriversHandler = exports.FindTotalUsersHandler = exports.ForgotPasswordHandler = exports.FindUserByIdHandler = exports.AdminLoginHandler = exports.UserLoginHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/authentication/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -1360,6 +1464,21 @@ UserLoginHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _a : Object])
 ], UserLoginHandler);
 exports.UserLoginHandler = UserLoginHandler;
+let AdminLoginHandler = class AdminLoginHandler {
+    constructor(authRepository) {
+        this.authRepository = authRepository;
+    }
+    execute(query) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.authRepository.adminLogin(query.email, query.password);
+        });
+    }
+};
+AdminLoginHandler = tslib_1.__decorate([
+    (0, cqrs_1.QueryHandler)(auth_query_query_1.AdminLoginQuery),
+    tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _b : Object])
+], AdminLoginHandler);
+exports.AdminLoginHandler = AdminLoginHandler;
 let FindUserByIdHandler = class FindUserByIdHandler {
     constructor(authRepository) {
         this.authRepository = authRepository;
@@ -1372,7 +1491,7 @@ let FindUserByIdHandler = class FindUserByIdHandler {
 };
 FindUserByIdHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindUserByIdQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_b = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _b : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_c = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _c : Object])
 ], FindUserByIdHandler);
 exports.FindUserByIdHandler = FindUserByIdHandler;
 let ForgotPasswordHandler = class ForgotPasswordHandler {
@@ -1387,7 +1506,7 @@ let ForgotPasswordHandler = class ForgotPasswordHandler {
 };
 ForgotPasswordHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.ForgotPasswordQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_c = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _c : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_d = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _d : Object])
 ], ForgotPasswordHandler);
 exports.ForgotPasswordHandler = ForgotPasswordHandler;
 let FindTotalUsersHandler = class FindTotalUsersHandler {
@@ -1402,7 +1521,7 @@ let FindTotalUsersHandler = class FindTotalUsersHandler {
 };
 FindTotalUsersHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTotalUsersQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_d = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _d : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_e = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _e : Object])
 ], FindTotalUsersHandler);
 exports.FindTotalUsersHandler = FindTotalUsersHandler;
 let FindTotalDriversHandler = class FindTotalDriversHandler {
@@ -1417,7 +1536,7 @@ let FindTotalDriversHandler = class FindTotalDriversHandler {
 };
 FindTotalDriversHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTotalDriversQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_e = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _e : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _f : Object])
 ], FindTotalDriversHandler);
 exports.FindTotalDriversHandler = FindTotalDriversHandler;
 let FindRecentUsersHandler = class FindRecentUsersHandler {
@@ -1432,7 +1551,7 @@ let FindRecentUsersHandler = class FindRecentUsersHandler {
 };
 FindRecentUsersHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindRecentUsersQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_f = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _f : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _g : Object])
 ], FindRecentUsersHandler);
 exports.FindRecentUsersHandler = FindRecentUsersHandler;
 let FindTopUniversitiesHandler = class FindTopUniversitiesHandler {
@@ -1447,7 +1566,7 @@ let FindTopUniversitiesHandler = class FindTopUniversitiesHandler {
 };
 FindTopUniversitiesHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTopUniversitiesQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_g = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _g : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _h : Object])
 ], FindTopUniversitiesHandler);
 exports.FindTopUniversitiesHandler = FindTopUniversitiesHandler;
 let FindAllUsersHandler = class FindAllUsersHandler {
@@ -1462,7 +1581,7 @@ let FindAllUsersHandler = class FindAllUsersHandler {
 };
 FindAllUsersHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindAllUsersQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_h = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _h : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _j : Object])
 ], FindAllUsersHandler);
 exports.FindAllUsersHandler = FindAllUsersHandler;
 let FindTopUsersHandler = class FindTopUsersHandler {
@@ -1477,7 +1596,7 @@ let FindTopUsersHandler = class FindTopUsersHandler {
 };
 FindTopUsersHandler = tslib_1.__decorate([
     (0, cqrs_1.QueryHandler)(auth_query_query_1.FindTopUsersQuery),
-    tslib_1.__metadata("design:paramtypes", [typeof (_j = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _j : Object])
+    tslib_1.__metadata("design:paramtypes", [typeof (_k = typeof repository_1.AuthRepository !== "undefined" && repository_1.AuthRepository) === "function" ? _k : Object])
 ], FindTopUsersHandler);
 exports.FindTopUsersHandler = FindTopUsersHandler;
 
@@ -1489,7 +1608,7 @@ exports.FindTopUsersHandler = FindTopUsersHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.FindTopUsersQuery = exports.FindAllUsersQuery = exports.FindTopUniversitiesQuery = exports.FindRecentUsersQuery = exports.FindTotalDriversQuery = exports.FindTotalUsersQuery = exports.ForgotPasswordQuery = exports.FindUserByIdQuery = exports.UserLoginQuery = void 0;
+exports.FindTopUsersQuery = exports.FindAllUsersQuery = exports.FindTopUniversitiesQuery = exports.FindRecentUsersQuery = exports.FindTotalDriversQuery = exports.FindTotalUsersQuery = exports.ForgotPasswordQuery = exports.FindUserByIdQuery = exports.AdminLoginQuery = exports.UserLoginQuery = void 0;
 class UserLoginQuery {
     constructor(email, password) {
         this.email = email;
@@ -1497,6 +1616,13 @@ class UserLoginQuery {
     }
 }
 exports.UserLoginQuery = UserLoginQuery;
+class AdminLoginQuery {
+    constructor(email, password) {
+        this.email = email;
+        this.password = password;
+    }
+}
+exports.AdminLoginQuery = AdminLoginQuery;
 class FindUserByIdQuery {
     constructor(id) {
         this.id = id;

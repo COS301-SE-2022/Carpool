@@ -3,7 +3,7 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User, Driver } from '@prisma/client';
+import { User, Driver, AdminUser } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import * as bcrypt from 'bcrypt';
 import {
@@ -96,6 +96,24 @@ export class AuthRepository {
       throw new NotFoundException(`User with email ${email} does not exist`);
     } else if (!user.isValidated) {
       throw new UnauthorizedException(`Email address has not been validated`);
+    }
+  }
+
+  async adminLogin(email: string, password: string): Promise<AdminUser | null> {
+    const user = await this.prisma.adminUser.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      const isValidPassword = await bcrypt.compare(password, user.password);
+
+      if (isValidPassword) {
+        return user;
+      }
+    } else if (!user) {
+      throw new NotFoundException(`User with email ${email} does not exist`);
     }
   }
 

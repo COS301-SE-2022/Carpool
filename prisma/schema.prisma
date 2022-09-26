@@ -43,6 +43,17 @@ model User {
     @@map("user")
 }
 
+model AdminUser {
+  id        String @id @default(cuid())
+  name      String
+  surname   String
+  email     String @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("admin_user")
+}
+
 ////////////////////////////////
 //2.Banking Details
 ////////////////////////////////

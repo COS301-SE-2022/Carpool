@@ -1,22 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login } from '../actions/auth-actions';
+import { login, logout } from '../actions/auth-actions';
+import { UserState } from '../types/dashboard-types';
 
-type Error = {
-  message: string;
-};
-
-type UserState = {
-  user: User | null;
-  status: 'idle' | 'loading' | 'success' | 'failed';
-  error: Error | null;
-};
-
-type User = {
-  id: string;
-  token?: string;
-  email: string;
-  isDriver: boolean;
-};
 const userInfoFromStorage = localStorage.getItem('userInfo');
 
 export const initialState = {
@@ -48,6 +33,19 @@ export const userLoginSlice = createSlice({
         } else {
           state.error = { message: 'Unknown error' };
         }
+      })
+      .addCase(logout.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(logout.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.user = action.payload;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
       });
   },
 });

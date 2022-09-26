@@ -9,34 +9,38 @@ import {
   TextField,
 } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
-import { RootStore } from '@carpool/dashboard/redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootStore, AppDispatch, login } from '@carpool/dashboard/redux';
 import { useNavigate } from 'react-router-dom';
 
 export function LoginPage() {
   const theme = createTheme();
   const navigate = useNavigate();
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
 
   useEffect(() => {
-    if (userState.user) {
+    if (user) {
       navigate('/');
     }
-  }, [userState.user, navigate]);
+  }, [user, navigate]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
 
-    navigate('/');
+    dispatch(
+      login({
+        email: data.get('email') as string,
+        password: data.get('password') as string,
+      })
+    );
   };
 
   return (

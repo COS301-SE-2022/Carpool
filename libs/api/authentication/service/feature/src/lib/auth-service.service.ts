@@ -5,6 +5,7 @@ import {
   UserUpdate,
   Driver,
   TopUniversities,
+  AdminUser,
 } from '@carpool/api/authentication/entities';
 import {
   FindUserByIdQuery,
@@ -16,6 +17,7 @@ import {
   FindTopUniversitiesQuery,
   FindAllUsersQuery,
   FindTopUsersQuery,
+  AdminLoginQuery,
 } from './queries/auth-query.query';
 import {
   UserRegisterCommand,
@@ -40,6 +42,10 @@ export class AuthService {
 
   async login(email: string, password: string): Promise<User | null> {
     return await this.queryBus.execute(new UserLoginQuery(email, password));
+  }
+
+  async adminLogin(email: string, password: string): Promise<AdminUser | null> {
+    return await this.queryBus.execute(new AdminLoginQuery(email, password));
   }
 
   async findTopUsers(): Promise<User[]> {

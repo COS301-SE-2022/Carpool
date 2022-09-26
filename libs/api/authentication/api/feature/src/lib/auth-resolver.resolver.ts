@@ -14,6 +14,8 @@ import {
   Driver,
   ForgotPassword,
   TopUniversities,
+  AdminUser,
+  AdminUserReturn,
 } from '@carpool/api/authentication/entities';
 import { DriversService } from '@carpool/api/drivers/service';
 import { TripsService } from '@carpool/api/trips/service';
@@ -94,6 +96,26 @@ export class AuthResolver {
       } else {
         user.token = '';
       }
+
+      return user;
+    } else {
+      throw new Error('Invalid credentials');
+    }
+  }
+
+  @Query(() => AdminUserReturn)
+  async adminLogin(
+    @Args('email') email: string,
+    @Args('password') password: string
+  ): Promise<AdminUserReturn | null> {
+    const userObj = await this.authService.adminLogin(email, password);
+
+    if (userObj) {
+      const user = new AdminUserReturn();
+      user.id = userObj.id;
+      user.email = userObj.email;
+      user.name = userObj.name;
+      user.surname = userObj.surname;
 
       return user;
     } else {

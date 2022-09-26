@@ -18,6 +18,7 @@ import {
   FindRecentUsersHandler,
   FindTopUniversitiesHandler,
   FindAllUsersHandler,
+  AdminLoginHandler,
   FindTopUsersHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
@@ -31,6 +32,7 @@ import { TripsService } from '@carpool/api/trips/service';
     AuthService,
     DriversService,
     DriverRegisterHandler,
+    AdminLoginHandler,
     TripsService,
     FindTopUsersHandler,
     FindAllUsersHandler,

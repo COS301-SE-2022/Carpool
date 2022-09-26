@@ -4,9 +4,21 @@ import * as bcrypt from 'bcrypt';
 
 async function main() {
   //* USERS* //
-  //: Main User
+  //: Admin User
   let salt = await bcrypt.genSalt();
-  let hashedPassword = await bcrypt.hash('Carpool997', salt);
+  let hashedPassword = await bcrypt.hash('Carpool5620', salt);
+  const adminUser = await prisma.adminUser.create({
+    data: {
+      name: 'Benjamin',
+      surname: 'Osmers',
+      email: 'bennie1419@gmail.com',
+      password: hashedPassword,
+    },
+  });
+
+  //: Main User
+  salt = await bcrypt.genSalt();
+  hashedPassword = await bcrypt.hash('Carpool997', salt);
   const user = await prisma.user.create({
     data: {
       name: 'Benjamin',

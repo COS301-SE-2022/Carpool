@@ -2,6 +2,45 @@ import { Booking, Trip } from '@carpool/api/trips/entities';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
 
 @ObjectType()
+export class AdminUser {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  surname: string;
+
+  @Field()
+  password: string;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+}
+
+@ObjectType()
+export class AdminUserReturn {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  surname: string;
+}
+
+@ObjectType()
 export class User {
   @Field(() => ID)
   id: string;

@@ -1,3 +1,14 @@
+export const ADMIN_LOGIN = `
+query ($email: String!, $password: String!) {
+  adminLogin(email: $email, password: $password) {
+    id
+    email
+    name
+    surname
+  }
+}
+`;
+
 export const TRIPS_FOR_MONTH = `
 query {
   findTripsForMonth

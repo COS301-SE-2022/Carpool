@@ -14,7 +14,7 @@ import {
   Stack,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { AppDispatch, logout } from '@carpool/dashboard/redux';
 
 const sidebarWidth = 240;
 
@@ -23,8 +23,7 @@ interface Props {
 }
 
 export function Sidebar(props: Props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
   const { window } = props;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -34,7 +33,7 @@ export function Sidebar(props: Props) {
   };
 
   const handleLogout = () => {
-    navigate('/login');
+    dispatch(logout());
   };
 
   const container =

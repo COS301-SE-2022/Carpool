@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import {
   DashboardPage,
@@ -13,6 +13,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useLocation } from 'react-router-dom';
 import { Box } from '@mui/material';
+import { RootStore } from '@carpool/dashboard/redux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const darkTheme = createTheme({
   palette: {
@@ -22,6 +25,17 @@ const darkTheme = createTheme({
 
 export function App() {
   const path = useLocation().pathname;
+
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user } = userState;
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate('/login');
+    }
+  }, [user, navigate]);
 
   return (
     <ThemeProvider theme={darkTheme}>

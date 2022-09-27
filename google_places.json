@@ -21,6 +21,188 @@
     }
   },
   {
+    "Mooikloof Gardens": {
+      "address": "Mooikloof Gardens., Pretoriuspark, Pretoria, South Africa",
+      "lat": "-25.82790779999999",
+      "lng": "28.3222326"
+    }
+  },
+  {
+    "Woodhill Estate": {
+      "address": "Woodhill Golf Estate, Pretoria, South Africa",
+      "lat": "-25.8149972",
+      "lng": "28.3155101"
+    }
+  },
+  {
+    "Corry": {
+      "address": "242 Corry Street, Queenswood, Pretoria, South Africa",
+      "lat": "-25.7272734",
+      "lng": "28.2578929"
+    }
+  },
+  {
+    "Urban Quarter": {
+      "address": "Urban Quarter, Park Street, Hatfield, Pretoria, South Africa",
+      "lat": "-25.7272734",
+      "lng": "28.2578929"
+    }
+  },
+  {
+    "The Bull Ring Grill": {
+      "address": "The Bull Ring Grill & Bar, Olievenhoutbosch Avenue, Randjesfontein, Midrand, South Africa",
+      "lat": "-25.9264132",
+      "lng": "28.16938709999999"
+    }
+  },
+  {
+    "Midstream": {
+      "address": "Midstream Meadows Estate HOA, Olifantsfontein 410-JR, Olifantsfontein, South Africa",
+      "lat": "-25.9352566",
+      "lng": "28.2055068"
+    }
+  },
+  {
+    "Hillcrest Boulevard": {
+      "address": "Hillcrest Boulevard Shopping Centre, Lynnwood Road, Hillcrest, Pretoria, South Africa",
+      "lat": "-25.7586617",
+      "lng": "28.242174"
+    }
+  },
+  {
+    "Loftus Park": {
+      "address": "Loftus Park, Kirkness Street, Arcadia, Pretoria, South Africa",
+      "lat": "-25.7511704",
+      "lng": "28.2231593"
+    }
+  },
+  {
+    "Stanza Bopape": {
+      "address": "1015 Stanza Bopape Street, Hatfield, Pretoria, South Africa",
+      "lat": "-25.7439662",
+      "lng": "28.2304697"
+    }
+  },
+  {
+    "Mustang Sally's": {
+      "address": "Mustang Sally's Pub & Diner, Pretorius Street, Hatfield, Pretoria, South Africa",
+      "lat": "-25.7442241",
+      "lng": "28.2456132"
+    }
+  },
+  {
+    "Medicross Silverton": {
+      "address": "Medicross Silverton, Pretoria Road, Silverton, Pretoria, South Africa",
+      "lat": "-25.7322314",
+      "lng": "28.2847934"
+    }
+  },
+  {
+    "Netcare Pretoria East": {
+      "address": "Netcare Pretoria East Hospital, Netcare Street, Moreleta Park, Pretoria, South Africa",
+      "lat": "-25.8211326",
+      "lng": "-25.8211326"
+    }
+  },
+  {
+    "Brooklyn": {
+      "address": "Brooklyn Mall, Fehrsen Street, Nieuw Muckleneuk, Pretoria, South Africa",
+      "lat": "-25.7717126",
+      "lng": "28.2356929"
+    }
+  },
+  {
+    "LCtuks": {
+      "address": "LC De Villiers Sportsground., Burnett Street, Koedoespoort 456-Jr, Pretoria, South Africa",
+      "lat": "-25.749791",
+      "lng": "28.2483149"
+    }
+  },
+  {
+    "Loftus Stadium": {
+      "address": "Loftus Versfeld Stadium, Kirkness Street, Arcadia, Pretoria, South Africa",
+      "lat": "-25.753321",
+      "lng": "28.2229295"
+    }
+  },
+  {
+    "Gautrain Pretoria": {
+      "address": "Gautrain Pretoria Station, Clara Street, Salvokop, Pretoria, South Africa",
+      "lat": "-25.7592436",
+      "lng": "28.1902027"
+    }
+  },
+  {
+    "ukzn": {
+      "address": "University of KwaZulu-Natal - Westville Campus, University Road, Westville, South Africa",
+      "lat": "-29.8241945",
+      "lng": "30.9496143"
+    }
+  },
+  {
+    "pavilion": {
+      "address": "The Pavilion Shopping Centre, Jack Martens Drive, Dawncliffe, Westville, South Africa",
+      "lat": "-29.8502023",
+      "lng": "30.9356198"
+    }
+  },
+  {
+    "Botanical": {
+      "address": "Durban Botanical Gardens, John Zikhali Road, Berea, Durban, South Africa",
+      "lat": "-29.848252",
+      "lng": "31.008291"
+    }
+  },
+  {
+    "uShaka": {
+      "address": "uShaka Marine World, King Shaka Avenue, Point, Durban, South Africa",
+      "lat": "-29.8672537",
+      "lng": "31.0458542"
+    }
+  },
+  {
+    "Westville Library": {
+      "address": "Westville Library, William Leister Drive, Westville, Durban, South Africa",
+      "lat": "-29.8379479",
+      "lng": "30.921952"
+    }
+  },
+  {
+    "Virgin Active Westville": {
+      "address": "Virgin Active Gym Westville, Dawncliffe, Westville, South Africa",
+      "lat": "-29.8361757",
+      "lng": "30.9184512"
+    }
+  },
+  {
+    "Coronation": {
+      "address": "68 Coronation Road, Malvern, Queensburgh, South Africa",
+      "lat": "-29.8846219",
+      "lng": "30.9201726"
+    }
+  },
+  {
+    "Edmonds": {
+      "address": "10 Edmonds Road, Glenwood, Berea, South Africa",
+      "lat": "29.8657886",
+      "lng": "30.9910601"
+    }
+  },
+  {
+    "Bellevue": {
+      "address": "149 Bellevue Road, Musgrave, Berea, South Africa",
+      "lat": "-29.846520",
+      "lng": "30.9970197"
+    }
+  },
+  {
+    "Larch": {
+      "address": "12 Larch Road, Morningside, Berea, South Africa",
+      "lat": "-29.8185756",
+      "lng": "31.0235429"
+    }
+  },
+  {
     "description": "University of Pretoria, Lynnwood Rd, Hatfield, Pretoria, South Africa",
     "matched_substrings": [
       {

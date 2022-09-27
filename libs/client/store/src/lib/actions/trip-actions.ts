@@ -24,6 +24,7 @@ import {
   POST_REVIEW,
   LIST_ALL_PASSENGERS,
   DRIVER_REVIEW_UPDATE,
+  UPDATE_AVGRATING,
 } from '../queries/trip-queries';
 import {
   TripListType,
@@ -31,7 +32,8 @@ import {
   Passenger,
   TripRequestType,
   PassengerListType,
-  PassengerList
+  PassengerList,
+  UserRating
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
@@ -741,6 +743,26 @@ export const updateReviewDriver = createAsyncThunk<
   return res;
 });
 
+export const updateAvgRating = createAsyncThunk<
+  UserRating,
+  string,
+  { rejectValue: Error }
+>('reviews/updateAvgRating', async (id: string, thunkApi) => {
+
+  const response = await axios.post(`http://${host}:3333/graphql`, {
+    query: UPDATE_AVGRATING ,
+    variables: {
+      id: id,
+    },
+  });
+
+  console.log('UPDATING');
+  const res = response.data.data.updateAvgRating;
+  console.log(res);
+
+  return res;
+});
+
 export type PostReviewType = {
   byId: string;
   forId: string;
@@ -753,53 +775,6 @@ export type PostReviewType = {
 export type ReviewReturn = {
   id: string;
 };
-
-// export const postReview = createAsyncThunk<
-//   ReviewReturn,
-//   PostReviewType,
-//   { rejectValue: Error }
-// >('postReview/review', async (review: PostReviewType, { rejectWithValue }) => {
-//   console.log(review);
-//   console.log(review.byId);
-//   console.log(review.forId);
-//   console.log(review.tripId);
-//   console.log(review.role);
-//   console.log(review.comment);
-//   console.log(review.rating);
-
-//   console.log(POST_REVIEW);
-
-//   const response = await axios.post(`${url}/graphql`, {
-//     query: POST_REVIEW,
-//     variables: {
-//       byId: review.byId,
-//       forId: review.forId,
-//       tripId: review.tripId,
-//       role: review.role,
-//       comment: review.comment,
-//       rating: review.rating,
-//     },
-//   });
-
-//   console.log('ADDING');
-
-//   if (response.data.errors) {
-//     const error = {
-//       message: response.data.errors[0].message,
-//     } as Error;
-
-//     console.log('ERROR', error);
-
-//     return rejectWithValue(error);
-//   }
-
-//   console.log(response.data.data);
-
-//   const res = response.data.data.postReview;
-
-//   return res;
-// });
-
 export const postReview = createAsyncThunk<
   string,
   PostReviewType,

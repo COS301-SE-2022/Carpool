@@ -39,6 +39,7 @@ import {
   updateReviewDriver,
   postReview,
   listAllPassengers,
+  updateAvgRating,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -403,7 +404,7 @@ export const tripBookingSlice = createSlice({
 });
 
 export const postReviewState = {
-  review: null,
+  review: '',
   status: 'idle',
   error: null,
 } as ReviewTripState;
@@ -585,7 +586,7 @@ export const PaymentStatusUpdateSlice = createSlice({
 });
 
 export const initialUpdatePassengerReviewsState = {
-  review: null,
+  review: '',
   status: 'idle',
   error: null,
 } as ReviewTripState;
@@ -613,7 +614,7 @@ export const UpdatePassengerReviewsSlice = createSlice({
 });
 
 export const initialUpdateDriverReviewsState = {
-  review: null,
+  review: '',
   status: 'idle',
   error: null,
 } as ReviewTripState;
@@ -768,6 +769,33 @@ export const getAllTripRequestsSlice = createSlice({
         } else {
           state.error = { message: 'Unknown error' };
         }
+      });
+  },
+});
+
+export const initialUpdateAvgRatingState = {
+  status: 'idle',
+  error: null,
+} as UpdatePaymentStatusType;
+
+export const UpdateAvgRatingSlice = createSlice({
+  name: 'update-payment-status',
+  initialState: initialUpdatePaymentStatusState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(updateAvgRating.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(updateAvgRating.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        // state.userProfile = action.payload;
+      })
+      .addCase(updateAvgRating.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
       });
   },
 });

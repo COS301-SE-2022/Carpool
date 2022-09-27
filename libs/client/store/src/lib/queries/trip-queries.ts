@@ -253,7 +253,7 @@ export const CREATE_TRIP = `
 
 export const POST_REVIEW = `
   mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: String!) {
-    postReview(byId: $byId, forId: $forId, tripId: $tripId role: $role, comment: $comment, rating: $rating){
+    postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
       id
     }
   }`;
@@ -343,6 +343,14 @@ query ($userId: String!) {
         address
       }
     }
+  }
+}
+`;
+
+export const UPDATE_AVGRATING = `
+mutation ($id: String!) {
+  updateAverageRating(id: $id) {
+    id
   }
 }
 `;

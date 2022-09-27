@@ -29,6 +29,7 @@ import {
   UpdateDriverReviewsSlice,
   postReviewSlice,
   getAllPassengersSlice,
+  UpdateAvgRatingSlice,
 } from './slices/trip-slice';
 import { getWeatherSlice } from './slices/weather-slices';
 import {
@@ -71,6 +72,7 @@ const RootReducer = combineReducers({
   updateDriverReviews: UpdateDriverReviewsSlice.reducer,
   postReview: postReviewSlice.reducer,
   allPassengers: getAllPassengersSlice.reducer,
+  updateAvgRating: UpdateAvgRatingSlice.reducer,
 });
 
 export default RootReducer;

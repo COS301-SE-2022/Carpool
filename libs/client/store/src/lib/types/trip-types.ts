@@ -83,6 +83,10 @@ export type Passenger = {
   bookingId: string;
 };
 
+export type UserRating = {
+  id: string;
+};
+
 export type DriverTrip = {
   id: string;
   name: string;
@@ -167,7 +171,7 @@ export type ReviewReturnType = {
 };
 
 export type ReviewTripState = {
-  review: string | null;
+  review: string;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
 };

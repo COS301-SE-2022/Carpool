@@ -1,5 +1,5 @@
 import { Booking, Trip } from '@carpool/api/trips/entities';
-import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
+import { Field, ObjectType, ID, InputType, Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class User {
@@ -38,6 +38,9 @@ export class User {
 
   @Field()
   cellNumber: string;
+
+  @Field(() => Float)
+  avgRating: number;
 
   @Field(() => Boolean)
   isValidated: boolean;

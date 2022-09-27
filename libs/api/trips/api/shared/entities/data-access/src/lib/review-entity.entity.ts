@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, InputType, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Int, InputType, ID, Float } from '@nestjs/graphql';
 
 
 @ObjectType()
@@ -21,8 +21,9 @@ export class Reviews {
   @Field()
   comment: string;
 
-  @Field()
-  rating: string;
+  @Field(() => Int)
+  rating: number;
+
 
 
 }
@@ -44,7 +45,15 @@ export class ReviewInput {
   @Field()
   comment: string;
 
-  @Field()
-  rating: string;
+  @Field(() => Int)
+  rating: number;
+}
 
+@InputType()
+export class AverageRatingUpdate {
+  @Field()
+  forid: string;
+
+  @Field(() => Float)
+  avgRating: number;
 }

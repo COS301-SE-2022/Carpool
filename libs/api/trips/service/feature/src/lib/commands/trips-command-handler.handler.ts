@@ -1,4 +1,4 @@
-import { Trip, Booking, Review } from '@prisma/client';
+import { Trip, Booking, Review, User } from '@prisma/client';
 import { TripsRepository } from '@carpool/api/trips/repository';
 import { ICommandHandler, CommandHandler } from '@nestjs/cqrs';
 import {
@@ -14,6 +14,7 @@ import {
   UpdatePassengerReviewsCommand,
   UpdateDriverReviewsCommand,
   CreateReviewCommand,
+  UpdateAverageRatingCommand,
 } from './trips-command.command';
 import { ReviewInput, TripsUpdate } from '@carpool/api/trips/entities';
 
@@ -205,5 +206,19 @@ export class EndTripHandler implements ICommandHandler<EndTripCommand> {
     const { tripId } = command;
 
     return await this.tripsRepository.endTrip(tripId);
+  }
+}
+
+@CommandHandler(UpdateAverageRatingCommand)
+export class UpdateAverageRatingCommandHandler implements ICommandHandler<UpdateAverageRatingCommand> {
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: UpdateAverageRatingCommand): Promise<User> {
+    const {
+      id,
+    } = command;
+
+
+    return await this.tripsRepository.updateAverageRating(id);
   }
 }

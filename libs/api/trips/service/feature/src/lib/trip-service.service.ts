@@ -38,6 +38,7 @@ import {
   UpdatePassengerReviewsCommand,
   UpdateDriverReviewsCommand,
   CreateReviewCommand,
+  UpdateAverageRatingCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -237,8 +238,12 @@ export class TripsService {
   async findAllTripRequests(userId: string): Promise<Booking[]> {
     return await this.queryBus.execute(new FindAllTripRequestsQuery(userId));
   }
-}
-enum Role {
-  PASSENGER = 'PASSENGER',
-  DRIVER = 'DRIVER',
+
+  async updateAverageRating(
+    id: string,
+  ): Promise<Reviews> {
+    return await this.commandBus.execute(
+      new UpdateAverageRatingCommand(id)
+    );
+  }
 }

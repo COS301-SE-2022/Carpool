@@ -81,3 +81,9 @@ export class EndTripCommand {
 export class DeclineTripRequestCommand {
   constructor(public readonly bookingId: string) {}
 }
+
+export class UpdateAverageRatingCommand {
+  constructor(
+    public readonly id: string
+    ) {}
+}

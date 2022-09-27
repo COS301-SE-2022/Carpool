@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip, Booking, Location, Review } from '@prisma/client';
+import { Trip, Booking, Location, Review, User } from '@prisma/client';
 import { TripsUpdate } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
@@ -242,7 +242,7 @@ export class TripsRepository {
     tripId: string,
     role: string,
     comment: string,
-    rating: string): Promise<Review | null> {
+    rating: string): Promise<Review> {
 
     return this.prisma.review.create({
       data: {
@@ -251,7 +251,7 @@ export class TripsRepository {
         tripId: tripId,
         role: role,
         comment: comment,
-        rating: rating,
+        rating: parseInt(rating),
       },
     });
   }
@@ -447,6 +447,26 @@ export class TripsRepository {
           driverId: userId,
         },
         status: 'requested',
+      },
+    });
+  }
+
+  async updateAverageRating(id: string): Promise<User> {
+    const aggregations = await this.prisma.review.aggregate({
+      _avg: {
+        rating: true,
+      },
+      where: {
+        forId: id,
+      },
+    });
+
+    return this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        avgRating: aggregations._avg.rating,
       },
     });
   }

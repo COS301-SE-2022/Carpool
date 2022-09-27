@@ -6,6 +6,7 @@ import {
   BookingStatusUpdate,
   ReviewsStatusUpdate,
   Reviews,
+  AverageRatingUpdate,
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -267,5 +268,12 @@ export class TripsResolver {
   @Mutation(() => Trip)
   async endTrip(@Args('id') tripId: string): Promise<Trip> {
     return await this.tripsService.endTrip(tripId);
+  }
+
+  @Mutation(() => User)
+  async updateAverageRating(
+    @Args('id') id: string,
+  ): Promise<Reviews> {
+    return await this.tripsService.updateAverageRating(id);
   }
 }

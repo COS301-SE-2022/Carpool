@@ -15,6 +15,7 @@ import {
   postReview,
   updateReviewPassenger,
   findBookingId,
+  updateAvgRating,
 } from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
 import { getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
@@ -29,7 +30,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
 
   const { tripId, driverId, driver, date, destination } = route.params;
 
-  const [rate, setRate] = useState('');
+  const [rate, setRate] = useState('3');
   const [comment, setComment] = useState('');
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,8 +47,8 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
     }
   }, [dispatch, userData, tripId, error]);
 
-  const ratingCompleted = (rating:string) => {
-    setRate(rating);
+  const ratingCompleted = (rating: number) => {
+    setRate(`${rating}`);
     console.log("Rating is: " + rating)
     setModalVisible(true)
   };
@@ -75,13 +76,17 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
         })
       );
     }
-    if (bookingId) {
-      dispatch(updateReviewPassenger(bookingId));
-    }
+    setTimeout(() => {
+      if (bookingId) {
+        dispatch(updateReviewPassenger(bookingId));
+        dispatch(updateAvgRating(driverId));
+      }
+    }, 3000)
+
     showToast();
     setTimeout(() => {
         navigation.push('TripRatingPage');
-      }, 3000);
+      }, 1000);
 
   };
   return (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { ReviewDriverPageProps } from '../NavigationTypes/navigation-types';
 import { View, StyleSheet, TouchableOpacity, Text, Image, TextInput } from 'react-native';
-import { AppDispatch, RootStore, postReview, findBookingId, listAllPassengers, updateReviewDriver } from '@carpool/client/store';
+import { AppDispatch, RootStore, postReview, findBookingId, listAllPassengers, updateReviewDriver, updateAvgRating } from '@carpool/client/store';
 import { AirbnbRating } from 'react-native-ratings';
 import {getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
 import Swiper from 'react-native-swiper'
@@ -43,11 +43,11 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
     return false
   }
 
-  const ratingCompleted = (rating:string) => {
-    setRate(rating);
+  const ratingCompleted = (rating: number) => {
+    setRate(`${rating}`);
     console.log("Rating is: " + rating)
     setModalVisible(true)
-  }
+  };
 
   const showToast = () => {
     Toast.show({
@@ -62,32 +62,29 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
   const submitHandler = (userforId: string) => {
 
     setCountReview(countReview + 1)
+    if(userData){
+    dispatch(
+      postReview({
+        byId: userData?.id,
+        forId: userforId,
+        tripId: tripId,
+        role: "DRIVER",
+        comment: comment,
+        rating: rate,
+      })
+    );
+    setTimeout(() => {
+      dispatch(updateAvgRating(userforId));
+      showToast();
+    }, 5000);
 
-    console.log("The review has been posted")
-    console.log("byId: " + userData?.id )
-    console.log("forId: " + userforId)
-    console.log("tripId: " + tripId)
-    console.log("rating: " + rate)
-    console.log("comment: " + comment)
-    console.log(countReview)
-
-    // if(userData){
-    // dispatch(
-    //   postReview({
-    //     byId: userData?.id,
-    //     forId: userforId,
-    //     tripId: tripId,
-    //     role: "DRIVER",
-    //     comment: comment,
-    //     rating: rate,
-    //   })
-    // );
+    }
 
     if (passengersList?.length === countReview){
       if (tripId) {
         dispatch(updateReviewDriver(tripId));
       }
-      showToast();
+
       setTimeout(() => {
           navigation.push('TripRatingPage');
         }, 3000);
@@ -142,6 +139,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
     )
   )
   }
+  {/* <View></View> */}
 </Swiper>
   );
 }

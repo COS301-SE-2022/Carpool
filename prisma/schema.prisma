@@ -29,7 +29,7 @@ model User {
     updatedAt     DateTime @default(now()) @map("updated_at")
     isValidated   Boolean @default(false)
     cellNumber    String @map("cell_number")
-    avgRating     Int @default(0)
+    avgRating     Float @default(0)
 
     byReviews     Review[] @relation("by_review")
     forReviews    Review[] @relation("for_review")
@@ -41,6 +41,17 @@ model User {
     sender        Message[] @relation("sender")
     receiver      Message[] @relation("receiver")
     @@map("user")
+}
+
+model AdminUser {
+  id        String @id @default(cuid())
+  name      String
+  surname   String
+  email     String @unique
+  password  String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+  @@map("admin_user")
 }
 
 ////////////////////////////////
@@ -136,7 +147,7 @@ model Review {
     tripId      String @map("trip_id")
     role        String
     comment     String
-    rating      String
+    rating      Int
 
     byUser      User @relation(name:"by_review", fields:[byId], references: [id])
     forUser     User @relation(name:"for_review", fields:[forId], references: [id])

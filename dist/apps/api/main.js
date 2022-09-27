@@ -352,6 +352,10 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], User.prototype, "cellNumber", void 0);
 tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Float),
+    tslib_1.__metadata("design:type", Number)
+], User.prototype, "avgRating", void 0);
+tslib_1.__decorate([
     (0, graphql_1.Field)(() => Boolean),
     tslib_1.__metadata("design:type", Boolean)
 ], User.prototype, "isValidated", void 0);
@@ -2218,7 +2222,8 @@ TripsModule = tslib_1.__decorate([
             service_2.UpdatePassengerReviewsHandler,
             service_2.UpdateDriverReviewsHandler,
             service_2.CreateReviewHandler,
-            service_2.FindAllPassengersHandler
+            service_2.FindAllPassengersHandler,
+            service_2.UpdateAverageRatingCommandHandler
         ],
     })
 ], TripsModule);
@@ -2231,7 +2236,7 @@ exports.TripsModule = TripsModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.TripsResolver = void 0;
 const tslib_1 = __webpack_require__("tslib");
@@ -2405,6 +2410,11 @@ let TripsResolver = class TripsResolver {
     endTrip(tripId) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
             return yield this.tripsService.endTrip(tripId);
+        });
+    }
+    updateAverageRating(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.tripsService.updateAverageRating(id);
         });
     }
 };
@@ -2610,6 +2620,13 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [String]),
     tslib_1.__metadata("design:returntype", typeof (_5 = typeof Promise !== "undefined" && Promise) === "function" ? _5 : Object)
 ], TripsResolver.prototype, "endTrip", null);
+tslib_1.__decorate([
+    (0, graphql_1.Mutation)(() => entities_1.User),
+    tslib_1.__param(0, (0, graphql_1.Args)('id')),
+    tslib_1.__metadata("design:type", Function),
+    tslib_1.__metadata("design:paramtypes", [String]),
+    tslib_1.__metadata("design:returntype", typeof (_6 = typeof Promise !== "undefined" && Promise) === "function" ? _6 : Object)
+], TripsResolver.prototype, "updateAverageRating", null);
 TripsResolver = tslib_1.__decorate([
     (0, graphql_1.Resolver)(() => entities_2.Trip),
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof service_1.TripsService !== "undefined" && service_1.TripsService) === "function" ? _a : Object, typeof (_b = typeof service_2.AuthService !== "undefined" && service_2.AuthService) === "function" ? _b : Object])
@@ -2896,7 +2913,7 @@ exports.PickupLocationInput = PickupLocationInput;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.ReviewInput = exports.Reviews = void 0;
+exports.AverageRatingUpdate = exports.ReviewInput = exports.Reviews = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 let Reviews = class Reviews {
@@ -2926,8 +2943,8 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], Reviews.prototype, "comment", void 0);
 tslib_1.__decorate([
-    (0, graphql_1.Field)(),
-    tslib_1.__metadata("design:type", String)
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    tslib_1.__metadata("design:type", Number)
 ], Reviews.prototype, "rating", void 0);
 Reviews = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
@@ -2956,13 +2973,27 @@ tslib_1.__decorate([
     tslib_1.__metadata("design:type", String)
 ], ReviewInput.prototype, "comment", void 0);
 tslib_1.__decorate([
-    (0, graphql_1.Field)(),
-    tslib_1.__metadata("design:type", String)
+    (0, graphql_1.Field)(() => graphql_1.Int),
+    tslib_1.__metadata("design:type", Number)
 ], ReviewInput.prototype, "rating", void 0);
 ReviewInput = tslib_1.__decorate([
     (0, graphql_1.InputType)()
 ], ReviewInput);
 exports.ReviewInput = ReviewInput;
+let AverageRatingUpdate = class AverageRatingUpdate {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], AverageRatingUpdate.prototype, "forid", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.Float),
+    tslib_1.__metadata("design:type", Number)
+], AverageRatingUpdate.prototype, "avgRating", void 0);
+AverageRatingUpdate = tslib_1.__decorate([
+    (0, graphql_1.InputType)()
+], AverageRatingUpdate);
+exports.AverageRatingUpdate = AverageRatingUpdate;
 
 
 /***/ }),
@@ -3388,7 +3419,7 @@ let TripsRepository = class TripsRepository {
                     tripId: tripId,
                     role: role,
                     comment: comment,
-                    rating: rating,
+                    rating: parseInt(rating),
                 },
             });
         });
@@ -3586,6 +3617,26 @@ let TripsRepository = class TripsRepository {
             });
         });
     }
+    updateAverageRating(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const aggregations = yield this.prisma.review.aggregate({
+                _avg: {
+                    rating: true,
+                },
+                where: {
+                    forId: id,
+                },
+            });
+            return this.prisma.user.update({
+                where: {
+                    id: id,
+                },
+                data: {
+                    avgRating: aggregations._avg.rating,
+                },
+            });
+        });
+    }
 };
 TripsRepository = tslib_1.__decorate([
     (0, common_1.Injectable)(),
@@ -3636,9 +3687,9 @@ exports.ApiTripsServiceFeatureModule = ApiTripsServiceFeatureModule;
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.EndTripHandler = exports.StartTripHandler = exports.DeclineTripRequestHandler = exports.AcceptTripRequestHandler = exports.TripsDeleteHandler = exports.BookingUpdatePaymentStatusHandler = exports.UpdateDriverReviewsHandler = exports.UpdatePassengerReviewsHandler = exports.TripsUpdateHandler = exports.BookTripHandler = exports.CreateReviewHandler = exports.TripsCreateHandler = void 0;
+exports.UpdateAverageRatingCommandHandler = exports.EndTripHandler = exports.StartTripHandler = exports.DeclineTripRequestHandler = exports.AcceptTripRequestHandler = exports.TripsDeleteHandler = exports.BookingUpdatePaymentStatusHandler = exports.UpdateDriverReviewsHandler = exports.UpdatePassengerReviewsHandler = exports.TripsUpdateHandler = exports.BookTripHandler = exports.CreateReviewHandler = exports.TripsCreateHandler = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const repository_1 = __webpack_require__("./libs/api/trips/repository/data-access/src/index.ts");
 const cqrs_1 = __webpack_require__("@nestjs/cqrs");
@@ -3840,6 +3891,22 @@ EndTripHandler = tslib_1.__decorate([
     tslib_1.__metadata("design:paramtypes", [typeof (_m = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _m : Object])
 ], EndTripHandler);
 exports.EndTripHandler = EndTripHandler;
+let UpdateAverageRatingCommandHandler = class UpdateAverageRatingCommandHandler {
+    constructor(tripsRepository) {
+        this.tripsRepository = tripsRepository;
+    }
+    execute(command) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            const { id, } = command;
+            return yield this.tripsRepository.updateAverageRating(id);
+        });
+    }
+};
+UpdateAverageRatingCommandHandler = tslib_1.__decorate([
+    (0, cqrs_1.CommandHandler)(trips_command_command_1.UpdateAverageRatingCommand),
+    tslib_1.__metadata("design:paramtypes", [typeof (_o = typeof repository_1.TripsRepository !== "undefined" && repository_1.TripsRepository) === "function" ? _o : Object])
+], UpdateAverageRatingCommandHandler);
+exports.UpdateAverageRatingCommandHandler = UpdateAverageRatingCommandHandler;
 
 
 /***/ }),
@@ -3849,7 +3916,7 @@ exports.EndTripHandler = EndTripHandler;
 
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.DeclineTripRequestCommand = exports.EndTripCommand = exports.StartTripCommand = exports.AcceptTripRequestCommand = exports.TripsDeleteCommand = exports.UpdateDriverReviewsCommand = exports.UpdatePassengerReviewsCommand = exports.BookingUpdatePaymentStatusCommand = exports.TripsUpdateCommand = exports.BookTripCommand = exports.CreateReviewCommand = exports.TripsCreateCommand = void 0;
+exports.UpdateAverageRatingCommand = exports.DeclineTripRequestCommand = exports.EndTripCommand = exports.StartTripCommand = exports.AcceptTripRequestCommand = exports.TripsDeleteCommand = exports.UpdateDriverReviewsCommand = exports.UpdatePassengerReviewsCommand = exports.BookingUpdatePaymentStatusCommand = exports.TripsUpdateCommand = exports.BookTripCommand = exports.CreateReviewCommand = exports.TripsCreateCommand = void 0;
 class TripsCreateCommand {
     constructor(driver, tripDate, seatsAvailable, price, status, startLocationAddress, startLocationLongitude, startLocationLatitude, destinationAddress, destinationLongitude, destinationLatitude) {
         this.driver = driver;
@@ -3948,6 +4015,12 @@ class DeclineTripRequestCommand {
     }
 }
 exports.DeclineTripRequestCommand = DeclineTripRequestCommand;
+class UpdateAverageRatingCommand {
+    constructor(id) {
+        this.id = id;
+    }
+}
+exports.UpdateAverageRatingCommand = UpdateAverageRatingCommand;
 
 
 /***/ }),
@@ -4442,17 +4515,17 @@ let TripsService = class TripsService {
             return yield this.queryBus.execute(new trips_query_query_1.FindAllTripRequestsQuery(userId));
         });
     }
+    updateAverageRating(id) {
+        return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            return yield this.commandBus.execute(new trips_command_command_1.UpdateAverageRatingCommand(id));
+        });
+    }
 };
 TripsService = tslib_1.__decorate([
     (0, common_1.Injectable)(),
     tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof cqrs_1.QueryBus !== "undefined" && cqrs_1.QueryBus) === "function" ? _a : Object, typeof (_b = typeof cqrs_1.CommandBus !== "undefined" && cqrs_1.CommandBus) === "function" ? _b : Object])
 ], TripsService);
 exports.TripsService = TripsService;
-var Role;
-(function (Role) {
-    Role["PASSENGER"] = "PASSENGER";
-    Role["DRIVER"] = "DRIVER";
-})(Role || (Role = {}));
 
 
 /***/ }),

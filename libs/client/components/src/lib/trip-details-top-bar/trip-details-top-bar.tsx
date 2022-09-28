@@ -76,7 +76,7 @@ export function TripDetailsTopBar({ tripId, userId, trip, onPress}: props) {
       </View>
       <Pressable>
         <View style={[styles.shadow, styles.cancelButton]}>
-          <Icons name="cancel" color="#ff0000" size={30} onPress={cancel}/>
+          <Icons name="cancel" color="#fff" size={30} onPress={cancel}/>
         </View>
       </Pressable>
     </View>

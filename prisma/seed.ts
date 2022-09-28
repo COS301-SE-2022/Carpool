@@ -206,8 +206,8 @@ async function main() {
   hashedPassword = await bcrypt.hash('Carpool998', salt);
   const passenger5 = await prisma.user.create({
     data: {
-      name: 'Sanjay',
-      surname: 'Mckinney',
+      name: 'Kiara',
+      surname: 'Smith',
       email: 'u87975564@mandela.ac.za',
       university: 'Nelson Mandela University',
       studentNumber: '87975564',
@@ -315,8 +315,8 @@ async function main() {
           {
             address:
               'University Of Johannesburg, University Road, Auckland Park, Johannesburg, South Africa',
-            latitude: '-25.8149972',
-            longitude: '28.3155101',
+            latitude: '-26.1840135',
+            longitude: '27.9978102',
           },
         ],
       },

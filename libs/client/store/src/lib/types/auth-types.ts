@@ -1,3 +1,9 @@
+export type ImageUploadState = {
+  image: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type UserState = {
   user: User | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -60,6 +66,7 @@ export type UserProfile = {
   university: string;
   studentNumber: string;
   cellNumber: string;
+  profilePic: string;
 };
 
 export type UpdateUserType = {

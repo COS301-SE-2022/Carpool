@@ -4,11 +4,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   // imports: [ApiShellFeatureModule, ConfigModule.forRoot()],
   imports: [
     ApiShellFeatureModule,
+    AppService,
     MailerModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({
@@ -35,5 +38,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     }),
     ConfigModule.forRoot(),
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

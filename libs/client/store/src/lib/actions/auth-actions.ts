@@ -9,6 +9,7 @@ import {
   DRIVER_REGISTER,
   FORGOT_PASSWORD,
   RESET_PASSWORD,
+  UPDATE_IMAGE,
 } from '../queries/auth-queries';
 import * as SecureStore from 'expo-secure-store';
 import { User, UserProfile, Driver } from '../types/auth-types';
@@ -102,6 +103,54 @@ export const login = createAsyncThunk<User, UserLogin, { rejectValue: Error }>(
     return res;
   }
 );
+
+type ImageUploadType = {
+  image: FormData;
+  id: string;
+};
+
+export const uploadImage = createAsyncThunk<
+  string,
+  ImageUploadType,
+  { rejectValue: Error }
+>('upload/image', async (imageUpload: ImageUploadType, thunkApi) => {
+  const response = await axios.post(
+    `http://${host}:3333/api`,
+    imageUpload.image,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  let res = response.data.key;
+
+  console.log(res);
+
+  const resp = await axios.post(`http://${host}:3333/graphql`, {
+    query: UPDATE_IMAGE,
+    variables: {
+      id: imageUpload.id,
+      image: `http://localhost:3333/api/${res}`,
+    },
+  });
+
+  console.log(resp);
+
+  res = resp.data.data.updateUserImage.profilePic;
+
+  return res;
+});
 
 export const fetchUserProfile = createAsyncThunk<
   UserProfile,

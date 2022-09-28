@@ -19,6 +19,15 @@ export const USER_PROFILE = `
       university
       studentNumber
       cellNumber
+      profilePic
+   }
+  }
+`;
+
+export const UPDATE_IMAGE = `
+  mutation ($id: String!, $image: String!) {
+   updateUserImage(id: $id, image: $image) {
+      profilePic
    }
   }
 `;

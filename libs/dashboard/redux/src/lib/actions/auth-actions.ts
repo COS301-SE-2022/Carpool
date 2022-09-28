@@ -34,7 +34,7 @@ export const login = createAsyncThunk<
 
   const res = response.data.data.adminLogin;
 
-  localStorage.setItem('userInfo', JSON.stringify(res.data));
+  localStorage.setItem('userInfo', JSON.stringify(res));
 
   return res;
 });

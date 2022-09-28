@@ -24,6 +24,23 @@ export class AuthRepository {
     });
   }
 
+  async updateUserImage(id: string, image: string): Promise<User | null> {
+    const user = await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        profilePic: image,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with id ${id} does not exist`);
+    }
+  }
+
   async findTotalUsers(): Promise<number> {
     return this.prisma.user.count();
   }

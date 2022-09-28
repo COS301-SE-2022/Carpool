@@ -56,6 +56,8 @@ export function SearchPage({ navigation }: SearchPageProps) {
           placeholder="Search"
           fetchDetails={true}
           onPress={(data, details = null) => {
+            console.log(data);
+            console.log(details);
             setOrigin({
               address: data.description,
               latitude: `${details?.geometry.location.lat}`,

@@ -101,6 +101,7 @@ query($id: String!) {
     studentNumber
     cellNumber
     isDriver
+    avgRating
     createdAt
     tripsCreated {
       tripId

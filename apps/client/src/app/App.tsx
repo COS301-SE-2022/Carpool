@@ -52,7 +52,7 @@ import {
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
-import * as SecureStore from 'expo-secure-store';
+import { createUploadLink } from 'apollo-upload-client';
 
 export type RootStackParamList = {
   HomePage;
@@ -354,6 +354,10 @@ const httpLink = new HttpLink({
   uri: 'http://localhost:3333/graphql',
 });
 
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:3333/graphql',
+});
+
 const wsLink = new GraphQLWsLink(
   createClient({
     url: 'ws://localhost:3333/graphql',
@@ -369,7 +373,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink
+  uploadLink
 );
 
 const client = new ApolloClient({
@@ -378,8 +382,6 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
-  // SecureStore.deleteItemAsync('user');
-
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>

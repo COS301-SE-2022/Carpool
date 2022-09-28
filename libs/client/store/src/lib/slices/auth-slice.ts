@@ -6,6 +6,7 @@ import {
   UserState,
   ForgotPasswordState,
   CheckCodeState,
+  ImageUploadState,
 } from '../types/auth-types';
 import {
   login,
@@ -19,6 +20,7 @@ import {
   forgotPassword,
   resetPasswordCode,
   resetPassword,
+  uploadImage,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -146,6 +148,39 @@ export const forgotPasswordSlice = createSlice({
         state.error = null;
       })
       .addCase(forgotPassword.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const imageUploadSlice = createSlice({
+  name: 'upload',
+  initialState: {
+    image: null,
+    status: 'idle',
+    error: null,
+  } as ImageUploadState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadImage.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(uploadImage.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.image = action.payload;
+        state.error = null;
+      })
+      .addCase(uploadImage.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {

@@ -1,5 +1,6 @@
 import { Booking, Trip } from '@carpool/api/trips/entities';
 import { Field, ObjectType, ID, InputType } from '@nestjs/graphql';
+import { Stream } from 'stream';
 
 @ObjectType()
 export class AdminUser {
@@ -23,6 +24,21 @@ export class AdminUser {
 
   @Field(() => Date)
   updatedAt: Date;
+}
+
+@InputType()
+export class Upload {
+  @Field()
+  filename: string;
+
+  @Field()
+  mimetype: string;
+
+  @Field()
+  encoding: string;
+
+  @Field(() => Stream)
+  createReadStream: Stream;
 }
 
 @ObjectType()

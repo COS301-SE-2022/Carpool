@@ -38,6 +38,8 @@ model User {
     driver        Driver? @relation("driver_id")
     bookings      Booking[]
 
+    notifications Notification[]
+
     sender        Message[] @relation("sender")
     receiver      Message[] @relation("receiver")
     @@map("user")
@@ -52,6 +54,19 @@ model AdminUser {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
   @@map("admin_user")
+}
+
+model Notification {
+  id        String @id @default(cuid())
+  userId    String @map("user_id")
+  message   String
+  type      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  user      User @relation(fields: [userId], references: [id])
+
+  @@map("notification")
 }
 
 ////////////////////////////////

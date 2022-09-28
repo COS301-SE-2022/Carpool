@@ -7,6 +7,7 @@ import {
   UserVerifyCommand,
   DriverRegisterCommand,
   ResetPasswordCommand,
+  UpdateUserImageCommand,
 } from './auth-command.command';
 import {
   UserInput,
@@ -91,6 +92,17 @@ export class UserUpdateHandler implements ICommandHandler<UserUpdateCommand> {
     user.cellNumber = cellNumber;
 
     return await this.authRepository.updateUser(user);
+  }
+}
+
+@CommandHandler(UpdateUserImageCommand)
+export class UpdateUserImageHandler
+  implements ICommandHandler<UpdateUserImageCommand>
+{
+  constructor(private readonly authRepository: AuthRepository) {}
+
+  async execute(command: UpdateUserImageCommand): Promise<User | null> {
+    return await this.authRepository.updateUserImage(command.id, command.image);
   }
 }
 

@@ -20,6 +20,7 @@ import {
 import { DriversService } from '@carpool/api/drivers/service';
 import { TripsService } from '@carpool/api/trips/service';
 import { Trip, Booking } from '@carpool/api/trips/entities';
+
 @Resolver(() => User)
 export class AuthResolver {
   constructor(
@@ -41,6 +42,14 @@ export class AuthResolver {
   @ResolveField(() => Driver)
   async driver(@Root() user: User): Promise<Driver> {
     return await this.driversService.findDriverProfile(user.id);
+  }
+
+  @Mutation(() => User)
+  async updateUserImage(
+    @Args('id') id: string,
+    @Args('image') image: string
+  ): Promise<User> {
+    return await this.authService.updateUserImage(id, image);
   }
 
   @Query(() => User)

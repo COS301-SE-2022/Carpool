@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -16,15 +16,20 @@ import {
   AppDispatch,
   logout,
   listTripRequests,
+  uploadImage,
 } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
+import * as ImagePicker from 'react-native-image-picker';
 
 export function UserProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
 
   const userProfile = useSelector((state: RootStore) => state.userProfile);
   const { userProfile: profile, status } = userProfile;
+
+  const uploadImageState = useSelector((state: RootStore) => state.imageUpload);
+  const { status: uploadStatus, image: uploadedImage } = uploadImageState;
 
   const requestsState = useSelector((state: RootStore) => state.tripRequests);
   const { requests, status: requestsStatus } = requestsState;
@@ -35,9 +40,8 @@ export function UserProfile({ navigation }: UserProfileProps) {
   useEffect(() => {
     if (userData) {
       dispatch(fetchUserProfile(userData.id));
-      // dispatch(listTripRequests(userData.id));
     }
-  }, [dispatch, userData]);
+  }, [dispatch, userData, uploadedImage]);
 
   const signOut = () => {
     Alert.alert('Are you sure?', '', [
@@ -63,9 +67,48 @@ export function UserProfile({ navigation }: UserProfileProps) {
     }
   };
 
+  const pickImage = async () => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: true,
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      (response) => {
+        if (
+          response &&
+          response.assets &&
+          response.assets[0].uri &&
+          response.assets[0].type &&
+          response.assets[0].fileName
+        ) {
+          console.log(response.assets[0]);
+
+          const formData = new FormData();
+          formData.append('upload', {
+            uri: response.assets[0].uri,
+            type: response.assets[0].type,
+            name: response.assets[0].fileName,
+          } as unknown as Blob);
+
+          userData &&
+            dispatch(
+              uploadImage({
+                image: formData,
+                id: userData.id,
+              })
+            );
+        }
+      }
+    );
+  };
+
   return (
     <SafeAreaView style={{ height: '100%' }}>
-      {status === 'loading' || requestsStatus === 'loading' ? (
+      {status === 'loading' ||
+      requestsStatus === 'loading' ||
+      uploadStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         profile && (
@@ -104,18 +147,45 @@ export function UserProfile({ navigation }: UserProfileProps) {
                 flex: 3,
               }}
             >
-              <Image
-                source={require('./lighter_grey.png')}
-                resizeMode="contain"
+              <View
                 style={{
-                  width: 100,
-                  height: 100,
                   borderRadius: 50,
-                  borderWidth: 3,
-                  borderColor: '#188aed',
                   marginBottom: 15,
                 }}
-              />
+              >
+                <Image
+                  source={{ uri: profile.profilePic }}
+                  resizeMode="cover"
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 50,
+                    borderWidth: 3,
+                    borderColor: '#188aed',
+                  }}
+                />
+                <Pressable
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    padding: 5,
+                    borderRadius: 50,
+                    backgroundColor: '#fff',
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 2,
+                    },
+                    shadowOpacity: 0.25,
+                    shadowRadius: 3.84,
+                    elevation: 5,
+                  }}
+                  onPress={pickImage}
+                >
+                  <Icon name="pencil-outline" size={20} />
+                </Pressable>
+              </View>
               <Text
                 style={{ fontSize: 20, fontWeight: '600', marginBottom: 20 }}
               >

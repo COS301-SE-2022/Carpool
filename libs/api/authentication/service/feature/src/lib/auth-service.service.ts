@@ -25,6 +25,7 @@ import {
   UserUpdateCommand,
   DriverRegisterCommand,
   ResetPasswordCommand,
+  UpdateUserImageCommand,
 } from './commands/auth-command.command';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -144,6 +145,10 @@ export class AuthService {
         cellNumber
       )
     );
+  }
+
+  async updateUserImage(id: string, image: string): Promise<User | null> {
+    return await this.commandBus.execute(new UpdateUserImageCommand(id, image));
   }
 
   async resetPassword(email: string, password: string): Promise<User | null> {

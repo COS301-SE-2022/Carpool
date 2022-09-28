@@ -7,6 +7,7 @@ import {
   forgotPasswordSlice,
   checkCodeSlice,
   resetPasswordSlice,
+  imageUploadSlice,
 } from './slices/auth-slice';
 import {
   tripListSlice,
@@ -77,6 +78,7 @@ const RootReducer = combineReducers({
   forgotPassword: forgotPasswordSlice.reducer,
   checkCode: checkCodeSlice.reducer,
   resetPassword: resetPasswordSlice.reducer,
+  imageUpload: imageUploadSlice.reducer,
 });
 
 export default RootReducer;

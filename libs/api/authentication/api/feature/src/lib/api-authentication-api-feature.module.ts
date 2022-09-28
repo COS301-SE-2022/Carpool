@@ -20,6 +20,7 @@ import {
   FindAllUsersHandler,
   AdminLoginHandler,
   FindTopUsersHandler,
+  UpdateUserImageHandler,
 } from '@carpool/api/authentication/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -34,6 +35,7 @@ import { TripsService } from '@carpool/api/trips/service';
     DriverRegisterHandler,
     AdminLoginHandler,
     TripsService,
+    UpdateUserImageHandler,
     FindTopUsersHandler,
     FindAllUsersHandler,
     FindTotalDriversHandler,

@@ -87,6 +87,7 @@ export type UserProfile = {
   email: string;
   university: string;
   studentNumber: string;
+  avgRating: number;
   cellNumber: string;
   isDriver: boolean;
   createdAt: string;

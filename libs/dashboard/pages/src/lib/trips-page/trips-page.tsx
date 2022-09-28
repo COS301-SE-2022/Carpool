@@ -38,8 +38,10 @@ export function TripsPage() {
   const [ID, setID] = useState('');
 
   useEffect(() => {
-    dispatch(fetchAllTrips());
-  }, [dispatch]);
+    if (!trips) {
+      dispatch(fetchAllTrips());
+    }
+  }, [dispatch, trips]);
 
   const toggleDrawer = () => {
     setOpen(true);

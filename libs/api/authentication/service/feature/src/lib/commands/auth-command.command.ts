@@ -41,3 +41,7 @@ export class ResetPasswordCommand {
     public readonly password: string
   ) {}
 }
+
+export class UpdateUserImageCommand {
+  constructor(public readonly id: string, public readonly image: string) {}
+}

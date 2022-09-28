@@ -123,7 +123,7 @@ export function UserProfile() {
               <Stack sx={{ flex: 3 }}>
                 <Grid container sx={{ height: '100%', mt: 2, mb: 2 }}>
                   <DashboardSmallCard
-                    value="5.0"
+                    value={`${userProfile.avgRating}`}
                     title="Rating"
                     icon={
                       <ThumbUpIcon sx={{ color: '#fff' }} fontSize="large" />

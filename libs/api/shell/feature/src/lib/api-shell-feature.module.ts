@@ -16,10 +16,11 @@ import { DriversModule } from '@carpool/api/drivers/api/feature';
     TripsModule,
     BookingsModule,
     MessageModule,
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       autoSchemaFile: true,
       // playground: true,
       // introspection: true,
+      uploads: false,
       driver: ApolloDriver,
       subscriptions: {
         'graphql-ws': true,

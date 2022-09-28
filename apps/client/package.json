@@ -48,6 +48,9 @@
     "react-native-geolocation-service": "*",
     "@mapbox/mapbox-gl-directions": "*",
     "react-native-bottom-drawer-view": "*",
-    "react-native-swiper": "*"
+    "react-native-swiper": "*",
+    "react-text-toxicity": "*",
+    "react-native-image-picker": "*",
+    "apollo-upload-client": "*"
   }
 }

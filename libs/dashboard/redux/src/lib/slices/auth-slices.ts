@@ -4,9 +4,14 @@ import { UserState } from '../types/dashboard-types';
 
 const userInfoFromStorage = localStorage.getItem('userInfo');
 
-console.log('userInfo', userInfoFromStorage);
+let userInfo;
 
-const userInfo = userInfoFromStorage ? JSON.parse(userInfoFromStorage) : null;
+if (userInfoFromStorage === 'undefined') {
+  console.log('undefined');
+  userInfo = null;
+} else {
+  userInfo = userInfoFromStorage ? JSON.parse(userInfoFromStorage) : null;
+}
 
 export const initialState = {
   user: userInfo,

@@ -346,6 +346,8 @@ PODS:
     - Google-Maps-iOS-Utils (= 4.1.0)
     - GoogleMaps (= 6.1.1)
     - React-Core
+  - react-native-image-picker (4.10.0):
+    - React-Core
   - react-native-mapbox-gl (8.6.0-beta.0):
     - Mapbox-iOS-SDK (~> 5.9.0)
     - React
@@ -512,6 +514,7 @@ DEPENDENCIES:
   - react-native-date-picker (from `../../../node_modules/react-native-date-picker`)
   - react-native-geolocation-service (from `../../../node_modules/react-native-geolocation-service`)
   - react-native-google-maps (from `../node_modules/react-native-maps`)
+  - react-native-image-picker (from `../../../node_modules/react-native-image-picker`)
   - "react-native-mapbox-gl (from `../../../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-maps (from `../../../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../../../node_modules/react-native-safe-area-context`)
@@ -618,6 +621,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-geolocation-service"
   react-native-google-maps:
     :path: "../node_modules/react-native-maps"
+  react-native-image-picker:
+    :path: "../../../node_modules/react-native-image-picker"
   react-native-mapbox-gl:
     :path: "../../../node_modules/@react-native-mapbox-gl/maps"
   react-native-maps:
@@ -716,6 +721,7 @@ SPEC CHECKSUMS:
   react-native-date-picker: 9088350e06918f7d842a34c171acadc66583cb94
   react-native-geolocation-service: c0efb872258ed9240f1003a70fca9e9757e5c785
   react-native-google-maps: 8231ffa015bf8b222c2e2661fa9163cdb609a224
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-mapbox-gl: b92795f61ff130323e6d25693bd68b081e105455
   react-native-maps: 8b8bfada2c86205a7f5a07dd1f92f29b33ea83aa
   react-native-safe-area-context: ebf8c413eb8b5f7c392a036a315eb7b46b96845f

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { Message } from '@carpool/client/store';
 import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
+import { getTime } from '@carpool/client/shared/utilities';
 
 const GET_MESSAGES = gql`
   query GetMessages($senderId: String!, $receiverId: String!) {
@@ -161,7 +162,7 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                 style={{ color: '#fff', flex: 1 }}
                 onPress={() => navigation.goBack()}
               />
-              <View style={{ flex: 4 }}>
+              <View style={{ flex: 5 }}>
                 <Text style={styles.textSmallWhite} numberOfLines={2}>
                   {name}
                 </Text>
@@ -186,8 +187,13 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                       {
                         backgroundColor: '#188aed',
                         paddingVertical: 6,
+                        paddingTop: 10,
                         paddingHorizontal: 10,
                         borderRadius: 8,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        // justifyContent: 'flex-end',
                       },
                     ]}
                   >
@@ -197,15 +203,24 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                         {
                           color: '#fff',
                           lineHeight: 20,
+                          fontSize: 15,
                         },
                       ]}
                     >
                       {message.message}
                     </Text>
+                    <Text
+                      style={{
+                        color: '#dbdbdb',
+                        lineHeight: 20,
+                        fontSize: 12,
+                        marginLeft: 10,
+                        textAlign: 'right',
+                      }}
+                    >
+                      {getTime(message.createdAt)}
+                    </Text>
                   </View>
-                  <Text style={{ color: '#999', lineHeight: 20, fontSize: 12 }}>
-                    {message.createdAt}
-                  </Text>
                 </View>
               ))}
             </View>

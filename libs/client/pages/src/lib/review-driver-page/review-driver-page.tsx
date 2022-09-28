@@ -28,20 +28,12 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
   const allPassengers = useSelector((state: RootStore) => state.allPassengers);
   const { passengers : passengersList, status: allPassengersStatus, error: allPassengersError } = allPassengers;
 
-
   useEffect(() => {
     if (userData) {
       dispatch(listAllPassengers(tripId));
     }
 
-  }, [dispatch, tripId, userData]);
-
-  const checkReviewsTotal = () => {
-    if (passengersList?.length === countReview){
-      return true
-    }
-    return false
-  }
+  }, [dispatch, userData, tripId]);
 
   const ratingCompleted = (rating: number) => {
     setRate(`${rating}`);
@@ -76,7 +68,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
     setTimeout(() => {
       dispatch(updateAvgRating(userforId));
       showToast();
-    }, 5000);
+    }, 4000);
 
     }
 
@@ -87,7 +79,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
 
       setTimeout(() => {
           navigation.push('TripRatingPage');
-        }, 3000);
+        }, 4000);
     }
 
 
@@ -139,7 +131,7 @@ export function ReviewDriverPage({ route, navigation }: ReviewDriverPageProps) {
     )
   )
   }
-  {/* <View></View> */}
+   {/* <View></View> */}
 </Swiper>
   );
 }

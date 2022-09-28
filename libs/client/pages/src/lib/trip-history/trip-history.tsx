@@ -175,6 +175,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
                   image={trip.driver.profilePic}
                   date={formatDate(trip.createdAt)}
                   distance=""
+                  rating={trip.driver.avgRating}
                   onPress={() => viewTrip(trip.tripId)}
                 />
               ))
@@ -204,6 +205,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
                 image={trip.driver.profilePic}
                 date={formatDate(trip.createdAt)}
                 distance=""
+                rating={trip.driver.avgRating}
                 onPress={() => viewTrip(trip.tripId)}
               />
             ))

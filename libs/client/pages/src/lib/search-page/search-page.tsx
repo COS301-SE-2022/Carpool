@@ -22,6 +22,8 @@ export function SearchPage({ navigation }: SearchPageProps) {
   const [destination, setDestination] = useState({} as address);
 
   const search = () => {
+    console.log("Start: ", origin, origin.latitude, origin.longitude);
+    console.log("Destination: ", destination, destination.latitude, destination.longitude);
     navigation.navigate('SearchResults', {
       date: date.toISOString(),
       startLongitude: origin.longitude,

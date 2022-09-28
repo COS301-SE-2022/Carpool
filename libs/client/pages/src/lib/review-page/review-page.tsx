@@ -20,6 +20,8 @@ import {
 import { AirbnbRating } from 'react-native-ratings';
 import { getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
 import Toast from 'react-native-toast-message';
+
+
 export function ReviewPage({ route, navigation }: ReviewPageProps) {
   const dispatch: AppDispatch = useDispatch();
 
@@ -45,14 +47,27 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
     if (userData) {
       dispatch(findBookingId({ tripId, userId: userData.id }));
     }
-  }, [dispatch, userData, tripId, error]);
+  }, [dispatch, userData, tripId]);
 
   const ratingCompleted = (rating: number) => {
     setRate(`${rating}`);
-    console.log("Rating is: " + rating)
-    setModalVisible(true)
+    console.log("Rating is: " + rating);
+    setModalVisible(true);
   };
-
+  async function post() {
+    if (userData) {
+    await dispatch(
+      postReview({
+        byId: userData.id,
+        forId: driverId,
+        tripId: tripId,
+        role: 'PASSENGER',
+        comment: comment,
+        rating: rate,
+      })
+    );
+  }
+}
   const showToast = () => {
     Toast.show({
       type: 'success',
@@ -61,27 +76,17 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
     });
   };
 
-
   const submitHandler = () => {
     console.log('The review has been posted');
-    if (userData) {
-      dispatch(
-        postReview({
-          byId: userData.id,
-          forId: driverId,
-          tripId: tripId,
-          role: 'PASSENGER',
-          comment: comment,
-          rating: rate,
-        })
-      );
-    }
+    post();
+
+
     setTimeout(() => {
       if (bookingId) {
         dispatch(updateReviewPassenger(bookingId));
         dispatch(updateAvgRating(driverId));
       }
-    }, 3000)
+    }, 5000)
 
     showToast();
     setTimeout(() => {

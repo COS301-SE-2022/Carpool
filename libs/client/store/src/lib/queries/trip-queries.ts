@@ -27,7 +27,8 @@ query ($id: String!) {
     driver {
 			profilePic,
       name,
-      surname
+      surname,
+      avgRating
     }
     coordinates {
 			address,
@@ -45,7 +46,8 @@ export const SEARCH_RESULTS = `
     driver {
 			profilePic,
       name,
-      surname
+      surname,
+      avgRating
     }
     coordinates {
 			address,
@@ -63,7 +65,7 @@ export const CONFIRMED_TRIPS = `
     driver {
 			profilePic,
       name,
-      surname
+      surname,
     }
     coordinates {
 			address,
@@ -106,7 +108,8 @@ query ($id: String!) {
     driver {
 			profilePic,
       name,
-      surname
+      surname,
+      avgRating
     }
     coordinates {
 			address,
@@ -125,7 +128,8 @@ query ($id: String!) {
       id,
 			profilePic,
       name,
-      surname
+      surname,
+      avgRating
     }
     coordinates {
 			address,
@@ -159,7 +163,8 @@ query ($id: String!) {
       id,
 			profilePic,
       name,
-      surname
+      surname,
+      avgRating
     }
     coordinates {
 			address,
@@ -200,7 +205,8 @@ export const TRIP_DETAILS = `
          id,
         name,
         surname,
-        profilePic
+        profilePic,
+        avgRating
       },
       passengers {
         userId,

@@ -115,6 +115,7 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
                   image={trip.driver.profilePic}
                   date={trip.tripDate}
                   distance=""
+                  rating={trip.driver.avgRating}
                   onPress={() => viewTrip(trip.tripId)}
                 />
               ))

@@ -461,6 +461,13 @@ export class TripsRepository {
       },
     });
 
+    if(aggregations._avg.rating){
+      console.log(aggregations._avg.rating);
+    }
+    else{
+      console.log("aggregations");
+    }
+
     return this.prisma.user.update({
       where: {
         id: id,

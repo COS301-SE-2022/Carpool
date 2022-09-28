@@ -92,6 +92,7 @@ export type DriverTrip = {
   name: string;
   surname: string;
   profilePic: string;
+  avgRating: string;
 };
 
 export type TripDetails = {

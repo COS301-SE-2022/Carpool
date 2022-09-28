@@ -166,8 +166,10 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                   image={trip.driver.profilePic}
                   date={formatDate(trip.tripDate)}
                   distance=""
+                  rating={trip.driver.avgRating}
                   onPress={() => viewTripDriver(trip.tripId, trip.tripDate, trip.coordinates[1].address)}
                 />
+
               ))
             )
           ) : passengerTrips?.length === 0 ? (
@@ -184,6 +186,7 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                 image={trip.driver.profilePic}
                 date={formatDate(trip.tripDate)}
                 distance=""
+                rating={trip.driver.avgRating}
                 onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.tripDate, trip.coordinates[1].address )}
               />
             ))

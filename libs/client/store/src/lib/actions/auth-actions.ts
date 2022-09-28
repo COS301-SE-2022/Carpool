@@ -44,6 +44,7 @@ export type DriverRegister = {
   userId: string;
   licensePlate: string;
   carModel: string;
+  license: string;
 };
 
 export type Verify = {
@@ -301,6 +302,7 @@ export const registerDriver = createAsyncThunk<
         userId: driver.userId,
         licensePlate: driver.licensePlate,
         carModel: driver.carModel,
+        license: driver.license,
       },
     });
 

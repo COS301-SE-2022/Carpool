@@ -39,7 +39,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
   useEffect(() => {
     if (userData) {
       dispatch(listDriverHistory(userData.id));
-      console.log('Driver History' + driverHistory);
+      // console.log('Driver History' + driverHistory);
     }
   }, [dispatch, userData]);
 

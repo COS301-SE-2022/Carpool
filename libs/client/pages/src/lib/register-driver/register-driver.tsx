@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { RegisterDriverProps } from '../NavigationTypes/navigation-types';
 import {
   Text,
   SafeAreaView,
   View,
   StyleSheet,
-  // Image,
+  Image,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
-import { AppDispatch, RootStore, registerDriver } from '@carpool/client/store';
+import {
+  AppDispatch,
+  RootStore,
+  registerDriver,
+  uploadDriversLicense,
+} from '@carpool/client/store';
 import { Button, Input } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
 import { useDispatch, useSelector } from 'react-redux';
+import * as ImagePicker from 'react-native-image-picker';
+import callGoogleVisionAsync from './helperFunctions';
 
 export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
-  // const { userId } = route.params;
-
   const dispatch: AppDispatch = useDispatch();
 
   const userState = useSelector((state: RootStore) => state.user);
@@ -23,6 +29,11 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
 
   const driverState = useSelector((state: RootStore) => state.driver);
   const { status: driverStatus } = driverState;
+
+  const driverUploadState = useSelector(
+    (state: RootStore) => state.driverUpload
+  );
+  const { status: driverUploadStatus, image: driverImage } = driverUploadState;
 
   const [ID, setID] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
@@ -35,6 +46,12 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
     }
   }, [driverStatus, navigation]);
 
+  // useEffect(() => {
+  //   if (driverImage) {
+  //     setImage(driverImage);
+  //   }
+  // }, [driverImage]);
+
   const submitHandler = () => {
     dispatch(
       registerDriver({
@@ -42,14 +59,54 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
         ID: ID,
         licensePlate: licensePlate,
         carModel: vehicle,
+        license: '',
       })
     );
   };
 
-  const pickImage = () => {
-    console.log('pick image');
-  };
+  const pickImage = async () => {
+    ImagePicker.launchImageLibrary(
+      {
+        mediaType: 'photo',
+        includeBase64: true,
+        maxHeight: 200,
+        maxWidth: 200,
+      },
+      async (response) => {
+        if (
+          response &&
+          response.assets &&
+          response.assets[0].uri &&
+          response.assets[0].type &&
+          response.assets[0].fileName &&
+          response.assets[0].base64
+        ) {
+          console.log(response.assets[0]);
 
+          const formData = new FormData();
+          formData.append('upload', {
+            uri: response.assets[0].uri,
+            type: response.assets[0].type,
+            name: response.assets[0].fileName,
+          } as unknown as Blob);
+
+          const idNo = await callGoogleVisionAsync(response.assets[0].base64);
+
+          setID(idNo);
+
+          // setImage(response.assets[0].uri);
+
+          user &&
+            dispatch(
+              uploadDriversLicense({
+                image: formData,
+                id: user.id,
+              })
+            );
+        }
+      }
+    );
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flexColumn}>
@@ -114,6 +171,49 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
                 iconName="directions-car"
                 iconType="Material"
               />
+              <View
+                style={{
+                  borderWidth: driverImage !== '' ? 0 : 1,
+                  borderStyle: 'dashed',
+                  borderRadius: 15,
+                  height: '20%',
+                  marginTop: 20,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Pressable
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}
+                  onPress={pickImage}
+                >
+                  {driverImage ? (
+                    <Image
+                      source={{ uri: driverImage }}
+                      resizeMode="contain"
+                      style={{
+                        width: 250,
+                        height: 120,
+                      }}
+                    />
+                  ) : (
+                    <Fragment>
+                      <Icon
+                        name="camera"
+                        size={20}
+                        style={{ color: '#808080', marginRight: 5 }}
+                        onPress={() => navigation.goBack()}
+                      />
+                      <Text>Upload Drivers License</Text>
+                    </Fragment>
+                  )}
+                </Pressable>
+              </View>
             </>
           )}
         </View>
@@ -126,7 +226,7 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
             flexDirection: 'column',
           }}
         >
-          <Button title="Select Photo" marginBottom={8} onPress={pickImage} />
+          {/* <Button title="Select Photo" marginBottom={8} onPress={pickImage} /> */}
           <Button title="Submit" marginBottom={8} onPress={submitHandler} />
           <Button title="Cancel" colour="#FF412B" onPress={submitHandler} />
         </View>

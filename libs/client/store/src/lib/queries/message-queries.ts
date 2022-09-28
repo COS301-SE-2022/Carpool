@@ -42,7 +42,8 @@ export const GET_CHATS = `
   query ($userId: String!) {
     getChats(userId: $userId) {
       name,
-      userId
+      userId,
+      profilePic
     }
   }
 `;

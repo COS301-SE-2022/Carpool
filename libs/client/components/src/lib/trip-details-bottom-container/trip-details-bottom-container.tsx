@@ -6,6 +6,8 @@ import {
   Pressable,
   ActivityIndicator,
   TouchableOpacity,
+  Platform,
+  Linking,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconEntypo from 'react-native-vector-icons/Entypo';
@@ -28,11 +30,15 @@ type props = {
   chat: () => void;
   onPress: () => void;
   onPressUser: () => void;
+  onPressStart?: () => void;
 };
 
 type Passenger = {
   userId: string;
   status: string;
+  pickUp: {
+    address: string;
+  };
 };
 
 export function TripDetailsBottomContainer({
@@ -40,12 +46,10 @@ export function TripDetailsBottomContainer({
   type,
   onPress,
   onPressUser,
+  onPressStart,
   userId,
   chat,
 }: props) {
-  console.log(trip);
-  console.log(userId);
-
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
       {trip.status !== 'active' && trip.driver.id !== userId && (
@@ -69,7 +73,7 @@ export function TripDetailsBottomContainer({
               ]}
             >
               <Image
-                source={require('./lighter_grey.png')}
+                source={{ uri: trip.driver.profilePic }}
                 resizeMode="contain"
                 style={styles.image}
               />
@@ -117,7 +121,8 @@ export function TripDetailsBottomContainer({
         </View>
       )}
       {Number(trip.seatsAvailable) === 0 ||
-      new Date(trip.tripDate) < new Date() ? (
+      new Date(trip.tripDate) < new Date() ||
+      trip.status === 'completed' ? (
         <></>
       ) : (
         trip.driver.id !== userId &&
@@ -137,7 +142,10 @@ export function TripDetailsBottomContainer({
           </View>
         )
       )}
-      {trip.driver.id !== userId &&
+      {trip.status === 'completed' ? (
+        <></>
+      ) : (
+        trip.driver.id !== userId &&
         trip.passengers.some(
           (passenger: Passenger) => passenger.userId === userId
         ) && (
@@ -191,117 +199,130 @@ export function TripDetailsBottomContainer({
                 </Pressable>
               </View>
             )}
-            {trip.passengers.some(
-              (passenger: Passenger) =>
-                passenger.userId === userId && passenger.status === 'declined'
-            ) && (
-              <View style={{ flex: 1, marginHorizontal: 3 }}>
-                <Pressable>
-                  <View
-                    style={[
-                      styles.flexRow,
-                      {
-                        backgroundColor: '#999',
-                        borderWidth: 2,
-                        borderRadius: 50,
-                        borderColor: '#ff0000',
-                        padding: 10,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      },
-                    ]}
-                  >
-                    <IconFont
-                      size={15}
-                      name="times-circle"
-                      color="#ff0000"
-                      style={{ marginRight: 10 }}
-                    />
-                    <Text
-                      style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontWeight: '600',
-                        fontSize: 13,
-                      }}
+            {trip.status === 'completed' ? (
+              <></>
+            ) : (
+              trip.passengers.some(
+                (passenger: Passenger) =>
+                  passenger.userId === userId && passenger.status === 'declined'
+              ) && (
+                <View style={{ flex: 1, marginHorizontal: 3 }}>
+                  <Pressable>
+                    <View
+                      style={[
+                        styles.flexRow,
+                        {
+                          backgroundColor: '#999',
+                          borderWidth: 2,
+                          borderRadius: 50,
+                          borderColor: '#ff0000',
+                          padding: 10,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        },
+                      ]}
                     >
-                      Request Declined
-                    </Text>
-                  </View>
-                </Pressable>
-              </View>
+                      <IconFont
+                        size={15}
+                        name="times-circle"
+                        color="#ff0000"
+                        style={{ marginRight: 10 }}
+                      />
+                      <Text
+                        style={{
+                          color: 'white',
+                          textAlign: 'center',
+                          fontWeight: '600',
+                          fontSize: 13,
+                        }}
+                      >
+                        Request Declined
+                      </Text>
+                    </View>
+                  </Pressable>
+                </View>
+              )
             )}
-            {trip.passengers.some(
-              (passenger: Passenger) =>
-                passenger.userId === userId && passenger.status === 'confirmed'
-            ) && (
-              <View style={{ flex: 1, marginHorizontal: 3 }}>
-                <Pressable>
-                  <View
-                    style={[
-                      styles.flexRow,
-                      {
-                        backgroundColor: '#188aed',
-                        borderWidth: 2,
-                        borderRadius: 50,
-                        borderColor: '#188aed',
-                        padding: 8,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      },
-                    ]}
-                  >
-                    <Text
-                      style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontWeight: '600',
-                      }}
+            {trip.status === 'completed' ? (
+              <></>
+            ) : (
+              trip.passengers.some(
+                (passenger: Passenger) =>
+                  passenger.userId === userId &&
+                  passenger.status === 'confirmed'
+              ) && (
+                <View style={{ flex: 1, marginHorizontal: 3 }}>
+                  <Pressable>
+                    <View
+                      style={[
+                        styles.flexRow,
+                        {
+                          backgroundColor: '#188aed',
+                          borderWidth: 2,
+                          borderRadius: 50,
+                          borderColor: '#188aed',
+                          padding: 8,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        },
+                      ]}
                     >
-                      Pay Now
-                    </Text>
-                  </View>
-                </Pressable>
-              </View>
+                      <Text
+                        style={{
+                          color: 'white',
+                          textAlign: 'center',
+                          fontWeight: '600',
+                        }}
+                      >
+                        Pay Now
+                      </Text>
+                    </View>
+                  </Pressable>
+                </View>
+              )
             )}
-            {trip.passengers.some(
-              (passenger: Passenger) =>
-                passenger.userId === userId && passenger.status === 'paid'
-            ) && (
-              <View style={{ flex: 1, marginHorizontal: 3 }}>
-                <Pressable>
-                  <View
-                    style={[
-                      styles.flexRow,
-                      {
-                        backgroundColor: '#bfbfbf',
-                        borderWidth: 2,
-                        borderRadius: 50,
-                        borderColor: '#bfbfbf',
-                        padding: 6.5,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      },
-                    ]}
-                  >
-                    <Icon
-                      size={20}
-                      name="check-circle"
-                      color="#03A61C"
-                      style={{ marginRight: 10 }}
-                    />
-                    <Text
-                      style={{
-                        color: 'white',
-                        textAlign: 'center',
-                        fontWeight: '600',
-                      }}
+            {trip.status === 'completed' ? (
+              <></>
+            ) : (
+              trip.passengers.some(
+                (passenger: Passenger) =>
+                  passenger.userId === userId && passenger.status === 'paid'
+              ) && (
+                <View style={{ flex: 1, marginHorizontal: 3 }}>
+                  <Pressable>
+                    <View
+                      style={[
+                        styles.flexRow,
+                        {
+                          backgroundColor: '#bfbfbf',
+                          borderWidth: 2,
+                          borderRadius: 50,
+                          borderColor: '#bfbfbf',
+                          padding: 6.5,
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        },
+                      ]}
                     >
-                      Confirmed
-                    </Text>
-                  </View>
-                </Pressable>
-              </View>
+                      <Icon
+                        size={20}
+                        name="check-circle"
+                        color="#03A61C"
+                        style={{ marginRight: 10 }}
+                      />
+                      <Text
+                        style={{
+                          color: 'white',
+                          textAlign: 'center',
+                          fontWeight: '600',
+                        }}
+                      >
+                        Confirmed
+                      </Text>
+                    </View>
+                  </Pressable>
+                </View>
+              )
             )}
             <View
               style={{
@@ -339,8 +360,11 @@ export function TripDetailsBottomContainer({
               </Pressable>
             </View>
           </View>
-        )}
-      {trip.driver.id === userId ? (
+        )
+      )}
+      {trip.status === 'completed' ? (
+        <></>
+      ) : trip.driver.id === userId ? (
         <View
           style={[
             styles.flexCol,
@@ -364,7 +388,7 @@ export function TripDetailsBottomContainer({
           </Text>
           <Button title="Start Trip" onPress={onPress} /> */}
           <View style={{ flex: 1, marginHorizontal: 3 }}>
-            <Pressable>
+            <Pressable onPress={onPressStart}>
               <View
                 style={[
                   styles.flexRow,

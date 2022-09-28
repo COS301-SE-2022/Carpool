@@ -32,6 +32,7 @@ import {
   ReviewDriverPage,
   ForgotPasswordCodePage,
   NewPasswordPage,
+  NotificationsPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -53,6 +54,8 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
 import { createUploadLink } from 'apollo-upload-client';
+import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 export type RootStackParamList = {
   HomePage;
@@ -81,6 +84,7 @@ export type RootStackParamList = {
   DriverActiveTrip;
   RegisterDriver;
   ReviewPage;
+  NotificationsPage;
   PayfastPage;
   ChatList;
   TripRatingPage;
@@ -285,9 +289,56 @@ const AuthNav = () => {
   );
 };
 
+const NOTIF_SUB = gql`
+  subscription Subscription {
+    requestReceived {
+      message
+      userId
+    }
+  }
+`;
+
+const TRIP_STARTED = gql`
+  subscription Subscription {
+    tripStarted {
+      message
+      userId
+    }
+  }
+`;
+
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
+
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'info',
+      position: 'top',
+      text1: message,
+    });
+  };
+
+  const { data: subData } = useSubscription(NOTIF_SUB, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      if (data && user.id === data.requestReceived.userId) {
+        showToast(data.requestReceived.message);
+      }
+    },
+  });
+
+  const { data } = useSubscription(TRIP_STARTED, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log(data.tripStarted);
+      if (data) {
+        data.tripStarted.map((notif) => {
+          if (user.id === notif.userId) {
+            showToast(notif.message);
+          }
+        });
+      }
+    },
+  });
 
   return (
     <NavigationContainer theme={navTheme}>
@@ -319,6 +370,10 @@ const AppWrapper = () => {
           /> */}
           <Stack.Screen name="TripDetails" component={TripDetails} />
           <Stack.Screen name="SearchResults" component={SearchResults} />
+          <Stack.Screen
+            name="NotificationsPage"
+            component={NotificationsPage}
+          />
           {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
           <Stack.Screen name="SearchPage" component={SearchPage} />
         </Stack.Group> */}

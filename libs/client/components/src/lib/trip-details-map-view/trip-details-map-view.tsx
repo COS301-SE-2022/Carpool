@@ -8,9 +8,15 @@ import Toast from 'react-native-toast-message';
 
 type props = {
   trip: TripDetailsType;
+  active?: boolean;
 };
 
-export function TripDetailsMapView({ trip }: props) {
+type WaypointsType = {
+  latitude: number;
+  longitude: number;
+};
+
+export function TripDetailsMapView({ trip, active }: props) {
   const GOOGLE_MAPS_APIKEY = 'AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg';
 
   const { width, height } = Dimensions.get('window');
@@ -24,6 +30,15 @@ export function TripDetailsMapView({ trip }: props) {
       text1: message,
     });
   };
+
+  const waypoints: WaypointsType[] = [];
+
+  trip.passengers.map((passenger) => {
+    waypoints.push({
+      latitude: parseFloat(passenger.pickUp.latitude),
+      longitude: parseFloat(passenger.pickUp.longitude),
+    });
+  });
 
   return (
     <View
@@ -62,6 +77,9 @@ export function TripDetailsMapView({ trip }: props) {
           }}
           pinColor="#188aed"
         />
+        {waypoints.map((waypoint, index) => (
+          <Marker key={index} coordinate={waypoint} pinColor="#188aed" />
+        ))}
         {trip.coordinates.length >= 2 && (
           <MapViewDirections
             origin={{
@@ -72,6 +90,7 @@ export function TripDetailsMapView({ trip }: props) {
               latitude: parseFloat(trip.coordinates[1].latitude),
               longitude: parseFloat(trip.coordinates[1].longitude),
             }}
+            waypoints={waypoints}
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={3}
             strokeColor="#188aed"

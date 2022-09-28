@@ -20,6 +20,7 @@ export const USER_PROFILE = `
       studentNumber
       cellNumber
       profilePic
+      isDriver
    }
   }
 `;
@@ -61,8 +62,8 @@ export const USER_REGISTER = `
 `;
 
 export const DRIVER_REGISTER = `
-  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!) {
-      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId) {
+  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!, $license: String!, idNumber: String!) {
+      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId, license: $license, idNumber: $idNumber) {
         userId
         idNumber
         license

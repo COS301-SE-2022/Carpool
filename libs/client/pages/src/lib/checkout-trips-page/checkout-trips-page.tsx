@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -6,53 +6,35 @@ import {
   SafeAreaView,
   ScrollView,
   Pressable,
+  StyleSheet,
 } from 'react-native';
 import { CheckoutTripsProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   AppDispatch,
   RootStore,
-  listConfirmedTrips,
-  listRequestedTrips,
+  listNotifications,
 } from '@carpool/client/store';
-import { TripCardCheckout } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { colors, getTime } from '@carpool/client/shared/utilities';
+const { blue, black, white } = colors;
 
 export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
   const dispatch: AppDispatch = useDispatch();
 
-  const [confirmed, setConfirmed] = useState(true);
+  const notificationState = useSelector(
+    (state: RootStore) => state.notifications
+  );
+  const { notifications, status: notificationStatus } = notificationState;
 
-  const user = useSelector((state: RootStore) => state.user);
-  const { user: userData } = user;
-
-  const confirmedTrip = useSelector((state: RootStore) => state.confirmedTrip);
-  const { trips: cTrips, status: cStatus } = confirmedTrip;
-
-  const requestedTrip = useSelector((state: RootStore) => state.requestedTrip);
-  const { trips: pTrips, status: pStatus } = requestedTrip;
+  const userState = useSelector((state: RootStore) => state.user);
+  const { user: userData } = userState;
 
   useEffect(() => {
     if (userData) {
-      dispatch(listConfirmedTrips(userData.id));
+      dispatch(listNotifications(userData.id));
     }
-  }, [dispatch, userData]);
-
-  const asConfirmed = () => {
-    setConfirmed(true);
-    console.log('As Confirmed Trips');
-    userData && dispatch(listConfirmedTrips(userData.id));
-  };
-
-  const asRequested = () => {
-    setConfirmed(false);
-    console.log('As Requested Trips');
-    userData && dispatch(listRequestedTrips(userData.id));
-  };
-
-  const viewTrip = (tripId: string, description: string, cost: number) => {
-    navigation.push('CreditCard', { tripId, description, cost })
-  };
+  }, [userData, dispatch]);
 
   return (
     <SafeAreaView
@@ -92,102 +74,176 @@ export function CheckoutTrips({ navigation }: CheckoutTripsProps) {
             textAlign: 'center',
           }}
         >
-          Trip Checkout
+          Notifications
         </Text>
         <View style={{ flex: 1 }}></View>
       </View>
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          marginBottom: 10,
-          paddingHorizontal: 30,
-        }}
-      >
-        <Pressable
-          onPress={asConfirmed}
+      {notificationStatus === 'loading' ? (
+        <ActivityIndicator size="large" color="#188aed" />
+      ) : notifications?.length === 0 ? (
+        <View
           style={{
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-            backgroundColor: confirmed ? '#188aed' : 'transparent',
-            borderRadius: 15,
+            height: '60%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
         >
           <Text
             style={{
-              color: confirmed ? '#fff' : '#000',
+              textAlign: 'center',
+              color: '#188aed',
               fontWeight: '600',
+              fontSize: 18,
             }}
           >
-            Confirmed
+            You have no notifications
           </Text>
-        </Pressable>
-        <Pressable
-          onPress={asRequested}
-          style={{
-            paddingVertical: 5,
-            paddingHorizontal: 10,
-            backgroundColor: !confirmed ? '#188aed' : 'transparent',
-            borderRadius: 15,
-          }}
-        >
-          <Text
-            style={{ color: !confirmed ? '#fff' : '#000', fontWeight: '600' }}
-          >
-            Requested
-          </Text>
-        </Pressable>
-      </View>
-      {cStatus === 'loading' || pStatus === 'loading' ? (
-        <ActivityIndicator />
+        </View>
       ) : (
-        <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
-          {confirmed ? (
-            cTrips?.length === 0 ? (
-              <Text>You have not offered any trips...</Text>
-            ) : (
-              cTrips?.map((trip, index) => (
-                <View key={index}>
-                  <TripCardCheckout
-                    startLocation={trip.coordinates[0].address}
-                    destination={trip.coordinates[1].address}
-                    date={trip.tripDate}
-                    type="passenger"
-                    price={trip.price}
-                    onPress={() => viewTrip(trip.tripId, trip.coordinates[1].address, parseInt(trip.price))
-                    }
-                  />
-                  {/* <Button
-                    title="Pay Now"
-                    onPress={() =>
-                      navigation.push('CreditCard', { tripId: trip.tripId })
-                    }
-                  /> */}
+        <ScrollView style={{ flex: 1, width: '100%', paddingHorizontal: 20 }}>
+          {notifications?.map((notification, index) => (
+            <View
+              key={index}
+              style={[styles.card, styles.shadow, { paddingVertical: 15 }]}
+            >
+              <View style={[styles.flexColumn, { paddingBottom: 10 }]}>
+                <View style={[styles.flexRow, { flex: 5, marginBottom: 5 }]}>
+                  <Text
+                    style={[styles.day, { paddingLeft: 20, flex: 1 }]}
+                    numberOfLines={1}
+                  >
+                    {notification.type === 'bookingRequest'
+                      ? 'Booking Request'
+                      : notification.type === 'payment'
+                      ? 'Payment Made'
+                      : notification.type === 'bookingAccepted'
+                      ? 'Request Accepted'
+                      : notification.type === 'bookingDeclined'
+                      ? 'Request Declined'
+                      : notification.type === 'tripStarted'
+                      ? 'Trip Started'
+                      : notification.type === 'tripEnded'
+                      ? 'Trip Ended'
+                      : ''}
+                  </Text>
+                  <Text style={{ color: black, textAlign: 'right', flex: 1 }}>
+                    {getTime(notification.createdAt)}
+                  </Text>
                 </View>
-              ))
-            )
-          ) : pTrips?.length === 0 ? (
-            <Text>You have not taking any trips...</Text>
-          ) : (
-            pTrips?.map((trip) => (
-              <TripCardCheckout
-                key={trip.tripId}
-                startLocation={trip.coordinates[0].address}
-                destination={trip.coordinates[1].address}
-                date={trip.tripDate}
-                type="passenger"
-                price={trip.price}
-                onPress={() =>  viewTrip(trip.tripId, trip.coordinates[1].address, parseInt(trip.price))}
-              />
-            ))
-          )}
+                <View>
+                  <Text style={[styles.date, { paddingLeft: 20 }]}>
+                    {notification.message}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ))}
         </ScrollView>
       )}
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container2: {
+    backgroundColor: '#282D46',
+    width: '100%',
+    padding: 12,
+    paddingVertical: 8,
+    borderRadius: 25,
+  },
+  text: {
+    color: '#fff',
+    fontSize: 15,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  card: {
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    borderRadius: 15,
+    marginVertical: 10,
+    backgroundColor: white,
+  },
+  flexRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  flexColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  image: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 4,
+    borderWidth: 3,
+    borderColor: '#188aed',
+  },
+  day: {
+    maxWidth: '75%',
+    textAlign: 'left',
+    color: black,
+    fontSize: 15,
+    fontWeight: '700',
+  },
+  date: {
+    color: blue,
+    fontSize: 12,
+  },
+  shadow: {
+    shadowColor: black,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  container: {
+    backgroundColor: 'white',
+    flex: 1,
+  },
+  backTextWhite: {
+    color: '#FFF',
+  },
+  rowFront: {
+    alignItems: 'center',
+    backgroundColor: '#CCC',
+    borderBottomColor: 'black',
+    borderBottomWidth: 1,
+    justifyContent: 'center',
+    height: 50,
+  },
+  rowBack: {
+    alignItems: 'center',
+    backgroundColor: '#DDD',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingLeft: 15,
+  },
+  backRightBtn: {
+    alignItems: 'center',
+    bottom: 0,
+    justifyContent: 'center',
+    position: 'absolute',
+    top: 0,
+    width: 75,
+  },
+  backRightBtnLeft: {
+    backgroundColor: 'blue',
+    right: 75,
+  },
+  backRightBtnRight: {
+    backgroundColor: 'red',
+    right: 0,
+  },
+});
 
 export default CheckoutTrips;

@@ -16,5 +16,12 @@ export type DriverProfile = {
     name: string;
     surname: string;
     cellNumber: string;
+    profilePic: string;
   };
+};
+
+export type DriverUploadState = {
+  image: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
 };

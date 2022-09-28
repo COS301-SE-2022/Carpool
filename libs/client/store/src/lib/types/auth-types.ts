@@ -67,6 +67,7 @@ export type UserProfile = {
   studentNumber: string;
   cellNumber: string;
   profilePic: string;
+  isDriver: boolean;
 };
 
 export type UpdateUserType = {

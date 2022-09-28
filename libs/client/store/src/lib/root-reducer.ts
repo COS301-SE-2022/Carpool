@@ -33,6 +33,7 @@ import {
   UpdateDriverReviewsSlice,
   postReviewSlice,
   getAllPassengersSlice,
+  notificationsSlice,
 } from './slices/trip-slice';
 import { getWeatherSlice } from './slices/weather-slices';
 import {
@@ -40,11 +41,12 @@ import {
   sendMessageSlice,
   getChatsSlice,
 } from './slices/message-slices';
-import { driverProfileSlice } from './slices/drivers-slice';
+import { driverProfileSlice, driverUploadSlice } from './slices/drivers-slice';
 
 const RootReducer = combineReducers({
   user: userLoginSlice.reducer,
   userProfile: userProfileSlice.reducer,
+  notifications: notificationsSlice.reducer,
   updateUser: userUpdateSlice.reducer,
   trips: tripListSlice.reducer,
   driverHistory: driverHistorySlice.reducer,
@@ -79,6 +81,7 @@ const RootReducer = combineReducers({
   checkCode: checkCodeSlice.reducer,
   resetPassword: resetPasswordSlice.reducer,
   imageUpload: imageUploadSlice.reducer,
+  driverUpload: driverUploadSlice.reducer,
 });
 
 export default RootReducer;

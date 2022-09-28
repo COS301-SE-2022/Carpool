@@ -4,6 +4,30 @@ import { Booking } from './booking-entity.entity';
 import { Location, LocationInput } from './location-entity.entity';
 
 @ObjectType()
+export class Notification {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  userId: string;
+
+  @Field(() => String)
+  message: string;
+
+  @Field(() => String)
+  type: string;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @Field(() => User)
+  user: User;
+}
+
+@ObjectType()
 export class Trip {
   @Field(() => ID)
   tripId: string;

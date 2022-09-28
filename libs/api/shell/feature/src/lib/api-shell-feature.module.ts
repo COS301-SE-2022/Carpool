@@ -7,6 +7,7 @@ import { BookingsModule } from '@carpool/api/bookings/resolvers';
 import { WeatherModule } from '@carpool/api/weather/api/feature';
 import { MessageModule } from '@carpool/api/messages/api/feature';
 import { DriversModule } from '@carpool/api/drivers/api/feature';
+import { NotificationsModule } from '@carpool/api/notifications/api/feature';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DriversModule } from '@carpool/api/drivers/api/feature';
     TripsModule,
     BookingsModule,
     MessageModule,
+    NotificationsModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
       // playground: true,

@@ -17,6 +17,7 @@
     "api-messages-api-shared-entities-data-access": "libs/api/messages/api/shared/entities/data-access",
     "api-messages-repository-data-access": "libs/api/messages/repository/data-access",
     "api-messages-service-feature": "libs/api/messages/service/feature",
+    "api-notifications-api-feature": "libs/api/notifications/api/feature",
     "api-shared-services-aws-data-access": "libs/api/shared/services/aws/data-access",
     "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",

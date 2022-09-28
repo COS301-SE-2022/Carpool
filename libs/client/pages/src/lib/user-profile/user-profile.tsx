@@ -20,7 +20,9 @@ import {
 } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icons from 'react-native-vector-icons/Entypo';
+import IconMaterial from 'react-native-vector-icons/MaterialIcons';
 import * as ImagePicker from 'react-native-image-picker';
+import { UserProfileItem } from '@carpool/client/components';
 
 export function UserProfile({ navigation }: UserProfileProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -237,25 +239,10 @@ export function UserProfile({ navigation }: UserProfileProps) {
                   height: 0.5,
                 }}
               ></View>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
+              <UserProfileItem
+                title="Profile"
                 onPress={() => navigation.push('EditProfile')}
-              >
-                <View
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
-                  }}
-                >
+                icon={
                   <Icon
                     name="account"
                     size={20}
@@ -263,47 +250,13 @@ export function UserProfile({ navigation }: UserProfileProps) {
                       color: '#188aed',
                     }}
                   />
-                </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Profile
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
-                  <Icon
-                    name="chevron-right"
-                    size={25}
-                    style={{
-                      color: '#000',
-                    }}
-                  />
-                </View>
-              </Pressable>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
+                }
+              />
+              <UserProfileItem
+                title="Requests"
                 onPress={() => navigation.push('Statistics')}
-              >
-                <View
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
-                  }}
-                >
+                count="0"
+                icon={
                   <Icons
                     name="heart"
                     size={20}
@@ -311,78 +264,26 @@ export function UserProfile({ navigation }: UserProfileProps) {
                       color: '#188aed',
                     }}
                   />
-                </View>
-                <View
-                  style={{
-                    flex: 12,
-                    paddingLeft: 15,
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Requests
-                  </Text>
-                  <View
+                }
+              />
+              <UserProfileItem
+                title="Payments"
+                onPress={() => navigation.push('CheckoutTrips')}
+                count="0"
+                icon={
+                  <IconMaterial
+                    name="payments"
+                    size={20}
                     style={{
-                      backgroundColor: '#188aed',
-                      borderRadius: 50,
-                      zIndex: 10,
-                      paddingLeft: 4,
-                      paddingRight: 4,
-                      paddingTop: 1,
-                      paddingBottom: 1,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        textAlign: 'center',
-                        color: '#fff',
-                        fontSize: 13,
-                        fontWeight: '700',
-                      }}
-                    >
-                      {requests && requests.length}
-                    </Text>
-                  </View>
-                </View>
-                <View
-                  style={{
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
-                  <Icon
-                    name="chevron-right"
-                    size={25}
-                    style={{
-                      color: '#000',
+                      color: '#188aed',
                     }}
                   />
-                </View>
-              </Pressable>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
+                }
+              />
+              <UserProfileItem
+                title="Trip History"
                 onPress={() => navigation.push('TripHistory')}
-              >
-                <View
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
-                  }}
-                >
+                icon={
                   <Icon
                     name="history"
                     size={22}
@@ -390,48 +291,12 @@ export function UserProfile({ navigation }: UserProfileProps) {
                       color: '#188aed',
                     }}
                   />
-                </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Trip History
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
-                  <Icon
-                    name="chevron-right"
-                    size={25}
-                    style={{
-                      color: '#000',
-                    }}
-                  />
-                </View>
-              </Pressable>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
+                }
+              />
+              <UserProfileItem
+                title="Review"
                 onPress={() => navigation.push('TripRatingPage')}
-              >
-                <View
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
-                  }}
-                >
+                icon={
                   <Icon
                     name="star"
                     size={22}
@@ -439,106 +304,25 @@ export function UserProfile({ navigation }: UserProfileProps) {
                       color: '#188aed',
                     }}
                   />
-                </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Review
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
+                }
+              />
+              <UserProfileItem
+                title="Change Password"
+                onPress={resetPassword}
+                icon={
                   <Icon
-                    name="chevron-right"
-                    size={25}
+                    name="lock"
+                    size={20}
                     style={{
-                      color: '#000',
+                      color: '#188aed',
                     }}
                   />
-                </View>
-              </Pressable>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
-                onPress={resetPassword}
-              >
-                <View
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <View
-                    style={{
-                      backgroundColor: '#f5f5f5',
-                      padding: 3,
-                      borderRadius: 5,
-                      flex: 1,
-                    }}
-                  >
-                    <Icon
-                      name="lock"
-                      size={20}
-                      style={{
-                        color: '#188aed',
-                      }}
-                    />
-                  </View>
-                  <View style={{ flex: 12, paddingLeft: 15 }}>
-                    <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                      Change Password
-                    </Text>
-                  </View>
-                  <View
-                    style={{
-                      // backgroundColor: '#f5f5f5',
-                      padding: 3,
-                      borderRadius: 20,
-                      flex: 1,
-                    }}
-                  >
-                    <Icon
-                      name="chevron-right"
-                      size={25}
-                      style={{
-                        color: '#000',
-                      }}
-                    />
-                  </View>
-                </View>
-              </Pressable>
-              <Pressable
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  padding: 10,
-                  paddingHorizontal: 15,
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}
+                }
+              />
+              <UserProfileItem
+                title="Sign out"
                 onPress={signOut}
-              >
-                <View
-                  style={{
-                    backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 5,
-                    flex: 1,
-                  }}
-                >
+                icon={
                   <Icon
                     name="logout"
                     size={22}
@@ -546,29 +330,8 @@ export function UserProfile({ navigation }: UserProfileProps) {
                       color: '#188aed',
                     }}
                   />
-                </View>
-                <View style={{ flex: 12, paddingLeft: 15 }}>
-                  <Text style={{ fontWeight: '500', fontSize: 15 }}>
-                    Sign out
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    // backgroundColor: '#f5f5f5',
-                    padding: 3,
-                    borderRadius: 20,
-                    flex: 1,
-                  }}
-                >
-                  <Icon
-                    name="chevron-right"
-                    size={25}
-                    style={{
-                      color: '#000',
-                    }}
-                  />
-                </View>
-              </Pressable>
+                }
+              />
               <View
                 style={{
                   backgroundColor: '#d5d5d5',

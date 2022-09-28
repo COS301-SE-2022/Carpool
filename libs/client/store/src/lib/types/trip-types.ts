@@ -15,6 +15,20 @@ export type TripCreateType = {
   coordinates: Location[];
 };
 
+export type NotificationState = {
+  notifications: Notification[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type Notification = {
+  message: string;
+  id: string;
+  type: string;
+  createdAt: string;
+  userId: string;
+};
+
 export type TripRequestType = {
   bookingId: string;
   user: UserTrip;
@@ -37,6 +51,7 @@ export type UserTrip = {
   id: string;
   name: string;
   surname: string;
+  profilePic: string;
 };
 
 export type UpcomingTrip = {
@@ -103,6 +118,11 @@ export type TripDetailsType = {
     {
       userId: string;
       status: string;
+      pickUp: {
+        address: string;
+        latitude: string;
+        longitude: string;
+      };
     }
   ];
   tripDate: string;
@@ -187,6 +207,7 @@ export type PassengerListType = {
 
 export type UserPassengerList = {
   name: string;
+  profilePic: string;
 };
 
 export type Passengers = {

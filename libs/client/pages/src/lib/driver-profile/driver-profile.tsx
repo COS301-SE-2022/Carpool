@@ -50,7 +50,7 @@ export function DriverProfile({ route, navigation }: DriverProfileProps) {
               }}
             >
               <ImageBackground
-                source={require('../assets/lighter_grey.png')}
+                source={{ uri: driver.user.profilePic }}
                 imageStyle={{
                   resizeMode: 'cover',
                 }}

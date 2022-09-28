@@ -7,6 +7,7 @@ import {
   Image,
   Pressable,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import { UserProfileProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
@@ -121,7 +122,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
                   textAlign: 'center',
                 }}
               >
-                Profile
+                Edit Profile
               </Text>
               <View style={{ flex: 1 }}></View>
             </View>
@@ -134,7 +135,7 @@ export function EditProfile({ navigation }: UserProfileProps) {
               }}
             >
               <Image
-                source={require('../assets/lighter_grey.png')}
+                source={{ uri: profile.profilePic }}
                 resizeMode="contain"
                 style={{
                   width: 100,
@@ -151,203 +152,213 @@ export function EditProfile({ navigation }: UserProfileProps) {
                 {profile.name} {profile.surname}
               </Text>
             </View>
-            <View
-              style={{
-                flex: 5,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
+            <View style={{ flex: 5 }}>
+              <ScrollView
+                style={
+                  {
+                    // flex: 1,
+                    // display: 'flex',
+                    // flexDirection: 'column',
+                    // alignItems: 'center',
+                  }
+                }
               >
-                <Text style={{ paddingLeft: 5 }}>Name</Text>
-                <TextInput
-                  value={name}
-                  onChangeText={setName}
+                <View
                   style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
                     width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
-              >
-                <Text style={{ paddingLeft: 5 }}>Surname</Text>
-                <TextInput
-                  value={surname}
-                  onChangeText={setSurname}
-                  style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
-                    width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
-              >
-                <Text style={{ paddingLeft: 5 }}>Email</Text>
-                <TextInput
-                  value={email}
-                  onChangeText={setEmail}
-                  style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
-                    width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
-              >
-                <Text style={{ paddingLeft: 5 }}>Cell Number</Text>
-                <TextInput
-                  value={cellNumber}
-                  onChangeText={setCellNumber}
-                  style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
-                    width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
-              >
-                <Text style={{ paddingLeft: 5 }}>University</Text>
-                <TextInput
-                  value={university}
-                  onChangeText={setUniversity}
-                  style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
-                    width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'flex-start',
-                  width: '100%',
-                }}
-              >
-                <Text style={{ paddingLeft: 5 }}>Student Number</Text>
-                <TextInput
-                  value={studentNumber}
-                  onChangeText={setStudentNumber}
-                  style={{
-                    height: 40,
-                    marginVertical: 8,
-                    padding: 8,
-                    paddingLeft: 10,
-                    borderColor: '#808080',
-                    borderWidth: 0.5,
-                    borderStyle: 'solid',
-                    borderRadius: 5,
-                    backgroundColor: '#f5f5f5',
-                    width: '100%',
-                  }}
-                  placeholderTextColor="#808080"
-                  autoCapitalize="none"
-                />
-              </View>
-              <Pressable
-                style={{
-                  width: '50%',
-                  backgroundColor: '#188aed',
-                  borderRadius: 30,
-                  marginTop: 30,
-                  paddingVertical: 10,
-                }}
-                onPress={saveProfile}
-              >
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontSize: 18,
-                    fontWeight: '600',
-                    textAlign: 'center',
+                    marginVertical: 5,
                   }}
                 >
-                  Save
-                </Text>
-              </Pressable>
+                  <Text style={{ paddingLeft: 5 }}>Name</Text>
+                  <TextInput
+                    value={name}
+                    onChangeText={setName}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    marginVertical: 5,
+                  }}
+                >
+                  <Text style={{ paddingLeft: 5 }}>Surname</Text>
+                  <TextInput
+                    value={surname}
+                    onChangeText={setSurname}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    marginVertical: 5,
+                  }}
+                >
+                  <Text style={{ paddingLeft: 5 }}>Email</Text>
+                  <TextInput
+                    value={email}
+                    onChangeText={setEmail}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    marginVertical: 5,
+                  }}
+                >
+                  <Text style={{ paddingLeft: 5 }}>Cell Number</Text>
+                  <TextInput
+                    value={cellNumber}
+                    onChangeText={setCellNumber}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    marginVertical: 5,
+                  }}
+                >
+                  <Text style={{ paddingLeft: 5 }}>University</Text>
+                  <TextInput
+                    value={university}
+                    onChangeText={setUniversity}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <View
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    width: '100%',
+                    marginVertical: 5,
+                  }}
+                >
+                  <Text style={{ paddingLeft: 5 }}>Student Number</Text>
+                  <TextInput
+                    value={studentNumber}
+                    onChangeText={setStudentNumber}
+                    style={{
+                      height: 40,
+                      marginVertical: 8,
+                      padding: 8,
+                      paddingLeft: 10,
+                      borderColor: '#808080',
+                      borderWidth: 0.5,
+                      borderStyle: 'solid',
+                      borderRadius: 5,
+                      backgroundColor: '#f5f5f5',
+                      width: '100%',
+                    }}
+                    placeholderTextColor="#808080"
+                    autoCapitalize="none"
+                  />
+                </View>
+                <Pressable
+                  style={{
+                    width: '100%',
+                    backgroundColor: '#188aed',
+                    borderRadius: 30,
+                    marginTop: 10,
+                    paddingVertical: 10,
+                  }}
+                  onPress={saveProfile}
+                >
+                  <Text
+                    style={{
+                      color: '#fff',
+                      fontSize: 18,
+                      fontWeight: '600',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Save
+                  </Text>
+                </Pressable>
+              </ScrollView>
             </View>
           </View>
         )

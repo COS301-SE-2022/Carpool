@@ -14,6 +14,7 @@ import {
   UpcomingTripState,
   ReviewTripState,
   PassengerList,
+  NotificationState,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -39,6 +40,7 @@ import {
   updateReviewDriver,
   postReview,
   listAllPassengers,
+  listNotifications,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -54,7 +56,7 @@ export const initialCreateState = {
 } as CreateTripState;
 
 export const createTripSlice = createSlice({
-  name: 'trips',
+  name: 'tripCreate',
   initialState: initialCreateState,
   reducers: {},
   extraReducers: (builder) => {
@@ -69,6 +71,39 @@ export const createTripSlice = createSlice({
         state.trip = action.payload;
       })
       .addCase(createTrip.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialNotificationState = {
+  notifications: null,
+  status: 'idle',
+  error: null,
+} as NotificationState;
+
+export const notificationsSlice = createSlice({
+  name: 'notifications',
+  initialState: initialNotificationState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(listNotifications.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(listNotifications.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.notifications = action.payload;
+      })
+      .addCase(listNotifications.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -145,7 +180,7 @@ export const initialDriverHistoryState = {
 } as TripList;
 
 export const driverHistorySlice = createSlice({
-  name: 'trips',
+  name: 'tripsDriver',
   initialState: initialDriverHistoryState,
   reducers: {},
   extraReducers: (builder) => {
@@ -211,7 +246,7 @@ export const initialAllPassengersState = {
 } as PassengerList;
 
 export const getAllPassengersSlice = createSlice({
-  name: 'list-passengers',
+  name: 'listPassengers',
   initialState: initialAllPassengersState,
   reducers: {},
   extraReducers: (builder) => {
@@ -244,7 +279,7 @@ export const initialDriverReviewState = {
 } as TripList;
 
 export const DriverReviewSlice = createSlice({
-  name: 'trips',
+  name: 'driverReviews',
   initialState: initialDriverReviewState,
   reducers: {},
   extraReducers: (builder) => {
@@ -277,7 +312,7 @@ export const initialSearchResultsState = {
 } as TripList;
 
 export const searchResultsSlice = createSlice({
-  name: 'trips',
+  name: 'tripSearch',
   initialState: initialSearchResultsState,
   reducers: {},
   extraReducers: (builder) => {
@@ -310,7 +345,7 @@ export const initialPassengerHistoryState = {
 } as TripList;
 
 export const passengerHistorySlice = createSlice({
-  name: 'trips',
+  name: 'passengerHistory',
   initialState: initialPassengerHistoryState,
   reducers: {},
   extraReducers: (builder) => {
@@ -343,7 +378,7 @@ export const tripInitialState = {
 } as TripDetails;
 
 export const tripDetailsSlice = createSlice({
-  name: 'trip',
+  name: 'tripDetails',
   initialState: tripInitialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -376,7 +411,7 @@ export const tripBookingState = {
 } as TripBooking;
 
 export const tripBookingSlice = createSlice({
-  name: 'trip-booking',
+  name: 'tripBook',
   initialState: tripBookingState,
   reducers: {},
   extraReducers: (builder) => {
@@ -442,7 +477,7 @@ export const acceptTripRequestState = {
 } as AcceptTripRequest;
 
 export const acceptTripRequestSlice = createSlice({
-  name: 'accept-trip-request',
+  name: 'acceptRequest',
   initialState: acceptTripRequestState,
   reducers: {
     resetAccept: () => acceptTripRequestState,
@@ -471,7 +506,7 @@ export const declineTripRequestState = {
 } as DeclineTripRequest;
 
 export const declineTripRequestSlice = createSlice({
-  name: 'decline-trip-request',
+  name: 'declineRequest',
   initialState: declineTripRequestState,
   reducers: {
     resetDecline: () => declineTripRequestState,
@@ -500,7 +535,7 @@ export const startTripState = {
 } as StartTrip;
 
 export const startTripSlice = createSlice({
-  name: 'start-trip',
+  name: 'startTrip',
   initialState: startTripState,
   reducers: {
     resetStart: () => startTripState,
@@ -529,7 +564,7 @@ export const endTripState = {
 } as EndTrip;
 
 export const endTripSlice = createSlice({
-  name: 'end-trip',
+  name: 'endTrip',
   initialState: endTripState,
   reducers: {
     resetEnd: () => endTripState,
@@ -563,7 +598,7 @@ export const initialUpdatePaymentStatusState = {
 } as UpdatePaymentStatusType;
 
 export const PaymentStatusUpdateSlice = createSlice({
-  name: 'update-payment-status',
+  name: 'updatePaymentStatus',
   initialState: initialUpdatePaymentStatusState,
   reducers: {},
   extraReducers: (builder) => {
@@ -591,7 +626,7 @@ export const initialUpdatePassengerReviewsState = {
 } as ReviewTripState;
 
 export const UpdatePassengerReviewsSlice = createSlice({
-  name: 'update-passenger-reviews',
+  name: 'updatePassengerReviews',
   initialState: initialUpdatePassengerReviewsState,
   reducers: {},
   extraReducers: (builder) => {
@@ -619,7 +654,7 @@ export const initialUpdateDriverReviewsState = {
 } as ReviewTripState;
 
 export const UpdateDriverReviewsSlice = createSlice({
-  name: 'update-driver-reviews',
+  name: 'updateDriverReviews',
   initialState: initialUpdateDriverReviewsState,
   reducers: {},
   extraReducers: (builder) => {
@@ -647,7 +682,7 @@ export const initialRequestedTripState = {
 } as TripList;
 
 export const requestedTripSlice = createSlice({
-  name: 'requested-trips',
+  name: 'requestedTrips',
   initialState: initialRequestedTripState,
   reducers: {},
   extraReducers: (builder) => {
@@ -680,7 +715,7 @@ export const initialConfirmedTripState = {
 } as TripList;
 
 export const confirmedTripSlice = createSlice({
-  name: 'confirmed-trips',
+  name: 'confirmedTrips',
   initialState: initialConfirmedTripState,
   reducers: {},
   extraReducers: (builder) => {
@@ -713,7 +748,7 @@ export const initialBookingIdState = {
 } as BookingIdType;
 
 export const getBookingIdSlice = createSlice({
-  name: 'booking-id',
+  name: 'findBooking',
   initialState: initialBookingIdState,
   reducers: {},
   extraReducers: (builder) => {
@@ -746,7 +781,7 @@ export const initialTripRequestListState = {
 } as TripRequestState;
 
 export const getAllTripRequestsSlice = createSlice({
-  name: 'trips',
+  name: 'tripRequests',
   initialState: initialTripRequestListState,
   reducers: {},
   extraReducers: (builder) => {

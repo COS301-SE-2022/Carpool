@@ -145,6 +145,7 @@ query ($id: String!) {
       userId,
       user{
         name,
+        profilePic
       }
     }
   }
@@ -204,7 +205,12 @@ export const TRIP_DETAILS = `
       },
       passengers {
         userId,
-        status
+        status,
+        pickUp {
+          address
+          latitude
+          longitude
+        }
       },
       tripDate,
       createdAt,
@@ -298,6 +304,18 @@ mutation ($id: String!) {
 }
 `;
 
+export const LIST_NOTIFICATIONS = `
+  query ($id: String!) {
+    findAllNotifications(id: $id) {
+      id,
+      type,
+      message,
+      createdAt,
+      userId
+    }
+  }
+`;
+
 export const END_TRIP = `
 mutation ($id: String!) {
   endTrip (id: $id) {
@@ -334,7 +352,8 @@ query ($userId: String!) {
     user {
 			id,
       name,
-      surname
+      surname,
+      profilePic
     },
     trip {
       tripDate,

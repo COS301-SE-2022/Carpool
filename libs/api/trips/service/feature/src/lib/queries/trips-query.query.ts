@@ -65,3 +65,11 @@ export class FindTripsByMonthQuery {}
 export class FindBookingsByUserQuery {
   constructor(public readonly userId: string) {}
 }
+
+export class FindAllNotificationsQuery {
+  constructor(public readonly userId: string) {}
+}
+
+export class FindBookingByIdQuery {
+  constructor(public readonly bookingId: string) {}
+}

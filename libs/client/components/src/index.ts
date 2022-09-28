@@ -1,3 +1,5 @@
+export * from './lib/user-profile-item/user-profile-item';
+export * from './lib/notification-card/notification-card';
 export * from './lib/passenger-active-trip-mapview/passenger-active-trip-mapview';
 export * from './lib/trip-details-top-bar/trip-details-top-bar';
 export * from './lib/home-map-view/home-map-view';

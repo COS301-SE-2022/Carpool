@@ -60,6 +60,9 @@
       "@carpool/api/messages/service/feature": [
         "libs/api/messages/service/feature/src/index.ts"
       ],
+      "@carpool/api/notifications/api/feature": [
+        "libs/api/notifications/api/feature/src/index.ts"
+      ],
       "@carpool/api/prisma": [
         "libs/api/shared/services/prisma/data-access/src/index.ts"
       ],

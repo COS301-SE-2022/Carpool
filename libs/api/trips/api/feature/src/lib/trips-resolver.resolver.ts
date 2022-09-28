@@ -7,6 +7,7 @@ import {
   ReviewsStatusUpdate,
   Reviews,
   TripByMonth,
+  Notification,
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -16,8 +17,13 @@ import {
   ResolveField,
   Resolver,
   Root,
+  Subscription,
 } from '@nestjs/graphql';
 import { AuthService } from '@carpool/api/authentication/service';
+
+import { PubSub } from 'graphql-subscriptions';
+
+const pubSub = new PubSub();
 
 @Resolver(() => Trip)
 export class TripsResolver {
@@ -41,6 +47,16 @@ export class TripsResolver {
     return await this.authService.findUserById(trip.driverId);
   }
 
+  @Subscription(() => Notification, { name: 'requestReceived' })
+  requestReceived() {
+    return pubSub.asyncIterator('requestReceived');
+  }
+
+  @Subscription(() => [Notification], { name: 'tripStarted' })
+  tripStarted() {
+    return pubSub.asyncIterator('tripStarted');
+  }
+
   /**
    * Query to find all trips
    * @returns {Promise<Trip[]>}
@@ -48,6 +64,15 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findAllTrips(): Promise<Trip[]> {
     return await this.tripsService.findAll();
+  }
+
+  /**
+   * Query to find all trips
+   * @returns {Promise<Trip[]>}
+   */
+  @Query(() => [Notification])
+  async findAllNotifications(@Args('id') id: string): Promise<Notification[]> {
+    return await this.tripsService.findAllNotifications(id);
   }
 
   /**
@@ -208,10 +233,27 @@ export class TripsResolver {
     );
   }
 
+  @Query(() => Booking)
+  async findBookingById(
+    @Args('bookingId') bookingId: string
+  ): Promise<Booking> {
+    return await this.tripsService.findBookingById(bookingId);
+  }
+
   @Mutation(() => Booking)
   async updatePaymentStatus(
     @Args('bookingId') bookingId: string
   ): Promise<BookingStatusUpdate> {
+    const booking = await this.tripsService.findBookingById(bookingId);
+
+    const trip = await this.tripsService.findTripById(booking.tripId);
+
+    const notification = new Notification();
+    notification.message = 'Payment has been made for one of your trips.';
+    notification.userId = trip.driverId;
+
+    pubSub.publish('requestReceived', { requestReceived: notification });
+
     return await this.tripsService.updatePaymentStatus(bookingId);
   }
 
@@ -240,6 +282,14 @@ export class TripsResolver {
     @Args('longitude') longitude: string,
     @Args('latitude') latitude: string
   ): Promise<Booking | null> {
+    const trip = await this.tripsService.findTripById(tripId);
+
+    const notification = new Notification();
+    notification.message = 'You have a new booking request';
+    notification.userId = trip.driverId;
+
+    pubSub.publish('requestReceived', { requestReceived: notification });
+
     return await this.tripsService.bookTrip(
       passengerId,
       tripId,
@@ -277,6 +327,14 @@ export class TripsResolver {
     @Args('id') tripId: string,
     @Args('bookingId') bookingId: string
   ): Promise<Trip> {
+    const booking = await this.tripsService.findBookingById(bookingId);
+
+    const notification = new Notification();
+    notification.message = 'Your booking request has been approved';
+    notification.userId = booking.userId;
+
+    pubSub.publish('requestReceived', { requestReceived: notification });
+
     return await this.tripsService.acceptTripRequest(tripId, bookingId);
   }
 
@@ -284,16 +342,54 @@ export class TripsResolver {
   async declineTripRequest(
     @Args('bookingId') bookingId: string
   ): Promise<Booking> {
+    const booking = await this.tripsService.findBookingById(bookingId);
+
+    const notification = new Notification();
+    notification.message = 'Your booking request has been declined';
+    notification.userId = booking.userId;
+
+    pubSub.publish('requestReceived', { requestReceived: notification });
+
     return await this.tripsService.declineTripRequest(bookingId);
   }
 
   @Mutation(() => Trip)
   async startTrip(@Args('id') tripId: string): Promise<Trip> {
+    const passengers = await this.tripsService.findBookingByTrip(tripId);
+
+    const notifications: Notification[] = [];
+
+    passengers.map((passenger) => {
+      const notification = new Notification();
+      notification.message = 'Your trip has started';
+      notification.userId = passenger.userId;
+
+      notifications.push(notification);
+    });
+
+    pubSub.publish('tripStarted', { tripStarted: notifications });
+
     return await this.tripsService.startTrip(tripId);
   }
 
   @Mutation(() => Trip)
   async endTrip(@Args('id') tripId: string): Promise<Trip> {
+    console.log('END');
+
+    const passengers = await this.tripsService.findBookingByTrip(tripId);
+
+    const notifications: Notification[] = [];
+
+    passengers.map((passenger) => {
+      const notification = new Notification();
+      notification.message = 'Your trip has ended';
+      notification.userId = passenger.userId;
+
+      notifications.push(notification);
+    });
+
+    pubSub.publish('tripStarted', { tripStarted: notifications });
+
     return await this.tripsService.endTrip(tripId);
   }
 }

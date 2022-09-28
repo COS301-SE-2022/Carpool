@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   RootStore,
@@ -15,17 +14,8 @@ import {
   HomeOptionBox,
   HomeSearchBar,
   HomeMapView,
-  RatingCard,
-  ReviewCard,
 } from '@carpool/client/components';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  Alert,
-  TouchableOpacity,
-  Modal,
-} from 'react-native';
+import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { styles } from './home-page.style';
 
 export function HomePage({ navigation }: HomePageProps) {
@@ -57,12 +47,6 @@ export function HomePage({ navigation }: HomePageProps) {
     }
   }, [dispatch, endTripStatus, tripStartStatus, userData]);
 
-  useEffect(() => {
-    if (trip) {
-      console.log(trip);
-    }
-  }, [trip]);
-
   const viewTrip = (tripId: string, trip: TripListType) => {
     if (trip.status === 'active') {
       if (trip.driver.id === userData?.id) {
@@ -75,10 +59,6 @@ export function HomePage({ navigation }: HomePageProps) {
     } else {
       navigation.push('TripDetails', { tripId, type: '__' });
     }
-
-    // navigation.push('MapboxTest', { tripId, type: '__' });
-
-    //* FIX THIS */
   };
 
   const createTrip = () => {
@@ -108,18 +88,9 @@ export function HomePage({ navigation }: HomePageProps) {
 
   return (
     <View style={[styles.flexCol, { flex: 1 }]}>
-      {/* <View
-        style={{
-          backgroundColor: '#188aed',
-          width: '100%',
-          paddingVertical: 30,
-        }}
-      >
-        <Text>Hello</Text>
-      </View> */}
       <HomeSearchBar
         onPress={() => navigation.push('SearchPage')}
-        onPressCart={() => navigation.push('CheckoutTrips')}
+        onPressCart={() => navigation.push('NotificationsPage')}
       />
       <HomeMapView />
       <View style={styles.bottomContainer}>
@@ -129,15 +100,7 @@ export function HomePage({ navigation }: HomePageProps) {
         />
         <View style={styles.cardContainer}>
           {trip && trip.status === 'active' ? (
-            <Text style={styles.smallTextBlack}>
-              Active trip
-              {/* <Icon
-                name="shopping-cart"
-                size={30}
-                style={{ color: '#188aed', alignSelf: 'flex-end' }}
-                onPress={() => navigation.push('CheckoutTrips')}
-              /> */}
-            </Text>
+            <Text style={styles.smallTextBlack}></Text>
           ) : (
             <Text style={styles.smallTextBlack}>Upcoming trip</Text>
           )}

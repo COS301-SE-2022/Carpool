@@ -1,6 +1,6 @@
 import { TripsRepository } from '@carpool/api/trips/repository';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { Trip, Booking, Location, Driver } from '@prisma/client';
+import { Trip, Booking, Location, Driver, Notification } from '@prisma/client';
 import {
   FindAllQuery,
   FindByDriverQuery,
@@ -21,6 +21,8 @@ import {
   FindTripsForMonthQuery,
   FindTripsByMonthQuery,
   FindBookingsByUserQuery,
+  FindAllNotificationsQuery,
+  FindBookingByIdQuery,
 } from './trips-query.query';
 import { TripByMonth } from '@carpool/api/trips/entities';
 
@@ -212,5 +214,27 @@ export class FindBookingsByUserHandler
 
   async execute(query: FindBookingsByUserQuery): Promise<Booking[]> {
     return await this.tripsRepository.findBookingsByUser(query.userId);
+  }
+}
+
+@QueryHandler(FindAllNotificationsQuery)
+export class FindALlNotificationsHandler
+  implements IQueryHandler<FindAllNotificationsQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindAllNotificationsQuery): Promise<Notification[]> {
+    return await this.tripsRepository.findAllNotifications(query.userId);
+  }
+}
+
+@QueryHandler(FindBookingByIdQuery)
+export class FindBookingByIdHandler
+  implements IQueryHandler<FindBookingByIdQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindBookingByIdQuery): Promise<Booking> {
+    return await this.tripsRepository.findBookingById(query.bookingId);
   }
 }

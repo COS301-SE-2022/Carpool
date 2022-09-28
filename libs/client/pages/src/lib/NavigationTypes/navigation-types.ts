@@ -9,6 +9,7 @@ export type RootStackParamList = {
   SignUpPage: undefined;
   ChatList: undefined;
   SignOut: undefined;
+  NotificationsPage: undefined;
   NewPasswordPage: { email: string; previousScreen?: string };
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
@@ -62,6 +63,11 @@ export type HomePageProps = NativeStackScreenProps<
 export type ChatListProps = NativeStackScreenProps<
   RootStackParamList,
   'ChatList'
+>;
+
+export type NotificationsPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'NotificationsPage'
 >;
 
 export type RegisterDriverProps = NativeStackScreenProps<

@@ -38,8 +38,8 @@ export function TripCard({
             ]}
           >
             <Image
-              source={require('./lighter_grey.png')}
-              resizeMode="contain"
+              source={{ uri: image }}
+              resizeMode="cover"
               style={{
                 width: 40,
                 height: 40,

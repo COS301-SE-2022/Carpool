@@ -7,6 +7,7 @@ import {
   Reviews,
   ReviewsStatusUpdate,
   TripByMonth,
+  Notification,
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -28,6 +29,8 @@ import {
   FindBookingsForMonthQuery,
   FindTripsByMonthQuery,
   FindBookingsByUserQuery,
+  FindAllNotificationsQuery,
+  FindBookingByIdQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -56,6 +59,10 @@ export class TripsService {
     return await this.queryBus.execute(new FindAllQuery());
   }
 
+  async findAllNotifications(userId: string): Promise<Notification[]> {
+    return this.queryBus.execute(new FindAllNotificationsQuery(userId));
+  }
+
   async findTripById(tripId: string): Promise<Trip | null> {
     return await this.queryBus.execute(new FindTripByIdQuery(tripId));
   }
@@ -82,6 +89,10 @@ export class TripsService {
 
   async findBookingsForMonth(): Promise<number> {
     return await this.queryBus.execute(new FindBookingsForMonthQuery());
+  }
+
+  async findBookingById(bookingId: string): Promise<Booking | null> {
+    return await this.queryBus.execute(new FindBookingByIdQuery(bookingId));
   }
 
   async findByConfirmedTrips(passengerId: string): Promise<Trip[] | null> {

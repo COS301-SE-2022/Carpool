@@ -43,7 +43,7 @@ export function HomeSearchBar({ onPress, onPressCart }: props) {
         }}
       >
         <Icon
-          name="shopping-cart"
+          name="bell"
           size={20}
           style={{ color: '#fff' }}
           onPress={onPressCart}

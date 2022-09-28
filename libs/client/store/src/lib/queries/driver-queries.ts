@@ -10,6 +10,7 @@ export const DRIVER_PROFILE = `
           name
           surname
           cellNumber
+          profilePic
         }
      }
   }

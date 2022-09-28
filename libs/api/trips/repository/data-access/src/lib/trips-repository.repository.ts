@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
-import { Trip, Booking, Location, Review } from '@prisma/client';
+import { Trip, Booking, Location, Review, Notification } from '@prisma/client';
 import { TripsUpdate, TripByMonth } from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
@@ -33,6 +33,14 @@ export class TripsRepository {
     return await this.prisma.trip.findMany({
       orderBy: {
         tripDate: 'desc',
+      },
+    });
+  }
+
+  async findAllNotifications(id: string): Promise<Notification[]> {
+    return this.prisma.notification.findMany({
+      where: {
+        userId: id,
       },
     });
   }
@@ -134,6 +142,10 @@ export class TripsRepository {
     return await this.prisma.trip.findMany({
       where: {
         driverId: driverId,
+        tripDate: {
+          lt: new Date(),
+        },
+        status: 'completed',
       },
     });
   }
@@ -149,6 +161,7 @@ export class TripsRepository {
         tripDate: {
           lt: new Date(),
         },
+        status: 'completed',
       },
     });
   }
@@ -220,6 +233,14 @@ export class TripsRepository {
     return this.prisma.booking.findMany({
       where: {
         tripId: tripID,
+      },
+    });
+  }
+
+  async findBookingById(bookingId: string): Promise<Booking> {
+    return this.prisma.booking.findUnique({
+      where: {
+        bookingId: bookingId,
       },
     });
   }
@@ -296,6 +317,8 @@ export class TripsRepository {
     comment: string,
     rating: string
   ): Promise<Review | null> {
+    //** NOTIFY DRIVER OR PASSENGER */
+
     return this.prisma.review.create({
       data: {
         byId: byId,
@@ -309,7 +332,8 @@ export class TripsRepository {
   }
 
   async updatePaymentStatus(id: string): Promise<Booking> {
-    return this.prisma.booking.update({
+    //** NOTIFY DRIVER */
+    const booking = await this.prisma.booking.update({
       where: {
         bookingId: id,
       },
@@ -317,6 +341,27 @@ export class TripsRepository {
         status: 'paid',
       },
     });
+
+    const trip = await this.prisma.trip.update({
+      where: {
+        tripId: booking.tripId,
+      },
+      data: {
+        seatsAvailable: {
+          decrement: 1,
+        },
+      },
+    });
+
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: trip.driverId,
+        message: `Your trip has been paid for by ${booking.userId}`,
+        type: 'payment',
+      },
+    });
+
+    return booking;
   }
 
   async bookTrip(
@@ -329,6 +374,28 @@ export class TripsRepository {
     longitude: string,
     latitude: string
   ): Promise<Booking | null> {
+    //** NOTIFY DRIVER */
+
+    const trip = await this.prisma.trip.findUnique({
+      where: {
+        tripId: tripId,
+      },
+    });
+
+    const passenger = await this.prisma.user.findUnique({
+      where: {
+        id: passengerId,
+      },
+    });
+
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: trip.driverId,
+        message: `You have a new booking request from ${passenger.name} ${passenger.surname}`,
+        type: 'bookingRequest',
+      },
+    });
+
     return this.prisma.booking.create({
       data: {
         trip: {
@@ -436,6 +503,8 @@ export class TripsRepository {
   }
 
   async acceptTripRequest(id: string, bookingId: string): Promise<Trip> {
+    //** NOTIFY PASSENGER */
+
     const trip = await this.prisma.trip.update({
       where: {
         tripId: id,
@@ -447,7 +516,7 @@ export class TripsRepository {
       },
     });
 
-    await this.prisma.booking.update({
+    const booking = await this.prisma.booking.update({
       where: {
         bookingId: bookingId,
       },
@@ -456,11 +525,21 @@ export class TripsRepository {
       },
     });
 
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: booking.userId,
+        message: `Your booking request has been accepted`,
+        type: 'bookingAccepted',
+      },
+    });
+
     return trip;
   }
 
   async declineTripRequest(bookingId: string): Promise<Booking> {
-    return this.prisma.booking.update({
+    //** NOTIFY PASSENGER */
+
+    const booking = await this.prisma.booking.update({
       where: {
         bookingId: bookingId,
       },
@@ -468,10 +547,22 @@ export class TripsRepository {
         status: 'declined',
       },
     });
+
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: booking.userId,
+        message: `Your booking request has been declined`,
+        type: 'bookingDeclined',
+      },
+    });
+
+    return booking;
   }
 
   async startTrip(id: string): Promise<Trip> {
-    return this.prisma.trip.update({
+    //** NOTIFY PASSENGERS */
+
+    const trip = await this.prisma.trip.update({
       where: {
         tripId: id,
       },
@@ -479,10 +570,39 @@ export class TripsRepository {
         status: 'active',
       },
     });
+
+    const tripUpdated = await this.prisma.trip.findUnique({
+      where: {
+        tripId: id,
+      },
+      select: {
+        passengers: {
+          select: {
+            userId: true,
+          },
+        },
+      },
+    });
+
+    // console.log(tripUpdated);
+
+    tripUpdated.passengers.map(async (passenger) => {
+      await this.prisma.notification.create({
+        data: {
+          userId: passenger.userId,
+          message: `Your trip has started`,
+          type: 'tripStarted',
+        },
+      });
+    });
+
+    return trip;
   }
 
   async endTrip(id: string): Promise<Trip> {
-    return this.prisma.trip.update({
+    //** NOTIFY PASSENGERS */
+
+    const trip = await this.prisma.trip.update({
       where: {
         tripId: id,
       },
@@ -490,6 +610,27 @@ export class TripsRepository {
         status: 'completed',
       },
     });
+
+    const tripUpdated = await this.prisma.trip.findUnique({
+      where: {
+        tripId: id,
+      },
+      select: {
+        passengers: true,
+      },
+    });
+
+    tripUpdated.passengers.map(async (passenger) => {
+      await this.prisma.notification.create({
+        data: {
+          userId: passenger.userId,
+          message: `Your trip has ended`,
+          type: 'tripEnded',
+        },
+      });
+    });
+
+    return trip;
   }
 
   async findAllTripRequests(userId: string): Promise<Booking[]> {

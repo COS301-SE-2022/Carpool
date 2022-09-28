@@ -88,11 +88,61 @@ export function TripDetailsBottomContainer({
                   Last trip: 1 April 2022
                 </Text>
                 <View style={styles.flexRow}>
-                  <Icon size={15} name="star" color="#FACC15" />
-                  <Icon size={15} name="star" color="#FACC15" />
-                  <Icon size={15} name="star" color="#FACC15" />
-                  <Icon size={15} name="star" color="#FACC15" />
-                  <Icon size={15} name="star" color="#FACC15" />
+                <Icon
+                    size={15}
+                    name={
+                      parseFloat(trip.driver.avgRating) >= 1
+                        ? 'star'
+                        : parseFloat(trip.driver.avgRating) >= 0.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icon
+                    size={15}
+                    name={
+                      parseFloat(trip.driver.avgRating) >= 2
+                        ? 'star'
+                        : parseFloat(trip.driver.avgRating) >= 1.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icon
+                    size={15}
+                    name={
+                      parseFloat(trip.driver.avgRating) >= 3
+                        ? 'star'
+                        :parseFloat(trip.driver.avgRating) >= 2.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icon
+                    size={15}
+                    name={
+                      parseFloat(trip.driver.avgRating) >= 4
+                        ? 'star'
+                        : parseFloat(trip.driver.avgRating) >= 3.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icon
+                    size={15}
+                    name={
+                      parseFloat(trip.driver.avgRating) >= 5
+                        ? 'star'
+                        : parseFloat(trip.driver.avgRating) >= 4.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
                   <Text
                     style={[
                       styles.textMediumLight,
@@ -102,7 +152,7 @@ export function TripDetailsBottomContainer({
                       },
                     ]}
                   >
-                    5 ratings
+                    {trip.driver.avgRating} ratings
                   </Text>
                 </View>
               </View>

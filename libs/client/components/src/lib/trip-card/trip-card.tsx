@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { formatDate, getTime } from '@carpool/client/shared/utilities';
 
 type cardProps = {
@@ -13,6 +14,7 @@ type cardProps = {
   image: string;
   date: string;
   distance: string;
+  rating: string;
   onPress: () => void;
 };
 
@@ -25,6 +27,7 @@ export function TripCard({
   image,
   date,
   distance,
+  rating,
   onPress,
 }: cardProps) {
   return (
@@ -56,11 +59,61 @@ export function TripCard({
               {driver}
             </Text>
             <View style={[styles.flexRow, { justifyContent: 'flex-start' }]}>
-              <Icon name="star" size={18} color="#FACC15" />
-              <Icon name="star" size={18} color="#FACC15" />
-              <Icon name="star" size={18} color="#FACC15" />
-              <Icon name="star" size={18} color="#FACC15" />
-              <Icon name="star-half" size={18} color="#FACC15" />
+            <Icons
+                    size={15}
+                    name={
+                      parseFloat(rating) >= 1
+                        ? 'star'
+                        : parseFloat(rating) >= 0.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icons
+                    size={15}
+                    name={
+                      parseFloat(rating) >= 2
+                        ? 'star'
+                        : parseFloat(rating) >= 1.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icons
+                    size={15}
+                    name={
+                      parseFloat(rating) >= 3
+                        ? 'star'
+                        :parseFloat(rating) >= 2.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icons
+                    size={15}
+                    name={
+                      parseFloat(rating) >= 4
+                        ? 'star'
+                        : parseFloat(rating) >= 3.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
+                  <Icons
+                    size={15}
+                    name={
+                      parseFloat(rating) >= 5
+                        ? 'star'
+                        : parseFloat(rating) >= 4.5
+                        ? 'star-half-full'
+                        : 'star-outline'
+                    }
+                    color="#FACC15"
+                  />
             </View>
           </View>
         </View>

@@ -128,6 +128,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
                 }
                 chat={() => openChat(userData.id, trip.driver.id)}
                 userId={userData ? userData.id : ''}
+                status={trip.status}
               />
             )}
           </View>

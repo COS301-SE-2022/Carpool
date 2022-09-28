@@ -22,6 +22,7 @@ import {
 type props = {
   trip: TripDetailsType;
   type: string;
+  status: string;
   userId: string;
   chat: () => void;
   onPress: () => void;
@@ -35,6 +36,7 @@ export function TripDetailsBottomContainer({
   onPressUser,
   userId,
   chat,
+  status,
 }: props) {
   return (
     <View style={[styles.flexCol, styles.userContainer]}>
@@ -104,7 +106,8 @@ export function TripDetailsBottomContainer({
           <Icons name="chat-bubble" color="#188aed" size={25} />
         </Pressable>
       </View>
-      {Number(trip.seatsAvailable) === 0 || type === 'booked' ? (
+      {Number(trip.seatsAvailable) === 0 || type === 'booked' || type === 'unpaid' || status === 'confirmed'
+        || status === 'booked' || status === 'unpaid' ? (
         <></>
       ) : (
         <View

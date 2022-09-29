@@ -30,7 +30,8 @@ async function main() {
       cellNumber: '0716002219',
       isValidated: true,
       isDriver: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/e2e62b8eb62d41ac8be6839ae422cd65',
     },
   });
 
@@ -59,7 +60,8 @@ async function main() {
       cellNumber: '0144952654',
       isValidated: true,
       isDriver: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/89df257fe2b942f830249a87bf7d9008',
     },
   });
 
@@ -81,14 +83,15 @@ async function main() {
     data: {
       name: 'Brand',
       surname: 'Keighley',
-      email: 'u15379753@@student.uj.ac',
+      email: 'u15379753@student.uj.ac',
       university: 'University of Johannesburg',
       studentNumber: '15379753',
       password: hashedPassword,
       cellNumber: '0434921917',
       isValidated: true,
       isDriver: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/a1ccbcfd8b07998d4c5582d8f5204bef',
     },
   });
 
@@ -117,7 +120,8 @@ async function main() {
       cellNumber: '0544950849',
       isValidated: true,
       isDriver: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/a3d0c90f70b13530881bb20a30d897d0',
     },
   });
 
@@ -146,7 +150,8 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0786944692',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/3b5faccd281033e8c7b8e5b3c89c306a',
     },
   });
 
@@ -163,7 +168,8 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0747999714',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/29a7c4aee1bd850a81ffa4454cbaeeb8',
     },
   });
 
@@ -180,7 +186,8 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0834944000',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/2b1c575d278e22c836ee82f664cd3085',
     },
   });
 
@@ -197,7 +204,8 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0855310258',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/9d4f7f1d7e805878a7fc13c9c6d29212',
     },
   });
 
@@ -206,15 +214,16 @@ async function main() {
   hashedPassword = await bcrypt.hash('Carpool998', salt);
   const passenger5 = await prisma.user.create({
     data: {
-      name: 'Sanjay',
-      surname: 'Mckinney',
+      name: 'Cara',
+      surname: 'Smith',
       email: 'u87975564@mandela.ac.za',
       university: 'Nelson Mandela University',
       studentNumber: '87975564',
       password: hashedPassword,
       cellNumber: '0855310258',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/3f5e8a391b241ba5754d5a59858d98b0',
     },
   });
 
@@ -231,7 +240,8 @@ async function main() {
       password: hashedPassword,
       cellNumber: '0826674272',
       isValidated: true,
-      profilePic: '',
+      profilePic:
+        'https://carpoolcos301.herokuapp.com/api/e43885a64cc144db0c5dea5ac7c43097',
     },
   });
   let tripDate = new Date();
@@ -315,8 +325,8 @@ async function main() {
           {
             address:
               'University Of Johannesburg, University Road, Auckland Park, Johannesburg, South Africa',
-            latitude: '-25.8149972',
-            longitude: '28.3155101',
+            latitude: '-26.1840135',
+            longitude: '27.9978102',
           },
         ],
       },
@@ -344,7 +354,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 30,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -363,7 +373,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 30,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -382,7 +392,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 30,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -401,7 +411,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 60,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -420,7 +430,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 60,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -439,7 +449,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 60,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -458,7 +468,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 100,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 
@@ -477,7 +487,7 @@ async function main() {
       },
       seatsBooked: 1,
       price: 100,
-      status: 'unpaid',
+      status: 'requested',
     },
   });
 

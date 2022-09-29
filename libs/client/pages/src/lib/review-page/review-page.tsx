@@ -97,7 +97,7 @@ export function ReviewPage({ route, navigation }: ReviewPageProps) {
         <View>
           <View style={styles.row}>
             <Image
-              source={require('./lighter_grey.png')}
+              source={require('./brand.png')}
               resizeMode="contain"
               style={styles.image}
             />

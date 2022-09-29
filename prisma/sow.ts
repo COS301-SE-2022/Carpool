@@ -16,6 +16,10 @@ async function main() {
 
   await prisma.message.deleteMany({});
 
+  await prisma.adminUser.deleteMany({});
+
+  await prisma.notification.deleteMany({});
+
   await prisma.driver.deleteMany({});
 
   await prisma.user.deleteMany({});

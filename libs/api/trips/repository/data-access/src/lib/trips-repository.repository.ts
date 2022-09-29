@@ -141,11 +141,19 @@ export class TripsRepository {
   async findByDriver(driverId: string): Promise<Trip[]> {
     return await this.prisma.trip.findMany({
       where: {
-        driverId: driverId,
-        tripDate: {
-          lt: new Date(),
-        },
-        status: 'completed',
+        AND: [
+          { driverId: driverId },
+          {
+            OR: [
+              {
+                tripDate: {
+                  lt: new Date(),
+                },
+              },
+              { status: 'completed' },
+            ],
+          },
+        ],
       },
     });
   }

@@ -237,7 +237,7 @@ export const fetchUserTrips = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  return userTrips.data.data.findByDriver;
+  return userTrips.data.data.findByDriverForDashboard;
 });
 
 export const fetchTripDetails = createAsyncThunk<

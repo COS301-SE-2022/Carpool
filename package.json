@@ -6,13 +6,12 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node dist/apps/dashboard",
+    "start": "nx serve",
     "start:api": "yarn start api",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:sow": "ts-node prisma/sow.ts",
-    "build": "nx build dashboard",
-    "test": "nx test",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix dashboard && npm run build --prefix dashboard"
+    "build": "nx build",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {

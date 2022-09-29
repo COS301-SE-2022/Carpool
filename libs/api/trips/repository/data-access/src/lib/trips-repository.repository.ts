@@ -93,7 +93,7 @@ export class TripsRepository {
 
   async findTripsByMonth(): Promise<TripByMonth[]> {
     const trips = await this.prisma.$queryRaw<TripByMonth[]>`
-    SELECT count(trip_id) AS trips, TO_CHAR(trip_date, 'Mon')
+    SELECT count(trip_id)::int AS trips, TO_CHAR(trip_date, 'Mon')
     AS month FROM trip GROUP BY TO_CHAR(trip_date, 'Mon');
     `;
 

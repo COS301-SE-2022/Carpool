@@ -33,8 +33,8 @@ export class BookTripCommand {
     public readonly status: string,
     public readonly price: string,
     public readonly address: string,
-    public readonly longitude: string,
-    public readonly latitude: string
+    public readonly latitude: string,
+    public readonly longitude: string
   ) {}
 }
 

@@ -31,6 +31,8 @@ function myJoin(array: string[], separator: string) {
 export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
   const { tripId } = route.params;
 
+  console.log('ACTIVE TIRP');
+
   const dispatch: AppDispatch = useDispatch();
 
   const tripDetails = useSelector((state: RootStore) => state.trip);

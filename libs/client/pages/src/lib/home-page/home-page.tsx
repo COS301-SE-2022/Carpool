@@ -33,6 +33,12 @@ export function HomePage({ navigation }: HomePageProps) {
   const endTripState = useSelector((state: RootStore) => state.endTrip);
   const { status: endTripStatus } = endTripState;
 
+  const createdTripState = useSelector((state: RootStore) => state.createdTrip);
+  const { status: createdTripStatus } = createdTripState;
+
+  const startTrip = useSelector((state: RootStore) => state.startTrip);
+  const { status: startTripStatus } = startTrip;
+
   useEffect(() => {
     if (userData && userData.id) {
       dispatch(findUpcomingTrip(userData.id));
@@ -45,7 +51,14 @@ export function HomePage({ navigation }: HomePageProps) {
     if (tripStartStatus === 'success') {
       dispatch(resetStart());
     }
-  }, [dispatch, endTripStatus, tripStartStatus, userData]);
+  }, [
+    dispatch,
+    endTripStatus,
+    tripStartStatus,
+    userData,
+    createdTripStatus,
+    startTripStatus,
+  ]);
 
   const viewTrip = (tripId: string, trip: TripListType) => {
     if (trip.status === 'active') {

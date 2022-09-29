@@ -52,21 +52,22 @@ export class TripsCreateHandler implements ICommandHandler<TripsCreateCommand> {
   }
 }
 @CommandHandler(CreateReviewCommand)
-export class CreateReviewHandler implements ICommandHandler<CreateReviewCommand> {
+export class CreateReviewHandler
+  implements ICommandHandler<CreateReviewCommand>
+{
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: CreateReviewCommand): Promise<Review | null> {
-    const {
+    const { byId, forId, tripId, role, comment, rating } = command;
+
+    return await this.tripsRepository.postReview(
       byId,
       forId,
       tripId,
       role,
       comment,
-      rating,
-    } = command;
-
-
-    return await this.tripsRepository.postReview(byId, forId, tripId, role, comment, rating);
+      rating
+    );
   }
 }
 
@@ -93,8 +94,8 @@ export class BookTripHandler implements ICommandHandler<BookTripCommand> {
       status,
       price,
       address,
-      longitude,
-      latitude
+      latitude,
+      longitude
     );
   }
 }
@@ -115,10 +116,14 @@ export class TripsUpdateHandler implements ICommandHandler<TripsUpdateCommand> {
 }
 
 @CommandHandler(UpdatePassengerReviewsCommand)
-export class UpdatePassengerReviewsHandler implements ICommandHandler<UpdatePassengerReviewsCommand> {
+export class UpdatePassengerReviewsHandler
+  implements ICommandHandler<UpdatePassengerReviewsCommand>
+{
   constructor(private readonly tripsRepository: TripsRepository) {}
 
-  async execute(command: UpdatePassengerReviewsCommand): Promise<Booking | null> {
+  async execute(
+    command: UpdatePassengerReviewsCommand
+  ): Promise<Booking | null> {
     const { bookingId } = command;
 
     return await this.tripsRepository.updateReviewPassenger(bookingId);
@@ -126,7 +131,9 @@ export class UpdatePassengerReviewsHandler implements ICommandHandler<UpdatePass
 }
 
 @CommandHandler(UpdateDriverReviewsCommand)
-export class UpdateDriverReviewsHandler implements ICommandHandler<UpdateDriverReviewsCommand> {
+export class UpdateDriverReviewsHandler
+  implements ICommandHandler<UpdateDriverReviewsCommand>
+{
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(command: UpdateDriverReviewsCommand): Promise<Trip | null> {

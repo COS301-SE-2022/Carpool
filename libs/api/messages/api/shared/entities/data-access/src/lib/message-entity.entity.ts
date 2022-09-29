@@ -35,6 +35,9 @@ export class Chat {
 
   @Field()
   name: string;
+
+  @Field()
+  profilePic: string;
 }
 
 @InputType()

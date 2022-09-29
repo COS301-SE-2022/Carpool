@@ -1,19 +1,6 @@
 import React, { useRef } from 'react';
 
-import {
-  Button,
-  HomeMapView,
-  TripDetailsTopBar,
-} from '@carpool/client/components';
-
-import {
-  Text,
-  SafeAreaView,
-  View,
-  StyleSheet,
-  Image,
-  Dimensions,
-} from 'react-native';
+import { Text, SafeAreaView, View, StyleSheet, Dimensions } from 'react-native';
 
 import { PassengerActiveTripProps } from '../NavigationTypes/navigation-types';
 
@@ -23,7 +10,6 @@ import MapViewDirections from 'react-native-maps-directions';
 
 import { TripDetailsType } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { formatDate } from '@carpool/client/shared/utilities';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng';
 
@@ -191,21 +177,21 @@ export function PassengerActiveTrip(
 
         {/* <Image
 
-  
 
-  
+
+
 
  source={require('../assets/title.png')}
 
-  
 
-  
+
+
 
  style={{ resizeMode: 'cover' }}
 
-  
 
-  
+
+
 
  /> */}
 

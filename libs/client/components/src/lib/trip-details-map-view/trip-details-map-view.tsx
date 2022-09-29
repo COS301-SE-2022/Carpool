@@ -34,10 +34,15 @@ export function TripDetailsMapView({ trip, active }: props) {
   const waypoints: WaypointsType[] = [];
 
   trip.passengers.map((passenger) => {
-    waypoints.push({
-      latitude: parseFloat(passenger.pickUp.latitude),
-      longitude: parseFloat(passenger.pickUp.longitude),
-    });
+    if (
+      passenger.pickUp.latitude !== trip.coordinates[0].latitude &&
+      passenger.pickUp.longitude !== trip.coordinates[0].longitude
+    ) {
+      waypoints.push({
+        latitude: parseFloat(passenger.pickUp.latitude),
+        longitude: parseFloat(passenger.pickUp.longitude),
+      });
+    }
   });
 
   return (

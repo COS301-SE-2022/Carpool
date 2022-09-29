@@ -52,13 +52,14 @@ export class DriverRegisterHandler
   constructor(private readonly authRepository: AuthRepository) {}
 
   async execute(command: DriverRegisterCommand): Promise<Driver | null> {
-    const { userId, licensePlate, carModel, ID } = command;
+    const { userId, licensePlate, carModel, ID, license } = command;
 
     const driver = new DriverInput();
     driver.userId = userId;
     driver.licensePlate = licensePlate;
     driver.carModel = carModel;
     driver.ID = ID;
+    driver.license = license;
 
     return await this.authRepository.registerDriver(driver);
   }

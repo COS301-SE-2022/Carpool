@@ -49,13 +49,7 @@ export function HomePage({ navigation }: HomePageProps) {
 
   const viewTrip = (tripId: string, trip: TripListType) => {
     if (trip.status === 'active') {
-      if (trip.driver.id === userData?.id) {
-        //**Driver active screen */
-        navigation.navigate('DriverActiveTrip', { tripId });
-      } else {
-        //** Passenger active screen */
-        navigation.navigate('DriverActiveTrip', { tripId });
-      }
+      navigation.navigate('DriverActiveTrip', { tripId });
     } else {
       navigation.push('TripDetails', { tripId, type: '__' });
     }

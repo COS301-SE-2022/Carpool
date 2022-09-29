@@ -218,13 +218,15 @@ export class AuthResolver {
     @Args('ID') ID: string,
     @Args('licensePlate') licensePlate: string,
     @Args('carModel') carModel: string,
-    @Args('userId') userId: string
+    @Args('userId') userId: string,
+    @Args('license') license: string
   ): Promise<Driver | null> {
     const driverObj = await this.authService.registerDriver(
       userId,
       licensePlate,
       carModel,
-      ID
+      ID,
+      license
     );
 
     if (driverObj) {

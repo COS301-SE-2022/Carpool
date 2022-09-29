@@ -288,7 +288,7 @@ export const registerDriver = createAsyncThunk<
   DriverRegister,
   { rejectValue: Error }
 >(
-  'users/registerDriver',
+  'userDriver/registerDriver',
   async (driver: DriverRegister, { rejectWithValue, dispatch }) => {
     console.log('driver', driver);
 

@@ -38,7 +38,7 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
   const [ID, setID] = useState('');
   const [licensePlate, setLicensePlate] = useState('');
   const [vehicle, setVehicle] = useState('');
-  // const [image, setImage] = useState('');
+  const [image, setImage] = useState('');
 
   useEffect(() => {
     if (driverStatus === 'success') {
@@ -46,11 +46,11 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
     }
   }, [driverStatus, navigation]);
 
-  // useEffect(() => {
-  //   if (driverImage) {
-  //     setImage(driverImage);
-  //   }
-  // }, [driverImage]);
+  useEffect(() => {
+    if (driverImage) {
+      setImage(driverImage);
+    }
+  }, [driverImage]);
 
   const submitHandler = () => {
     dispatch(
@@ -59,7 +59,7 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
         ID: ID,
         licensePlate: licensePlate,
         carModel: vehicle,
-        license: '',
+        license: image,
       })
     );
   };
@@ -173,7 +173,7 @@ export function RegisterDriver({ route, navigation }: RegisterDriverProps) {
               />
               <View
                 style={{
-                  borderWidth: driverImage !== '' ? 0 : 1,
+                  borderWidth: driverImage ? 0 : 1,
                   borderStyle: 'dashed',
                   borderRadius: 15,
                   height: '20%',

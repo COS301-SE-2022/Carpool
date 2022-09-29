@@ -62,8 +62,8 @@ export const USER_REGISTER = `
 `;
 
 export const DRIVER_REGISTER = `
-  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!, $license: String!, idNumber: String!) {
-      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId, license: $license, idNumber: $idNumber) {
+  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!, $license: String!) {
+      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId, license: $license) {
         userId
         idNumber
         license

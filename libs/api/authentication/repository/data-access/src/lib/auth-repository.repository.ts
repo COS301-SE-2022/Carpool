@@ -212,7 +212,7 @@ export class AuthRepository {
           licensePlate: driver.licensePlate,
           model: driver.carModel,
           userId: driver.userId,
-          license: '',
+          license: driver.license,
           carPicture: '',
         },
       });

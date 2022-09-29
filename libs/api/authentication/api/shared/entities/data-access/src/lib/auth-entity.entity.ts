@@ -222,6 +222,9 @@ export class DriverInput {
 
   @Field()
   carModel: string;
+
+  @Field()
+  license: string;
 }
 
 @ObjectType()

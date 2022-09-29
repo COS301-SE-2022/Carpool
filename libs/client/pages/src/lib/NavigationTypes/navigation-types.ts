@@ -42,7 +42,7 @@ export type RootStackParamList = {
   CreditCard: { tripId: string; description: string; cost: number };
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
-  PassengerActiveTrip: undefined;
+  PassengerActiveTrip: { tripId: string };
   ReviewPage: {
     tripId: string;
     driverId: string;

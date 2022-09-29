@@ -15,7 +15,8 @@ export class DriverRegisterCommand {
     public readonly ID: string,
     public readonly licensePlate: string,
     public readonly carModel: string,
-    public readonly userId: string
+    public readonly userId: string,
+    public readonly license: string
   ) {}
 }
 

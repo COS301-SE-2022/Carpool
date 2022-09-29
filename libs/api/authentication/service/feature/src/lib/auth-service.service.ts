@@ -103,10 +103,11 @@ export class AuthService {
     ID: string,
     licensePlate: string,
     carModel: string,
-    userId: string
+    userId: string,
+    license: string
   ): Promise<Driver | null> {
     return await this.commandBus.execute(
-      new DriverRegisterCommand(userId, licensePlate, carModel, ID)
+      new DriverRegisterCommand(userId, licensePlate, carModel, ID, license)
     );
   }
 

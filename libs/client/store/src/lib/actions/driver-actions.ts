@@ -45,7 +45,7 @@ export const uploadDriversLicense = createAsyncThunk<
   string,
   ImageUploadType,
   { rejectValue: Error }
->('upload/image', async (imageUpload: ImageUploadType, thunkApi) => {
+>('drivers/image', async (imageUpload: ImageUploadType, thunkApi) => {
   const response = await axios.post(`${host}/api`, imageUpload.image, {
     headers: {
       'Content-Type': 'multipart/form-data',

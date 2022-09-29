@@ -47,12 +47,14 @@ export class MessageRepository {
           select: {
             name: true,
             surname: true,
+            profilePic: true,
           },
         },
         receiver: {
           select: {
             name: true,
             surname: true,
+            profilePic: true,
           },
         },
       },
@@ -66,9 +68,11 @@ export class MessageRepository {
       if (chat.senderId === userId) {
         chatObj.userId = chat.receiverId;
         chatObj.name = `${chat.receiver.name} ${chat.receiver.surname}`;
+        chatObj.profilePic = chat.receiver.profilePic;
       } else {
         chatObj.userId = chat.senderId;
         chatObj.name = `${chat.sender.name} ${chat.sender.surname}`;
+        chatObj.profilePic = chat.sender.profilePic;
       }
 
       uniqueChats.push(chatObj);

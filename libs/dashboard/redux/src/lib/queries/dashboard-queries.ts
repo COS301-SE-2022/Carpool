@@ -128,7 +128,7 @@ query($id: String!) {
 
 export const USER_TRIPS = `
 query ($id: String!) {
-  findByDriver (id: $id) {
+  findByDriverForDashboard (id: $id) {
     tripId
     tripDate
     createdAt

@@ -20,8 +20,8 @@ import { NotificationsModule } from '@carpool/api/notifications/api/feature';
     NotificationsModule,
     GraphQLModule.forRoot({
       autoSchemaFile: true,
-      // playground: true,
-      // introspection: true,
+      playground: true,
+      introspection: true,
       uploads: false,
       driver: ApolloDriver,
       subscriptions: {

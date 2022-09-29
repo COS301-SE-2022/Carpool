@@ -51,6 +51,7 @@
     "react-native-swiper": "*",
     "react-text-toxicity": "*",
     "react-native-image-picker": "*",
-    "apollo-upload-client": "*"
+    "apollo-upload-client": "*",
+    "react-router-dom": "*"
   }
 }

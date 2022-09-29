@@ -95,6 +95,7 @@ describe('AuthResolver', () => {
           'email@example.com',
           'Tuks',
           '12345678',
+          '0716002219',
           'password'
         )
       ).toBe(userLoginMock);
@@ -132,7 +133,8 @@ describe('AuthResolver', () => {
           'doe',
           'email@example.com',
           'Tuks',
-          '12345678'
+          '12345678',
+          '0716002219'
         )
       ).toBe(userUpdateMock);
     });

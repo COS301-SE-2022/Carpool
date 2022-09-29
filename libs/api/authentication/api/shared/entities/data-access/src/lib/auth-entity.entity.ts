@@ -108,6 +108,48 @@ export class User {
 }
 
 @ObjectType()
+export class UserReturn {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  name: string;
+
+  @Field()
+  surname: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  university: string;
+
+  @Field()
+  studentNumber: string;
+
+  @Field()
+  profilePic: string;
+
+  @Field(() => Boolean)
+  isDriver: boolean;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @Field(() => Number)
+  avgRating: number;
+
+  @Field()
+  cellNumber: string;
+
+  @Field(() => Boolean)
+  isValidated: boolean;
+}
+
+@ObjectType()
 export class Count {
   @Field()
   university: number;

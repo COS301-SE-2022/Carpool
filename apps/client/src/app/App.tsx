@@ -113,10 +113,7 @@ export type HomeStackParamList = {
   HomePage;
   SearchPage;
   TripDetails;
-  CheckoutTrips;
-  CreditCard;
   ReviewPage;
-  PayfastPage;
 };
 
 export type ProfileStackParamList = {
@@ -153,9 +150,6 @@ const HomeStack = () => {
       <HomeStackNav.Screen name="HomePage" component={HomePage} />
       <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
       <HomeStackNav.Screen name="SearchPage" component={SearchPage} />
-      <HomeStackNav.Screen name="CheckoutTrips" component={CheckoutTrips} />
-      <HomeStackNav.Screen name="CreditCard" component={CreditCard} />
-      <HomeStackNav.Screen name="PayfastPage" component={PayfastPage} />
     </HomeStackNav.Navigator>
   );
 };
@@ -354,29 +348,16 @@ const AppWrapper = () => {
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />
           <Stack.Screen name="DriverActiveTrip" component={DriverActiveTrip} />
-          {/* <Stack.Screen name="LoginPage" component={LoginPage} /> */}
-          {/* <Stack.Screen name="OnboardPage" component={OnboardPage} /> */}
-          {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-          {/* <Stack.Screen name="SignOut" component={SignOut} /> */}
+          <Stack.Screen name="CheckoutTrips" component={CheckoutTrips} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
-          {/* <Stack.Screen
-            name="ForgotPasswordPage"
-            component={ForgotPasswordPage}
-          /> */}
-          {/* <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} /> */}
-          {/* <Stack.Screen
-            name="ResetPasswordPage"
-            component={ResetPasswordPage}
-          /> */}
           <Stack.Screen name="TripDetails" component={TripDetails} />
+          <Stack.Screen name="CreditCard" component={CreditCard} />
+          <Stack.Screen name="PayfastPage" component={PayfastPage} />
           <Stack.Screen name="SearchResults" component={SearchResults} />
           <Stack.Screen
             name="NotificationsPage"
             component={NotificationsPage}
           />
-          {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="SearchPage" component={SearchPage} />
-        </Stack.Group> */}
           <Stack.Screen name="SearchPage" component={SearchPage} />
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="DriverProfile" component={DriverProfile} />

@@ -688,9 +688,9 @@ exports.ApiAuthenticationApiSharedEntitiesDataAccessModule = ApiAuthenticationAp
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
-var _a, _b, _c, _d, _e, _f, _g;
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.TopUniversities = exports.Count = exports.User = exports.AdminUserReturn = exports.Upload = exports.AdminUser = void 0;
+exports.UserUpdate = exports.ForgotPassword = exports.Driver = exports.DriverInput = exports.UserInput = exports.UserLogin = exports.TopUniversities = exports.Count = exports.UserReturn = exports.User = exports.AdminUserReturn = exports.Upload = exports.AdminUser = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const entities_1 = __webpack_require__("./libs/api/trips/api/shared/entities/data-access/src/index.ts");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
@@ -843,6 +843,64 @@ User = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
 ], User);
 exports.User = User;
+let UserReturn = class UserReturn {
+};
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => graphql_1.ID),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "id", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "name", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "surname", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "email", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "university", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "studentNumber", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "profilePic", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Boolean),
+    tslib_1.__metadata("design:type", Boolean)
+], UserReturn.prototype, "isDriver", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Date),
+    tslib_1.__metadata("design:type", typeof (_f = typeof Date !== "undefined" && Date) === "function" ? _f : Object)
+], UserReturn.prototype, "createdAt", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Date),
+    tslib_1.__metadata("design:type", typeof (_g = typeof Date !== "undefined" && Date) === "function" ? _g : Object)
+], UserReturn.prototype, "updatedAt", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Number),
+    tslib_1.__metadata("design:type", Number)
+], UserReturn.prototype, "avgRating", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(),
+    tslib_1.__metadata("design:type", String)
+], UserReturn.prototype, "cellNumber", void 0);
+tslib_1.__decorate([
+    (0, graphql_1.Field)(() => Boolean),
+    tslib_1.__metadata("design:type", Boolean)
+], UserReturn.prototype, "isValidated", void 0);
+UserReturn = tslib_1.__decorate([
+    (0, graphql_1.ObjectType)()
+], UserReturn);
+exports.UserReturn = UserReturn;
 let Count = class Count {
 };
 tslib_1.__decorate([
@@ -891,7 +949,7 @@ tslib_1.__decorate([
 ], UserLogin.prototype, "verificationCode", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_f = typeof Date !== "undefined" && Date) === "function" ? _f : Object)
+    tslib_1.__metadata("design:type", typeof (_h = typeof Date !== "undefined" && Date) === "function" ? _h : Object)
 ], UserLogin.prototype, "expires", void 0);
 UserLogin = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()
@@ -999,7 +1057,7 @@ tslib_1.__decorate([
 ], ForgotPassword.prototype, "verificationCode", void 0);
 tslib_1.__decorate([
     (0, graphql_1.Field)(() => Date),
-    tslib_1.__metadata("design:type", typeof (_g = typeof Date !== "undefined" && Date) === "function" ? _g : Object)
+    tslib_1.__metadata("design:type", typeof (_j = typeof Date !== "undefined" && Date) === "function" ? _j : Object)
 ], ForgotPassword.prototype, "expires", void 0);
 ForgotPassword = tslib_1.__decorate([
     (0, graphql_1.ObjectType)()

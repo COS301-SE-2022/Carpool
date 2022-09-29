@@ -6,11 +6,11 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node dist/apps/api/main.js",
+    "start": "node dist/apps/dashboard/main.js",
     "start:api": "yarn start api",
     "prisma:seed": "ts-node prisma/seed.ts",
     "prisma:sow": "ts-node prisma/sow.ts",
-    "build": "nx build api --prod",
+    "build": "nx build dashboard --prod",
     "test": "nx test"
   },
   "private": true,

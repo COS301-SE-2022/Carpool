@@ -5,7 +5,8 @@ import { url } from '../config';
 import { DriverProfile } from '../types/driver-types';
 import { Platform } from 'react-native';
 
-const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
+const host = 'https://carpoolcos301.herokuapp.com';
+// const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const fetchDriverProfile = createAsyncThunk<
   DriverProfile,
@@ -14,7 +15,7 @@ export const fetchDriverProfile = createAsyncThunk<
 >('drivers/profile', async (userId: string, thunkApi) => {
   console.log('userId', userId);
 
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: DRIVER_PROFILE,
     variables: {
       userId,
@@ -45,15 +46,11 @@ export const uploadDriversLicense = createAsyncThunk<
   ImageUploadType,
   { rejectValue: Error }
 >('upload/image', async (imageUpload: ImageUploadType, thunkApi) => {
-  const response = await axios.post(
-    `http://${host}:3333/api`,
-    imageUpload.image,
-    {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }
-  );
+  const response = await axios.post(`${host}/api`, imageUpload.image, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
   console.log('FETCHING');
 
   if (response.data.errors) {
@@ -64,7 +61,7 @@ export const uploadDriversLicense = createAsyncThunk<
     return thunkApi.rejectWithValue(error);
   }
 
-  const res = `http://localhost:3333/api/${response.data.key}`;
+  const res = `https://carpoolcos301.herokuapp.com/api/${response.data.key}`;
 
   console.log(res);
 

@@ -30,9 +30,12 @@ export const dashboardAnalytics = createAsyncThunk<
   { rejectValue: Error }
 >('dashboard/analytics', async (__, thunkApi) => {
   //* TRIPS FOR MONTH
-  const tripsForMonth = await axios.post(`http://localhost:3333/graphql`, {
-    query: TRIPS_FOR_MONTH,
-  });
+  const tripsForMonth = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TRIPS_FOR_MONTH,
+    }
+  );
 
   if (tripsForMonth.data.errors) {
     const error = {
@@ -43,29 +46,44 @@ export const dashboardAnalytics = createAsyncThunk<
   }
 
   //* BOOKINGS FOR MONTH
-  const bookingsForMonth = await axios.post(`http://localhost:3333/graphql`, {
-    query: BOOKINGS_FOR_MONTH,
-  });
+  const bookingsForMonth = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: BOOKINGS_FOR_MONTH,
+    }
+  );
 
   //* TOTAL USERS
-  const totalUsers = await axios.post(`http://localhost:3333/graphql`, {
-    query: TOTAL_USERS,
-  });
+  const totalUsers = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TOTAL_USERS,
+    }
+  );
 
   //* TOTAL DRIVERS
-  const totalDrivers = await axios.post(`http://localhost:3333/graphql`, {
-    query: TOTAL_DRIVERS,
-  });
+  const totalDrivers = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TOTAL_DRIVERS,
+    }
+  );
 
   //* RECENT USERS
-  const recentUsers = await axios.post(`http://localhost:3333/graphql`, {
-    query: RECENT_USERS,
-  });
+  const recentUsers = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: RECENT_USERS,
+    }
+  );
 
   //* TRIPS FOR YEAR GROUPED BY MONTH
-  const tripsForYear = await axios.post(`http://localhost:3333/graphql`, {
-    query: TRIPS_BY_MONTH,
-  });
+  const tripsForYear = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TRIPS_BY_MONTH,
+    }
+  );
 
   const graphData = [
     { month: 'Jan', trips: 0 },
@@ -97,14 +115,20 @@ export const dashboardAnalytics = createAsyncThunk<
   });
 
   //* TOP UNIVERSITIES
-  const topUniversities = await axios.post(`http://localhost:3333/graphql`, {
-    query: TOP_UNIVERSITIES,
-  });
+  const topUniversities = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TOP_UNIVERSITIES,
+    }
+  );
 
   //* TOP USERS
-  const topUsers = await axios.post(`http://localhost:3333/graphql`, {
-    query: TOP_USERS,
-  });
+  const topUsers = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TOP_USERS,
+    }
+  );
 
   const analytics = {
     tripsForMonth: tripsForMonth.data.data.findTripsForMonth,
@@ -124,9 +148,12 @@ export const listUsers = createAsyncThunk<User[], void, { rejectValue: Error }>(
   'users/list',
   async (__, thunkApi) => {
     //* USER PROFILE
-    const userList = await axios.post(`http://localhost:3333/graphql`, {
-      query: LIST_USERS,
-    });
+    const userList = await axios.post(
+      `https://carpoolcos301.herokuapp.com/graphql`,
+      {
+        query: LIST_USERS,
+      }
+    );
 
     if (userList.data.errors) {
       const error = {
@@ -146,12 +173,15 @@ export const fetchUserProfile = createAsyncThunk<
   { rejectValue: Error }
 >('user/profile', async (id: string, thunkApi) => {
   //* USER PROFILE
-  const userProfile = await axios.post(`http://localhost:3333/graphql`, {
-    query: GET_USER_PROFILE,
-    variables: {
-      id,
-    },
-  });
+  const userProfile = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: GET_USER_PROFILE,
+      variables: {
+        id,
+      },
+    }
+  );
 
   if (userProfile.data.errors) {
     const error = {
@@ -162,12 +192,15 @@ export const fetchUserProfile = createAsyncThunk<
   }
 
   if (userProfile.data.data.findUserById.isDriver) {
-    const driverProfile = await axios.post(`http://localhost:3333/graphql`, {
-      query: GET_DRIVER_PROFILE,
-      variables: {
-        id,
-      },
-    });
+    const driverProfile = await axios.post(
+      `https://carpoolcos301.herokuapp.com/graphql`,
+      {
+        query: GET_DRIVER_PROFILE,
+        variables: {
+          id,
+        },
+      }
+    );
 
     return {
       ...userProfile.data.data.findUserById,
@@ -186,12 +219,15 @@ export const fetchUserTrips = createAsyncThunk<
   { rejectValue: Error }
 >('userTrips/list', async (id: string, thunkApi) => {
   //* USER TRIPS
-  const userTrips = await axios.post(`http://localhost:3333/graphql`, {
-    query: USER_TRIPS,
-    variables: {
-      id,
-    },
-  });
+  const userTrips = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: USER_TRIPS,
+      variables: {
+        id,
+      },
+    }
+  );
 
   if (userTrips.data.errors) {
     const error = {
@@ -210,12 +246,15 @@ export const fetchTripDetails = createAsyncThunk<
   { rejectValue: Error }
 >('tripDetails/details', async (id: string, thunkApi) => {
   //* USER TRIPS
-  const tripDetails = await axios.post(`http://localhost:3333/graphql`, {
-    query: TRIP_DETAILS,
-    variables: {
-      id,
-    },
-  });
+  const tripDetails = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: TRIP_DETAILS,
+      variables: {
+        id,
+      },
+    }
+  );
 
   if (tripDetails.data.errors) {
     const error = {
@@ -234,9 +273,12 @@ export const fetchAllTrips = createAsyncThunk<
   { rejectValue: Error }
 >('trips/all', async (__, thunkApi) => {
   //* USER TRIPS
-  const allTrips = await axios.post(`http://localhost:3333/graphql`, {
-    query: GET_ALL_TRIPS,
-  });
+  const allTrips = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: GET_ALL_TRIPS,
+    }
+  );
 
   if (allTrips.data.errors) {
     const error = {

@@ -15,13 +15,16 @@ export const login = createAsyncThunk<
 >('users/login', async (user: UserLogin, thunkApi) => {
   console.log(user);
 
-  const response = await axios.post(`http://localhost:3333/graphql`, {
-    query: ADMIN_LOGIN,
-    variables: {
-      email: user.email,
-      password: user.password,
-    },
-  });
+  const response = await axios.post(
+    `https://carpoolcos301.herokuapp.com/graphql`,
+    {
+      query: ADMIN_LOGIN,
+      variables: {
+        email: user.email,
+        password: user.password,
+      },
+    }
+  );
   console.log('FETCHING');
 
   if (response.data.errors) {

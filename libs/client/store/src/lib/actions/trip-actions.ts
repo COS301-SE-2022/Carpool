@@ -38,14 +38,15 @@ import {
 import { Platform } from 'react-native';
 import { url } from '../config';
 
-const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
+const host = 'https://carpoolcos301.herokuapp.com';
+// const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const listTrips = createAsyncThunk<
   TripListType[],
   undefined,
   { rejectValue: Error }
 >('trips/list', async (__, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: LIST_TRIPS,
   });
   console.log('FETCHING');
@@ -71,7 +72,7 @@ export const listNotifications = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('notifications/list', async (id: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: LIST_NOTIFICATIONS,
     variables: {
       id,
@@ -100,7 +101,7 @@ export const listTripRequests = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('tripRequests/listRequests', async (userId, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: FIND_REQUESTS,
     variables: {
       userId,
@@ -129,7 +130,7 @@ export const findUpcomingTrip = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('tripUpcoming/listUpcoming', async (id: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: UPCOMING_TRIP,
     variables: {
       id,
@@ -155,7 +156,7 @@ export const listDriverHistory = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('tripsDriver/history', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: DRIVER_HISTORY,
     variables: {
       id: tripId,
@@ -181,7 +182,7 @@ export const listPassengerReviews = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('passengerReviews/PassengerReviews', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: PASSENGER_REVIEWS,
     variables: {
       id: tripId,
@@ -207,7 +208,7 @@ export const listAllPassengers = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('listPassengers/AllPassengers', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: LIST_ALL_PASSENGERS,
     variables: {
       id: tripId,
@@ -233,7 +234,7 @@ export const listDriverReviews = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('driverReviews/DriverReviews', async (DriverId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: DRIVER_REVIEWS,
     variables: {
       id: DriverId,
@@ -259,7 +260,7 @@ export const listConfirmedTrips = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('confirmedTrips/checkout', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: CONFIRMED_TRIPS,
     variables: {
       id: tripId,
@@ -295,7 +296,7 @@ export const findBookingId = createAsyncThunk<
   console.log(tripId);
   console.log(userId);
 
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: BOOKING_ID,
     variables: {
       tripId: tripId,
@@ -327,7 +328,7 @@ export const listRequestedTrips = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('requestedTrips/checkout', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: REQUESTED_TRIPS,
     variables: {
       id: tripId,
@@ -361,7 +362,7 @@ export const listSearchResults = createAsyncThunk<
   SearchInput,
   { rejectValue: Error }
 >('tripSearch/search', async (search: SearchInput, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: SEARCH_RESULTS,
     variables: {
       date: search.date,
@@ -391,7 +392,7 @@ export const listPassengerHistory = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('passengerHistory/history', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: PASSENGER_HISTORY,
     variables: {
       id: tripId,
@@ -444,7 +445,7 @@ export const fetchTripDetails = createAsyncThunk<
   string,
   { rejectValue: Error }
 >('tripDetails/details', async (tripId: string, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: TRIP_DETAILS,
     variables: {
       id: tripId,
@@ -485,7 +486,7 @@ export const createTrip = createAsyncThunk<
 >('tripCreate/create', async (trip: TripCreate, thunkApi) => {
   console.log(trip);
 
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: CREATE_TRIP,
     variables: {
       driver: trip.driver,
@@ -543,7 +544,7 @@ export const bookTrip = createAsyncThunk<
   BookTripType,
   { rejectValue: Error }
 >('tripBook/book', async (acceptTripRequestValues: BookTripType, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: BOOK_TRIP,
     variables: {
       //bookingId: acceptTripRequestValues.bookingId,
@@ -585,7 +586,7 @@ export const acceptTripRequest = createAsyncThunk<
   AcceptTripReqType,
   { rejectValue: Error }
 >('acceptRequest/accept', async ({ id, bookingId }, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: ACCEPT_REQ,
     variables: {
       id: id,
@@ -618,7 +619,7 @@ export const declineTripRequest = createAsyncThunk<
   DeclineTripReqType,
   { rejectValue: Error }
 >('declineRequest/decline', async ({ bookingId }, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: DECLINE_REQ,
     variables: {
       bookingId: bookingId,
@@ -650,7 +651,7 @@ export const startTrip = createAsyncThunk<
   TripStatusType,
   { rejectValue: Error }
 >('startTrip/start', async ({ id }, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: START_TRIP,
     variables: {
       id: id,
@@ -678,7 +679,7 @@ export const endTrip = createAsyncThunk<
   TripStatusType,
   { rejectValue: Error }
 >('endTrip/end', async ({ id }, thunkApi) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: END_TRIP,
     variables: {
       id: id,
@@ -708,7 +709,7 @@ export const updateBookingPaymentStatus = createAsyncThunk<
 >('updatePaymentStatus/updatePayment', async (bookingId: string, thunkApi) => {
   console.log('updating booking payment status');
 
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: PAYMENT_STATUS_UPDATE,
     variables: {
       bookingId: bookingId,
@@ -733,7 +734,7 @@ export const updateReviewPassenger = createAsyncThunk<
   async (bookingId: string, thunkApi) => {
     console.log('updating Review Passenger');
 
-    const response = await axios.post(`http://${host}:3333/graphql`, {
+    const response = await axios.post(`${host}/graphql`, {
       query: PASSENGER_REVIEW_UPDATE,
       variables: {
         bookingId: bookingId,
@@ -759,7 +760,7 @@ export const updateReviewDriver = createAsyncThunk<
   async (tripId: string, thunkApi) => {
     console.log('updating Review Driver');
 
-    const response = await axios.post(`http://${host}:3333/graphql`, {
+    const response = await axios.post(`${host}/graphql`, {
       query: DRIVER_REVIEW_UPDATE,
       variables: {
         tripId: tripId,
@@ -794,7 +795,7 @@ export const postReview = createAsyncThunk<
   PostReviewType,
   { rejectValue: Error }
 >('postReview/review', async (review: PostReviewType, { rejectWithValue }) => {
-  const response = await axios.post(`http://${host}:3333/graphql`, {
+  const response = await axios.post(`${host}/graphql`, {
     query: POST_REVIEW,
     variables: {
       byId: review.byId,

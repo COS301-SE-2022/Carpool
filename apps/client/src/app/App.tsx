@@ -301,6 +301,28 @@ const TRIP_STARTED = gql`
   }
 `;
 
+const MSG_SUB = gql`
+  subscription Subscription {
+    messageSent {
+      id
+      message
+      senderId
+      receiverId
+      sender {
+        id
+        name
+        surname
+      }
+      receiver {
+        id
+        name
+        surname
+      }
+      createdAt
+    }
+  }
+`;
+
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
@@ -330,6 +352,14 @@ const AppWrapper = () => {
             showToast(notif.message);
           }
         });
+      }
+    },
+  });
+
+  const { data: msgData } = useSubscription(MSG_SUB, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      if (data.messageSent.receiverId === user.id) {
+        showToast('new message in chats');
       }
     },
   });

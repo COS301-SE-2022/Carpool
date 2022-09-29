@@ -14,6 +14,20 @@
     }
   },
   {
+    "menlyn": {
+      "address": "Menlyn Park Shopping Centre, Lois Avenue, Menlyn, Pretoria, South Africa",
+      "lat": "-25.7828439",
+      "lng": "28.2747677"
+    }
+  },
+  {
+    "planetFitnessCenturion": {
+      "address": "Planet Fitness Centurion Gate, John Vorster Drive, Zwartkop, Centurion, South Africa",
+      "lat": "-25.8664077",
+      "lng": "28.1905714"
+    }
+  },
+  {
     "edwards": {
       "address": "1060 Edwards Road, Eldoraigne, Centurion, South Africa",
       "lat": "-25.8487678",

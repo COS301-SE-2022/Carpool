@@ -18,8 +18,8 @@ export function RequestCard({ trip, onPressAccept, onPressDecline }: props) {
       <View style={[styles.flexRow, { marginBottom: 5 }]}>
         <View style={[styles.flexRow, { flex: 1, marginRight: 0 }]}>
           <Image
-            source={require('./lighter_grey.png')}
-            resizeMode="contain"
+            source={{ uri: trip.user.profilePic }}
+            resizeMode="cover"
             style={styles.image}
           />
         </View>

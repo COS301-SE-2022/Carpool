@@ -106,9 +106,8 @@ export function ConfirmEmailPage({ navigation }: ConfirmEmailPageProps) {
                 lineHeight: 22,
               }}
             >
-              A confirmation email has been sent to ustudentnumber@domain.co.za
-              Please click on the link in the email to confirm your email
-              address. Then come back here and login.
+              A code has been sent to ustudentnumber@domain.co.za Please enter
+              the code below to verify your email address.
             </Text>
             <View style={{ display: 'flex', flexDirection: 'row' }}>
               <TextInput

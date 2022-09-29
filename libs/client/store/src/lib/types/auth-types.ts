@@ -1,3 +1,9 @@
+export type ImageUploadState = {
+  image: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type UserState = {
   user: User | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -9,6 +15,22 @@ export type User = {
   token?: string;
   email: string;
   isDriver: boolean;
+};
+
+export type CheckCodeState = {
+  result: boolean | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type ForgotPasswordState = {
+  user: ForgotPasswordType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type ForgotPasswordType = {
+  email: string;
 };
 
 export type DriverState = {
@@ -43,6 +65,9 @@ export type UserProfile = {
   email: string;
   university: string;
   studentNumber: string;
+  cellNumber: string;
+  profilePic: string;
+  isDriver: boolean;
 };
 
 export type UpdateUserType = {

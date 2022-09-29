@@ -1,3 +1,7 @@
+export * from './lib/notifications-page/notifications-page';
+export * from './lib/new-password-page/new-password-page';
+export * from './lib/forgot-password-code-page/forgot-password-code-page';
+export * from './lib/mapbox-test/mapbox-test';
 export * from './lib/chat-list/chat-list';
 export * from './lib/register-driver/register-driver';
 export * from './lib/set-pickup-page/set-pickup-page';
@@ -29,3 +33,4 @@ export * from './lib/accept-request/accept-request';
 export * from './lib/review-page/review-page';
 export * from './lib/payfast-page/payfast-page';
 export * from './lib/trip-rating-page/trip-rating-page';
+export * from './lib/review-driver-page/review-driver-page';

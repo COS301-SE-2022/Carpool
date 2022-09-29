@@ -18,7 +18,35 @@ export const USER_PROFILE = `
       email
       university
       studentNumber
+      cellNumber
+      profilePic
+      isDriver
    }
+  }
+`;
+
+export const UPDATE_IMAGE = `
+  mutation ($id: String!, $image: String!) {
+   updateUserImage(id: $id, image: $image) {
+      profilePic
+   }
+  }
+`;
+
+export const FORGOT_PASSWORD = `
+query($email: String!) {
+  forgotPassword(email: $email) {
+    email
+    verificationCode
+  }
+}
+`;
+
+export const RESET_PASSWORD = `
+  mutation($email: String!, $password: String!) {
+    resetPassword(email: $email, password: $password) {
+      email
+    }
   }
 `;
 
@@ -34,8 +62,8 @@ export const USER_REGISTER = `
 `;
 
 export const DRIVER_REGISTER = `
-  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!) {
-      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId) {
+  mutation ($ID: String!, $licensePlate: String!, $carModel: String!, $userId: String!, $license: String!, idNumber: String!) {
+      registerDriver(ID: $ID, licensePlate: $licensePlate, carModel: $carModel, userId: $userId, license: $license, idNumber: $idNumber) {
         userId
         idNumber
         license

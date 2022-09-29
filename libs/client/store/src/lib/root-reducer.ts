@@ -4,13 +4,16 @@ import {
   userProfileSlice,
   userUpdateSlice,
   driverRegisterSlice,
+  forgotPasswordSlice,
+  checkCodeSlice,
+  resetPasswordSlice,
+  imageUploadSlice,
 } from './slices/auth-slice';
 import {
   tripListSlice,
   tripDetailsSlice,
-  upcomingTripSlice,
   driverHistorySlice,
-  tripUpcomingListSlice,
+  tripUpcomingSlice,
   passengerHistorySlice,
   createTripSlice,
   searchResultsSlice,
@@ -24,6 +27,13 @@ import {
   getBookingIdSlice,
   declineTripRequestSlice,
   getAllTripRequestsSlice,
+  passengerReviewSlice,
+  DriverReviewSlice,
+  UpdatePassengerReviewsSlice,
+  UpdateDriverReviewsSlice,
+  postReviewSlice,
+  getAllPassengersSlice,
+  notificationsSlice,
 } from './slices/trip-slice';
 import { getWeatherSlice } from './slices/weather-slices';
 import {
@@ -31,17 +41,18 @@ import {
   sendMessageSlice,
   getChatsSlice,
 } from './slices/message-slices';
+import { driverProfileSlice, driverUploadSlice } from './slices/drivers-slice';
 
 const RootReducer = combineReducers({
   user: userLoginSlice.reducer,
   userProfile: userProfileSlice.reducer,
+  notifications: notificationsSlice.reducer,
   updateUser: userUpdateSlice.reducer,
   trips: tripListSlice.reducer,
   driverHistory: driverHistorySlice.reducer,
   passengerHistory: passengerHistorySlice.reducer,
   searchResults: searchResultsSlice.reducer,
   trip: tripDetailsSlice.reducer,
-  upcoming: upcomingTripSlice.reducer,
   createdTrip: createTripSlice.reducer,
   booking: tripBookingSlice.reducer,
   acceptTrip: acceptTripRequestSlice.reducer,
@@ -52,13 +63,25 @@ const RootReducer = combineReducers({
   requestedTrip: requestedTripSlice.reducer,
   updatePaymentStatus: PaymentStatusUpdateSlice.reducer,
   bookingId: getBookingIdSlice.reducer,
-  upcomingTrips: tripUpcomingListSlice.reducer,
+  upcomingTrip: tripUpcomingSlice.reducer,
   tripRequests: getAllTripRequestsSlice.reducer,
   weather: getWeatherSlice.reducer,
   driver: driverRegisterSlice.reducer,
   messages: getMessagesSlice.reducer,
   message: sendMessageSlice.reducer,
   chats: getChatsSlice.reducer,
+  driverProfile: driverProfileSlice.reducer,
+  passengerReviews: passengerReviewSlice.reducer,
+  driverReviews: DriverReviewSlice.reducer,
+  updatePassengerReviews: UpdatePassengerReviewsSlice.reducer,
+  updateDriverReviews: UpdateDriverReviewsSlice.reducer,
+  postReview: postReviewSlice.reducer,
+  allPassengers: getAllPassengersSlice.reducer,
+  forgotPassword: forgotPasswordSlice.reducer,
+  checkCode: checkCodeSlice.reducer,
+  resetPassword: resetPasswordSlice.reducer,
+  imageUpload: imageUploadSlice.reducer,
+  driverUpload: driverUploadSlice.reducer,
 });
 
 export default RootReducer;

@@ -4,6 +4,9 @@ import {
   UpdateUserType,
   UserProfileState,
   UserState,
+  ForgotPasswordState,
+  CheckCodeState,
+  ImageUploadState,
 } from '../types/auth-types';
 import {
   login,
@@ -14,6 +17,10 @@ import {
   fetchUserProfile,
   createUpdateUser,
   registerDriver,
+  forgotPassword,
+  resetPasswordCode,
+  resetPassword,
+  uploadImage,
 } from '../actions/auth-actions';
 
 export const initialState = {
@@ -38,11 +45,13 @@ export const userLoginSlice = createSlice({
       .addCase(login.pending, (state, action) => {
         console.log('IDLE');
         state.status = 'loading';
+        state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
         console.log('SUCCESS');
         state.status = 'success';
         state.user = action.payload;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         console.log('FAIL');
@@ -113,6 +122,133 @@ export const userLoginSlice = createSlice({
         console.log('SUCCESS');
         state.status = 'success';
         state.user = action.payload;
+      });
+  },
+});
+
+export const forgotPasswordSlice = createSlice({
+  name: 'userPassword',
+  initialState: {
+    user: null,
+    status: 'idle',
+    error: null,
+  } as ForgotPasswordState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(forgotPassword.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const imageUploadSlice = createSlice({
+  name: 'upload',
+  initialState: {
+    image: null,
+    status: 'idle',
+    error: null,
+  } as ImageUploadState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(uploadImage.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(uploadImage.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.image = action.payload;
+        state.error = null;
+      })
+      .addCase(uploadImage.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const checkCodeSlice = createSlice({
+  name: 'userCode',
+  initialState: {
+    result: null,
+    status: 'idle',
+    error: null,
+  } as CheckCodeState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(resetPasswordCode.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(resetPasswordCode.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.result = action.payload;
+        state.error = null;
+      })
+      .addCase(resetPasswordCode.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+      });
+  },
+});
+
+export const resetPasswordSlice = createSlice({
+  name: 'userPasswordReset',
+  initialState: {
+    user: null,
+    status: 'idle',
+    error: null,
+  } as ForgotPasswordState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(resetPassword.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
       });
   },
 });

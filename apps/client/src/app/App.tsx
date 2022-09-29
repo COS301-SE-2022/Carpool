@@ -28,6 +28,11 @@ import {
   PayfastPage,
   ChatList,
   TripRatingPage,
+  MapboxTest,
+  ReviewDriverPage,
+  ForgotPasswordCodePage,
+  NewPasswordPage,
+  NotificationsPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import { store, RootStore } from '@carpool/client/store';
@@ -48,13 +53,17 @@ import {
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { createClient } from 'graphql-ws';
-import * as SecureStore from 'expo-secure-store';
+import { createUploadLink } from 'apollo-upload-client';
+import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
+import { useNavigate } from 'react-router-dom';
 
 export type RootStackParamList = {
   HomePage;
   LoginPage;
   OnboardPage;
   SignUpPage;
+  ForgotPasswordCodePage;
+  NewPasswordPage;
   SignOut;
   ForgotPasswordPage;
   ConfirmEmailPage;
@@ -75,20 +84,25 @@ export type RootStackParamList = {
   DriverActiveTrip;
   RegisterDriver;
   ReviewPage;
+  NotificationsPage;
   PayfastPage;
   ChatList;
   TripRatingPage;
+  MapboxTest;
 };
 
 export type TabBarParamList = {
   Home;
   Profile;
   ChatList;
+  MapboxTest;
 };
 
 export type AuthStackParamList = {
   LoginPage;
   OnboardPage;
+  ForgotPasswordCodePage;
+  NewPasswordPage;
   SignUpPage;
   ForgotPasswordPage;
   ConfirmEmailPage;
@@ -99,10 +113,7 @@ export type HomeStackParamList = {
   HomePage;
   SearchPage;
   TripDetails;
-  CheckoutTrips;
-  CreditCard;
   ReviewPage;
-  PayfastPage;
 };
 
 export type ProfileStackParamList = {
@@ -110,6 +121,10 @@ export type ProfileStackParamList = {
   EditProfile;
   Statistics;
   TripHistory;
+  ReviewPage;
+  ReviewDriverPage;
+  NewPasswordPage;
+  TripRatingPage;
 };
 
 const Tab = createBottomTabNavigator<TabBarParamList>();
@@ -135,9 +150,6 @@ const HomeStack = () => {
       <HomeStackNav.Screen name="HomePage" component={HomePage} />
       <HomeStackNav.Screen name="TripDetails" component={TripDetails} />
       <HomeStackNav.Screen name="SearchPage" component={SearchPage} />
-      <HomeStackNav.Screen name="CheckoutTrips" component={CheckoutTrips} />
-      <HomeStackNav.Screen name="CreditCard" component={CreditCard} />
-      <HomeStackNav.Screen name="PayfastPage" component={PayfastPage} />
     </HomeStackNav.Navigator>
   );
 };
@@ -151,10 +163,18 @@ const ProfileStack = () => {
       }}
     >
       <ProfileStackNav.Screen name="UserProfile" component={UserProfile} />
+      <ProfileStackNav.Screen
+        name="NewPasswordPage"
+        component={NewPasswordPage}
+      />
       <ProfileStackNav.Screen name="EditProfile" component={EditProfile} />
       <ProfileStackNav.Screen name="Statistics" component={Statistics} />
       <ProfileStackNav.Screen name="TripHistory" component={TripHistory} />
       <ProfileStackNav.Screen name="ReviewPage" component={ReviewPage} />
+      <ProfileStackNav.Screen
+        name="ReviewDriverPage"
+        component={ReviewDriverPage}
+      />
       <ProfileStackNav.Screen
         name="TripRatingPage"
         component={TripRatingPage}
@@ -220,6 +240,11 @@ const TabBar = () => {
         component={ChatList}
         options={{ title: 'Messages' }}
       />
+      {/* <Tab.Screen
+        name="MapboxTest"
+        component={MapboxTest}
+        options={{ title: 'Mapbox' }}
+      /> */}
       <Tab.Screen
         name="Profile"
         component={ProfileStack}
@@ -241,6 +266,11 @@ const AuthNav = () => {
       <AuthStack.Screen name="OnboardPage" component={OnboardPage} />
       <AuthStack.Screen name="SignUpPage" component={SignUpPage} />
       <AuthStack.Screen
+        name="ForgotPasswordCodePage"
+        component={ForgotPasswordCodePage}
+      />
+      <AuthStack.Screen name="NewPasswordPage" component={NewPasswordPage} />
+      <AuthStack.Screen
         name="ForgotPasswordPage"
         component={ForgotPasswordPage}
       />
@@ -253,9 +283,56 @@ const AuthNav = () => {
   );
 };
 
+const NOTIF_SUB = gql`
+  subscription Subscription {
+    requestReceived {
+      message
+      userId
+    }
+  }
+`;
+
+const TRIP_STARTED = gql`
+  subscription Subscription {
+    tripStarted {
+      message
+      userId
+    }
+  }
+`;
+
 const AppWrapper = () => {
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
+
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'info',
+      position: 'top',
+      text1: message,
+    });
+  };
+
+  const { data: subData } = useSubscription(NOTIF_SUB, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      if (data && user.id === data.requestReceived.userId) {
+        showToast(data.requestReceived.message);
+      }
+    },
+  });
+
+  const { data } = useSubscription(TRIP_STARTED, {
+    onSubscriptionData({ subscriptionData: { data } }) {
+      console.log(data.tripStarted);
+      if (data) {
+        data.tripStarted.map((notif) => {
+          if (user.id === notif.userId) {
+            showToast(notif.message);
+          }
+        });
+      }
+    },
+  });
 
   return (
     <NavigationContainer theme={navTheme}>
@@ -266,29 +343,21 @@ const AppWrapper = () => {
             headerShown: false,
           }}
         >
+          <Stack.Screen name="MapboxTest" component={MapboxTest} />
           <Stack.Screen name="HomePage" component={TabBar} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />
           <Stack.Screen name="DriverActiveTrip" component={DriverActiveTrip} />
-          {/* <Stack.Screen name="LoginPage" component={LoginPage} /> */}
-          {/* <Stack.Screen name="OnboardPage" component={OnboardPage} /> */}
-          {/* <Stack.Screen name="SignUpPage" component={SignUpPage} /> */}
-          {/* <Stack.Screen name="SignOut" component={SignOut} /> */}
+          <Stack.Screen name="CheckoutTrips" component={CheckoutTrips} />
           <Stack.Screen name="ChatScreen" component={ChatScreen} />
-          {/* <Stack.Screen
-            name="ForgotPasswordPage"
-            component={ForgotPasswordPage}
-          /> */}
-          {/* <Stack.Screen name="ConfirmEmailPage" component={ConfirmEmailPage} /> */}
-          {/* <Stack.Screen
-            name="ResetPasswordPage"
-            component={ResetPasswordPage}
-          /> */}
           <Stack.Screen name="TripDetails" component={TripDetails} />
+          <Stack.Screen name="CreditCard" component={CreditCard} />
+          <Stack.Screen name="PayfastPage" component={PayfastPage} />
           <Stack.Screen name="SearchResults" component={SearchResults} />
-          {/* <Stack.Group screenOptions={{ presentation: 'modal' }}>
-          <Stack.Screen name="SearchPage" component={SearchPage} />
-        </Stack.Group> */}
+          <Stack.Screen
+            name="NotificationsPage"
+            component={NotificationsPage}
+          />
           <Stack.Screen name="SearchPage" component={SearchPage} />
           <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="DriverProfile" component={DriverProfile} />
@@ -318,12 +387,16 @@ const AppWrapper = () => {
 };
 
 const httpLink = new HttpLink({
-  uri: 'https://carpoolcos301.herokuapp.com/graphql',
+  uri: 'http://localhost:3333/graphql',
+});
+
+const uploadLink = createUploadLink({
+  uri: 'http://localhost:3333/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'ws://carpoolcos301.herokuapp.com/graphql',
+    url: 'ws://localhost:3333/graphql',
   })
 );
 
@@ -336,7 +409,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  httpLink
+  uploadLink
 );
 
 const client = new ApolloClient({
@@ -345,8 +418,6 @@ const client = new ApolloClient({
 });
 
 export const App = () => {
-  // SecureStore.deleteItemAsync('user');
-
   return (
     <ApolloProvider client={client}>
       <NativeBaseProvider>

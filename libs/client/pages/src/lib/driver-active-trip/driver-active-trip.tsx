@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { Button, TripDetailsMapView } from '@carpool/client/components';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -8,12 +7,26 @@ import {
   RootStore,
   endTrip,
 } from '@carpool/client/store';
-
-import { Text, View, StyleSheet, ActivityIndicator, Alert } from 'react-native';
-
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Alert,
+  Linking,
+} from 'react-native';
 import { DriverActiveTripProps } from '../NavigationTypes/navigation-types';
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
+function myJoin(array: string[], separator: string) {
+  let newString = '';
+  separator = separator || ',';
+
+  array.forEach((a, i, arr) => {
+    newString += `${a}${i < arr.length - 1 ? separator : ''}`;
+  });
+  return newString;
+}
 
 export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
   const { tripId } = route.params;
@@ -48,6 +61,27 @@ export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
         style: 'cancel',
       },
     ]);
+  };
+
+  const openMaps = () => {
+    if (trip) {
+      const start = trip.coordinates[0].address.replace(/\s/g, '+');
+      const end = trip.coordinates[1].address.replace(/\s/g, '+');
+
+      const waypoints: string[] = [];
+
+      trip.passengers.map((passenger) => {
+        const waypoint = passenger.pickUp.address.replace(/\s/g, '+');
+
+        waypoints.push(waypoint);
+      });
+
+      const waypointString = myJoin(waypoints, '%7C');
+
+      Linking.openURL(
+        `https://www.google.com/maps/dir/?api=1&origin=${start}&destination=${end}&travelmode=driving&waypoints=${waypointString}`
+      );
+    }
   };
 
   return (
@@ -89,10 +123,11 @@ export function DriverActiveTrip({ navigation, route }: DriverActiveTripProps) {
               </View>
             </View>
           )}
-          {trip && <TripDetailsMapView trip={trip} />}
+          {trip && <TripDetailsMapView trip={trip} active={true} />}
           {userData?.id === trip.driver.id ? (
-            <View style={styles.bottomSection}>
+            <View style={[styles.bottomSection, { flex: 3 }]}>
               <View style={[styles.flexCol, styles.userContainer]}>
+                <Button title="Open Maps" onPress={openMaps} colour="#188aed" />
                 <Button
                   title="End Trip"
                   onPress={() => endTripHandle(tripId)}

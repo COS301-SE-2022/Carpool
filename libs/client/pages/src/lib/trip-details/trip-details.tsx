@@ -54,25 +54,21 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   }, [dispatch, tripId, tripStartStatus, navigation]);
 
   const bookRide = (tripId: string) => {
-    if (trip?.driver.id === userData?.id) {
-      startTripHandle(tripId);
-    } else {
-      dispatch(
-        bookTrip({
-          tripId,
-          passengerId: userData ? userData.id : '',
-          seatsBooked: '1',
-          status: 'unpaid',
-          price: trip ? `${trip.price}` : '',
-          address: trip ? trip.coordinates[0].address : '',
-          latitude: trip ? trip.coordinates[0].latitude : '',
-          longitude: trip ? trip.coordinates[0].longitude : '',
-        })
-      );
+    dispatch(
+      bookTrip({
+        tripId,
+        passengerId: userData ? userData.id : '',
+        seatsBooked: '1',
+        status: 'requested',
+        price: trip ? `${trip.price}` : '',
+        address: trip ? trip.coordinates[0].address : '',
+        latitude: trip ? trip.coordinates[0].latitude : '',
+        longitude: trip ? trip.coordinates[0].longitude : '',
+      })
+    );
 
-      showToast('Trip booked successfully');
-      navigation.popToTop();
-    }
+    showToast('Trip booked successfully');
+    navigation.popToTop();
   };
 
   const openChat = (senderId: string, receiverId: string) => {
@@ -119,6 +115,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
                 trip={trip}
                 type={type}
                 onPress={() => bookRide(tripId)}
+                onPressStart={() => startTripHandle(trip.tripId)}
                 onPressUser={() =>
                   navigation.navigate('DriverProfile', {
                     driverId: trip.driver.id,

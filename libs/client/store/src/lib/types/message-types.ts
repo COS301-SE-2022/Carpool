@@ -37,4 +37,5 @@ export type ChatState = {
 export type Chat = {
   userId: string;
   name: string;
+  profilePic: string;
 };

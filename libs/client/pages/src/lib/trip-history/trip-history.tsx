@@ -39,6 +39,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
   useEffect(() => {
     if (userData) {
       dispatch(listDriverHistory(userData.id));
+      // console.log('Driver History' + driverHistory);
     }
   }, [dispatch, userData]);
 
@@ -55,7 +56,7 @@ export function TripHistory({ navigation }: TripHistoryProps) {
   };
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+    navigation.push('TripDetails', { tripId, type: 'completed' });
   };
 
   return (
@@ -150,7 +151,18 @@ export function TripHistory({ navigation }: TripHistoryProps) {
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
           {driver ? (
             driverTrips?.length === 0 ? (
-              <Text>You have not offered any trips...</Text>
+              <View
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  paddingTop: 20,
+                }}
+              >
+                <Text style={{ fontWeight: '600', color: '#333' }}>
+                  You have not offered any trips...
+                </Text>
+              </View>
             ) : (
               driverTrips?.map((trip) => (
                 <TripCard
@@ -168,7 +180,18 @@ export function TripHistory({ navigation }: TripHistoryProps) {
               ))
             )
           ) : passengerTrips?.length === 0 ? (
-            <Text>You have not taking any trips...</Text>
+            <View
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingTop: 20,
+              }}
+            >
+              <Text style={{ fontWeight: '600', color: '#333' }}>
+                You have not taken any trips...
+              </Text>
+            </View>
           ) : (
             passengerTrips?.map((trip) => (
               <TripCard

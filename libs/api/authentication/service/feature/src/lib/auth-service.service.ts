@@ -1,12 +1,31 @@
 import { Injectable } from '@nestjs/common';
 import { QueryBus, CommandBus } from '@nestjs/cqrs';
-import { User, UserUpdate, Driver } from '@carpool/api/authentication/entities';
-import { FindUserByIdQuery, UserLoginQuery } from './queries/auth-query.query';
+import {
+  User,
+  UserUpdate,
+  Driver,
+  TopUniversities,
+  AdminUser,
+} from '@carpool/api/authentication/entities';
+import {
+  FindUserByIdQuery,
+  UserLoginQuery,
+  ForgotPasswordQuery,
+  FindTotalDriversQuery,
+  FindTotalUsersQuery,
+  FindRecentUsersQuery,
+  FindTopUniversitiesQuery,
+  FindAllUsersQuery,
+  FindTopUsersQuery,
+  AdminLoginQuery,
+} from './queries/auth-query.query';
 import {
   UserRegisterCommand,
   UserVerifyCommand,
   UserUpdateCommand,
   DriverRegisterCommand,
+  ResetPasswordCommand,
+  UpdateUserImageCommand,
 } from './commands/auth-command.command';
 import { MailerService } from '@nestjs-modules/mailer';
 
@@ -26,13 +45,42 @@ export class AuthService {
     return await this.queryBus.execute(new UserLoginQuery(email, password));
   }
 
+  async adminLogin(email: string, password: string): Promise<AdminUser | null> {
+    return await this.queryBus.execute(new AdminLoginQuery(email, password));
+  }
+
+  async findTopUsers(): Promise<User[]> {
+    return await this.queryBus.execute(new FindTopUsersQuery());
+  }
+
+  async findTotalUsers(): Promise<number> {
+    return this.queryBus.execute(new FindTotalUsersQuery());
+  }
+
+  async findAllUsers(): Promise<User[]> {
+    return this.queryBus.execute(new FindAllUsersQuery());
+  }
+
+  async findTotalDrivers(): Promise<number> {
+    return this.queryBus.execute(new FindTotalDriversQuery());
+  }
+
+  async findRecentUsers(): Promise<User[]> {
+    return this.queryBus.execute(new FindRecentUsersQuery());
+  }
+
+  async findTopUniversities(): Promise<TopUniversities[]> {
+    return this.queryBus.execute(new FindTopUniversitiesQuery());
+  }
+
   async register(
     name: string,
     surname: string,
     email: string,
     university: string,
     studentNumber: string,
-    password: string
+    password: string,
+    cellNumber: string
   ): Promise<User | null> {
     return await this.commandBus.execute(
       new UserRegisterCommand(
@@ -41,9 +89,14 @@ export class AuthService {
         email,
         university,
         studentNumber,
-        password
+        password,
+        cellNumber
       )
     );
+  }
+
+  async forgotPassword(email: string): Promise<User | null> {
+    return await this.queryBus.execute(new ForgotPasswordQuery(email));
   }
 
   async registerDriver(
@@ -78,10 +131,29 @@ export class AuthService {
     surname: string,
     email: string,
     university: string,
-    studentNumber: string
+    studentNumber: string,
+    cellNumber: string
   ): Promise<UserUpdate | null> {
     return await this.commandBus.execute(
-      new UserUpdateCommand(id, name, surname, email, university, studentNumber)
+      new UserUpdateCommand(
+        id,
+        name,
+        surname,
+        email,
+        university,
+        studentNumber,
+        cellNumber
+      )
+    );
+  }
+
+  async updateUserImage(id: string, image: string): Promise<User | null> {
+    return await this.commandBus.execute(new UpdateUserImageCommand(id, image));
+  }
+
+  async resetPassword(email: string, password: string): Promise<User | null> {
+    return await this.commandBus.execute(
+      new ResetPasswordCommand(email, password)
     );
   }
 }

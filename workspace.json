@@ -7,10 +7,18 @@
     "api-authentication-repository-data-access": "libs/api/authentication/repository/data-access",
     "api-authentication-service-feature": "libs/api/authentication/service/feature",
     "api-bookings-api-feature": "libs/api/bookings/api/feature",
+    "api-dashboard-api-feature": "libs/api/dashboard/api/feature",
+    "api-dashboard-repository-data-access": "libs/api/dashboard/repository/data-access",
+    "api-dashboard-service-feature": "libs/api/dashboard/service/feature",
+    "api-drivers-api-feature": "libs/api/drivers/api/feature",
+    "api-drivers-repository-data-access": "libs/api/drivers/repository/data-access",
+    "api-drivers-service-feature": "libs/api/drivers/service/feature",
     "api-messages-api-feature": "libs/api/messages/api/feature",
     "api-messages-api-shared-entities-data-access": "libs/api/messages/api/shared/entities/data-access",
     "api-messages-repository-data-access": "libs/api/messages/repository/data-access",
     "api-messages-service-feature": "libs/api/messages/service/feature",
+    "api-notifications-api-feature": "libs/api/notifications/api/feature",
+    "api-shared-services-aws-data-access": "libs/api/shared/services/aws/data-access",
     "api-shared-services-prisma-data-access": "libs/api/shared/services/prisma/data-access",
     "api-shell-feature": "libs/api/shell/feature",
     "api-trips-api-feature": "libs/api/trips/api/feature",
@@ -24,6 +32,11 @@
     "client-e2e": "apps/client-e2e",
     "client-pages": "libs/client/pages",
     "client-shared-utilities": "libs/client/shared/utilities",
-    "client-store": "libs/client/store"
+    "client-store": "libs/client/store",
+    "dashboard": "apps/dashboard",
+    "dashboard-components": "libs/dashboard/components",
+    "dashboard-e2e": "apps/dashboard-e2e",
+    "dashboard-pages": "libs/dashboard/pages",
+    "dashboard-redux": "libs/dashboard/redux"
   }
 }

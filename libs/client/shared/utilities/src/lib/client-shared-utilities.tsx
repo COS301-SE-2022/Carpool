@@ -58,3 +58,35 @@ export const colors = {
   grey: '#808080',
   lightGrey: '#F1F1F1',
 };
+
+export const getTimeOfDay = (date: string) => {
+  const dateObj = new Date(date);
+  const hour = dateObj.getHours();
+  if (hour < 12) {
+    return 'Morning';
+  } else if (hour < 18) {
+    return 'Afternoon';
+  } else {
+    return 'Evening';
+  }
+};
+
+export const getMonthName = (date: string) => {
+  const dateObj = new Date(date);
+  const month = dateObj.getMonth();
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  return `${monthNames[month]}`;
+};

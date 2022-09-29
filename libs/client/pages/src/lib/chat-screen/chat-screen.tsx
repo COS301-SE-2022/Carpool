@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { RootStore } from '@carpool/client/store';
 import { Message } from '@carpool/client/store';
 import { gql, useMutation, useQuery, useSubscription } from '@apollo/client';
+import { getTime } from '@carpool/client/shared/utilities';
 
 const GET_MESSAGES = gql`
   query GetMessages($senderId: String!, $receiverId: String!) {
@@ -23,10 +24,12 @@ const GET_MESSAGES = gql`
       sender {
         id
         name
+        surname
       }
       receiver {
         id
         name
+        surname
       }
       createdAt
     }
@@ -71,10 +74,12 @@ const MSG_SUB = gql`
       sender {
         id
         name
+        surname
       }
       receiver {
         id
         name
+        surname
       }
       createdAt
     }
@@ -86,10 +91,24 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
 
   const [messages, setMessages] = useState<Message[]>([]);
 
+  const [name, setName] = useState('');
+
   const { data, loading, error } = useQuery(GET_MESSAGES, {
     variables: { senderId, receiverId },
     onCompleted(data) {
+      console.log(data);
+
       setMessages(data.getMessages);
+
+      if (data.getMessages.length > 0) {
+        data.getMessages[0].receiverId === receiverId
+          ? setName(
+              `${data.getMessages[0].receiver.name} ${data.getMessages[0].receiver.surname}`
+            )
+          : setName(
+              `${data.getMessages[0].sender.name} ${data.getMessages[0].sender.surname}`
+            );
+      }
     },
   });
 
@@ -107,8 +126,14 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
 
   const { data: subData } = useSubscription(MSG_SUB, {
     onSubscriptionData({ subscriptionData: { data } }) {
-      console.log(data);
-      setMessages((prevMessages) => [...prevMessages, data.messageSent]);
+      if (
+        (data.messageSent.receiverId === receiverId &&
+          data.messageSent.senderId === senderId) ||
+        (data.messageSent.receiverId === senderId &&
+          data.messageSent.senderId === receiverId)
+      ) {
+        setMessages((prevMessages) => [...prevMessages, data.messageSent]);
+      }
     },
   });
 
@@ -137,9 +162,9 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                 style={{ color: '#fff', flex: 1 }}
                 onPress={() => navigation.goBack()}
               />
-              <View style={{ flex: 4 }}>
+              <View style={{ flex: 5 }}>
                 <Text style={styles.textSmallWhite} numberOfLines={2}>
-                  Benjamin Osmers
+                  {name}
                 </Text>
               </View>
             </View>
@@ -162,8 +187,13 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                       {
                         backgroundColor: '#188aed',
                         paddingVertical: 6,
+                        paddingTop: 10,
                         paddingHorizontal: 10,
                         borderRadius: 8,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        flexWrap: 'wrap',
+                        // justifyContent: 'flex-end',
                       },
                     ]}
                   >
@@ -173,15 +203,24 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
                         {
                           color: '#fff',
                           lineHeight: 20,
+                          fontSize: 15,
                         },
                       ]}
                     >
                       {message.message}
                     </Text>
+                    <Text
+                      style={{
+                        color: '#dbdbdb',
+                        lineHeight: 20,
+                        fontSize: 12,
+                        marginLeft: 10,
+                        textAlign: 'right',
+                      }}
+                    >
+                      {getTime(message.createdAt)}
+                    </Text>
                   </View>
-                  <Text style={{ color: '#999', lineHeight: 20, fontSize: 12 }}>
-                    {message.createdAt}
-                  </Text>
                 </View>
               ))}
             </View>

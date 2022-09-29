@@ -117,14 +117,78 @@ query ($id: String!) {
 }
 `;
 
-export const UPCOMING_TRIP = `
-  query {
-    findUpcomingTrip {
+export const PASSENGER_REVIEWS = `
+query ($id: String!) {
+  findByPassengerReviews(id: $id) {
+    tripId,
+    driver {
+      id,
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
+export const LIST_ALL_PASSENGERS = `
+query ($id: String!) {
+  findAllPassengers(id: $id) {
+    passengers {
+      bookingId,
       tripId,
+      userId,
+      user{
+        name,
+        profilePic
+      }
+    }
+  }
+}
+`;
+
+export const DRIVER_REVIEWS = `
+query ($id: String!) {
+  findByDriverReviews(id: $id) {
+    tripId,
+    driver {
+      id,
+			profilePic,
+      name,
+      surname
+    }
+    coordinates {
+			address,
+    }
+    tripDate,
+    createdAt,
+	}
+}
+`;
+
+export const UPCOMING_TRIP = `
+  query ($id: String!) {
+    findUpcomingTrip(id: $id) {
+      tripId,
+      driver {
+        id,
+        name,
+        surname,
+        profilePic
+      },
       tripDate,
+      createdAt,
       coordinates {
         address,
-      }
+        latitude,
+        longitude
+      },
+      status
     }
   }
 `;
@@ -138,6 +202,15 @@ export const TRIP_DETAILS = `
         name,
         surname,
         profilePic
+      },
+      passengers {
+        userId,
+        status,
+        pickUp {
+          address
+          latitude
+          longitude
+        }
       },
       tripDate,
       createdAt,
@@ -184,6 +257,13 @@ export const CREATE_TRIP = `
   }
 `;
 
+export const POST_REVIEW = `
+  mutation($byId: String!, $forId: String!, $tripId: String!, $role: String!, $comment: String!, $rating: String!) {
+    postReview(byId: $byId, forId: $forId, tripId: $tripId, role: $role, comment: $comment, rating: $rating){
+      id
+    }
+  }`;
+
 export const BOOK_TRIP = `
   mutation($tripId: String!, $passengerId: String!, $seatsBooked: String!, $status: String!, $price: String!, $address: String!, $latitude: String!, $longitude: String!) {
     bookTrip(tripId: $tripId, passengerId: $passengerId, seatsBooked: $seatsBooked, status: $status, price: $price, address: $address, longitude: $longitude, latitude: $latitude) {
@@ -224,6 +304,18 @@ mutation ($id: String!) {
 }
 `;
 
+export const LIST_NOTIFICATIONS = `
+  query ($id: String!) {
+    findAllNotifications(id: $id) {
+      id,
+      type,
+      message,
+      createdAt,
+      userId
+    }
+  }
+`;
+
 export const END_TRIP = `
 mutation ($id: String!) {
   endTrip (id: $id) {
@@ -239,6 +331,20 @@ mutation ($bookingId: String!) {
   }
 }`;
 
+export const PASSENGER_REVIEW_UPDATE = `
+mutation ($bookingId: String!) {
+  updateReviewPassenger(bookingId: $bookingId) {
+    bookingId
+  }
+}`;
+
+export const DRIVER_REVIEW_UPDATE = `
+mutation ($tripId: String!) {
+  updateReviewDriver(tripId: $tripId) {
+    tripId
+  }
+}`;
+
 export const FIND_REQUESTS = `
 query ($userId: String!) {
   findAllTripRequests(userId: $userId) {
@@ -246,7 +352,8 @@ query ($userId: String!) {
     user {
 			id,
       name,
-      surname
+      surname,
+      profilePic
     },
     trip {
       tripDate,

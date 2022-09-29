@@ -5,8 +5,7 @@ import { Weather } from '../types/weather-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
 
-const host =
-  Platform.OS === 'ios' ? 'https://a5a7-102-33-32-76.eu.ngrok.io' : '10.0.2.2';
+const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 type WeatherInput = {
   lat: string;
@@ -18,7 +17,7 @@ export const getWeather = createAsyncThunk<
   WeatherInput,
   { rejectValue: Error }
 >('weather/getWeather', async ({ lat, long }: WeatherInput, thunkApi) => {
-  const response = await axios.post(`${url}/graphql`, {
+  const response = await axios.post(`http://${host}:3333/graphql`, {
     query: GET_WEATHER,
     variables: {
       long: long,

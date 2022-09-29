@@ -30,6 +30,24 @@
       "@carpool/api/bookings/resolvers": [
         "libs/api/bookings/api/feature/src/index.ts"
       ],
+      "@carpool/api/dashboard/api/feature": [
+        "libs/api/dashboard/api/feature/src/index.ts"
+      ],
+      "@carpool/api/dashboard/repository/data-access": [
+        "libs/api/dashboard/repository/data-access/src/index.ts"
+      ],
+      "@carpool/api/dashboard/service/feature": [
+        "libs/api/dashboard/service/feature/src/index.ts"
+      ],
+      "@carpool/api/drivers/api/feature": [
+        "libs/api/drivers/api/feature/src/index.ts"
+      ],
+      "@carpool/api/drivers/repository": [
+        "libs/api/drivers/repository/data-access/src/index.ts"
+      ],
+      "@carpool/api/drivers/service": [
+        "libs/api/drivers/service/feature/src/index.ts"
+      ],
       "@carpool/api/messages/api/feature": [
         "libs/api/messages/api/feature/src/index.ts"
       ],
@@ -42,8 +60,14 @@
       "@carpool/api/messages/service/feature": [
         "libs/api/messages/service/feature/src/index.ts"
       ],
+      "@carpool/api/notifications/api/feature": [
+        "libs/api/notifications/api/feature/src/index.ts"
+      ],
       "@carpool/api/prisma": [
         "libs/api/shared/services/prisma/data-access/src/index.ts"
+      ],
+      "@carpool/api/shared/services/aws/data-access": [
+        "libs/api/shared/services/aws/data-access/src/index.ts"
       ],
       "@carpool/api/shell": ["libs/api/shell/feature/src/index.ts"],
       "@carpool/api/trips/entities": [
@@ -69,7 +93,12 @@
       "@carpool/client/shared/utilities": [
         "libs/client/shared/utilities/src/index.ts"
       ],
-      "@carpool/client/store": ["libs/client/store/src/index.ts"]
+      "@carpool/client/store": ["libs/client/store/src/index.ts"],
+      "@carpool/dashboard/components": [
+        "libs/dashboard/components/src/index.ts"
+      ],
+      "@carpool/dashboard/pages": ["libs/dashboard/pages/src/index.ts"],
+      "@carpool/dashboard/redux": ["libs/dashboard/redux/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

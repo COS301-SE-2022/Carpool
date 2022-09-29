@@ -11,3 +11,7 @@ export * from './lib/slices/message-slices';
 export * from './lib/actions/message-actions';
 export * from './lib/types/message-types';
 export * from './lib/queries/message-queries';
+export * from './lib/queries/auth-queries';
+export * from './lib/queries/driver-queries';
+export * from './lib/actions/driver-actions';
+export * from './lib/types/driver-types';

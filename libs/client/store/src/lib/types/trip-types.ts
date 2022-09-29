@@ -8,16 +8,30 @@ export type CreateTripState = {
 
 export type TripCreateType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   price: number;
   coordinates: Location[];
 };
 
+export type NotificationState = {
+  notifications: Notification[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type Notification = {
+  message: string;
+  id: string;
+  type: string;
+  createdAt: string;
+  userId: string;
+};
+
 export type TripRequestType = {
   bookingId: string;
-  user: User;
+  user: UserTrip;
   trip: TripRequest;
 };
 
@@ -33,10 +47,11 @@ export type TripRequest = {
   coordinates: Location[];
 };
 
-export type User = {
+export type UserTrip = {
   id: string;
   name: string;
   surname: string;
+  profilePic: string;
 };
 
 export type UpcomingTrip = {
@@ -51,6 +66,12 @@ export type TripUpcomingType = {
   coordinates: Location[];
 };
 
+export type UpcomingTripState = {
+  trip: TripListType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
 export type TripList = {
   trips: TripListType[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -59,7 +80,7 @@ export type TripList = {
 
 export type TripListType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
   tripDate: string;
   createdAt: string;
   coordinates: Location[];
@@ -77,7 +98,7 @@ export type Passenger = {
   bookingId: string;
 };
 
-export type Driver = {
+export type DriverTrip = {
   id: string;
   name: string;
   surname: string;
@@ -92,7 +113,18 @@ export type TripDetails = {
 
 export type TripDetailsType = {
   tripId: string;
-  driver: Driver;
+  driver: DriverTrip;
+  passengers: [
+    {
+      userId: string;
+      status: string;
+      pickUp: {
+        address: string;
+        latitude: string;
+        longitude: string;
+      };
+    }
+  ];
   tripDate: string;
   createdAt: string;
   seatsAvailable?: string;
@@ -139,4 +171,47 @@ export type EndTrip = {
   tripId: string | null;
   status: 'success' | 'loading' | 'error' | 'idle';
   error: Error | null;
+};
+
+export type ReviewType = {
+  byId: string;
+  forId: string;
+  tripId: string;
+  role: string;
+  comment: string;
+  rating: string;
+};
+
+export type ReviewReturnType = {
+  id: string;
+};
+
+export type ReviewTripState = {
+  review: string | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type PassengerList = {
+  passengers: PassengerListType[] | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type PassengerListType = {
+  bookingId: string;
+  tripId: string;
+  userId: string;
+  user: UserPassengerList;
+};
+
+export type UserPassengerList = {
+  name: string;
+  profilePic: string;
+};
+
+export type Passengers = {
+  bookingId: string;
+  tripId: string;
+  userId: string;
 };

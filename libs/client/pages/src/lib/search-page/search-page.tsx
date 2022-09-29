@@ -56,6 +56,8 @@ export function SearchPage({ navigation }: SearchPageProps) {
           placeholder="Search"
           fetchDetails={true}
           onPress={(data, details = null) => {
+            console.log(data);
+            console.log(details);
             setOrigin({
               address: data.description,
               latitude: `${details?.geometry.location.lat}`,
@@ -63,7 +65,7 @@ export function SearchPage({ navigation }: SearchPageProps) {
             });
           }}
           query={{
-            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+            key: 'AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg',
             language: 'en',
             components: 'country:za',
           }}
@@ -95,7 +97,7 @@ export function SearchPage({ navigation }: SearchPageProps) {
             });
           }}
           query={{
-            key: 'AIzaSyChxxl-UlhNAXjKJp2cYcrG5l6yEo9qcng',
+            key: 'AIzaSyBWXW1Mq7vb6wIIfdHFEzp9xuknlomPJkg',
             language: 'en',
             components: 'country:za',
           }}

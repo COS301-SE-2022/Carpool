@@ -1,23 +1,29 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 import { PayfastPageProps } from '../NavigationTypes/navigation-types';
-import {PayFastWebView} from "react-native-payfast";
-import {WebView} from "react-native-webview";
-import {PayfastView} from "@carpool/client/components";
+import { PayfastView } from '@carpool/client/components';
 
-export function PayfastPage({ navigation }: PayfastPageProps) {
+export function PayfastPage({ route, navigation }: PayfastPageProps) {
+  const { description, cost } = route.params;
+
   const paymentData = {
-    merchant_id : 10000100,
+    merchant_id: 10000100,
     merchant_key: '46f0cd694581a',
-    amount: 60.00,
-    item_name: 'React Native Purchase'
-};
+    amount: cost,
+    item_name: description,
+  };
+
+  setTimeout(() => {
+    navigation.navigate('CheckoutTrips');
+  }, 10000);
+
   return (
-      // <WebView
-      //   source={{ uri: 'https://infinite.red' }}
-      //   style={{ marginTop: 20 }}
-      // />
-      <PayfastView title ="Pay Now" data = {paymentData} sandbox={true} signature = {false} passphrase = {""}/>
+    <PayfastView
+      title="Pay Now"
+      data={paymentData}
+      sandbox={true}
+      signature={false}
+      passphrase={''}
+    />
   );
 }
 

@@ -3,13 +3,14 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User, Driver } from '@prisma/client';
+import { User, Driver, AdminUser } from '@prisma/client';
 import { PrismaService } from '@carpool/api/prisma';
 import * as bcrypt from 'bcrypt';
 import {
   UserInput,
   UserUpdate,
   DriverInput,
+  TopUniversities,
 } from '@carpool/api/authentication/entities';
 @Injectable()
 export class AuthRepository {
@@ -19,6 +20,77 @@ export class AuthRepository {
     return this.prisma.user.findUnique({
       where: {
         id,
+      },
+    });
+  }
+
+  async updateUserImage(id: string, image: string): Promise<User | null> {
+    const user = await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        profilePic: image,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with id ${id} does not exist`);
+    }
+  }
+
+  async findTotalUsers(): Promise<number> {
+    return this.prisma.user.count();
+  }
+
+  async findTopUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      orderBy: {
+        avgRating: 'desc',
+      },
+      take: 5,
+    });
+  }
+
+  async findTopUniversities(): Promise<TopUniversities[]> {
+    const universities = await this.prisma.user.groupBy({
+      by: ['university'],
+      _count: {
+        university: true,
+      },
+      orderBy: {
+        _count: {
+          university: 'desc',
+        },
+      },
+    });
+
+    return universities;
+  }
+
+  async findTotalDrivers(): Promise<number> {
+    return this.prisma.driver.count();
+  }
+
+  async findAllUsers(): Promise<User[]> {
+    return this.prisma.user.findMany();
+  }
+
+  async findRecentUsers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 5,
+    });
+  }
+
+  async findAllDrivers(): Promise<User[]> {
+    return this.prisma.user.findMany({
+      where: {
+        isDriver: true,
       },
     });
   }
@@ -44,6 +116,24 @@ export class AuthRepository {
     }
   }
 
+  async adminLogin(email: string, password: string): Promise<AdminUser | null> {
+    const user = await this.prisma.adminUser.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (user) {
+      const isValidPassword = await bcrypt.compare(password, user.password);
+
+      if (isValidPassword) {
+        return user;
+      }
+    } else if (!user) {
+      throw new NotFoundException(`User with email ${email} does not exist`);
+    }
+  }
+
   async register(user: UserInput): Promise<User | null> {
     const userExist = await this.prisma.user.findUnique({
       where: {
@@ -65,9 +155,44 @@ export class AuthRepository {
           university: user.university,
           studentNumber: user.studentNumber,
           password: hashedPassword,
+          cellNumber: user.cellNumber,
           profilePic: '',
         },
       });
+    }
+  }
+
+  async forgotPassword(email: string): Promise<User | null> {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with email ${email} does not exist`);
+    }
+  }
+
+  async resetPassword(email: string, password: string): Promise<User | null> {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = await this.prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+
+    if (user) {
+      return user;
+    } else {
+      throw new Error(`User with email ${email} does not exist`);
     }
   }
 
@@ -133,6 +258,7 @@ export class AuthRepository {
         email: user.email,
         university: user.university,
         studentNumber: user.studentNumber,
+        cellNumber: user.cellNumber,
       },
     });
 

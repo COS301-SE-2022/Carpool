@@ -21,7 +21,7 @@ import Toast from 'react-native-toast-message';
 import { Button, PayfastView } from '@carpool/client/components';
 
 export function CreditCard({ navigation, route }: CreditCardProps) {
-  const { tripId } = route.params;
+  const { tripId, description, cost } = route.params;
 
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
@@ -42,17 +42,17 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
       dispatch(findBookingId({ tripId, userId: userData.id }));
     }
 
-    if (paymentStatus === 'success') {
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: 'Success',
-      });
+    // if (paymentStatus === 'success') {
+    //   Toast.show({
+    //     type: 'success',
+    //     position: 'top',
+    //     text1: 'Success',
+    //   });
 
-      setTimeout(() => {
-        navigation.navigate('HomePage');
-      }, 2000);
-    }
+    //   setTimeout(() => {
+    //     navigation.navigate('HomePage');
+    //   }, 2000);
+    // }
   }, [dispatch, userData, tripId, paymentStatus, navigation]);
 
   const [name, setName] = useState('Name Surname');
@@ -89,15 +89,9 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
       dispatch(updateBookingPaymentStatus(bookingId));
     }
     console.log('Make Payment');
-    navigation.push('PayfastPage');
+    navigation.push('PayfastPage',{description, cost});
   };
 
-  const paymentData = {
-    merchant_id : 10026673,
-    merchant_key: '7zctrsta1c3ys',
-    amount: 60.00,
-    item_name: 'React Native Purchase'
-}
 
   return (
     <SafeAreaView
@@ -262,12 +256,6 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
             </View>
             <View>
              <Button title="Continue" onPress={submitPayment} />
-             {/* <TouchableOpacity onPress={submitPayment}>
-             <PayfastView title ="Pay Now" data = {paymentData} sandbox={true} signature = {false} passphrase = {""}/>
-             </TouchableOpacity> */}
-
-
-
             </View>
           </View>
         </>

@@ -2,11 +2,15 @@ import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 
 export type RootStackParamList = {
   HomePage: undefined;
+  ForgotPasswordCodePage: { email: string };
   RegisterDriver: { userId: string };
   LoginPage: undefined;
   OnboardPage: undefined;
   SignUpPage: undefined;
+  ChatList: undefined;
   SignOut: undefined;
+  NotificationsPage: undefined;
+  NewPasswordPage: { email: string; previousScreen?: string };
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
   ResetPasswordPage: undefined;
@@ -17,6 +21,7 @@ export type RootStackParamList = {
   EditProfile: undefined;
   Statistics: undefined;
   TripHistory: undefined;
+  MapboxTest: { tripId: string; type: string };
   SetPickupPage: {
     tripId: string;
     passengerId: string;
@@ -34,14 +39,20 @@ export type RootStackParamList = {
   ChatScreen: { senderId: string; receiverId: string };
   PostTrips: undefined;
   CheckoutTrips: undefined;
-  CreditCard: { tripId: string };
+  CreditCard: { tripId: string; description: string; cost: number };
   AcceptRequest: undefined;
   DriverActiveTrip: { tripId: string };
   PassengerActiveTrip: undefined;
-  ReviewPage: undefined;
-  PayfastPage: undefined;
-  ChatList: undefined;
+  ReviewPage: {
+    tripId: string;
+    driverId: string;
+    driver: string;
+    date: string;
+    destination: string;
+  };
+  PayfastPage: { description: string; cost: number };
   TripRatingPage: undefined;
+  ReviewDriverPage: { tripId: string; date: string; destination: string };
 };
 
 export type HomePageProps = NativeStackScreenProps<
@@ -52,6 +63,11 @@ export type HomePageProps = NativeStackScreenProps<
 export type ChatListProps = NativeStackScreenProps<
   RootStackParamList,
   'ChatList'
+>;
+
+export type NotificationsPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'NotificationsPage'
 >;
 
 export type RegisterDriverProps = NativeStackScreenProps<
@@ -72,6 +88,11 @@ export type OnboardPageProps = NativeStackScreenProps<
 export type SignUpPageProps = NativeStackScreenProps<
   RootStackParamList,
   'SignUpPage'
+>;
+
+export type NewPasswordPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'NewPasswordPage'
 >;
 
 export type SignOutProps = NativeStackScreenProps<
@@ -139,6 +160,11 @@ export type ChatScreenProps = NativeStackScreenProps<
   'ChatScreen'
 >;
 
+export type ForgotPasswordCodePageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ForgotPasswordCodePage'
+>;
+
 export type SetPickupPageProps = NativeStackScreenProps<
   RootStackParamList,
   'SetPickupPage'
@@ -178,6 +204,11 @@ export type ReviewPageProps = NativeStackScreenProps<
   'ReviewPage'
 >;
 
+export type ReviewDriverPageProps = NativeStackScreenProps<
+  RootStackParamList,
+  'ReviewDriverPage'
+>;
+
 export type PayfastPageProps = NativeStackScreenProps<
   RootStackParamList,
   'PayfastPage'
@@ -186,4 +217,9 @@ export type PayfastPageProps = NativeStackScreenProps<
 export type TripRatingPageProps = NativeStackScreenProps<
   RootStackParamList,
   'TripRatingPage'
+>;
+
+export type MapboxTestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'MapboxTest'
 >;

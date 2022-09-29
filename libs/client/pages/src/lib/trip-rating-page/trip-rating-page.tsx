@@ -11,12 +11,12 @@ import { TripRatingPageProps } from '../NavigationTypes/navigation-types';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   AppDispatch,
-  listDriverHistory,
-  listPassengerHistory,
+  listDriverReviews,
+  listPassengerReviews,
   RootStore,
 } from '@carpool/client/store';
 import { TripCard } from '@carpool/client/components';
-import { formatDate } from '@carpool/client/shared/utilities';
+import { formatDate, getDay, getTimeOfDay } from '@carpool/client/shared/utilities';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export function TripRatingPage({ navigation }: TripRatingPageProps) {
@@ -27,35 +27,38 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
   const user = useSelector((state: RootStore) => state.user);
   const { user: userData } = user;
 
-  const driverHistory = useSelector((state: RootStore) => state.driverHistory);
-  const { trips: driverTrips, status: driverHistoryStatus } = driverHistory;
+  const driverReviews = useSelector((state: RootStore) => state.driverReviews);
+  const { trips: driverTrips, status: driverReviewsStatus } = driverReviews;
 
-  const passengerHistory = useSelector(
-    (state: RootStore) => state.passengerHistory
-  );
-  const { trips: passengerTrips, status: passengerHistoryStatus } =
-    passengerHistory;
+  const passengerReviews = useSelector((state: RootStore) => state.passengerReviews);
+  const { trips: passengerTrips, status: passengerReviewsStatus } = passengerReviews;
 
   useEffect(() => {
     if (userData) {
-      dispatch(listDriverHistory(userData.id));
+      dispatch(listDriverReviews(userData.id));
     }
   }, [dispatch, userData]);
 
   const asDriver = () => {
     setDriver(true);
     console.log('As Driver');
-    userData && dispatch(listDriverHistory(userData.id));
+    userData && dispatch(listDriverReviews(userData.id));
   };
 
   const asPassenger = () => {
     setDriver(false);
     console.log('As Passenger');
-    userData && dispatch(listPassengerHistory(userData.id));
+    userData && dispatch(listPassengerReviews(userData.id));
+    console.log(passengerTrips);
   };
 
-  const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId });
+  const viewTrip = (tripId: string, driverId: string, driver: string, date: string, destination: string) => {
+    navigation.push('ReviewPage', { tripId, driverId, driver, date, destination});
+  };
+
+  const viewTripDriver = (tripId: string,  date: string, destination: string) => {
+    console.log('View Trip Driver');
+    navigation.push('ReviewDriverPage', { tripId, date, destination});
   };
 
   return (
@@ -143,8 +146,8 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
           </Text>
         </Pressable>
       </View>
-      {driverHistoryStatus === 'loading' ||
-      passengerHistoryStatus === 'loading' ? (
+      {driverReviewsStatus === 'loading' ||
+      passengerReviewsStatus === 'loading' ? (
         <ActivityIndicator />
       ) : (
         <ScrollView style={{ width: '100%', paddingHorizontal: 20 }}>
@@ -161,9 +164,9 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                   destination={trip.coordinates[1].address}
                   created={formatDate(trip.createdAt)}
                   image={trip.driver.profilePic}
-                  date={formatDate(trip.createdAt)}
+                  date={formatDate(trip.tripDate)}
                   distance=""
-                  onPress={() => viewTrip(trip.tripId)}
+                  onPress={() => viewTripDriver(trip.tripId, trip.tripDate, trip.coordinates[1].address)}
                 />
               ))
             )
@@ -179,9 +182,9 @@ export function TripRatingPage({ navigation }: TripRatingPageProps) {
                 destination={trip.coordinates[1].address}
                 created={formatDate(trip.createdAt)}
                 image={trip.driver.profilePic}
-                date={formatDate(trip.createdAt)}
+                date={formatDate(trip.tripDate)}
                 distance=""
-                onPress={() => viewTrip(trip.tripId)}
+                onPress={() => viewTrip(trip.tripId, trip.driver.id, trip.driver.name , trip.tripDate, trip.coordinates[1].address )}
               />
             ))
           )}

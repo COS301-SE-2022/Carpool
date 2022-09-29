@@ -6,11 +6,17 @@ async function main() {
 
   await prisma.pickupLocation.deleteMany({});
 
+  await prisma.review.deleteMany({});
+
   await prisma.booking.deleteMany({});
 
   await prisma.location.deleteMany({});
 
   await prisma.trip.deleteMany({});
+
+  await prisma.message.deleteMany({});
+
+  await prisma.driver.deleteMany({});
 
   await prisma.user.deleteMany({});
 }

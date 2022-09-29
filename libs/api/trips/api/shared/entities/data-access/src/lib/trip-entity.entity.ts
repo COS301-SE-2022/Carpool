@@ -4,6 +4,30 @@ import { Booking } from './booking-entity.entity';
 import { Location, LocationInput } from './location-entity.entity';
 
 @ObjectType()
+export class Notification {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  userId: string;
+
+  @Field(() => String)
+  message: string;
+
+  @Field(() => String)
+  type: string;
+
+  @Field(() => Date)
+  createdAt: Date;
+
+  @Field(() => Date)
+  updatedAt: Date;
+
+  @Field(() => User)
+  user: User;
+}
+
+@ObjectType()
 export class Trip {
   @Field(() => ID)
   tripId: string;
@@ -34,6 +58,15 @@ export class Trip {
 
   @Field(() => [Location])
   coordinates: Location[];
+}
+
+@ObjectType()
+export class TripByMonth {
+  @Field(() => String)
+  month: string;
+
+  @Field(() => Int)
+  trips: number;
 }
 
 @InputType()
@@ -79,4 +112,10 @@ export class AcceptTripRequestUpdate {
 export class TripStatusUpdate {
   @Field()
   status: string;
+}
+
+@InputType()
+export class ReviewsStatusUpdate {
+  @Field(() => ID)
+  tripId: string;
 }

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TripsRepository } from '@carpool/api/trips/repository';
-import { TripsService } from '@carpool/api/trips/service';
 import { TripsResolver } from './trips-resolver.resolver';
 import {
   FindAllHandler,
@@ -10,9 +9,11 @@ import {
   BookTripHandler,
   TripsDeleteHandler,
   TripsUpdateHandler,
+  FindALlNotificationsHandler,
   FindTripByIdHandler,
   FindCoordinatesByTripHandler,
   FindBookingByTripHandler,
+  FindUpcomingTripsHandler,
   SearchTripsHandler,
   FindByConfirmedTripHandler,
   FindByRequestedTripHandler,
@@ -22,6 +23,18 @@ import {
   StartTripHandler,
   EndTripHandler,
   DeclineTripRequestHandler,
+  FindByPassengerReviewsHandler,
+  FindByDriverReviewsHandler,
+  UpdatePassengerReviewsHandler,
+  UpdateDriverReviewsHandler,
+  CreateReviewHandler,
+  FindAllPassengersHandler,
+  FindTripsForMonthHandler,
+  TripsService,
+  FindBookingsForMonthHandler,
+  FindTripsByMonthHandler,
+  FindBookingsByUserHandler,
+  FindBookingByIdHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -39,6 +52,11 @@ import { AuthService } from '@carpool/api/authentication/service';
     PrismaService,
     //** COMMAND HANDLERS */
     FindAllHandler,
+    FindBookingsForMonthHandler,
+    FindTripsForMonthHandler,
+    FindBookingsByUserHandler,
+    FindUpcomingTripsHandler,
+    FindTripsByMonthHandler,
     FindByDriverHandler,
     FindByPassengerHandler,
     TripsCreateHandler,
@@ -49,7 +67,9 @@ import { AuthService } from '@carpool/api/authentication/service';
     TripsUpdateHandler,
     FindCoordinatesByTripHandler,
     FindTripByIdHandler,
+    FindBookingByIdHandler,
     AuthService,
+    FindALlNotificationsHandler,
     FindByConfirmedTripHandler,
     FindByRequestedTripHandler,
     BookingUpdatePaymentStatusHandler,
@@ -58,6 +78,12 @@ import { AuthService } from '@carpool/api/authentication/service';
     StartTripHandler,
     EndTripHandler,
     DeclineTripRequestHandler,
+    FindByPassengerReviewsHandler,
+    FindByDriverReviewsHandler,
+    UpdatePassengerReviewsHandler,
+    UpdateDriverReviewsHandler,
+    CreateReviewHandler,
+    FindAllPassengersHandler,
   ],
 })
 export class TripsModule {}

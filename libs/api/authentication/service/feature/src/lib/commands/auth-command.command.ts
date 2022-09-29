@@ -5,7 +5,8 @@ export class UserRegisterCommand {
     public readonly email: string,
     public readonly university: string,
     public readonly studentNumber: string,
-    public readonly password: string
+    public readonly password: string,
+    public readonly cellNumber: string
   ) {}
 }
 
@@ -29,6 +30,18 @@ export class UserUpdateCommand {
     public readonly surname: string,
     public readonly email: string,
     public readonly university: string,
-    public readonly studentNumber: string
+    public readonly studentNumber: string,
+    public readonly cellNumber: string
   ) {}
+}
+
+export class ResetPasswordCommand {
+  constructor(
+    public readonly email: string,
+    public readonly password: string
+  ) {}
+}
+
+export class UpdateUserImageCommand {
+  constructor(public readonly id: string, public readonly image: string) {}
 }

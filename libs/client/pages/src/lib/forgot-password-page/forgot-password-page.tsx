@@ -1,12 +1,55 @@
 /* eslint-disable-next-line */
-import React, { useState } from 'react';
-import { SafeAreaView, View, Image, Text, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Image,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import { Button, Input } from '@carpool/client/components';
 import Icon from 'react-native-vector-icons/Feather';
 import { ForgotPasswordPageProps } from '../NavigationTypes/navigation-types';
+import { RootStore, AppDispatch, forgotPassword } from '@carpool/client/store';
+import { useDispatch, useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 
 export function ForgotPasswordPage({ navigation }: ForgotPasswordPageProps) {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [email, setEmail] = useState('');
+
+  const forgotPasswordState = useSelector(
+    (state: RootStore) => state.forgotPassword
+  );
+  const { status, user, error } = forgotPasswordState;
+
+  const showToast = (message: string) => {
+    Toast.show({
+      type: 'error',
+      position: 'top',
+      text1: message,
+    });
+  };
+
+  useEffect(() => {
+    if (user) {
+      navigation.navigate('ForgotPasswordCodePage', { email });
+    }
+  }, [user, navigation, email]);
+
+  useEffect(() => {
+    if (error) {
+      showToast(error.message);
+    }
+  }, [error]);
+
+  const handleSubmit = (email: string) => {
+    if (email !== '') {
+      dispatch(forgotPassword(email));
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,7 +89,7 @@ export function ForgotPasswordPage({ navigation }: ForgotPasswordPageProps) {
             style={{ resizeMode: 'cover' }}
           />
         </View>
-        <View style={{ display: 'flex', flex: 2, justifyContent: 'center' }}>
+        <View style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
           <Text style={{ textAlign: 'left', fontSize: 24, fontWeight: '700' }}>
             Forgot password?
           </Text>
@@ -64,26 +107,36 @@ export function ForgotPasswordPage({ navigation }: ForgotPasswordPageProps) {
             No problem. It happens to all of us! Enter your registered email
             address below to receive a password reset email.
           </Text>
-          <Input
-            inputPlaceholder="Email Address"
-            iconName="email"
-            onChangeText={setEmail}
-            inputValue={email}
-          />
         </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginBottom: 10,
-            display: 'flex',
-            flexDirection: 'column',
-          }}
-        >
-          <Button
-            title="Reset Password"
-            onPress={() => navigation.push('LoginPage')}
-          />
+        <View style={{ flex: 1 }}>
+          {status === 'loading' ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <>
+              <View>
+                <Input
+                  inputPlaceholder="Email Address"
+                  iconName="email"
+                  onChangeText={setEmail}
+                  inputValue={email}
+                />
+              </View>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'flex-end',
+                  marginBottom: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Button
+                  title="Reset Password"
+                  onPress={() => handleSubmit(email)}
+                />
+              </View>
+            </>
+          )}
         </View>
       </View>
     </SafeAreaView>

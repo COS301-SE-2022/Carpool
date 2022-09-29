@@ -74,8 +74,6 @@ export class MessageRepository {
       uniqueChats.push(chatObj);
     });
 
-    console.log(uniqueChats);
-
     uniqueChats = uniqueChats.filter(
       (value, index, self) =>
         index ===

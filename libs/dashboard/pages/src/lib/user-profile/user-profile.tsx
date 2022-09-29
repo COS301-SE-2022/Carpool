@@ -116,6 +116,7 @@ export function UserProfile() {
               <UserProfileHeader
                 name={`${userProfile.name} ${userProfile.surname}`}
                 email={userProfile.email}
+                profilePic={userProfile.profilePic}
                 setView={setView}
                 view={view}
                 onBack={() => navigate(-1)}
@@ -242,6 +243,16 @@ export function UserProfile() {
                                 title="vehicle"
                                 value={userProfile.driver.model}
                               />
+                              {userProfile.driver.license && (
+                                <img
+                                  src={userProfile.driver.license}
+                                  alt="user profile pic"
+                                  style={{
+                                    width: 300,
+                                    marginTop: 30,
+                                  }}
+                                />
+                              )}
                             </Grid>
                           )}
                         </Grid>

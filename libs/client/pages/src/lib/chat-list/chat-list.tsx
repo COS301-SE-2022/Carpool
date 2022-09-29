@@ -82,7 +82,7 @@ export function ChatList({ navigation }: ChatListProps) {
                   >
                     <Image
                       source={{ uri: chat.profilePic }}
-                      resizeMode="contain"
+                      resizeMode="cover"
                       style={{
                         width: 40,
                         height: 40,

@@ -14,6 +14,7 @@ import {
   Chip,
   Button,
   Typography,
+  Avatar,
 } from '@mui/material';
 import { formatDate } from '@carpool/client/shared/utilities';
 import {
@@ -120,14 +121,27 @@ export function TripsPage() {
                                   alignItems: 'center',
                                 }}
                               >
-                                <img
-                                  src={require('./ben.png')}
+                                {/* <img
+                                  src={
+                                    trip.driver.profilePic
+                                      ? trip.driver.profilePic
+                                      : require('./placeholder.png')
+                                  }
                                   alt="user profile pic"
                                   style={{
                                     width: 35,
                                     borderRadius: '50%',
                                     marginRight: 20,
                                   }}
+                                /> */}
+                                <Avatar
+                                  alt={trip.driver.name}
+                                  src={
+                                    trip.driver.profilePic
+                                      ? trip.driver.profilePic
+                                      : require('./placeholder.png')
+                                  }
+                                  sx={{ width: 30, height: 30, marginRight: 2 }}
                                 />
                                 <Stack>
                                   <Typography

@@ -6,6 +6,7 @@ import {
   IconButton,
   Button,
   Typography,
+  Avatar,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -23,6 +24,7 @@ type UserProfileHeaderProps = {
   name: string;
   email: string;
   view: string;
+  profilePic: string;
   setView: (view: string) => void;
   onBack: () => void;
 };
@@ -32,6 +34,7 @@ export function UserProfileHeader({
   email,
   onBack,
   view,
+  profilePic,
   setView,
 }: UserProfileHeaderProps) {
   return (
@@ -66,14 +69,27 @@ export function UserProfileHeader({
                       alignItems: 'center',
                     }}
                   >
-                    <img
-                      src={require('./ben.png')}
+                    {/* <img
+                      src={
+                        profilePic !== ''
+                          ? profilePic
+                          : require('./placeholder.png')
+                      }
                       alt="user profile pic"
                       style={{
                         width: 60,
                         borderRadius: '50%',
                         marginRight: 20,
                       }}
+                    /> */}
+                    <Avatar
+                      alt={name}
+                      src={
+                        profilePic !== ''
+                          ? profilePic
+                          : require('./placeholder.png')
+                      }
+                      sx={{ width: 60, height: 60, marginRight: 2 }}
                     />
                     <Stack>
                       <Typography

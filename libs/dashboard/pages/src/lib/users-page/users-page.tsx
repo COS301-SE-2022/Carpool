@@ -12,6 +12,7 @@ import {
   Paper,
   TableHead,
   Button,
+  Avatar,
 } from '@mui/material';
 import { formatDate } from '@carpool/client/shared/utilities';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -94,14 +95,28 @@ export function UsersPage() {
                               alignItems: 'center',
                             }}
                           >
-                            <img
-                              src={require('./ben.png')}
+                            {/* <img
+                              src={
+                                user.profilePic
+                                  ? user.profilePic
+                                  : require('./placeholder.png')
+                              }
                               alt="user profile pic"
                               style={{
                                 width: 35,
+                                height: 35,
                                 borderRadius: '50%',
                                 marginRight: 20,
                               }}
+                            /> */}
+                            <Avatar
+                              alt={user.name}
+                              src={
+                                user.profilePic
+                                  ? user.profilePic
+                                  : require('./placeholder.png')
+                              }
+                              sx={{ width: 30, height: 30, marginRight: 2 }}
                             />
                             <Stack>
                               <Typography

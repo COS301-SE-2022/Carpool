@@ -72,6 +72,7 @@ export type User = {
   cellNumber: string;
   isDriver: boolean;
   createdAt: string;
+  profilePic: string;
 };
 
 export type UserProfileState = {
@@ -90,6 +91,7 @@ export type UserProfile = {
   avgRating: number;
   cellNumber: string;
   isDriver: boolean;
+  profilePic: string;
   createdAt: string;
   driver?: Driver;
   tripsCreated: TripCreated[];
@@ -100,6 +102,7 @@ export type Driver = {
   licensePlate: string;
   model: string;
   idNumber: string;
+  license: string;
 };
 
 export type TripCreated = {

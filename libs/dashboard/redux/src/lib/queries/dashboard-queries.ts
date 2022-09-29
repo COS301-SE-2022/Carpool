@@ -86,6 +86,7 @@ query {
     studentNumber
     isDriver
     createdAt
+    profilePic
   }
 }
 `;
@@ -100,6 +101,7 @@ query($id: String!) {
     university
     studentNumber
     cellNumber
+    profilePic
     isDriver
     avgRating
     createdAt
@@ -119,6 +121,7 @@ query($id: String!) {
     licensePlate
     model
     idNumber
+    license
   }
 }
 `;

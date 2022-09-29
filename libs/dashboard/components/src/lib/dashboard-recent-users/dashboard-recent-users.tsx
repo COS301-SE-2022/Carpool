@@ -8,6 +8,7 @@ import {
   TableBody,
   TableRow,
   Paper,
+  Avatar,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { formatDate } from '@carpool/client/shared/utilities';
@@ -64,14 +65,27 @@ export function DashboardRecentUsers({ data }: RecentUsersProps) {
                     align="left"
                     sx={{ display: 'flex', alignItems: 'center' }}
                   >
-                    <img
-                      src={require('./ben.png')}
+                    {/* <img
+                      src={
+                        user.profilePic
+                          ? user.profilePic
+                          : require('./placeholder.png')
+                      }
                       alt="user profile pic"
                       style={{
                         width: 30,
                         borderRadius: '50%',
                         marginRight: 10,
                       }}
+                    /> */}
+                    <Avatar
+                      alt={user.name}
+                      src={
+                        user.profilePic
+                          ? user.profilePic
+                          : require('./placeholder.png')
+                      }
+                      sx={{ width: 30, height: 30, marginRight: 2 }}
                     />
                     {user.name} {user.surname}
                   </TableCell>

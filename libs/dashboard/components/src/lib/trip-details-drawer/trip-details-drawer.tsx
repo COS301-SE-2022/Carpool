@@ -186,7 +186,11 @@ export function TripDetailsDrawer({
                     }}
                   >
                     <img
-                      src={require('./ben.png')}
+                      src={
+                        trip.driver.profilePic !== ''
+                          ? trip.driver.profilePic
+                          : require('./placeholder.png')
+                      }
                       alt="user profile pic"
                       style={{
                         width: 60,
@@ -272,7 +276,11 @@ export function TripDetailsDrawer({
                           <ListItemAvatar>
                             <Avatar
                               alt={passenger.user.name}
-                              src={require('./ben.png')}
+                              src={
+                                passenger.user.profilePic !== ''
+                                  ? passenger.user.profilePic
+                                  : require('./placeholder.png')
+                              }
                             />
                           </ListItemAvatar>
                           <ListItemText

@@ -23,6 +23,7 @@ import {
   StartTripHandler,
   EndTripHandler,
   DeclineTripRequestHandler,
+  FindByDriverForDashboardHandler,
   FindByPassengerReviewsHandler,
   FindByDriverReviewsHandler,
   UpdatePassengerReviewsHandler,
@@ -53,6 +54,7 @@ import { AuthService } from '@carpool/api/authentication/service';
     //** COMMAND HANDLERS */
     FindAllHandler,
     FindBookingsForMonthHandler,
+    FindByDriverForDashboardHandler,
     FindTripsForMonthHandler,
     FindBookingsByUserHandler,
     FindUpcomingTripsHandler,

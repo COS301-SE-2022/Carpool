@@ -150,6 +150,14 @@ export class TripsRepository {
     });
   }
 
+  async findByDriverForDashboard(driverId: string): Promise<Trip[]> {
+    return await this.prisma.trip.findMany({
+      where: {
+        driverId: driverId,
+      },
+    });
+  }
+
   async findByPassenger(passengerId: string): Promise<Trip[]> {
     return this.prisma.trip.findMany({
       where: {

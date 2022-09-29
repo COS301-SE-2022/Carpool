@@ -124,6 +124,16 @@ export class TripsResolver {
   }
 
   /**
+   * Query to find trips by driver id
+   * @param {string} id The id of the driver to find the trips by
+   * @returns {Promise<Trip[]>}
+   */
+  @Query(() => [Trip])
+  async findByDriverForDashboard(@Args('id') id: string): Promise<Trip[]> {
+    return await this.tripsService.findByDriverForDashboard(id);
+  }
+
+  /**
    * Query to find trips by passenger id
    * @param {string} id The id of the passenger to find the trips by
    * @returns {Promise<Trip[]>}

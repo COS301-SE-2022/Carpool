@@ -4,6 +4,10 @@ export class FindByDriverQuery {
   constructor(public readonly driverId: string) {}
 }
 
+export class FindByDriverForDashboardQuery {
+  constructor(public readonly driverId: string) {}
+}
+
 export class FindByPassengerQuery {
   constructor(public readonly passengerId: string) {}
 }

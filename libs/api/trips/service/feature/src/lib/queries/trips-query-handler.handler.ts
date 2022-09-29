@@ -23,6 +23,7 @@ import {
   FindBookingsByUserQuery,
   FindAllNotificationsQuery,
   FindBookingByIdQuery,
+  FindByDriverForDashboardQuery,
 } from './trips-query.query';
 import { TripByMonth } from '@carpool/api/trips/entities';
 
@@ -40,6 +41,17 @@ export class FindByDriverHandler implements IQueryHandler<FindAllQuery> {
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(query: FindByDriverQuery): Promise<Trip[] | null> {
+    return await this.tripsRepository.findByDriver(query.driverId);
+  }
+}
+
+@QueryHandler(FindByDriverForDashboardQuery)
+export class FindByDriverForDashboardHandler
+  implements IQueryHandler<FindAllQuery>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(query: FindByDriverForDashboardQuery): Promise<Trip[] | null> {
     return await this.tripsRepository.findByDriver(query.driverId);
   }
 }

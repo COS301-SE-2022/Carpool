@@ -52,7 +52,7 @@ export class FindByDriverForDashboardHandler
   constructor(private readonly tripsRepository: TripsRepository) {}
 
   async execute(query: FindByDriverForDashboardQuery): Promise<Trip[] | null> {
-    return await this.tripsRepository.findByDriver(query.driverId);
+    return await this.tripsRepository.findByDriverForDashboard(query.driverId);
   }
 }
 

@@ -55,10 +55,9 @@
     \hline
     Name  & Student Number\\ \hline
     Benjamin Osmers & u16068344 \\ \hline
-    Ashleigh Govender &  U20528834      \\ \hline
-    Joshua Brink  & U19185678 \\ \hline
+    Ashleigh Govender &  u20528834      \\ \hline
     Jason Antalis     & U19141859     \\ \hline
-    Wesley Pachai & U20578688    \\ \hline
+    Wesley Pachai & u20578688    \\ \hline
             
     \end{tabular}
     \end{table}
@@ -87,15 +86,15 @@
 
 \textbf{Lecture mentor:}
 
-\qquad  \qquad David  \qquad \qquad \href{matthew.wood@advance.io}{matthew.wood@advance.io} \qquad \qquad
+\qquad  \qquad David  \qquad \qquad \href{}{} \qquad \qquad
 
 \vspace{1.5cm}
 
 \section{Introduction}
 Carpooling is a method of sharing unoccupied seats in a car with people who commute along the same route. Usually, one person from the group drives their personal car and the others all share the cost of the trip. Due to the environmental crisis that the world faces, carpooling has become immensely popular as it reduces the number of cars on the road. Of recent carpooling has become the latest trend as petrol prices continue to increase. Carpooling has evolved into a viable, cost-effective, and stress-free mode of transportation. Finding individuals to carpool with is challenging, since it is difficult to locate someone travelling to the same destination at the same time as you. This Carpool application is a solution to this problem. \\ \\
-Carpool is a mobile application that helps students find affordable transport to and from campus or longer trips such as returning home for semester break. Carpool provides students with a central location whereby they can post, find, and join safe car trips. This application allows students with vehicles to save on petrol costs as well as provide affordable transportation to students who do not have vehicles. Students can travel to their desired location while sharing the car and expenditures.\\ \\
+Carpool is a mobile application that helps students find affordable transport to and from campus or longer trips such as returning home for semester break. Carpool provides students with a central location whereby they can post, find, and join safe car trips. This application allows students with vehicles to save on petrol costs as well as provide affordable transportation to students who do not have vehicles. Students can travel to their desired location whilst sharing the car and expenditures.\\ \\
 \textbf{Vision:}\\
-A more affordable and practical version of Uber/Lyft for students. Students can be both drivers and passengers.\\ \\
+A more affordable and practical version of Uber/Lyft/Bolt for students. Students can be both drivers and passengers.\\ \\
 \textbf{Objective and Scope:} \\
 To create an Android and IOS mobile application for students, whereby they are able to post, find and join safe car trips with ease.
 
@@ -147,7 +146,6 @@ Students will be the main users of the application and will be verified through 
       \item A person who can decline or accept users that book seats.
       \item A person who can cancel trips that they have created.
       \item A person who is responsible for starting and ending trips.
-      \item A person that can send reminders and information about the trip to users on the trip.
       \item  A person who is responsible for picking up and dropping off passengers at their location.
 \end{itemize}
 \vspace{0.5cm}
@@ -159,11 +157,7 @@ Students will be the main users of the application and will be verified through 
       \item A person who can search and book trips.
       \item A person who owns a credit card and can afford to book a trip.
       \item A person who can rate their trip experience.
-      \item A person who can decline or accept users that book seats.
-      \item A person who can cancel trips that they have created.
-      \item A person who is responsible for starting and ending trips.
-      \item A person that can send reminders and information about the trip to users on the trip.
-      \item  A person who is responsible for picking up and dropping off passengers at their location.
+
 \end{itemize}
 
 \newpage
@@ -176,7 +170,7 @@ Students will be the main users of the application and will be verified through 
       \item \textbf{\underline{User Story 3: }} \\
             As a user I want to be able to login to my account and change my personal details on my profile such as (profile picture, name, surname, email, banking details and contact number).
       \item \textbf{\underline{User Story 4: }} \\
-            As a User I want to view my previous trips so that I can have a record of all User I have been in contact with and view my previous destinations.
+            As a User I want to view my previous trips so that I can have a record of all users I have been in contact with and so that I can view my previous destinations.
       \item \textbf{\underline{User Story 5: }} \\
             As a driver I want to be able to create my own trip by posting the date, seats available, price per seat, starting location and destination of the trip. This will help me find individuals to carpool with. I would also like to edit and delete said trips.
       \item \textbf{\underline{User Story 6: }}\\
@@ -184,7 +178,7 @@ Students will be the main users of the application and will be verified through 
       \item \textbf{\underline{User Story 7: }} \\
             As a driver I want to receive income from my trips so that I can pay for the costs occurred on the trip (petrol).
       \item \textbf{\underline{User Story 8: }} \\
-            As a driver I want to be able to send messaged to Passenger so that I can communicate with them information about the trip. I want to be able to communicate with them all at the same time and not send messages to them individually.
+            As a driver I want to be able to send messaged to Passenger so that I can communicate with them information about the trip. I want to be able to send messages to them individually.
       \item \textbf{\underline{User Story 9: }}: \\
             As a Passenger I want to be able to view all trips that have been recommended to me based on my current location and previous trips so that I can pick the most suitable trip to join at ease.
       \item \textbf{\underline{User Story 10: }} \\
@@ -260,13 +254,15 @@ Students will be the main users of the application and will be verified through 
 \begin{itemize}
       \item[-] The database must function well in order for the user to have no delays in the program.
       \item[-] Reading is more significant than writing since users are more likely to spend time browsing than posting trips. As a result, few actions write to the database. Hence a read operation should take less than 500ms and a write operation should approximately 1s.
-
 \end{itemize}
 \vspace{0.5cm}
 \large{ \textbf{Security}}
 \begin{itemize}
-      \item[-] Because users' passwords and banking details  are kept in the database, the database must be encrypted in order to safeguard this data.
-      \item [-] Because users' passwords and banking details  are kept in the database, the database must be encrypted in order to safeguard this data.
+      \item[-] Because users' passwords and are kept in the database, the sensitive information stored in database must be encrypted. Passwords are hashed using the bcrypt library.
+      \item [-] Users will need to be authenticated to access the application. Tokens will be used
+and stored in local storage. Local storage is encrypted using Expo Secure Store.
+      \item [-] For they payment gateway, we make use of PayFast – an online payment platform that allows users to make secure payments. It is PCI-DSS Level 1 compliant, makes use of extended validation SSL and they perform Anti-Virus-Scans on a weekly basis – weekly network scans to search for fresh potential vulnerabilities, and quarterly certification.
+
 \end{itemize}
 \vspace{0.5cm}
 \large{ \textbf{Maintainability}}
@@ -320,34 +316,25 @@ The connection between the various subsystems and their individual classes are d
 
 \subsubsection{User}
 This table stores all the necessary information of the user. A user can be either a passenger, driver or both.
-
-\subsubsection{Banking\_Details}
-This table is responsible for storing the user’s banking details. The user can only have one bank account, and bank account can belong to only one user.
+An admin user is a user that maintains the application, admin users are predefined.
 
 \subsubsection{Reviews}
 This table stores the reviews that users leave on other user’s profiles. The role attribute refers to Driver or Passenger. A user can leave many different reviews on many different profiles, however a review can only be created by one user.
 
-
-\subsubsection{Notification table}
-This table stores all notifications that were sent either by a driver or an admin user. A notification can be sent to multiple users at the same time, however a notification can only be sent by one person.
-
-
 \subsubsection{Trips}
 This table is responsible for storing the trips that the user(driver) has created. It stores the necessary information about the trip that has been created. A user (driver) can post/ create many different trips however only one user can post/create a trip.
-
 
 \subsubsection{Booking}
 This table is responsible for storing the bookings that have been made by the user(passenger). Booking occurs when a user(passenger) requests an available seat on a trip that has been created. The booking is only confirmed once the driver has accepted their request. A user can have many bookings on many trips, however a booking can only relate to one user. A trip can have many bookings (since more then one passenger can join a trip), but a booking can only belong to one trip.
 
-\subsubsection{ChatRoom}
-This is responsible for storing information relating to a chatroom. A chatroom is created when the user confirms a booking. The chatroom allows all users that partake in the trip to send messages to one another in a central location, instead of sending messages to each user individually. A user can belong to many chatrooms, and a chatroom can have many different users.
-
-
 \subsubsection{Message}
-This is the actual message that is sent on the chatroom. This table stores all necessary information about the message sent as well as who sent the message, and who receives the message. A message can belong to only one chatroom, but a chatroom can consists of many different messages. A user can create many different messages, but a message can only be created/sent by one user.
+This is the actual message that is sent in the chat. This table stores all necessary information about the message sent as well as who sent the message, and who receives the message. A user can create many different messages, but a message can only be created/sent by one user.
 
 \subsubsection{Driver}
 Since a user can be both a driver and a passenger, the driver table stores all information relating to the driver. This ensures that the User table does not have null fields, since if a user is a passenger they won’t need to enter their car model and a picture of their license.
+
+\subsubsection{Location}
+The location table stores the address, longitude and latitude of either the start or destination of a particular trip.
 
 \newpage
 \section{Subsystems}
@@ -379,14 +366,8 @@ The User subsystem manages all operations where a User needs to interact with th
       \item EditProfile: \\
             The user will be provided with the opportunity to edit their profie, such as their name, surname, and profile picture. The userid as well as what information the user would like to edit will be passed into this function.
 
-      \item EditPaymentMethod:\\
-            The user will be provided with the opportunity to change their banking details and their payment method (cash or card). The userid as well as the updated banking details/ payment method will be passed into this function.
-
       \item VerifyStudent:\\
             The admin user will verify newly registered students through their email address. The function will take in the student’s email address as a parameter, and return a Boolean value (based on if the user is valid or not). This verification ensures that the user is a student at a recognized university in South Africa.
-
-      \item AddAdmin:\\
-            The admin user is able to add new admin users to the database. This function will take in the admin user’s name, surname, email, student number and profile picture. A new user will be created in the database.
 
       \item DeleteUser: \\
             The admin user is able to delete/ remove any user from the Carpool application. The userid of the user who should be removed should be passed into this function. The user will be removed from the database.
@@ -401,7 +382,7 @@ The Payment subsystem is responsible for ensuring that the user is able to make 
 \begin{figure}[H]
 
       \centering
-      \includegraphics[width=15cm]{images/User Usecase.drawio.png}
+      \includegraphics[width=15cm]{images/Payment UseCase.drawio.png}
       \caption{Payment Use Cases}
       \label{fig:User UseCases}
 
@@ -414,14 +395,10 @@ The Payment subsystem is responsible for ensuring that the user is able to make 
             When a user would like to make payment for their booking, this function will be called. The function will take in as parameters : account holder, account number, password, OTP, amount due)
 
       \item Confirmation:\\
-            This use case is responsible for sending a confirmation email to the user once the payment is reflected as successful. The function takes in the userid as a parameter.
-
-      \item GenerateInvoice:\\
-            This use case is responsible for generating an invoice that will be emailed along with the confirmation to the user. This is only done when the payment is successful.
+            This use case is responsible for sending a confirmation notification to the user once the payment is reflected as successful. The function takes in the userid as a parameter.
 
       \item CancelPayment: \\
             The user is provided with the opportunity to cancel their payment. The money that they paid will be refunded to them.
-
 
 \end{enumerate}
 
@@ -451,9 +428,6 @@ The review subsystem allows user’s to rate and review other users in the appli
 
       \item LeaveReview:\\
             The user is able to rate other users via this use case. This function takes in the userid of the user who wants to leave the rating, the userid of the user whom the rating is about, and the rating.\\
-
-      \item NotifyUserWhenTripFullyBooked: \\
-            The user is able to review other users via this use case. This function takes in the userid of the user who wants to leave the review, the userid of the user whom the review is about, and the review. Ratings are integer/ stars and reviews are usually longer sentence.\\
 
 \end{enumerate}
 
@@ -524,9 +498,6 @@ The trips subsystem is where the core functionality of the application occurs, u
       \item CreateTrip:\\
             Drivers can create a  trip, when creating the trip they need to include : date of trip, seats available, price per seat, starting location and destination of the trip. The database will then record all this information and this trip will be displayed on the view Trip page.\\
 
-      \item EditTrip:\\
-            Drivers can then edit the trips they created, by changing the information that they have entered(date of trip, seats available, price per seat, starting location and destination of the trip). They can also deny previously confirmed passengers of joining the trip. The database will be updated accordingly.\\
-
       \item CancelTrip:\\
             A driver can cancel the trips that they have created, when they cancel the trip. Passengers who were supposed to be apart of the trip will be notified. The trip’s information will be removed from the database and users will no longer be able to join the trip since it does not exist anymore.\\
 
@@ -559,28 +530,18 @@ The searching subsystem allows users to browse for trips based on many different
 
 \begin{enumerate}[label=U1.\arabic*]
 
-      \item BasedOnDriver:\\
-            Passengers will be provided with the opportunity to search for a trip based on the drivers name. The name of the driver will be passed as a parameter into this function. Trips that the driver has currently posted will then be displayed to the passenger.\\
-
-
       \item BasedOnStartLocation:\\
             Passengers will be provided with the opportunity to search for a trip based on their start location. Their start location  will be passed as a parameter into this function. Trips that are near their start location will be displayed to the user.\\
 
       \item BasedOnDestination:\\
             Passengers will be provided with the opportunity to search for a trip based on their end  location. Their end  location  will be passed as a parameter into this function. Trips that are near their end location will be displayed to the user.\\
-            U6.2
-
-      \item BasedonPrice: \\
-            Passengers will be provided with the opportunity to search for a trip based on the price of the available seat. Trips will then be displayed to the user from lowest seat cost to highest seat cost, or vice versa depending on the passenger’s needs.\\
-
-      \item BasedOnSeatsAviailable:\\
-            Passengers will be provided with the opportunity to search for a trip based on the number of seats available (Trips that have more seats will be displayed first or trips that have one seat left will be displayed first. Trips that match this criteria will then be displayed to the user. \\
+        
 
       \item BasedOnDriversRating:\\
             Passengers will be provided with the opportunity to search for a trip based the rating of the drivers. Trips that have drivers will high ratings will displayed at the top of the page, and drivers with low ratings will be displayed towards the end of the page.\\
 
       \item BasedOnPreviousTrips:\\
-            Admin will use this function to view the user’s previous trips, and recommend trips to the user based on their previous trips. Information like the driver, driver’s rating and cost can be used to find a trip that the passenger will most likely join. The trip will be added to an array.\\
+            Admin will use this function to view the user’s previous trips, and recommend trips to the user based on their previous trips. The trip will be added to an array.\\
 
       \item BasedOnPreviousLocations: \\
             Admin will use this function to view the user’s previous trip, and based on their previous locations recommend a trip to them. The function scans through all trips that have been posted in the database, and matches the users  previous locations to locations in the database. If there is a match, then the trip is added to an array..\\
@@ -592,7 +553,6 @@ The searching subsystem allows users to browse for trips based on many different
             The user will be able to view all the trips that have been recommended to them by the system. These recommended trips will be based on their previous trips(previous location, cost, driver). \\
 
 \end{enumerate}
-\newpage
 \subsection{Chat :}
 \subsubsection{Use Cases}
 The chat subsystem allows the user to send and receive messages from other user within the carpool application. Users are added to chatrooms when their trips are confirmed, and the users part of that trip are able to talk to one another in a central location.
@@ -611,28 +571,9 @@ The chat subsystem allows the user to send and receive messages from other user 
 \begin{enumerate}[label=U1.\arabic*]
 
       \item SendMessage:\\
-            User will be allowed to send messages on the group chat, The content of the message as well as the sender and receivers of the message will be passed into the function as parameters. The message will  then be stored in the database and displayed in the chat room for that particular trip.\\
-
-
-      \item BlockUser:\\
-            Users will be provided with the opportunity to block another user, they will no longer be able to receive messages from that passenger, nor will they be able to join a trip with a user that they have blocked. The userid of the blocked user, and the userid of the user who wants to block someone will be passed as a parameter in the function. The system will then ensure that the user does not receive or join trips with said blocked user.\\
-
-      \item LeaveChatroom:\\
-            User’s will be provided with the opportunity to leave the chatroom that has been created for a specific trip. The userid of the user that wants to leave the trip will be passed as a parameter into the function. The user will then be removed from the chatroom row in the database. The user will no longer receive messages from said chatroom.\\
-
-      \item CreateChatroom: \\
-            When a driver creates a trip, a chatroom is automatically created by the system. Every time a passenger is confirmed to be apart of the trip, they are added to the chatroom.\\
-
-      \item RemoveUser:\\
-            Admin is allowed to remove a passenger from the chatroom, the userid of the passenger that Admin wants to remove will be passed as a parameter into the function. The user is then removed from the chatroom row in the database. The user is no longer a participant of the chatroom and can no longer receive messages from that chatroom.\\
-
-      \item AddUser:\\
-            Admin is allowed to add a user to the chatroom, the userid of the passenger Admin wants to add to the chatroom will be passed as a parameter. When a passenger is confirmed to be a participant in the trip, this function will be called so that the user can be apart of the chatroom for that trip. The user is added to the chatroom row in the database. The user can now receive and send messages via the chatroom.\\
-
-      \item DeleteChatroom:\\
-            Admin can delete the chatroom, the id of the chatroom is passed through this function. The chatroom with that particular id is removed from the chatroom table in the database. This function is called automatically by the system .when the trip has been complete.\\
+            User will be allowed to send messages on the chat, The content of the message as well as the sender and receivers of the message will be passed into the function as parameters. The message will  then be stored in the database and displayed in the chat room for that particular trip.\\
 \end{enumerate}
-\newpage
+
 \section{Traceability Matrix}
 
 
@@ -746,8 +687,163 @@ The chat subsystem allows the user to send and receive messages from other user 
       \caption{Transability matrix with use cases as rows and requirements as columns}
       \label{table:ContinuedCould-haveRequirementsTraceabilityMatrix}
 \end{table}
+\newpage
+\section{Architectural design strategy}
+The architectural design strategy employed during the development of carpool  is  composed of two methods: decomposition and the consideration of quality requirements.
+\newline \\
+When implementing the decomposition strategy, we split the system up into smaller subsystems namely: client-side, back-end, and database systems. By splitting the system up into smaller subsystems, it makes it easier to work with the system as well as update the system. Suitable architectural designs were considered based on each subsystem.
+\newline \\
+These designs were then narrowed down based on the quality requirements that are listed below. Using quality requirements to design our system ensures that our system meets the necessary standards and performs the way we want it to.
+\vspace{0.75cm}
+\section{Architectural design styles}
+Our system is comprised of four different Architectural design styles which are all combined together. The four styles are:
+
+\subsection{\textbf{Client-server Pattern:}}
+\newline
+Since the carpool application relies heavily on user input (users will be querying the database on a regular basis), the logic and data storage needs to be separate from the mobile application. The client in this case will be the mobile application whilst the server is the database and logic of the system. The system will consist of users (both drivers and passengers) all of which need to connect to the server when using the carpool application. The database is responsible for storing information about drivers, passengers, and trips.
+The client-server pattern was used as many clients request and receive service from a centralized database (server) \\ \\
+This style allows us to achieve security as the server can have checks which prevent unauthenticated clients from sending request.\\ \\
+This style allows us to achieve useability, since the mobile application is separate from the logic and data storage of the system, the user is not concerned with the underlining functionality of the system. The user only has to worry about the front-end.
+
+\begin{center}
+    \noindent
+    \includegraphics[width=4cm]{images/client_server.png}
+    \vspace{0.5cm}
+\end{center}
+\subsection{\textbf{Model View Controller:}}
+\newline
+Since the carpool applications needs to perform CRUD operations on  the database, the Model View Controller pattern will be used. The model is responsible for handling the data logic, it is connected to the database. The view helps to represent the data(from the model) in a way that is easily read-able to the user. The controller functions as a middleman between the views and the model by allowing them to communicate with each other.
+The layout of the application follows the layout of the model view controller pattern, for example: the passanger will have to be able to view available trips (view -> controller -> model).
+The Model view Controller was used as it facilitates the development of a dynamic and reactive front-end  \\ \\
+This style allows us to achieve Maintainability. Since the model view controller provides modularity, one is able easily upgrade/ change the system without hassle  .\\ \\
+This style allows us to achieve useability, because of the architecture's separation of concerns, it has the potential to ease user interface development.
+ \vspace{0.2cm}
+\begin{center}
+    \noindent
+    \includegraphics[width=10cm]{images/model_view_controller.png}
+    \vspace{0.5cm}
+\end{center}
+\subsection{\textbf{Layered:}}
+\newline
+The application will make use of the layered pattern. The pattern facilities communication between the back-end and front-end of the carpool application. The system will be broken up into many different layers, which will allow us to modify, maintain and expand the application easily.
+The layered pattern was used as it uses a control layer to facilitate the separation of concerns and security. \\ \\
+This style allows us to achieve scalability, since the system can be broken up into layers, adding more functionality to the system simply means adding another layer to the system (or components to a specific layer), which can be done easily as the layers are independent of each other. The layers that our system will be broken up into are: Application, Presentation, Logic and Database layer.\\ \\
+Application: Handles all of the logic that the application need to meet its functional requirements.
+Presentation: Where the user interface component is included. Model View Controller patterns sits on this layer.
+Logic: Handles the data and performs the necessary functions on the data.
+Database: All aspects relating to the database
+This style allows us to achieve reliability since the pattern divides possible points of failure into loosely linked layers.
+\begin{center}
+    \noindent
+    \includegraphics[width=4cm]{images/layered.png}
+    \vspace{0.5cm}
+\end{center}
+\subsection{\textbf{REST:}}
+\newline
+The REST (Representational State Transfer) architectural style will be used for data transit. A loosely linked application can be created with the REST approach. For transportation, the REST style will work well with our other Client Server Style.
+
+\subsection{\textbf{Conclusion:}}
+The application makes use of the client-side pattern, within this client-side pattern, the layered pattern is used to facilitate communication between the back-end and front end of the carpool system. The model view controller is used on the presentation layer to assist with the querying of the database. And REST will be used to transport the data.
+\newpage
+\section{Architectural Quality requirements}
+\large{\textbf{Usability:}}
+\begin{itemize}[]
+            \item [-]The user should be able to see the system's responses, whether favorable or negative. These responses should contain enough information, allowing the user to know exactly what went wrong or right.
+            \item [-]Buttons, graphics, and text should be made large enough to improve clarity, user comfort, reduce annoyance, and reduce the chance of selection mistakes.
+        \end{itemize}
+\vspace{0.5cm}
+\large{ \textbf{Scalability}}
+\begin{itemize}
+      \item[-]Currently the carpool application is only for students in South Africa but it could be expanded internationally. As the number of users and operations grows, the server and database must be able to scale both vertically and horizontally.  The system must be able to accommodate a user base from 100 users to 1 million users.
+\end{itemize}
+\vspace{0.5cm}
+\large{ \textbf{Availability}}
+\begin{itemize}
+      \item[-] The system is expected to have at least 99.5\% uptime.This app should be available to all users, at all times of the day. For example, if a driver wants to post a ride at the middle of night and a passenger wants to book a ride at the same time then the system should be able to handle this.
+\end{itemize}
+\vspace{0.5cm}
+\large{ \textbf{Reliability:}}
+\begin{itemize}
+        \item[-] The system should be operational 99.9\% of the time.
+      \item[-] The software should be extremely reliable. If a crash occurs, the system should be able to offer sufficient information as to why the crash happened, allowing us to swiftly correct the problem.
+\end{itemize}
+\newpage
+\large{ \textbf{Maintainability}}
+\begin{itemize}
+      \item[-] The system should be checked and maintained on a regular basis, at least twice a month. Users should be informed about this maintenance at least 24 hours ahead of time so that they may make the required preparations.
+      \item [-] It should be simple to add new functionality to the system or alter existing functionality. The system should be decoupled as much as possible. We should be certain that the technology we choose will be supported for a long time.
+      \end{itemize}
+\vspace{0.5cm}
+\large{ \textbf{Performance}}
+\begin{itemize}
+      \item[-] Reading is more significant than writing since users are more likely to spend time browsing than posting trips. As a result, few actions write to the database. Hence a read operation should take less than 500ms and a write operation should approximately 1s.
+\end{itemize}
+\vspace{0.5cm}
+\large{ \textbf{Security}}
+\begin{itemize}
+      \item [-] Because users' passwords and banking details  are kept in the database, the database must be encrypted or hashed in order to safeguard this data.
+      \item [-] Every user has their own unique username and password, which ensures that unauthorised users do not have access to the database.
+\end{itemize}
+
+
+\section{Architectural design and patterns}
+\begin{center}
+    \noindent
+    \includegraphics[]{images/Archn.png}
+    \vspace{0.5cm}
+\end{center}
 
 \newpage
-\section{KO}
+\section{Architectural constraints}
+The architectural constraints of Carpool are few and hence would not impose much of a limit on the system. These constraints are as follows:\\
+•    The system must be deployable to mobile devices.\\
+•    Must be deployable to both Android and iOS.\\
+•    The backend must run remotely.\\
+\section{Technology Choices}
+\subsection{Front-End}
+The chosen front-end technology is React Native along side redux.
+React Native allows us to create mobile applications using website technology and create cross-platform mobile applications, Android and iOS for example.
+It allows faster development since the apps do not need to be recompiled but rather the app can be reloaded and the changes will be reflected on the device.
+Flutter and Angular are also popular front-end technologies.
+We opted for React Native since it provides accessibility to intelligent debugging tools and error reporting.
+As well as, Flutter cannot create apps for android and Angular has lowered app performance when compared with React Native.
+Unfortunately, React Native does not support parallel threading and multi-processing.
+\newline
+\newline
+Looking at the candidates of redux, flux and mvc, we chose redux as it is a state management framework that is easy to use and easy to understand.
+All of these candidates revolve around the Model View Controller pattern.
+Rather than placing state information in multiple Stores across the application, Redux keeps everything in one region of the app.
+\subsection{Back-End}
+NestJS, GraphQL and the Prisma Client are all the choices for the back-end technologies.
+Looking at our architecture, we chose NestJS as it is can be based on the Model View Controller pattern.
+While ExpressJs does not follow the MVCPattern which our architecture is based on, it does not have as much structure as NestJs causing it to be inefficient.
+On the API side, we chose GraphQL as it is a query language and REST is more of an architectural pattern/style.
+Due to using the Prisma ORM, it is logical to therefore use the prisma client for our database needs.
+\subsection{Database}
+Database systems are used to store and retrieve data.
+The two options were PostgreSQL and MySQL.
+We opted for PostgreSQL since it has much more functionality than MySQL.
+For example PostgreSQL allows us to create different data types for a specific array of data.
+Another advantage over MySQL is that it is supports analytic functions.
+\newline
+\newline
+Onto Object Relational Mapping (ORM) frameworks, we chose Prisma.
+It makes database access easy with auto-generated query builder for TypeScript.
+\subsection{Hosting}
+When looking at hosting options, there many options which range from AWS, Azure and Google.
+We chose Google Hosting because it is the most cost effective and it is also a popular option.
+There is not a lot of difference between the various hosting services and generally comes down to preference.
+\newpage
+\section{Deployment model}
+\begin{figure}[H]
+
+      \centering
+      \includegraphics[width=15cm]{images/Deployemnt.png}
+      \caption{Deployment Diagram}
+      \label{fig:User UseCases}
+
+\end{figure}
+\newline
+The system will be deployed as a mobile application on android and iOS hence the hardware of the end user will make use of either an APK or IPA depending on their operating system. The frontend of the system has been developed using react native to deploy the components, this being the various screens, to the user’s device. The middleware between react native and the backend will be redux which handles the queries and receives responses. The backend as well as the databases are deployed on Heroku however we make use of AWS S3 bucket for the storing of images. Prisma is used to query the databases to return results that we require.
 
 \end{document}

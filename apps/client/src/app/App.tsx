@@ -433,14 +433,14 @@ const httpLink = new HttpLink({
 });
 
 const uploadLink = createUploadLink({
-  // uri: 'https://carpoolcos301.herokuapp.com/graphql',
-  uri: 'http://localhost:3333/graphql',
+  uri: 'https://carpoolcos301.herokuapp.com/graphql',
+  // uri: 'http://localhost:3333/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    // url: 'ws://carpoolcos301.herokuapp.com/graphql',
-    url: 'ws://localhost:3333/graphql',
+    url: 'ws://carpoolcos301.herokuapp.com/graphql',
+    // url: 'ws://localhost:3333/graphql',
   })
 );
 

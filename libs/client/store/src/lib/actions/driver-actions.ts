@@ -5,8 +5,8 @@ import { url } from '../config';
 import { DriverProfile } from '../types/driver-types';
 import { Platform } from 'react-native';
 
-// const host = 'https://carpoolcos301.herokuapp.com';
-const host = 'http://localhost:3333';
+const host = 'https://carpoolcos301.herokuapp.com';
+// const host = 'http://localhost:3333';
 // const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const fetchDriverProfile = createAsyncThunk<

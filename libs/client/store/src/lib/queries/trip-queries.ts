@@ -198,10 +198,11 @@ export const TRIP_DETAILS = `
     findTripById(id: $id) {
       tripId,
        driver {
-         id,
+        id,
         name,
         surname,
-        profilePic
+        profilePic,
+        avgRating
       },
       passengers {
         userId,

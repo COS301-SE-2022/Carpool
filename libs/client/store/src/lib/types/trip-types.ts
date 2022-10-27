@@ -109,6 +109,7 @@ export type DriverTrip = {
   name: string;
   surname: string;
   profilePic: string;
+  avgRating: number;
 };
 
 export type BookingRequestState = {

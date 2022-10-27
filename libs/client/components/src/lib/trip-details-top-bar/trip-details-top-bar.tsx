@@ -47,7 +47,14 @@ export function TripDetailsTopBar({ trip, onPress }: props) {
   };
 
   return (
-    <View style={[styles.shadow, styles.flexRow, styles.topBar]}>
+    <View
+      style={[
+        styles.shadow,
+        styles.flexRow,
+        styles.topBar,
+        { flex: new Date(trip.tripDate) < new Date() ? 1.5 : 1 },
+      ]}
+    >
       <Icon
         name="arrow-left"
         size={22}

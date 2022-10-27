@@ -49,7 +49,11 @@ export function TripDetailsMapView({ trip, active }: props) {
     <View
       style={[
         styles.flexRow,
-        trip.status === 'active' ? newStyles.flexStyle2 : newStyles.flexStyle1,
+        trip.status === 'active'
+          ? newStyles.flexStyle2
+          : new Date(trip.tripDate) < new Date()
+          ? newStyles.flexStyle3
+          : newStyles.flexStyle1,
       ]}
     >
       <MapView
@@ -80,7 +84,6 @@ export function TripDetailsMapView({ trip, active }: props) {
             latitude: parseFloat(trip.coordinates[1].latitude),
             longitude: parseFloat(trip.coordinates[1].longitude),
           }}
-          pinColor="#188aed"
         />
         {waypoints.map((waypoint, index) => (
           <Marker key={index} coordinate={waypoint} pinColor="#188aed" />
@@ -136,6 +139,9 @@ const newStyles = StyleSheet.create({
   },
   flexStyle2: {
     flex: 9,
+  },
+  flexStyle3: {
+    flex: 7,
   },
 });
 export default TripDetailsMapView;

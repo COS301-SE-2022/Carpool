@@ -77,3 +77,7 @@ export class FindAllNotificationsQuery {
 export class FindBookingByIdQuery {
   constructor(public readonly bookingId: string) {}
 }
+
+export class FindTripByBookingQuery {
+  constructor(public readonly bookingId: string) {}
+}

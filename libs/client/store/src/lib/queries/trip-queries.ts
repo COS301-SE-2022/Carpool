@@ -226,6 +226,56 @@ export const TRIP_DETAILS = `
   }
 `;
 
+export const BOOKING_REQUEST = `
+query($bookingId: String!) {
+  findTripByBooking(bookingId: $bookingId) {
+    tripId,
+    bookingId,
+    passengerId,
+    tripDate,
+    passengerName,
+    passengerPic,
+    passengerRating,
+    startAddress,
+    startLat,
+    startLong,
+    endAddress,
+    endLat,
+    endLong,
+    pickupAddress,
+    pickupLat,
+    pickupLong,
+  }
+}
+`;
+
+export const TRIP_BY_BOOKING = `
+  query($bookingId: String!) {
+    findTripByBooking(bookingId: $bookingId) {
+      tripId,
+      passengers {
+        userId,
+        status,
+        pickUp {
+          address
+          latitude
+          longitude
+        }
+      },
+      tripDate,
+      createdAt,
+      seatsAvailable,
+      price,
+      coordinates {
+        address,
+        latitude
+        longitude,
+      },
+      status
+    }
+  }
+`;
+
 export const CREATE_TRIP = `
   mutation (
     $driver: String!,
@@ -311,8 +361,27 @@ export const LIST_NOTIFICATIONS = `
       type,
       message,
       createdAt,
+      entity,
       userId
     }
+  }
+`;
+
+export const DELETE_MESSAGE_NOTIFICATIONS = `
+  mutation ($userIdd: String!) {
+    deleteMessageNotifications(userId: $userId)
+  }
+`;
+
+export const DELETE_BOOKING_REQUEST_NOTIFICATION = `
+  mutation ($userId: String!, $entity: String!) {
+    deleteBookingRequestNotification(userId: $userId, entity: $entity)
+  }
+`;
+
+export const DELETE_BOOKING_ACCEPTED_NOTIFICATION = `
+  mutation ($userId: String!, $entity: String!) {
+    deleteBookingAcceptedNotification(userId: $userId, entity: $entity)
   }
 `;
 

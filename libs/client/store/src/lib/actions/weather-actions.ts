@@ -5,7 +5,8 @@ import { Weather } from '../types/weather-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
 
-const host = 'https://carpoolcos301.herokuapp.com';
+// const host = 'https://carpoolcos301.herokuapp.com';
+const host = 'http://localhost:3333';
 // const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 type WeatherInput = {

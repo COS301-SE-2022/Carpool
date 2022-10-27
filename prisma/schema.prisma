@@ -61,6 +61,7 @@ model Notification {
   userId    String @map("user_id")
   message   String
   type      String
+  entity    String @default("")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 

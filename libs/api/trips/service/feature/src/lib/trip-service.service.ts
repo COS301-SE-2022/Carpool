@@ -8,6 +8,7 @@ import {
   ReviewsStatusUpdate,
   TripByMonth,
   Notification,
+  BookingRequest,
 } from '@carpool/api/trips/entities';
 import {
   FindAllQuery,
@@ -32,6 +33,7 @@ import {
   FindAllNotificationsQuery,
   FindBookingByIdQuery,
   FindByDriverForDashboardQuery,
+  FindTripByBookingQuery,
 } from './queries/trips-query.query';
 import { Location } from '@carpool/api/trips/entities';
 import {
@@ -47,6 +49,9 @@ import {
   UpdatePassengerReviewsCommand,
   UpdateDriverReviewsCommand,
   CreateReviewCommand,
+  DeleteMessageNotificationsCommand,
+  DeleteBookingRequestNotificationCommand,
+  DeleteBookingAcceptedNotificationCommand,
 } from './commands/trips-command.command';
 
 @Injectable()
@@ -62,6 +67,30 @@ export class TripsService {
 
   async findAllNotifications(userId: string): Promise<Notification[]> {
     return this.queryBus.execute(new FindAllNotificationsQuery(userId));
+  }
+
+  async deleteMessageNotifications(userId: string): Promise<string> {
+    return this.commandBus.execute(
+      new DeleteMessageNotificationsCommand(userId)
+    );
+  }
+
+  async deleteBookingRequestNotification(
+    userId: string,
+    entity: string
+  ): Promise<string> {
+    return this.commandBus.execute(
+      new DeleteBookingRequestNotificationCommand(userId, entity)
+    );
+  }
+
+  async deleteBookingAcceptedNotification(
+    userId: string,
+    entity: string
+  ): Promise<string> {
+    return this.commandBus.execute(
+      new DeleteBookingAcceptedNotificationCommand(userId, entity)
+    );
   }
 
   async findTripById(tripId: string): Promise<Trip | null> {
@@ -134,6 +163,10 @@ export class TripsService {
 
   async findBookingByTrip(tripID: string): Promise<Booking[] | null> {
     return await this.queryBus.execute(new FindBookingByTripQuery(tripID));
+  }
+
+  async findTripByBooking(bookingId: string): Promise<BookingRequest | null> {
+    return await this.queryBus.execute(new FindTripByBookingQuery(bookingId));
   }
 
   async findBookingByTripAndUserId(

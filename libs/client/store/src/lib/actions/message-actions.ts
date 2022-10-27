@@ -9,7 +9,8 @@ import { Platform } from 'react-native';
 import { Message, Chat } from '../types/message-types';
 import { url } from '../config';
 
-const host = 'https://carpoolcos301.herokuapp.com';
+// const host = 'https://carpoolcos301.herokuapp.com';
+const host = 'http://localhost:3333';
 // const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export type GetMessageInput = {

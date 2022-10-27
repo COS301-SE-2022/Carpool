@@ -8,6 +8,7 @@ import {
   Reviews,
   TripByMonth,
   Notification,
+  BookingRequest,
 } from '@carpool/api/trips/entities';
 import { TripsService } from '@carpool/api/trips/service';
 import {
@@ -67,12 +68,45 @@ export class TripsResolver {
   }
 
   /**
-   * Query to find all trips
-   * @returns {Promise<Trip[]>}
+   * Query to find all notifications
+   * @returns {Promise<Notification[]>}
    */
   @Query(() => [Notification])
   async findAllNotifications(@Args('id') id: string): Promise<Notification[]> {
     return await this.tripsService.findAllNotifications(id);
+  }
+
+  /**
+   * Query to delete all message notifications
+   * @returns {Promise<null>}
+   */
+  @Mutation(() => String)
+  async deleteMessageNotifications(
+    @Args('userId') userId: string
+  ): Promise<string> {
+    return await this.tripsService.deleteMessageNotifications(userId);
+  }
+
+  @Mutation(() => String)
+  async deleteBookingRequestNotification(
+    @Args('userId') userId: string,
+    @Args('entity') entity: string
+  ): Promise<string> {
+    return await this.tripsService.deleteBookingRequestNotification(
+      userId,
+      entity
+    );
+  }
+
+  @Mutation(() => String)
+  async deleteBookingAcceptedNotification(
+    @Args('userId') userId: string,
+    @Args('entity') entity: string
+  ): Promise<string> {
+    return await this.tripsService.deleteBookingAcceptedNotification(
+      userId,
+      entity
+    );
   }
 
   /**
@@ -149,7 +183,7 @@ export class TripsResolver {
    * @returns {Promise<Trip>}
    */
   @Query(() => Trip)
-  async findUpcomingTrip(@Args('id') id: string): Promise<Trip> {
+  async findUpcomingTrip(@Args('id') id: string): Promise<Trip | null> {
     return await this.tripsService.findUpcomingTrip(id);
   }
 
@@ -179,6 +213,13 @@ export class TripsResolver {
   @Query(() => [Trip])
   async findByDriverReviews(@Args('id') id: string): Promise<Trip[]> {
     return await this.tripsService.findByDriverReviews(id);
+  }
+
+  @Query(() => BookingRequest)
+  async findTripByBooking(
+    @Args('bookingId') bookingId: string
+  ): Promise<BookingRequest | null> {
+    return await this.tripsService.findTripByBooking(bookingId);
   }
 
   @Query(() => [Trip])

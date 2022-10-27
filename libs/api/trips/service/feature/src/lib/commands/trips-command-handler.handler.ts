@@ -14,6 +14,9 @@ import {
   UpdatePassengerReviewsCommand,
   UpdateDriverReviewsCommand,
   CreateReviewCommand,
+  DeleteMessageNotificationsCommand,
+  DeleteBookingRequestNotificationCommand,
+  DeleteBookingAcceptedNotificationCommand,
 } from './trips-command.command';
 import { ReviewInput, TripsUpdate } from '@carpool/api/trips/entities';
 
@@ -212,5 +215,51 @@ export class EndTripHandler implements ICommandHandler<EndTripCommand> {
     const { tripId } = command;
 
     return await this.tripsRepository.endTrip(tripId);
+  }
+}
+
+@CommandHandler(DeleteMessageNotificationsCommand)
+export class DeleteMessageNotificationsHandler
+  implements ICommandHandler<DeleteMessageNotificationsCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(command: DeleteMessageNotificationsCommand): Promise<string> {
+    const { userId } = command;
+
+    return await this.tripsRepository.deleteAllMessageNotifications(userId);
+  }
+}
+
+@CommandHandler(DeleteBookingRequestNotificationCommand)
+export class DeleteBookingRequestNotificationHandler
+  implements ICommandHandler<DeleteBookingRequestNotificationCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(
+    command: DeleteBookingRequestNotificationCommand
+  ): Promise<string> {
+    const { userId, entity } = command;
+
+    return await this.tripsRepository.deleteRequestNotification(userId, entity);
+  }
+}
+
+@CommandHandler(DeleteBookingAcceptedNotificationCommand)
+export class DeleteBookingAcceptedNotificationHandler
+  implements ICommandHandler<DeleteBookingAcceptedNotificationCommand>
+{
+  constructor(private readonly tripsRepository: TripsRepository) {}
+
+  async execute(
+    command: DeleteBookingAcceptedNotificationCommand
+  ): Promise<string> {
+    const { userId, entity } = command;
+
+    return await this.tripsRepository.deleteAcceptedNotification(
+      userId,
+      entity
+    );
   }
 }

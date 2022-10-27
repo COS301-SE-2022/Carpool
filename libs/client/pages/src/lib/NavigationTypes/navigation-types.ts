@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from 'react-native-screens/native-stack';
 
 export type RootStackParamList = {
   HomePage: undefined;
+  BookingRequest: { bookingId: string };
   ForgotPasswordCodePage: { email: string };
   RegisterDriver: { userId: string };
   LoginPage: undefined;
@@ -58,6 +59,11 @@ export type RootStackParamList = {
 export type HomePageProps = NativeStackScreenProps<
   RootStackParamList,
   'HomePage'
+>;
+
+export type BookingRequestProps = NativeStackScreenProps<
+  RootStackParamList,
+  'BookingRequest'
 >;
 
 export type ChatListProps = NativeStackScreenProps<

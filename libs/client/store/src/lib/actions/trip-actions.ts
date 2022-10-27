@@ -25,6 +25,10 @@ import {
   LIST_ALL_PASSENGERS,
   DRIVER_REVIEW_UPDATE,
   LIST_NOTIFICATIONS,
+  DELETE_MESSAGE_NOTIFICATIONS,
+  DELETE_BOOKING_REQUEST_NOTIFICATION,
+  BOOKING_REQUEST,
+  DELETE_BOOKING_ACCEPTED_NOTIFICATION,
 } from '../queries/trip-queries';
 import {
   TripListType,
@@ -34,11 +38,14 @@ import {
   PassengerListType,
   PassengerList,
   Notification,
+  DeleteRequestNotification,
+  BookingRequestType,
 } from '../types/trip-types';
 import { Platform } from 'react-native';
 import { url } from '../config';
 
-const host = 'https://carpoolcos301.herokuapp.com';
+// const host = 'https://carpoolcos301.herokuapp.com';
+const host = 'http://localhost:3333';
 // const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export const listTrips = createAsyncThunk<
@@ -60,9 +67,6 @@ export const listTrips = createAsyncThunk<
   }
 
   const res = response.data.data.findAllTrips;
-
-  // SecureStore.deleteItemAsync('trips');
-  // SecureStore.setItemAsync('trips', JSON.stringify(res));
 
   return res;
 });
@@ -90,11 +94,94 @@ export const listNotifications = createAsyncThunk<
 
   const res = response.data.data.findAllNotifications;
 
-  // SecureStore.deleteItemAsync('trips');
-  // SecureStore.setItemAsync('trips', JSON.stringify(res));
+  return res;
+});
+
+export const deleteMessageNotifications = createAsyncThunk<
+  null,
+  string,
+  { rejectValue: Error }
+>('messageNotifications/delete', async (userId: string, thunkApi) => {
+  const response = await axios.post(`${host}/graphql`, {
+    query: DELETE_MESSAGE_NOTIFICATIONS,
+    variables: {
+      userId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.deleteMessageNotifications;
 
   return res;
 });
+
+export const deleteBookingRequestNotification = createAsyncThunk<
+  null,
+  DeleteRequestNotification,
+  { rejectValue: Error }
+>(
+  'bookingRequestNotifications/delete',
+  async ({ userId, entity }, thunkApi) => {
+    const response = await axios.post(`${host}/graphql`, {
+      query: DELETE_BOOKING_REQUEST_NOTIFICATION,
+      variables: {
+        userId,
+        entity,
+      },
+    });
+    console.log('FETCHING');
+
+    if (response.data.errors) {
+      const error = {
+        message: response.data.errors[0].message,
+      } as Error;
+
+      return thunkApi.rejectWithValue(error);
+    }
+
+    const res = response.data.data.deleteBookingRequestNotification;
+
+    return res;
+  }
+);
+
+export const deleteBookingAcceptedNotification = createAsyncThunk<
+  null,
+  DeleteRequestNotification,
+  { rejectValue: Error }
+>(
+  'bookingAcceptedNotifications/delete',
+  async ({ userId, entity }, thunkApi) => {
+    const response = await axios.post(`${host}/graphql`, {
+      query: DELETE_BOOKING_ACCEPTED_NOTIFICATION,
+      variables: {
+        userId,
+        entity,
+      },
+    });
+    console.log('FETCHING');
+
+    if (response.data.errors) {
+      const error = {
+        message: response.data.errors[0].message,
+      } as Error;
+
+      return thunkApi.rejectWithValue(error);
+    }
+
+    const res = response.data.data.deleteBookingAcceptedNotification;
+
+    return res;
+  }
+);
 
 export const listTripRequests = createAsyncThunk<
   TripRequestType[],
@@ -118,9 +205,6 @@ export const listTripRequests = createAsyncThunk<
   }
 
   const res = response.data.data.findAllTripRequests;
-
-  // SecureStore.deleteItemAsync('trips');
-  // SecureStore.setItemAsync('trips', JSON.stringify(res));
 
   return res;
 });
@@ -147,6 +231,32 @@ export const findUpcomingTrip = createAsyncThunk<
   }
 
   const res = response.data.data.findUpcomingTrip;
+
+  return res;
+});
+
+export const findBookingRequest = createAsyncThunk<
+  BookingRequestType,
+  string,
+  { rejectValue: Error }
+>('bookingRequest/find', async (bookingId: string, thunkApi) => {
+  const response = await axios.post(`${host}/graphql`, {
+    query: BOOKING_REQUEST,
+    variables: {
+      bookingId,
+    },
+  });
+  console.log('FETCHING');
+
+  if (response.data.errors) {
+    const error = {
+      message: response.data.errors[0].message,
+    } as Error;
+
+    return thunkApi.rejectWithValue(error);
+  }
+
+  const res = response.data.data.findTripByBooking;
 
   return res;
 });

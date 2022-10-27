@@ -17,6 +17,9 @@ export class Notification {
   @Field(() => String)
   type: string;
 
+  @Field(() => String)
+  entity: string;
+
   @Field(() => Date)
   createdAt: Date;
 
@@ -25,6 +28,57 @@ export class Notification {
 
   @Field(() => User)
   user: User;
+}
+
+@ObjectType()
+export class BookingRequest {
+  @Field(() => ID)
+  tripId: string;
+
+  @Field()
+  bookingId: string;
+
+  @Field()
+  passengerId: string;
+
+  @Field(() => Date)
+  tripDate: Date;
+
+  @Field()
+  passengerName: string;
+
+  @Field()
+  passengerPic: string;
+
+  @Field(() => Int)
+  passengerRating: number;
+
+  @Field()
+  startAddress: string;
+
+  @Field()
+  endAddress: string;
+
+  @Field()
+  startLat: string;
+
+  @Field()
+  startLong: string;
+
+  @Field()
+  endLat: string;
+
+  @Field()
+  endLong: string;
+
+  @Field()
+  pickupAddress: string;
+
+  @Field()
+  pickupLat: string;
+
+  @Field()
+  pickupLong: string;
 }
 
 @ObjectType()

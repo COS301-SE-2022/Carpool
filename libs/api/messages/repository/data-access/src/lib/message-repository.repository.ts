@@ -9,13 +9,29 @@ export class MessageRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async createMessage(message: MessageInput): Promise<Message | null> {
-    return this.prisma.message.create({
+    const messageObj = await this.prisma.message.create({
       data: {
         senderId: message.senderId,
         receiverId: message.receiverId,
         message: message.message,
       },
     });
+
+    const sender = await this.prisma.user.findUnique({
+      where: {
+        id: message.senderId,
+      },
+    });
+
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: message.receiverId,
+        message: `New message from ${sender.name}`,
+        type: 'message',
+      },
+    });
+
+    return messageObj;
   }
 
   async getMessages(senderId: string, receiverId: string): Promise<Message[]> {

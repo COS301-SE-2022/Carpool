@@ -13,7 +13,7 @@ export function PayfastPage({ route, navigation }: PayfastPageProps) {
   };
 
   setTimeout(() => {
-    navigation.navigate('CheckoutTrips');
+    navigation.goBack();
   }, 10000);
 
   return (

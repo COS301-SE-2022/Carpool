@@ -33,6 +33,7 @@ import {
   ForgotPasswordCodePage,
   NewPasswordPage,
   NotificationsPage,
+  BookingRequest,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
 import {
@@ -66,6 +67,7 @@ export type RootStackParamList = {
   HomePage;
   LoginPage;
   OnboardPage;
+  BookingRequest;
   SignUpPage;
   ForgotPasswordCodePage;
   NewPasswordPage;
@@ -383,6 +385,7 @@ const AppWrapper = () => {
           }}
         >
           <Stack.Screen name="MapboxTest" component={MapboxTest} />
+          <Stack.Screen name="BookingRequest" component={BookingRequest} />
           <Stack.Screen name="HomePage" component={TabBar} />
           <Stack.Screen name="RegisterDriver" component={RegisterDriver} />
           <Stack.Screen name="PostTrips" component={PostTrips} />
@@ -430,14 +433,14 @@ const httpLink = new HttpLink({
 });
 
 const uploadLink = createUploadLink({
-  uri: 'https://carpoolcos301.herokuapp.com/graphql',
-  // uri: 'http://localhost:3333/graphql',
+  // uri: 'https://carpoolcos301.herokuapp.com/graphql',
+  uri: 'http://localhost:3333/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'ws://carpoolcos301.herokuapp.com/graphql',
-    // url: 'ws://localhost:3333/graphql',
+    // url: 'ws://carpoolcos301.herokuapp.com/graphql',
+    url: 'ws://localhost:3333/graphql',
   })
 );
 

@@ -96,8 +96,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/react-native-datepicker": "^1.7.1",
-    "@types/webpack": "^5.28.0",
+    "@babel/helper-string-parser": "^7.19.4",
     "@babel/preset-env": "^7.18.9",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",
@@ -130,7 +129,9 @@
     "@types/react-dom": "18.0.0",
     "@types/react-helmet": "^6.1.5",
     "@types/react-native": "0.67.4",
+    "@types/react-native-datepicker": "^1.7.1",
     "@types/react-native-vector-icons": "^6.4.10",
+    "@types/webpack": "^5.28.0",
     "@typescript-eslint/eslint-plugin": "~5.18.0",
     "@typescript-eslint/parser": "~5.18.0",
     "babel-jest": "^28.1.3",

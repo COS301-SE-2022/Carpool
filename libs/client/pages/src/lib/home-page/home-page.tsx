@@ -7,6 +7,7 @@ import {
   resetStart,
   resetEnd,
   findUpcomingTrip,
+  resetBookTrip,
 } from '@carpool/client/store';
 import { HomePageProps } from '../NavigationTypes/navigation-types';
 import {
@@ -62,6 +63,10 @@ export function HomePage({ navigation }: HomePageProps) {
 
     if (tripStartStatus === 'success') {
       dispatch(resetStart());
+    }
+
+    if (bookingStatusCreated) {
+      dispatch(resetBookTrip());
     }
   }, [
     dispatch,

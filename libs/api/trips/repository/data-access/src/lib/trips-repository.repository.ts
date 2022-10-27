@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '@carpool/api/prisma';
 import { Trip, Booking, Location, Review, Notification } from '@prisma/client';
-import { TripsUpdate, TripByMonth } from '@carpool/api/trips/entities';
+import {
+  TripsUpdate,
+  TripByMonth,
+  BookingRequest,
+} from '@carpool/api/trips/entities';
 
 const formatDate = (date: string) => {
   const dateObj = new Date(date);
@@ -43,6 +47,69 @@ export class TripsRepository {
         userId: id,
       },
     });
+  }
+
+  async deleteAllMessageNotifications(userId: string): Promise<string> {
+    await this.prisma.notification.deleteMany({
+      where: {
+        AND: [
+          {
+            userId: userId,
+          },
+          {
+            type: 'message',
+          },
+        ],
+      },
+    });
+
+    return 'success';
+  }
+
+  async deleteRequestNotification(
+    userId: string,
+    entity: string
+  ): Promise<string> {
+    await this.prisma.notification.deleteMany({
+      where: {
+        AND: [
+          {
+            userId: userId,
+          },
+          {
+            entity: entity,
+          },
+          {
+            type: 'bookingRequest',
+          },
+        ],
+      },
+    });
+
+    return 'success';
+  }
+
+  async deleteAcceptedNotification(
+    userId: string,
+    entity: string
+  ): Promise<string> {
+    await this.prisma.notification.deleteMany({
+      where: {
+        AND: [
+          {
+            userId: userId,
+          },
+          {
+            entity: entity,
+          },
+          {
+            type: 'bookingAccepted',
+          },
+        ],
+      },
+    });
+
+    return 'success';
   }
 
   async findTripsForMonth(): Promise<number> {
@@ -108,7 +175,7 @@ export class TripsRepository {
     });
   }
 
-  async findUpcomingTrip(id: string): Promise<Trip> {
+  async findUpcomingTrip(id: string): Promise<Trip | null> {
     const trips = await this.prisma.trip.findMany({
       where: {
         OR: [
@@ -134,6 +201,10 @@ export class TripsRepository {
         tripDate: 'desc',
       },
     });
+
+    if (trips.length === 0) {
+      return null;
+    }
 
     return trips[0];
   }
@@ -251,6 +322,67 @@ export class TripsRepository {
         tripId: tripID,
       },
     });
+  }
+
+  async findTripByBooking(bookingId: string): Promise<BookingRequest | null> {
+    const trips = await this.prisma.trip.findMany({
+      where: {
+        passengers: {
+          some: {
+            bookingId: bookingId,
+          },
+        },
+      },
+    });
+
+    if (trips.length !== 0) {
+      const booking = await this.prisma.booking.findUnique({
+        where: {
+          bookingId: bookingId,
+        },
+      });
+
+      const tripLocation = await this.prisma.location.findMany({
+        where: {
+          tripId: trips[0].tripId,
+        },
+      });
+
+      const passenger = await this.prisma.user.findUnique({
+        where: {
+          id: booking.userId,
+        },
+      });
+
+      const pickup = await this.prisma.pickupLocation.findUnique({
+        where: {
+          bookingId: bookingId,
+        },
+      });
+
+      const bookingRequest = new BookingRequest();
+
+      bookingRequest.tripId = trips[0].tripId;
+      bookingRequest.bookingId = bookingId;
+      bookingRequest.passengerId = booking.userId;
+      bookingRequest.tripDate = trips[0].tripDate;
+      bookingRequest.passengerName = `${passenger.name} ${passenger.surname}`;
+      bookingRequest.passengerPic = passenger.profilePic;
+      bookingRequest.passengerRating = passenger.avgRating;
+      bookingRequest.startAddress = tripLocation[0].address;
+      bookingRequest.startLat = tripLocation[0].latitude;
+      bookingRequest.startLong = tripLocation[0].longitude;
+      bookingRequest.endAddress = tripLocation[1].address;
+      bookingRequest.endLat = tripLocation[1].latitude;
+      bookingRequest.endLong = tripLocation[1].longitude;
+      bookingRequest.pickupAddress = pickup.address;
+      bookingRequest.pickupLat = pickup.latitude;
+      bookingRequest.pickupLong = pickup.longitude;
+
+      return bookingRequest;
+    }
+
+    return null;
   }
 
   async findBookingById(bookingId: string): Promise<Booking> {
@@ -374,6 +506,7 @@ export class TripsRepository {
         userId: trip.driverId,
         message: `Your trip has been paid for by ${booking.userId}`,
         type: 'payment',
+        entity: id,
       },
     });
 
@@ -404,15 +537,7 @@ export class TripsRepository {
       },
     });
 
-    const notify = await this.prisma.notification.create({
-      data: {
-        userId: trip.driverId,
-        message: `You have a new booking request from ${passenger.name} ${passenger.surname}`,
-        type: 'bookingRequest',
-      },
-    });
-
-    return this.prisma.booking.create({
+    const bookingObj = await this.prisma.booking.create({
       data: {
         trip: {
           connect: { tripId },
@@ -432,6 +557,17 @@ export class TripsRepository {
         },
       },
     });
+
+    const notify = await this.prisma.notification.create({
+      data: {
+        userId: trip.driverId,
+        message: `You have a new booking request from ${passenger.name} ${passenger.surname}`,
+        type: 'bookingRequest',
+        entity: bookingObj.bookingId,
+      },
+    });
+
+    return bookingObj;
   }
 
   async update(id: string, trips: TripsUpdate): Promise<Trip> {
@@ -546,6 +682,7 @@ export class TripsRepository {
         userId: booking.userId,
         message: `Your booking request has been accepted`,
         type: 'bookingAccepted',
+        entity: id,
       },
     });
 
@@ -569,6 +706,7 @@ export class TripsRepository {
         userId: booking.userId,
         message: `Your booking request has been declined`,
         type: 'bookingDeclined',
+        entity: bookingId,
       },
     });
 
@@ -602,15 +740,16 @@ export class TripsRepository {
 
     // console.log(tripUpdated);
 
-    tripUpdated.passengers.map(async (passenger) => {
-      await this.prisma.notification.create({
-        data: {
-          userId: passenger.userId,
-          message: `Your trip has started`,
-          type: 'tripStarted',
-        },
-      });
-    });
+    // tripUpdated.passengers.map(async (passenger) => {
+    //   await this.prisma.notification.create({
+    //     data: {
+    //       userId: passenger.userId,
+    //       message: `Your trip has started`,
+    //       type: 'tripStarted',
+    //       entity: id,
+    //     },
+    //   });
+    // });
 
     return trip;
   }
@@ -636,15 +775,16 @@ export class TripsRepository {
       },
     });
 
-    tripUpdated.passengers.map(async (passenger) => {
-      await this.prisma.notification.create({
-        data: {
-          userId: passenger.userId,
-          message: `Your trip has ended`,
-          type: 'tripEnded',
-        },
-      });
-    });
+    // tripUpdated.passengers.map(async (passenger) => {
+    //   await this.prisma.notification.create({
+    //     data: {
+    //       userId: passenger.userId,
+    //       message: `Your trip has ended`,
+    //       type: 'tripEnded',
+    //       entity: id,
+    //     },
+    //   });
+    // });
 
     return trip;
   }

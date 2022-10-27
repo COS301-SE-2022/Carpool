@@ -34,6 +34,10 @@ import {
   postReviewSlice,
   getAllPassengersSlice,
   notificationsSlice,
+  deleteMessageNotificationsSlice,
+  deleteBookingRequestNotificationSlice,
+  bookingRequestSlice,
+  deleteBookingAcceptedNotificationSlice,
 } from './slices/trip-slice';
 import { getWeatherSlice } from './slices/weather-slices';
 import {
@@ -82,6 +86,12 @@ const RootReducer = combineReducers({
   resetPassword: resetPasswordSlice.reducer,
   imageUpload: imageUploadSlice.reducer,
   driverUpload: driverUploadSlice.reducer,
+  deleteMessageNotifications: deleteMessageNotificationsSlice.reducer,
+  deleteBookingRequestNotification:
+    deleteBookingRequestNotificationSlice.reducer,
+  bookingRequest: bookingRequestSlice.reducer,
+  deleteBookingAcceptedNotification:
+    deleteBookingAcceptedNotificationSlice.reducer,
 });
 
 export default RootReducer;

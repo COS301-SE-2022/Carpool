@@ -9,7 +9,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { ChatListProps } from '../NavigationTypes/navigation-types';
-import { RootStore, AppDispatch, getChats } from '@carpool/client/store';
+import {
+  RootStore,
+  AppDispatch,
+  getChats,
+  deleteMessageNotifications,
+} from '@carpool/client/store';
 
 export function ChatList({ navigation }: ChatListProps) {
   const dispatch: AppDispatch = useDispatch();
@@ -21,7 +26,10 @@ export function ChatList({ navigation }: ChatListProps) {
   const { user } = userState;
 
   useEffect(() => {
-    user && dispatch(getChats(user.id));
+    if (user) {
+      dispatch(getChats(user.id));
+      dispatch(deleteMessageNotifications(user.id));
+    }
   }, [dispatch, user]);
 
   return (

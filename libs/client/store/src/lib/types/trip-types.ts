@@ -15,6 +15,11 @@ export type TripCreateType = {
   coordinates: Location[];
 };
 
+export type DeleteRequestNotification = {
+  userId: string;
+  entity: string;
+};
+
 export type NotificationState = {
   notifications: Notification[] | null;
   status: 'success' | 'loading' | 'error' | 'idle';
@@ -26,6 +31,7 @@ export type Notification = {
   id: string;
   type: string;
   createdAt: string;
+  entity: string;
   userId: string;
 };
 
@@ -103,6 +109,32 @@ export type DriverTrip = {
   name: string;
   surname: string;
   profilePic: string;
+};
+
+export type BookingRequestState = {
+  request: BookingRequestType | null;
+  status: 'success' | 'loading' | 'error' | 'idle';
+  error: Error | null;
+};
+
+export type BookingRequestType = {
+  tripId: string;
+  bookingId: string;
+  passengerId: string;
+  tripDate: string;
+  cost: string;
+  passengerName: string;
+  passengerPic: string;
+  passengerRating: number;
+  startAddress: string;
+  startLat: string;
+  startLong: string;
+  endAddress: string;
+  endLat: string;
+  endLong: string;
+  pickupAddress: string;
+  pickupLat: string;
+  pickupLong: string;
 };
 
 export type TripDetails = {

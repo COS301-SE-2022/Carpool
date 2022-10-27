@@ -36,6 +36,10 @@ import {
   FindTripsByMonthHandler,
   FindBookingsByUserHandler,
   FindBookingByIdHandler,
+  FindTripByBookingHandler,
+  DeleteMessageNotificationsHandler,
+  DeleteBookingRequestNotificationHandler,
+  DeleteBookingAcceptedNotificationHandler,
 } from '@carpool/api/trips/service';
 import { CqrsModule } from '@nestjs/cqrs';
 import { PrismaService } from '@carpool/api/prisma';
@@ -54,14 +58,18 @@ import { AuthService } from '@carpool/api/authentication/service';
     //** COMMAND HANDLERS */
     FindAllHandler,
     FindBookingsForMonthHandler,
+    DeleteMessageNotificationsHandler,
     FindByDriverForDashboardHandler,
+    DeleteBookingRequestNotificationHandler,
     FindTripsForMonthHandler,
     FindBookingsByUserHandler,
     FindUpcomingTripsHandler,
+    FindTripByBookingHandler,
     FindTripsByMonthHandler,
     FindByDriverHandler,
     FindByPassengerHandler,
     TripsCreateHandler,
+    DeleteBookingAcceptedNotificationHandler,
     SearchTripsHandler,
     BookTripHandler,
     FindBookingByTripHandler,

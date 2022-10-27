@@ -15,6 +15,8 @@ import {
   RootStore,
   updateBookingPaymentStatus,
   findBookingId,
+  fetchTripDetails,
+  deleteBookingAcceptedNotification,
 } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 
@@ -35,6 +37,13 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
   const { status: paymentStatus, error: paymentStatusError } =
     paymentStatusState;
 
+  const tripDetails = useSelector((state: RootStore) => state.trip);
+  const { trip, status: tripStatus } = tripDetails;
+
+  // if (cost === -1 && trip) {
+  //   setTripCost(Number(trip.price));
+  // }
+
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
@@ -54,6 +63,10 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
     //   }, 2000);
     // }
   }, [dispatch, userData, tripId, paymentStatus, navigation]);
+
+  useEffect(() => {
+    dispatch(fetchTripDetails(tripId));
+  }, [dispatch, tripId]);
 
   const [name, setName] = useState('Name Surname');
   const [number, setNumber] = useState('XXXX XXXX XXXX XXXX');
@@ -87,11 +100,18 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
   const submitPayment = () => {
     if (bookingId) {
       dispatch(updateBookingPaymentStatus(bookingId));
+      userData &&
+        dispatch(
+          deleteBookingAcceptedNotification({
+            userId: userData.id,
+            entity: tripId,
+          })
+        );
     }
     console.log('Make Payment');
-    navigation.push('PayfastPage',{description, cost});
+    trip &&
+      navigation.push('PayfastPage', { description, cost: Number(trip.price) });
   };
-
 
   return (
     <SafeAreaView
@@ -238,7 +258,7 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
               }}
             >
               <TextInput
-                value={expiry === 'MM/YY'?'' : expiry}
+                value={expiry === 'MM/YY' ? '' : expiry}
                 placeholder={'MM/YY'}
                 onChangeText={(value) => onExpiryChange(value)}
                 style={[styles.input, { flex: 1, marginRight: 8 }]}
@@ -255,7 +275,7 @@ export function CreditCard({ navigation, route }: CreditCardProps) {
               />
             </View>
             <View>
-             <Button title="Continue" onPress={submitPayment} />
+              <Button title="Continue" onPress={submitPayment} />
             </View>
           </View>
         </>

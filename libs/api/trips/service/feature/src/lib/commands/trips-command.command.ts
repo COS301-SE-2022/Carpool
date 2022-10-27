@@ -81,3 +81,15 @@ export class EndTripCommand {
 export class DeclineTripRequestCommand {
   constructor(public readonly bookingId: string) {}
 }
+
+export class DeleteMessageNotificationsCommand {
+  constructor(public readonly userId: string) {}
+}
+
+export class DeleteBookingRequestNotificationCommand {
+  constructor(public readonly userId: string, public readonly entity: string) {}
+}
+
+export class DeleteBookingAcceptedNotificationCommand {
+  constructor(public readonly userId: string, public readonly entity: string) {}
+}

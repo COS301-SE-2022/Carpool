@@ -1,3 +1,4 @@
+export * from './lib/booking-request/booking-request';
 export * from './lib/notifications-page/notifications-page';
 export * from './lib/new-password-page/new-password-page';
 export * from './lib/forgot-password-code-page/forgot-password-code-page';

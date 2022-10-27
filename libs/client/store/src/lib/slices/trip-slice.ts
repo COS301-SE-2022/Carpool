@@ -15,6 +15,7 @@ import {
   ReviewTripState,
   PassengerList,
   NotificationState,
+  BookingRequestState,
 } from '../types/trip-types';
 import {
   createTrip,
@@ -41,6 +42,10 @@ import {
   postReview,
   listAllPassengers,
   listNotifications,
+  deleteMessageNotifications,
+  deleteBookingRequestNotification,
+  findBookingRequest,
+  deleteBookingAcceptedNotification,
 } from '../actions/trip-actions';
 
 export const initialState = {
@@ -104,6 +109,105 @@ export const notificationsSlice = createSlice({
         state.notifications = action.payload;
       })
       .addCase(listNotifications.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialDeleteMessageNotificationState = {
+  notifications: null,
+  status: 'idle',
+  error: null,
+} as NotificationState;
+
+export const deleteMessageNotificationsSlice = createSlice({
+  name: 'messageNotifications',
+  initialState: initialDeleteMessageNotificationState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(deleteMessageNotifications.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(deleteMessageNotifications.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.notifications = action.payload;
+      })
+      .addCase(deleteMessageNotifications.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialDeleteBookingRequestNotificationState = {
+  notifications: null,
+  status: 'idle',
+  error: null,
+} as NotificationState;
+
+export const deleteBookingRequestNotificationSlice = createSlice({
+  name: 'bookingRequestNotifications',
+  initialState: initialDeleteBookingRequestNotificationState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(deleteBookingRequestNotification.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(deleteBookingRequestNotification.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.notifications = action.payload;
+      })
+      .addCase(deleteBookingRequestNotification.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
+export const initialDeleteBookingAcceptedNotificationState = {
+  notifications: null,
+  status: 'idle',
+  error: null,
+} as NotificationState;
+
+export const deleteBookingAcceptedNotificationSlice = createSlice({
+  name: 'bookingAcceptedNotifications',
+  initialState: initialDeleteBookingAcceptedNotificationState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(deleteBookingAcceptedNotification.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(deleteBookingAcceptedNotification.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.notifications = action.payload;
+      })
+      .addCase(deleteBookingAcceptedNotification.rejected, (state, action) => {
         console.log('FAIL');
         state.status = 'idle';
         if (action.payload) {
@@ -404,6 +508,39 @@ export const tripDetailsSlice = createSlice({
   },
 });
 
+export const bookingRequestInitialState = {
+  request: null,
+  status: 'idle',
+  error: null,
+} as BookingRequestState;
+
+export const bookingRequestSlice = createSlice({
+  name: 'bookingRequest',
+  initialState: bookingRequestInitialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(findBookingRequest.pending, (state, action) => {
+        console.log('IDLE');
+        state.status = 'loading';
+      })
+      .addCase(findBookingRequest.fulfilled, (state, action) => {
+        console.log('SUCCESS');
+        state.status = 'success';
+        state.request = action.payload;
+      })
+      .addCase(findBookingRequest.rejected, (state, action) => {
+        console.log('FAIL');
+        state.status = 'idle';
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = { message: 'Unknown error' };
+        }
+      });
+  },
+});
+
 export const tripBookingState = {
   tripId: null,
   status: 'idle',
@@ -413,7 +550,9 @@ export const tripBookingState = {
 export const tripBookingSlice = createSlice({
   name: 'tripBook',
   initialState: tripBookingState,
-  reducers: {},
+  reducers: {
+    resetBookTrip: () => tripBookingState,
+  },
   extraReducers: (builder) => {
     builder
       .addCase(bookTrip.pending, (state, action) => {
@@ -811,3 +950,4 @@ export const { resetStart } = startTripSlice.actions;
 export const { resetEnd } = endTripSlice.actions;
 export const { resetAccept } = acceptTripRequestSlice.actions;
 export const { resetDecline } = declineTripRequestSlice.actions;
+export const { resetBookTrip } = tripBookingSlice.actions;

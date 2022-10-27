@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,10 +14,10 @@ import {
   AppDispatch,
   RootStore,
   listNotifications,
+  fetchTripDetails,
 } from '@carpool/client/store';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { colors, getTime } from '@carpool/client/shared/utilities';
-import { Notification } from '@carpool/client/store';
 
 const { blue, black, white } = colors;
 
@@ -32,11 +32,35 @@ export function NotificationsPage({ navigation }: NotificationsPageProps) {
   const userState = useSelector((state: RootStore) => state.user);
   const { user: userData } = userState;
 
+  const acceptState = useSelector((state: RootStore) => state.acceptTrip);
+  const { status: acceptStatus } = acceptState;
+
+  const declineState = useSelector((state: RootStore) => state.declineTrip);
+  const { status: declineStatus } = declineState;
+
+  const paymentStatusState = useSelector(
+    (state: RootStore) => state.updatePaymentStatus
+  );
+  const { status: paymentStatus, error: paymentStatusError } =
+    paymentStatusState;
+
   useEffect(() => {
     if (userData) {
       dispatch(listNotifications(userData.id));
     }
-  }, [userData, dispatch]);
+  }, [userData, dispatch, acceptStatus, declineStatus, paymentStatus]);
+
+  const goTo = (type: string, entity: string) => {
+    if (type === 'bookingRequest') {
+      navigation.push('BookingRequest', { bookingId: entity });
+    } else if (type === 'bookingAccepted') {
+      navigation.push('CreditCard', {
+        tripId: entity,
+        description: 'trip',
+        cost: -1,
+      });
+    }
+  };
 
   return (
     <SafeAreaView
@@ -105,9 +129,10 @@ export function NotificationsPage({ navigation }: NotificationsPageProps) {
       ) : (
         <ScrollView style={{ flex: 1, width: '100%', paddingHorizontal: 20 }}>
           {notifications?.map((notification, index) => (
-            <View
+            <Pressable
               key={index}
               style={[styles.card, styles.shadow, { paddingVertical: 15 }]}
+              onPress={() => goTo(notification.type, notification.entity)}
             >
               <View style={[styles.flexColumn, { paddingBottom: 10 }]}>
                 <View style={[styles.flexRow, { flex: 5, marginBottom: 5 }]}>
@@ -139,7 +164,7 @@ export function NotificationsPage({ navigation }: NotificationsPageProps) {
                   </Text>
                 </View>
               </View>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
       )}

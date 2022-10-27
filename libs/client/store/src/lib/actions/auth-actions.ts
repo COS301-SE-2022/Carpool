@@ -18,7 +18,8 @@ import { updateDriverState } from '../slices/auth-slice';
 import { url } from '../config';
 import { ForgotPasswordType } from '../types/auth-types';
 
-const host = 'https://carpoolcos301.herokuapp.com';
+// const host = 'https://carpoolcos301.herokuapp.com';
+const host = 'http://localhost:3333';
 // const host = Platform.OS === 'ios' ? 'localhost' : '10.0.2.2';
 
 export type UserLogin = {

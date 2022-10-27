@@ -90,3 +90,57 @@ export const getMonthName = (date: string) => {
   ];
   return `${monthNames[month]}`;
 };
+
+export const distance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number,
+  unit: string
+) => {
+  const radlat1 = (Math.PI * lat1) / 180;
+  const radlat2 = (Math.PI * lat2) / 180;
+  const theta = lon1 - lon2;
+  const radtheta = (Math.PI * theta) / 180;
+  let dist =
+    Math.sin(radlat1) * Math.sin(radlat2) +
+    Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+  dist = Math.acos(dist);
+  dist = (dist * 180) / Math.PI;
+  dist = dist * 60 * 1.1515;
+  if (unit === 'K') {
+    dist = dist * 1.609344;
+  }
+  if (unit === 'N') {
+    dist = dist * 0.8684;
+  }
+  return dist;
+};
+
+export const calcCrow = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) => {
+  const R = 6371; // km
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const latitude1 = toRad(lat1);
+  const latitude2 = toRad(lat2);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) *
+      Math.sin(dLon / 2) *
+      Math.cos(latitude1) *
+      Math.cos(latitude2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const d = R * c;
+  return d;
+};
+
+// Converts numeric degrees to radians
+function toRad(Value: number) {
+  return (Value * Math.PI) / 180;
+}

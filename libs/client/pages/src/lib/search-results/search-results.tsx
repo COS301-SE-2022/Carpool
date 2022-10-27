@@ -22,6 +22,7 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
     date,
     startLongitude,
     startLatitude,
+    startAddress,
     destinationLongitude,
     destinationLatitude,
   } = route.params;
@@ -46,12 +47,19 @@ export function SearchResults({ navigation, route }: SearchResultsProps) {
     date,
     startLongitude,
     startLatitude,
+    startAddress,
     destinationLongitude,
     destinationLatitude,
   ]);
 
   const viewTrip = (tripId: string) => {
-    navigation.push('TripDetails', { tripId, type: 'not_booked' });
+    navigation.push('TripDetails', {
+      tripId,
+      type: 'not_booked',
+      startLat: startLatitude,
+      startLong: startLongitude,
+      startAddress: startAddress,
+    });
   };
 
   return (

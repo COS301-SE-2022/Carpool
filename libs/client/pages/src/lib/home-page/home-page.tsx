@@ -18,9 +18,14 @@ import {
 } from '@carpool/client/components';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { styles } from './home-page.style';
+import { calcCrow } from '@carpool/client/shared/utilities';
 
 export function HomePage({ navigation }: HomePageProps) {
   const dispatch: AppDispatch = useDispatch();
+
+  console.log(
+    calcCrow(-25.8858077, 28.1760277, -25.8487678, 28.1613571).toFixed(1)
+  );
 
   const tripState = useSelector((state: RootStore) => state.upcomingTrip);
   const { trip, status } = tripState;

@@ -27,7 +27,7 @@ import Toast from 'react-native-toast-message';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
 export function TripDetails({ route, navigation }: TripDetailsPageProps) {
-  const { tripId, type } = route.params;
+  const { tripId, type, startAddress, startLat, startLong } = route.params;
 
   type address = {
     address: string;
@@ -91,7 +91,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
   }, [tripBookingStatus, navigation]);
 
   const bookRide = (tripId: string) => {
-    if (pickup.address) {
+    if (startAddress && startLong && startLat) {
       dispatch(
         bookTrip({
           tripId,
@@ -99,9 +99,9 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
           seatsBooked: '1',
           status: 'requested',
           price: trip ? `${trip.price}` : '',
-          address: pickup.address,
-          latitude: pickup.latitude,
-          longitude: pickup.longitude,
+          address: startAddress,
+          latitude: startLat,
+          longitude: startLong,
         })
       );
     } else {
@@ -126,7 +126,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
         },
       ]}
     >
-      <Modal
+      {/* <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -247,7 +247,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
             </View>
           </View>
         </View>
-      </Modal>
+      </Modal> */}
       {status === 'loading' || tripStartStatus === 'loading' ? (
         <View
           style={[
@@ -278,7 +278,7 @@ export function TripDetails({ route, navigation }: TripDetailsPageProps) {
               <TripDetailsBottomContainer
                 trip={trip}
                 type={type}
-                onPress={() => setPickupLocation()}
+                onPress={() => bookRide(tripId)}
                 onPressStart={() => startTripHandle(trip.tripId)}
                 onPressUser={() =>
                   navigation.navigate('DriverProfile', {

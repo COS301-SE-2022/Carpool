@@ -3356,15 +3356,73 @@ exports.TripsModule = TripsModule;
 
 var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7, _8, _9, _10, _11, _12, _13, _14, _15, _16;
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.TripsResolver = void 0;
+exports.TripsResolver = exports.calcCrow = void 0;
 const tslib_1 = __webpack_require__("tslib");
 const entities_1 = __webpack_require__("./libs/api/authentication/api/shared/entities/data-access/src/index.ts");
 const entities_2 = __webpack_require__("./libs/api/trips/api/shared/entities/data-access/src/index.ts");
 const service_1 = __webpack_require__("./libs/api/trips/service/feature/src/index.ts");
 const graphql_1 = __webpack_require__("@nestjs/graphql");
 const service_2 = __webpack_require__("./libs/api/authentication/service/feature/src/index.ts");
+// import {
+//   Client,
+//   LatLng,
+//   DirectionsRequest,
+//   ApiKeyParams,
+//   LatLngLiteral,
+// } from '@googlemaps/google-maps-services-js';
 const graphql_subscriptions_1 = __webpack_require__("graphql-subscriptions");
 const pubSub = new graphql_subscriptions_1.PubSub();
+// const client = new Client({});
+const calcCrow = (lat1, lon1, lat2, lon2) => {
+    const R = 6371; // km
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const latitude1 = toRad(lat1);
+    const latitude2 = toRad(lat2);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.sin(dLon / 2) *
+            Math.sin(dLon / 2) *
+            Math.cos(latitude1) *
+            Math.cos(latitude2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c;
+    return d;
+};
+exports.calcCrow = calcCrow;
+// Converts numeric degrees to radians
+function toRad(Value) {
+    return (Value * Math.PI) / 180;
+}
+// export function decodePath(encodedPath: string): LatLngLiteral[] {
+//   const len: number = encodedPath.length || 0;
+//   const path = new Array(Math.floor(encodedPath.length / 2));
+//   let index = 0;
+//   let lat = 0;
+//   let lng = 0;
+//   let pointIndex: number;
+//   for (pointIndex = 0; index < len; ++pointIndex) {
+//     let result = 1;
+//     let shift = 0;
+//     let b: number;
+//     do {
+//       b = encodedPath.charCodeAt(index++) - 63 - 1;
+//       result += b << shift;
+//       shift += 5;
+//     } while (b >= 0x1f);
+//     lat += result & 1 ? ~(result >> 1) : result >> 1;
+//     result = 1;
+//     shift = 0;
+//     do {
+//       b = encodedPath.charCodeAt(index++) - 63 - 1;
+//       result += b << shift;
+//       shift += 5;
+//     } while (b >= 0x1f);
+//     lng += result & 1 ? ~(result >> 1) : result >> 1;
+//     path[pointIndex] = { lat: lat * 1e-5, lng: lng * 1e-5 };
+//   }
+//   path.length = pointIndex;
+//   return path;
+// }
 let TripsResolver = class TripsResolver {
     constructor(tripsService, authService) {
         this.tripsService = tripsService;
@@ -3503,6 +3561,33 @@ let TripsResolver = class TripsResolver {
      */
     findUpcomingTrip(id) {
         return tslib_1.__awaiter(this, void 0, void 0, function* () {
+            // const origin = {
+            //   lat: -25.8858077,
+            //   lng: 28.1760277,
+            // } as LatLng;
+            // const destination = {
+            //   lat: -25.7545492,
+            //   lng: 28.2314476,
+            // } as LatLng;
+            // const par = {
+            //   params: {
+            //     origin: origin,
+            //     destination: destination,
+            //     key: process.env.GOOGLE_API_KEY,
+            //   },
+            // } as DirectionsRequest;
+            // let points: LatLng[];
+            // const searchResults = [];
+            // client
+            //   .directions(par)
+            //   .then((r) => {
+            //     points = decodePath(r.data.routes[0].overview_polyline.points);
+            //     console.log(points);
+            //     console.log(typeof points);
+            //   })
+            //   .catch((e) => {
+            //     console.log(e);
+            //   });
             return yield this.tripsService.findUpcomingTrip(id);
         });
     }
@@ -3547,10 +3632,16 @@ let TripsResolver = class TripsResolver {
             const searchResults = [];
             if (trips.length !== 0) {
                 trips.map((trip) => {
-                    if (trip.coordinates[0].longitude === startLongitude &&
-                        trip.coordinates[0].latitude === startLatitude &&
-                        trip.coordinates[1].longitude === destinationLongitude &&
-                        trip.coordinates[1].latitude === destinationLatitude) {
+                    // if (
+                    //   trip.coordinates[0].longitude === startLongitude &&
+                    //   trip.coordinates[0].latitude === startLatitude &&
+                    //   trip.coordinates[1].longitude === destinationLongitude &&
+                    //   trip.coordinates[1].latitude === destinationLatitude
+                    // ) {
+                    //   searchResults.push(trip);
+                    // }
+                    if ((0, exports.calcCrow)(Number(trip.coordinates[0].latitude), Number(trip.coordinates[0].longitude), Number(startLatitude), Number(startLongitude)) <= 5 ||
+                        (0, exports.calcCrow)(Number(trip.coordinates[1].latitude), Number(trip.coordinates[1].longitude), Number(destinationLatitude), Number(destinationLongitude)) <= 5) {
                         searchResults.push(trip);
                     }
                 });

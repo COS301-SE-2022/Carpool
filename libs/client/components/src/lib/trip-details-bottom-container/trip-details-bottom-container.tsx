@@ -104,7 +104,7 @@ export function TripDetailsBottomContainer({
                         size={20}
                         name={
                           trip.driver.avgRating >= 1
-                            ? 'start'
+                            ? 'star'
                             : trip.driver.avgRating >= 0.5
                             ? 'star-half-full'
                             : 'star-outline'
@@ -115,7 +115,7 @@ export function TripDetailsBottomContainer({
                         size={20}
                         name={
                           trip.driver.avgRating >= 2
-                            ? 'start'
+                            ? 'star'
                             : trip.driver.avgRating >= 1.5
                             ? 'star-half-full'
                             : 'star-outline'
@@ -126,7 +126,7 @@ export function TripDetailsBottomContainer({
                         size={20}
                         name={
                           trip.driver.avgRating >= 3
-                            ? 'start'
+                            ? 'star'
                             : trip.driver.avgRating >= 2.5
                             ? 'star-half-full'
                             : 'star-outline'
@@ -137,7 +137,7 @@ export function TripDetailsBottomContainer({
                         size={20}
                         name={
                           trip.driver.avgRating >= 4
-                            ? 'start'
+                            ? 'star'
                             : trip.driver.avgRating >= 3.5
                             ? 'star-half-full'
                             : 'star-outline'
@@ -148,7 +148,7 @@ export function TripDetailsBottomContainer({
                         size={20}
                         name={
                           trip.driver.avgRating >= 5
-                            ? 'start'
+                            ? 'star'
                             : trip.driver.avgRating >= 4.5
                             ? 'star-half-full'
                             : 'star-outline'

@@ -26,6 +26,7 @@ export function SearchPage({ navigation }: SearchPageProps) {
       date: date.toISOString(),
       startLongitude: origin.longitude,
       startLatitude: origin.latitude,
+      startAddress: origin.address,
       destinationLongitude: destination.longitude,
       destinationLatitude: destination.latitude,
     });

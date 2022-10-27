@@ -15,7 +15,13 @@ export type RootStackParamList = {
   ForgotPasswordPage: undefined;
   ConfirmEmailPage: undefined;
   ResetPasswordPage: undefined;
-  TripDetails: { tripId: string; type: string };
+  TripDetails: {
+    tripId: string;
+    type: string;
+    startLat?: string;
+    startLong?: string;
+    startAddress?: string;
+  };
   SearchPage: undefined;
   UserProfile: { userId: string };
   DriverProfile: { driverId: string };
@@ -34,6 +40,7 @@ export type RootStackParamList = {
     date: string;
     startLongitude: string;
     startLatitude: string;
+    startAddress: string;
     destinationLongitude: string;
     destinationLatitude: string;
   };

@@ -39,4 +39,4 @@ This is a React Native application that helps students find and join safe car tr
 | <img src="Documentation/Images/Me.jpg" width=200px height=150px> <br/> **Asheigh Govender**  |Final year BSc Computer Science student at the University of Pretoria. I have some experience in web development. Email: ashleighgovender633@gmail.com  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/ashleigh-govender-91a886254)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ashleigh-Tuks)|
 
 ## Extra Information
-All other information regarding the project can be found on the wiki page
+All other information regarding the project can be found on the [wiki page](https://github.com/COS301-SE-2022/Carpool/wiki)

@@ -94,8 +94,8 @@ export class BookTripHandler implements ICommandHandler<BookTripCommand> {
       status,
       price,
       address,
-      latitude,
-      longitude
+      longitude,
+      latitude
     );
   }
 }

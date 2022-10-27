@@ -36,8 +36,20 @@ export function HomePage({ navigation }: HomePageProps) {
   const createdTripState = useSelector((state: RootStore) => state.createdTrip);
   const { status: createdTripStatus } = createdTripState;
 
+  const bookingStateCreated = useSelector((state: RootStore) => state.booking);
+  const { status: bookingStatusCreated } = bookingStateCreated;
+
   const startTrip = useSelector((state: RootStore) => state.startTrip);
   const { status: startTripStatus } = startTrip;
+
+  const bookTripState = useSelector((state: RootStore) => state.requestedTrip);
+  const { status: bookTripStatus } = bookTripState;
+
+  const acceptedTripState = useSelector((state: RootStore) => state.acceptTrip);
+  const { status: acceptedTripStatus } = acceptedTripState;
+
+  const declineTripState = useSelector((state: RootStore) => state.declineTrip);
+  const { status: declineTripStatus } = declineTripState;
 
   useEffect(() => {
     if (userData && userData.id) {
@@ -58,6 +70,10 @@ export function HomePage({ navigation }: HomePageProps) {
     userData,
     createdTripStatus,
     startTripStatus,
+    bookTripStatus,
+    acceptedTripStatus,
+    declineTripStatus,
+    bookingStatusCreated,
   ]);
 
   const viewTrip = (tripId: string, trip: TripListType) => {

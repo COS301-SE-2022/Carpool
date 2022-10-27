@@ -2,7 +2,7 @@ apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 
-apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
+// apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -236,10 +236,10 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('debug.keystore')
-            storePassword 'android'
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
+            storeFile file('your_key_name.keystore')
+            storePassword 'Carpool5620'
+            keyAlias 'your_key_alias'
+            keyPassword 'Carpool5620'
         }
     }
     buildTypes {
@@ -286,7 +286,7 @@ dependencies {
     implementation project(':react-native-config')
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    addUnimodulesDependencies()
+    // addUnimodulesDependencies()
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

@@ -21,9 +21,6 @@ import { styles } from './mapbox-styles.style';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { MapboxTestProps } from '../NavigationTypes/navigation-types';
 import MapViewDirections from 'react-native-maps-directions';
-// @ts-ignore
-import BottomDrawer from 'react-native-bottom-drawer-view';
-
 const TAB_BAR_HEIGHT = 80;
 const HEADER_HEIGHT = 60;
 
@@ -232,7 +229,7 @@ export function MapboxTest({ route, navigation }: MapboxTestProps) {
               )}
             </MapView>
           </View>
-          <BottomDrawer
+          {/* <BottomDrawer
             containerHeight={400}
             offset={0}
             startUp={false}
@@ -267,7 +264,7 @@ export function MapboxTest({ route, navigation }: MapboxTestProps) {
                 </View>
               </View>
             </View>
-          </BottomDrawer>
+          </BottomDrawer> */}
         </>
       ) : (
         /* eslint-disable-next-line */

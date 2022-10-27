@@ -38,7 +38,10 @@
         "apps/client/android/app/build/outputs/bundle",
         "apps/client/android/app/build/outputs/apk"
       ],
-      "options": {}
+      "options": {
+        "debug": false,
+        "apk": true
+      }
     },
     "bundle-android": {
       "executor": "@nrwl/react-native:bundle",

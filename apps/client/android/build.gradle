@@ -6,7 +6,7 @@ buildscript {
     ext {
         buildToolsVersion = "31.0.0"
         minSdkVersion = 21
-        compileSdkVersion = 31
+        compileSdkVersion = 32
         targetSdkVersion = 31
 
         if (System.properties['os.arch'] == "aarch64") {
@@ -28,7 +28,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:6.8.1")
+        classpath("com.android.tools.build:gradle:7.0.4")
         classpath("com.facebook.react:react-native-gradle-plugin")
         classpath("de.undercouch:gradle-download-task:4.1.2")
         // NOTE: Do not place your application dependencies here; they belong
@@ -55,13 +55,10 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
-
-
         maven {
             // All of Detox' artifacts are provided via the npm module
             url "$rootDir/../node_modules/detox/Detox-android"
         }
-
         maven {
           url 'https://api.mapbox.com/downloads/v2/releases/maven'
           authentication {

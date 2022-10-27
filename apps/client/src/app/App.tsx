@@ -35,14 +35,19 @@ import {
   NotificationsPage,
 } from '@carpool/client/pages';
 import { Provider } from 'react-redux';
-import { store, RootStore } from '@carpool/client/store';
+import {
+  store,
+  RootStore,
+  AppDispatch,
+  findUpcomingTrip,
+} from '@carpool/client/store';
 import { NativeBaseProvider } from 'native-base';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { fetchStorage } from '@carpool/client/store';
 import Toast from 'react-native-toast-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   ApolloClient,
   InMemoryCache,
@@ -324,6 +329,8 @@ const MSG_SUB = gql`
 `;
 
 const AppWrapper = () => {
+  const dispatch: AppDispatch = useDispatch();
+
   const userState = useSelector((state: RootStore) => state.user);
   const { user } = userState;
 
@@ -351,6 +358,8 @@ const AppWrapper = () => {
           if (user.id === notif.userId) {
             showToast(notif.message);
           }
+
+          dispatch(findUpcomingTrip(user.id));
         });
       }
     },

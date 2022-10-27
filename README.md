@@ -38,5 +38,5 @@ This is a React Native application that helps students find and join safe car tr
 | <img src="Documentation/Images/Wes.jpg" width=200px height=150px> <br/> **Wesley Pachai**  |Final year BSc Computer Science student at the University of Pretoria with small web development projects done. Email: pachaiwesley@gmail.com| [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/wesley-pachai)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/WesleyPachaiTuks)|
 | <img src="Documentation/Images/Me.jpg" width=200px height=150px> <br/> **Asheigh Govender**  |Final year BSc Computer Science student at the University of Pretoria. I have some experience in web development. Email: ashleighgovender633@gmail.com  | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](www.linkedin.com/in/ashleigh-govender-91a886254)  <br> [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Ashleigh-Tuks)|
 
-# Extra Information
+## Extra Information
 All other information regarding the project can be found on the wiki page

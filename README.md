@@ -13,7 +13,6 @@ This is a React Native application that helps students find and join safe car tr
 
 ## Documentation
 <div><a href="https://drive.google.com/file/d/13NRuYgyNQXT4404feg_0ihbTP1nUzH4M/view?usp=sharing" target="_blank">🧾 SRS Document</a></div>
-<div>[go]([http://stackoverflow.com](https://drive.google.com/file/d/13NRuYgyNQXT4404feg_0ihbTP1nUzH4M/view?usp=sharing)){:target="_blank" rel="noopener"}</div>
 <div><a href="https://drive.google.com/file/d/1xDOdy1RuHcaD6bfZmXEQi1v0jDKA4_tx/view?usp=sharing">🧾 Architectural Requirements</a></div>
 <div><a href="https://drive.google.com/file/d/10vLudJuCEjTIOc-Y64HBErKkccoEbQKg/view?usp=sharing">🧾 Coding Standards</a></div>
 <div><a href="https://drive.google.com/file/d/1RQiF0iWuFpJU-yRYtyXHXKCDW9ErpASP/view?usp=sharing">🧾 User Manual</a></div>

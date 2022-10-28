@@ -93,7 +93,7 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
 
   const [name, setName] = useState('');
 
-  const { data, loading, error } = useQuery(GET_MESSAGES, {
+  const { data, loading, error, refetch } = useQuery(GET_MESSAGES, {
     variables: { senderId, receiverId },
     onCompleted(data) {
       console.log(data);
@@ -135,6 +135,10 @@ export function ChatScreen({ navigation, route }: ChatScreenProps) {
         setMessages((prevMessages) => [...prevMessages, data.messageSent]);
       }
     },
+  });
+
+  useEffect(() => {
+    refetch();
   });
 
   return (
